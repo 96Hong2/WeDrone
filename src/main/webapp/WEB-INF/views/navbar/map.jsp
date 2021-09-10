@@ -107,7 +107,7 @@ footer {
 	<!-- 지도를 표시할 div 입니다 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789"></script>
-	<div id="map" style="width: 100%; height: 350px;"></div>
+	<div id="map" style="width: 100%; height: 600px;"></div>
 
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
