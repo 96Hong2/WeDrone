@@ -19,8 +19,14 @@
 <!-- css cdn 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap" rel="stylesheet">
 <!-- 아이콘 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
@@ -46,11 +52,41 @@ footer {
 	margin-top: auto
 }
 
+body,html {
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding: 5px 6px;
+		text-align: left;
+	}
+
+    table{
+      width:80%;
+      margin-left: auto; 
+      margin-right: auto;
+      height:300px;
+     
+
+   }
+
 
 </style>
 </head>
 <title>드론</title>
 <body>
+	<!-- 상단 메뉴바 -->
+	<!-- 아이디가 있다면 -->
+	<%-- <c:if test="${sessionScope.userId ne null}">
+		<jsp:include page="${path}/lognav"></jsp:include>
+	</c:if>
+	<!-- 아이디가 없ㅇ 네비바-->
+	<c:if test="${sessionScope.userId eq null}">
+		<jsp:include page="${path}/navbar"></jsp:include>
+	</c:if> --%>
+
 	<div class="wrap">
 		<!-- 네비게이션바 -->
 		<nav class="navbar navbar-expand-lg navbar-dark"
@@ -68,21 +104,10 @@ footer {
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				
-				<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item dropdown">
-						<a  class="nav-link dropdown-toggle"
-							aria-current="page" href="${path}/map"
-							id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<h4>Map</h4></a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="/map">지도 보기</a></li>
-            <li><a class="dropdown-item" href="#">비행 구역 조회</a></li>
-          </ul>   
-							
-							
-						<ul>	
+						<li class="nav-item"><a class="nav-link active text-center"
+							aria-current="page" href="${path}/map"><h4>Map</h4></a></li>
 						<li class="nav-item"><a class="nav-link active text-center "
 							href="${path}/calendar"><h4>Calendar</h4></a></li>
 						<a class="nav-link active" href="${path}/news"><h4>News</h4></a>
@@ -102,21 +127,81 @@ footer {
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div>
 					<div class="d-flex">
-						<button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button>
-						<button class="btn btn-sm btn-outline-light me-1 mx-1"
-							type="submit">로그아웃</button>
-
-						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
-							href="${path}/mypage">마이페이지</a>
+						<a class="btn btn-sm btn-outline-light mx-3 me-1"
+							href="${path}/login" role="button">로그인</a> <a
+							class="btn btn-sm btn-outline-light me-1 mx-1"
+							href="${path}/signup" role="button">회원가입</a> <a
+							class="btn btn-sm btn-outline-light mx-1 me-1"
+							href="${path}/mypages" role="button">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">기타</button>
+							aria-controls="offcanvasRight">메시지</button>
 					</div>
 				</div>
 		</nav>
-
-
-
 		
-	</body>
+		<form action="fbupdate" method="post" enctype="multipart/form-data">
+
+     <h1>자유게시판 글 수정</h1>
+		<table style="width: 800px; margin-left: auto; margin-right: auto;">
+			<tr>
+				<th>게시판 번호</th>
+				<td>${post.postId}<input type="hidden"
+					name="postId" value="${post.postId}" />
+				</td>
+			</tr>
+			<tr>
+				<th>닉네임</th>
+				<td>${post.nickName}<input type="hidden"
+					name="nickName" value="${post.nickName}" />
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>
+				 <div class="form-floating mb-3">
+				<textarea name="postContent"
+						style="height: 300px; width: 300px;" required class="form-control" id="floatingInput">${post.postContent}</textarea>
+			<label for="floatingInput" class="opacity-25">content</label>
+          </div>
+			</td>
+			</tr>
+			<tr>
+				<th>사진</th>
+				<td><img src="/photo/${image.newFileName}" width="500px" />
+					<p>
+						<input type="file" name="PostPic"/>
+					</p></td>
+			</tr>
+
+			<tr>
+			<td>
+				   <input type="button" onclick="location.href='./'"
+					value="자유게시판 리스트" class = "btn btn-dark" />
+					<button class = "btn btn-dark">저장</button></td>
+			</tr>
+		</table>
+	</form>
+		</div>
+		</body>
+		
+		<!-- 들어갈 내용 -->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+<!-- 하단 푸터 -->
+
+<footer class="py-3 bg-dark bg-gradient">
+	<p class="m-0 text-center text-white">구디아카데미 프로젝트 1조</p>
+	<p class="m-0 text-center text-white">Copyright &copy; Website 2021</p>
+</footer>
+
 </html>

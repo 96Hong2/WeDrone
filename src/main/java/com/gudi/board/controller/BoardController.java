@@ -14,12 +14,31 @@ public class BoardController {
 
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home(Model model) {
 
 		return "home";
 	}
+	
+	@RequestMapping(value = "/fbwriteForm")
+	public String fbwriteForm(Model model) {
 
+		return "/fbwriteForm";
+	}
+	
+	@RequestMapping(value = "/fbdetail")
+	public String fbdetail(Model model) {
+
+		return "/fbdetail";
+	}
+
+	@RequestMapping(value = "/fbupdate")
+	public String fbupdate(Model model) {
+
+		return "/fbupdate";
+	}
+
+	
 	@Controller
 	public class Controller0 {
 
@@ -64,6 +83,8 @@ public class BoardController {
 
 			return "navbar/mypage";
 		}
+		
+		
 	}
 
 }
