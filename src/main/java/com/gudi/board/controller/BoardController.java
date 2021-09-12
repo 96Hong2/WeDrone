@@ -37,6 +37,12 @@ public class BoardController {
 
 		return "/fbupdate";
 	}
+	
+	@RequestMapping(value = "/index")
+	public String index(Model model) {
+
+		return "/index";
+	}
 
 	
 	@Controller
