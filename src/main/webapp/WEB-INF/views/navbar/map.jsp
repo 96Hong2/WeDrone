@@ -224,33 +224,48 @@ footer {
 			polygons.push(polygon); //폴리곤 제거하기 위한 배열
 
 			//커스텀 오버레이 변수 설정
-			var customOverlay = new kakao.maps.CustomOverlay();
+			var customOverlay = new kakao.maps.CustomOverlay();			
 
 			//다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다.
 			//지역명을 표시하는 커스텀 오버레이를 지도 위에 표시합니다.
-			kakao.maps.event
-					.addListener(
-							polygon,
-							'mouseover',
-							function(mouseEvent) {
-								polygon.setOptions({ //마우스오버된 폴리곤의 배경색 옵션 변경
+			kakao.maps.event.addListener(polygon,'mouseover',function(mouseEvent) {
+				polygon.setOptions({ //마우스오버된 폴리곤의 배경색 옵션 변경
 									fillColor : '#09f'
-								});
-
-								//커스텀 오버레이의 내용 설정
-								customOverlay
-										.setContent('<div class="overlay">'
-												+'<div class="overlay_top"><span class="left">'
-												+ name
-												+ '</span><span class="right">등록된 후기 5개</span></div>'
-												+'<div class="overlay_bot"><span>'
-												+ '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
-												+ '</span><span><div class="gauge1"></div><div class="gauge2"></div></span></div>'
-												+'</div>');
-
-								customOverlay.setPosition(mouseEvent.latLng);
-								customOverlay.setMap(map);
-							});
+				});
+				
+				var reviewCnt = 0;
+				var areaRating = 0.0;
+				$.ajax({
+					url:'getAreaInfo',
+					type:'GET',
+					data:{'areaName' : '광주시'},
+					dataType:'JSON',
+					success:function(data){
+						console.log("후기마커개수 : ", data.reviewCnt);
+						console.log("지역평점", data.areaRating);
+						reviewCnt = data.reviewCnt;
+						areaRating = data.areaRating;
+					},
+					error:function(e){
+						console.log("에러발생 : ", e);
+					}
+				});	
+				console.log(data.reviewCnt);
+				console.log(data.areaRating);
+				
+								
+				//커스텀 오버레이의 내용 설정
+				customOverlay.setContent('<div class="overlay">'
+					+'<div class="overlay_top"><span class="left">'
+					+ name
+					+ '</span><span class="right">등록된 후기 '+reviewCnt+'개</span></div>'
+					+'<div class="overlay_bot"><span>'
+					+ '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
+					+ '</span><span><div class="gauge1"></div><div class="gauge2"></div></span></div>'
+					+'</div>');
+					customOverlay.setPosition(mouseEvent.latLng);
+					customOverlay.setMap(map);
+			});
 
 			//다각형에 mousemove 이벤트를 등록하고 이벤트 발생 시 커스텀 오버레이의 위치를 변경
 			kakao.maps.event.addListener(polygon, 'mousemove', function(
@@ -316,10 +331,10 @@ footer {
 					'안성시' : new kakao.maps.LatLng(37.036418285338,
 							127.31163550418967),
 					'이천시' : new kakao.maps.LatLng(37.194796, 127.498984),
-					'여주시' : new kakao.maps.LatLng(37.19479659498478,
-							127.49898409770141),
-					'광주시' : new kakao.maps.LatLng(37.19479659498478,
-							127.49898409770141),
+					'여주시' : new kakao.maps.LatLng(37.31013340253336,
+							127.62002734684562),
+					'광주시' : new kakao.maps.LatLng(37.41199111803577,
+							127.30495011990648),
 					'성남시 수정구' : new kakao.maps.LatLng(37.4339550640178,
 							127.11274158158241),
 					'성남시 중원구' : new kakao.maps.LatLng(37.4339550640178,
@@ -352,6 +367,8 @@ footer {
 				}
 				polygons = [];
 			}
+			
+			
 		} //end display
 	</script>
 	</div>
