@@ -161,7 +161,7 @@ body,html {
 		
 		<div class="col-6 center-block" style="margin-right:auto; margin-left:auto">
 				
-							<form action="fpwrite" method="post">
+<form action="fpwrite" method="post">
 							<h1>자유 게시판 글쓰기</h1>
 <table> <!-- get은 보안상의 문제도 있지만 내용을 보내는데에 한계가 있다. -->
       
@@ -176,8 +176,9 @@ body,html {
       </tr>
       <tr>
          <th>작성자</th>
-         <td><input type="hidden" name="nickName"/></td>
+         <td><input type="text" name="nickName"/></td>
       </tr>
+   
       <tr>
          <th>내용</th>
          <td>
@@ -221,6 +222,9 @@ body,html {
 	  </a>
 
 	  */
+	  function fileUp(){
+		   window.open('fbuploadForm','file upload','width=400, height=100');
+		}
 	  
 	  $("#save").click(function(){
 	  
@@ -241,9 +245,7 @@ body,html {
    $("#postContent").val($("#editable").html());
    $("form").submit();
 })
-function fileUp(){
-   window.open('uploadForm','file upload','width=400, height=100');
-}
+
 function del(elem){
 	//삭제 요청
 	//클릭시 a 태그를 가져와서 id 에서 파일명만 추출하기
@@ -254,7 +256,7 @@ function del(elem){
     console.log(fileName);
 	  
 	  $.ajax({
-		  url:"fileDelete",
+		  url:"fbfileDelete",
 		  type:"get",
 		  data:{"fileName":fileName},
 		  dataType:"json",

@@ -17,8 +17,8 @@
 
     <script type="text/javascript">
       // Client ID and API key from the Developer Console
-      var CLIENT_ID = '174728598166-b32tje889ba63751uvq4omo1prhfrrt0.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyBsLDXngrFkAJHI7kGAmqqolWzgNdbCRI0';
+      var CLIENT_ID = '942185017387-c1d7gsmgfgtji52vsv1t2u1cp4hfk2rq.apps.googleusercontent.com';
+      var API_KEY = 'AIzaSyDxn4mLYdZ1MHAGBexsMsQLHk6Vf4el7Ms';
 
       // Array of API discovery doc URLs for APIs used by the quickstart
       var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
@@ -133,6 +133,45 @@
         });
       }
 
+      
+      //var event = {
+    	//	  'summary': 'Google I/O 2015',
+    	//	  'location': '800 Howard St., San Francisco, CA 94103',
+    	//	  'description': 'A chance to hear more about Google\'s developer products.',
+    	//	  'start': {
+    	//	    'dateTime': '2015-05-28T09:00:00-07:00',
+    	//	    'timeZone': 'America/Los_Angeles'
+    		//  },
+    	//	  'end': {
+    	//	    'dateTime': '2015-05-28T17:00:00-07:00',
+    	//	    'timeZone': 'America/Los_Angeles'
+    	//	  },
+    		//  'recurrence': [
+    	//	    'RRULE:FREQ=DAILY;COUNT=2'
+    	//	  ],
+    	//	  'attendees': [
+    	//	    {'email': 'lpage@example.com'},
+    	//	    {'email': 'sbrin@example.com'}
+    	//	  ],
+    	//	  'reminders': {
+    	//	    'useDefault': false,
+    	//	    'overrides': [
+    		//      {'method': 'email', 'minutes': 24 * 60},
+    		 //     {'method': 'popup', 'minutes': 10}
+    		//    ]
+    	//	  }
+    	//	};
+
+    	//	var request = gapi.client.calendar.events.insert({
+    	//	  'calendarId': 'primary',
+    	//	  'resource': event
+    	//	});
+
+    	//	request.execute(function(event) {
+    	//	  appendPre('Event created: ' + event.htmlLink);
+    	//	});
+
+      
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"

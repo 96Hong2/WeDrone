@@ -11,6 +11,10 @@
 -->
 
 <configuration>
+ <settings> 
+    <setting name="cacheEnabled" value="false" />
+    <setting name="jdbcTypeForNull" value="NULL" />
+ </settings>
    <typeAliases>
       <package name="com.gudi.board.dto"/>
    </typeAliases>

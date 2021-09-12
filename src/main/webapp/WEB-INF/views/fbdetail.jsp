@@ -125,7 +125,10 @@ body,html {
 
 	<h1>자유 게시판 상세보기</h1>	
 	<table>
-	
+	 <tr>
+			<th>게시판 번호</th>
+			<td>${post.postId}</td>
+		</tr>
 		<tr>
 			<th>작성자</th>
 			<td>${post.nickName}</td>
@@ -139,29 +142,16 @@ body,html {
 			<td>${post.postContent}</td>
 		</tr>
 		
-		<c:if test="${fileList.size()>0}">
-		<tr>
-			<th>다운로드</th>
-			<td>
-				<ul>
-					<c:forEach items="${fileList}" var="file">
-						<!-- 뒤에 만약 /가 없으면 . 뒤에 확장자 내용을 지워버림 -->
-						<li><a href="download/${file.oriFileName}/${file.newFileName}/">${file.oriFileName}</a></li>
-					</c:forEach>
-				</ul>
-			</td>		
-		</tr>
-		</c:if>
+		
 		<tr>
 			<td colspan="2">
 				<button onclick="location.href='./'" class = "btn btn-dark" >리스트</button>
-				<button onclick="location.href='./fbupdateForm?idx=${post.postId}'" class = "btn btn-dark" >수정</button>
-				<button onclick="location.href='./del?idx=${post.postId}'" class = "btn btn-dark" >삭제</button>			
+				<button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
+				<button onclick="location.href='./del?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>			
 			</td>
 		</tr>
 	</table>
 </body>
-
 
 
 

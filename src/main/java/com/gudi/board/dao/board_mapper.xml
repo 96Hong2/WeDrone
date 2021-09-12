@@ -5,24 +5,31 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <!-- XML 이 어떤interface 와 연결이 되는가? -->
-<mapper namespace="com.gudi.board.dao.MapDAO">	
+<mapper namespace="com.gudi.board.dao.BoardDAO">	
+	
+	<insert id="fbwrite"
+		useGeneratedKeys="true"
+		keyColumn="postId"
+		keyProperty="postId"
+		parameterType="board">
+		INSERT INTO post(postId,title,postContent,nickName,userId, postDel) 
+		VALUES(post_seq.NEXTVAL,#{title},#{postContent},#{nickName},#{userId}, 'N')
+	</insert>
+
+	<insert id="fbfileWrite">
+		INSERT INTO image(imgId, oriFileName, newFileName, postId)
+			VALUES(image_seq.NEXTVAL, #{param1},#{param2},#{param3})
+	</insert>
+	
+	
+	<select id="fbdetail" parameterType="String" resultType="board">
+		SELECT * FROM post WHERE postId = #{postId}
+	</select>
+	
+	<select id="fileList" parameterType="String" resultType="file">
+		SELECT imgId, newFileName, oriFileName, postId 
+			FROM image WHERE postId = #{postId} ORDER BY imgId
+	</select>
+	
 	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
