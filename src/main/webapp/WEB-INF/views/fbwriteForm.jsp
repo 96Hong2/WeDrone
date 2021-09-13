@@ -7,22 +7,10 @@
 <head>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 부트스트랩 파일 -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-	crossorigin="anonymous">
-	
-</script>
 <link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
 <!-- css cdn 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap"
 	rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!--폰트-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +24,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 부트스트랩 파일 -->
+
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -161,7 +152,7 @@ body,html {
 		
 		<div class="col-6 center-block" style="margin-right:auto; margin-left:auto">
 				
-<form action="fpwrite" method="post">
+<form action="fbwrite" method="post">
 							<h1>자유 게시판 글쓰기</h1>
 <table> <!-- get은 보안상의 문제도 있지만 내용을 보내는데에 한계가 있다. -->
       
@@ -184,9 +175,8 @@ body,html {
          <td>
     <div id="editable" contenteditable="true">    
          <div class="form-floating mb-3">
-            <!-- div 내용을 서버에 보낼 수 있도록 input을 추가 -->
     <input id="postContent" type="hidden" name="postContent" value="" required class="form-control" id="floatingInput">
-        <label for="floatingInput">content</label>
+        
           </div>
     </div>
             
@@ -209,7 +199,13 @@ body,html {
 		</div>
 
 		
-		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+	crossorigin="anonymous">
+	
+</script>
 		
 		</body>
 		<!-- 들어갈 내용 -->
@@ -229,7 +225,7 @@ body,html {
 	  $("#save").click(function(){
 	  
 	  //a 태그 하위에 b 태그 삭제
-	  $("#editable a").find("b").remover();
+	  $("#editable a").find("b").remove();
 	  //a 태그 자체를 삭제? a 태그 하위에 onclick 만 삭제
 	  $("#editable a").removeAttr("onclick");
 	  
@@ -273,22 +269,4 @@ function del(elem){
 }
    
 </script>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-<!-- 하단 푸터 -->
-
-<footer class="py-3 bg-dark bg-gradient">
-	<p class="m-0 text-center text-white">구디아카데미 프로젝트 1조</p>
-	<p class="m-0 text-center text-white">Copyright &copy; Website 2021</p>
-</footer>
-
 </html>
-

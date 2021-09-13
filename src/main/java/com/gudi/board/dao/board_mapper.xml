@@ -12,8 +12,8 @@
 		keyColumn="postId"
 		keyProperty="postId"
 		parameterType="board">
-		INSERT INTO post(postId,title,postContent,nickName,userId, postDel) 
-		VALUES(post_seq.NEXTVAL,#{title},#{postContent},#{nickName},#{userId}, 'N')
+		INSERT INTO post(postId,title,postContent, nickName) 
+		VALUES(post_seq.NEXTVAL,#{title},#{postContent},#{nickName})
 	</insert>
 
 	<insert id="fbfileWrite">
@@ -23,13 +23,28 @@
 	
 	
 	<select id="fbdetail" parameterType="String" resultType="board">
-		SELECT * FROM post WHERE postId = #{postId}
+		SELECT * FROM post WHERE postId = #{postId} AND postDel = 'N'  
 	</select>
+	
 	
 	<select id="fileList" parameterType="String" resultType="file">
 		SELECT imgId, newFileName, oriFileName, postId 
 			FROM image WHERE postId = #{postId} ORDER BY imgId
 	</select>
+	
+	<update id="fbupdate" parameterType="hashmap">
+	  UPDATE post SET title = #{title}, postContent = #{postContent},nickName=#{nickName} 
+	  WHERE postId = #{postId}
+	</update>
+	
+	<update id="fileupdate" parameterType="hashmap">
+	  UPDATE image SET newFileName =#{newFileName}, oriFileName =#{oriFileName} WHERE postId = #{postId}
+	</update>
+	
+	<delete id="fbdel" parameterType="String">
+	UPDATE post SET postDel = 'Y' WHERE postId = #{postId}
+	
+	</delete>
 	
 	
 </mapper>

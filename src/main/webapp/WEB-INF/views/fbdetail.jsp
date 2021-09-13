@@ -125,7 +125,8 @@ body,html {
 
 	<h1>자유 게시판 상세보기</h1>	
 	<table>
-	 <tr>
+	
+	<tr>
 			<th>게시판 번호</th>
 			<td>${post.postId}</td>
 		</tr>
@@ -147,11 +148,12 @@ body,html {
 			<td colspan="2">
 				<button onclick="location.href='./'" class = "btn btn-dark" >리스트</button>
 				<button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
-				<button onclick="location.href='./del?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>			
+				<button onclick="location.href='./fbdel?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>			
 			</td>
 		</tr>
 	</table>
 </body>
+
 
 
 

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +35,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 
+	//게시판 글쓰기//지윤쓰
 	@Transactional
 	public ModelAndView fbwrite(HashMap<String, String> params, HttpSession session) {
 		
@@ -70,6 +72,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		return mav;
 	}
 
+	//파일 업로드//지윤쓰
 	public ModelAndView fbfileUpload(MultipartFile file, HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -106,6 +109,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		return mav;
 	}
 
+	//파일 삭제//지윤쓰
 	public HashMap<String, Object> fbfileDelete(String fileName, HttpSession session) {		
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -132,7 +136,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		return map;
 	}
 
-	@Transactional
+	//게시판 상세보기//지윤쓰
 	public ModelAndView fbdetail(String postId) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -148,5 +152,46 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		return mav;
 	}
+
+	//게시판 수정 폼
+			public ModelAndView fbupdateForm(String postId) {
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("post", dao.fbdetail(postId));
+				mav.setViewName("fbupdateForm");
+				return mav;
+			}
+
+			//게시판 수정
+			public ModelAndView fbupdate(HashMap<String, String> params) {
+				ModelAndView mav = new ModelAndView();
+				dao.fbupdate(params);
+				mav.setViewName("redirect:/member/fbdetail?postId="+params.get("postId"));		
+				return mav;
+			}
+
+			//게시판 삭제
+			public ModelAndView fbdel(String postId) {
+				int success = dao.fbdel(postId);
+				ModelAndView mav = new ModelAndView();
+				mav.setViewName("redirect:/");
+				
+				return mav;
+			}
+
+			//파일 업데이트 폼
+			public ModelAndView fileupdateForm(String postId) {
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("post", dao.fbdetail(postId));
+				mav.setViewName("fileupdate");
+				return mav;
+			}
+
+			//파일 업데이트 
+			public ModelAndView fileupdate(HashMap<String, String> params) {
+			ModelAndView mav = new ModelAndView();
+			dao.fileupdate(params);
+			mav.setViewName("redirect:/member/fbdetail?postId="+params.get("postId"));
+				return mav;
+			}
 	
 }

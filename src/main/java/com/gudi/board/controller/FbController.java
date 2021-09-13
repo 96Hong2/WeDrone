@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +70,54 @@ public class FbController {
 			logger.info("상세보기 요청 : "+postId);
 			return service.fbdetail(postId);
 		}
+		
+		
+		//게시판 업데이트
+		@RequestMapping(value = "/fbupdateForm")
+		public ModelAndView fbupdateForm(@RequestParam String postId) {
+		   logger.info("업데이트 폼 요청");
+	        	
+		   
+		 return service.fbupdateForm(postId);
+		}
+		
+		
+		
+		@RequestMapping(value = "/fbupdate")
+		public ModelAndView fbupdate(@RequestParam HashMap<String, String> params) {
+		    logger.info("업데이트  : {} ",params);
+		   
+		    
+			return service.fbupdate(params);
+		}
+		
+		//파일 업데이트//지윤쓰
+		@RequestMapping(value = "/fileupdateForm")
+		public ModelAndView fileupdateForm(@RequestParam String postId) {
+		   logger.info("업데이트 폼 요청");
+
+		 return service.fileupdateForm(postId);
+		}
+		
+		
+		
+		@RequestMapping(value = "/fileupdate")
+		public ModelAndView fileupdate(@RequestParam HashMap<String, String> params) {
+		    logger.info("업데이트  : {} ",params);
+		   
+		    
+			return service.fileupdate(params);
+		}
+		
+		
+		//지윤쓰
+		@RequestMapping(value = "/fbdel")
+		public ModelAndView fbdel(Model model, @RequestParam String postId) {
+		    logger.info("삭제 요청 : "+postId);
+		    
+			return service.fbdel(postId);
+		}
+		
 		
 		
 		
