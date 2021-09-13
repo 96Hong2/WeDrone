@@ -26,7 +26,7 @@ import com.gudi.board.dto.FileDTO;
 @Service
 public class BoardService {
 
-@Autowired(required=false) BoardDAO dao;
+@Autowired BoardDAO dao;
 
 Logger logger = LoggerFactory.getLogger(this.getClass());
 	

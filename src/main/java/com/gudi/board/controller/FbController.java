@@ -23,7 +23,7 @@ public class FbController {
 
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	@Autowired(required=false) BoardService service;
+	@Autowired BoardService service;
 	
 	
 	
