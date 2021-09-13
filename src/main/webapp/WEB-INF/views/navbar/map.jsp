@@ -141,6 +141,32 @@ ul.tabs li.current{
 	justify-content: right;
 }
 
+/* 후기마커 리스트 */
+#listTopArea{
+	display: flex;
+	justify-content: space-between;
+	margin: 10px;
+}
+
+#orderMenu a{
+	color : black;
+	text-decoration : none;
+}
+
+#orderMenu a:hover{
+	color : pink;
+	font-weight : bold;
+}
+
+#reloadBtn2{
+	/* justify-content: left; */
+}
+
+#orderMenu{
+	/* display:inline-block;margin-left:270px; margin-bottom:15px; */
+	/* justify-content: right; */
+}
+
 /* .overlay .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 50px;font-size: 12px;line-height: 50px;}
 .overlay .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 7px;}
 .overlay .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 6px;} */
@@ -212,7 +238,7 @@ ul.tabs li.current{
 	<div id="sideArea">
 	<div style="margin:40px; text-align:center;">
 		<h5><b>Enjoy your flight, WeDrone</b></h5>
-		<h6>닉네임 님, 환영합니다 ^ㅇ^</h6>
+		<h6>${sessionScope.nickName}닉네임 님, 환영합니다 ^ㅇ^</h6>
 	</div>
 		<ul class="tabs">
 			<li class="tab-link" data-tab="tab-myLocationMK">내위치마커</li>
@@ -228,13 +254,15 @@ ul.tabs li.current{
 	<div id="tab-reviewMK" class="tab-content current">
 		<h4 id="firstComment" style="color:crimson;text-align:center;">♥ 지역을 선택해주세요! ♥</h4>
 		<div id='reviewListArea'>
-			
-			<button type="button" onclick="location.reload(true)" style="display:inline-block;"  
-			class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn2">전체지역보기</button>
-			
-			<div id='orderMenu' style="margin-left:270px; margin-bottom:15px;">
+			<div>지도를 클릭하여 후기마커를 등록해보세요.</div>
+			<div id="listTopArea">
+			<div id="reloadBtn2"><button type="button" onclick="location.reload(true)" style="display:inline-block;"  
+			class="btn btn-sm btn-outline-dark mx-1 me-1">전체지역보기</button></div>
+			<div id='orderMenu'>
 				<a href="javascript:selectArea(name, \'like\')">좋아요순</a>&nbsp;|&nbsp;<a href="javascript:selectArea(name, \'latest\')">최신순</a>
 			</div>
+			</div>
+			
 			<div id='reviewList'>
 			<ul class="list-group list-group-flush">
  	 			<li class="list-group-item">An item</li>
@@ -343,7 +371,7 @@ $(document).ready(function(){
 			}
 			
 			$.ajax({
-				url:'getReviewlist',
+				url:'getReviewList',
 				type:'GET',
 				data : {
 					"areaName" : name,
@@ -351,11 +379,10 @@ $(document).ready(function(){
 				},
 				dataType:'JSON',
 				success:function(data){
-					reviewCnt = data.reviewCnt;
-					reviews = data.reviews;
-					console.log("후기마커개수 : ", data.reviewCnt);
-					
-					content = "";
+					console.log("후기마커 data : ", data);
+					console.log("후기마커 list : ", data.list);
+					console.log("후기마커 list[0] : ", data.list[0]);
+					content = "추가~~";
 					$(".list-group list-group-flush").append(content);
 				},
 				error:function(e){
