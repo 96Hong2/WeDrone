@@ -48,6 +48,8 @@ footer {
 	margin-top: auto
 }
 
+
+/* 후기마커 */
 .overlay {
 	margin-bottom: 60px;
 	background-color: rgba(248, 210, 221, 0.5);
@@ -87,6 +89,56 @@ footer {
 	position: absolute;
 	top:80px;
 	right:20px;
+}
+
+/* 사이드메뉴+지도 */
+#contentWrap{
+	display: flex;
+}
+
+/* 사이드메뉴 탭 */
+#sideArea{
+	width:30%;
+	height:600px;
+	margin:0 auto;
+	
+	justify-content: left;
+}
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
+
+/* 지도 */
+#map{
+	width: 70%; 
+	height: 600px;
+	justify-content: right;
 }
 
 /* .overlay .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 50px;font-size: 12px;line-height: 50px;}
@@ -150,19 +202,89 @@ footer {
 
 
 	<!-- 들어갈 내용 -->
-	<h4>Map - 지도 - 후기마커 보기</h4>
+	<h4>&nbsp;Map - 지도</h4>
 	<button type="button" onclick="location.reload(true)" class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn">전체지역보기</button>
-	<!-- 지도를 표시할 div 입니다 -->
 	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789"></script>
-	<div id="map" style="width: 100%; height: 600px;"></div>
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
+	
+	<div id="contentWrap">
+	<!-- 사이드메뉴 영역 -->
+	<div id="sideArea">
+	<div style="margin:40px; text-align:center;">
+		<h5><b>Enjoy your flight, WeDrone</b></h5>
+		<h6>닉네임 님, 환영합니다 ^ㅇ^</h6>
+	</div>
+		<ul class="tabs">
+			<li class="tab-link" data-tab="tab-myLocationMK">내위치마커</li>
+			<li class="tab-link current" data-tab="tab-reviewMK">후기마커</li>
+			<li class="tab-link" data-tab="tab-bookmark">즐겨찾기</li>
+			<li class="tab-link" data-tab="tab-myReviewMK">내후기마커</li>
+		</ul>
+		
+	<div id="tab-myLocationMK" class="tab-content">
+		내위치마커 내용
+	</div>
+	
+	<div id="tab-reviewMK" class="tab-content current">
+		<h4 id="firstComment" style="color:crimson;text-align:center;">♥ 지역을 선택해주세요! ♥</h4>
+		<div id='reviewListArea'>
+			
+			<button type="button" onclick="location.reload(true)" style="display:inline-block;"  
+			class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn2">전체지역보기</button>
+			
+			<div id='orderMenu' style="margin-left:270px; margin-bottom:15px;">
+				<a href="javascript:selectArea(name, \'like\')">좋아요순</a>&nbsp;|&nbsp;<a href="javascript:selectArea(name, \'latest\')">최신순</a>
+			</div>
+			<div id='reviewList'>
+			<ul class="list-group list-group-flush">
+ 	 			<li class="list-group-item">An item</li>
+  				<li class="list-group-item">A second item</li>
+  				<li class="list-group-item">A third item</li>
+  				<li class="list-group-item">A fourth item</li>
+  				<li class="list-group-item">And a fifth one</li>
+			</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div id="tab-bookmark" class="tab-content">
+		즐겨찾기 내용
+	</div>
+	
+	<div id="tab-myReviewMK" class="tab-content">
+		내후기마커 내용
+	</div>
+	
+	</div>
+	
+	<!-- 지도 영역 -->
+	<div id="map"></div>
+	
+	</div>
+</body>
+	
+<script>
+		
+$(document).ready(function(){
+	
+	//$('#reviewListArea').hide();
+	
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
 
-	<script>
+		$('ul.tabs li').removeClass('current');
+		$('.tab-content').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+
+})
 		
 		//#카카오맵 api 불러오기
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
-			center : new kakao.maps.LatLng(37.23158045033799, 126.8253682729277), // 지도의 중심좌표
+			center : new kakao.maps.LatLng(37.21953563998351, 127.21194259376661), // 지도의 중심좌표
 			level : 10
 		// 지도의 확대 레벨
 		};
@@ -193,22 +315,58 @@ footer {
 		//현재 지도에 띄워지는 커스텀 오버레이 변수 설정
 		var customOverlay = new kakao.maps.CustomOverlay();	
 		
-		function selectArea(name){ //선택 버튼 클릭 시 해당 지역 확대
-			console.log("selectArea Name : ",name);
-			//현재 지도 레벨에서 2레벨 확대한 레벨
-			var level = map.getLevel() - 2;
+		
+		//#지역 오버레이에서 선택버튼 클릭 시 수행되는 함수 
+		//해당 지역 확대 및 리스트,마커 가져오기
+		function selectArea(name, order='default'){ //지역명, 정렬기준
+			//정렬기준 : default는 지역선택에 의한 함수실행으로 지역 확대가 이루어짐,
+			//like는 좋아요순, latest는 최신순 선택에 의한 함수실행으로 지역확대X
+			console.log("selectArea name/order : "+name+"/"+order);
 			
-			//지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다.
-			map.setLevel(level, {
-				anchor : centroid(name),
-				animate : {
-				duration : 350
-				//확대 애니메이션 시간
+			if(order=='default'){
+				//현재 지도 레벨에서 2레벨 확대한 레벨
+				var level = map.getLevel() - 2;
+				
+				//지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다.
+				map.setLevel(level, {
+					anchor : centroid(name),
+					animate : {
+						duration : 350 //확대 애니메이션 시간
+					}
+				});
+
+				deletePolygon(polygons); //폴리곤 제거
+				customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
+			
+				$("#firstComment").hide();
+				$('#reviewListArea').show();				
+			}
+			
+			$.ajax({
+				url:'getReviewlist',
+				type:'GET',
+				data : {
+					"areaName" : name,
+					"order" : order
+				},
+				dataType:'JSON',
+				success:function(data){
+					reviewCnt = data.reviewCnt;
+					reviews = data.reviews;
+					console.log("후기마커개수 : ", data.reviewCnt);
+					
+					content = "";
+					$(".list-group list-group-flush").append(content);
+				},
+				error:function(e){
+					console.log("에러발생 : ", e);
 				}
 			});
-
-			deletePolygon(polygons); //폴리곤 제거 
+			
+			
 		}
+		
+		
 		
 		//클릭한 지역의 이름으로 중심좌표를 받아오기 위한 함수
 		function centroid(name) {
@@ -304,9 +462,10 @@ footer {
 			});
 			
 			//다각형에 클릭 이벤트를 등록
-			kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
-				polygon.setOptions({ //폴리곤의 배경색 옵션 변경
-					fillColor : '#09f'
+			kakao.maps.event.addListener(polygon, 'click', function() {
+				polygon.setOptions({
+					fillColor : '#09f',
+					strokeWeght : 4
 				});
 				customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
 				
@@ -330,7 +489,7 @@ footer {
 							+ '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
 							+ '</span><span><div class="gauge1" style="width:'+((data.areaRating/5)*100)+'px"></div>'
 							+ '<div class="gauge2" style="width:'+(100-((data.areaRating/5)*100))+'px"></div></span></div>'
-							+ '<div><button onclick="selectArea(\''+name+'\')" class="btn btn-sm btn-outline-dark mx-1 me-1">선택하기</button></div>'
+							+ '<div style="margin-left:70px;"><button onclick="selectArea(\''+name+'\')" class="btn btn-sm btn-outline-dark mx-1 me-1">선택하기</button></div>'
 							+'</div>');
 						customOverlay.setPosition(centroid(name));
 						customOverlay.setMap(map);					
@@ -362,10 +521,9 @@ footer {
 			 */
 
 			
-
-			
 			
 		} //end display
+		
 		
 		function deletePolygon(polygons) {
 			for (var i = 0; i < polygons.length; i++) {
@@ -373,6 +531,6 @@ footer {
 			}
 			polygons = [];
 		}
-	</script>
-</body>
+		
+</script>
 </html>

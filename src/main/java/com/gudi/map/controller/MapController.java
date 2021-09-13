@@ -27,4 +27,12 @@ public class MapController {
 		logger.info("컨트롤러로 들어온(서비스에 넘겨주는) areaName : ", areaName);
 		return service.getAreaInfo(areaName);
 	}
+	
+	@RequestMapping(value = "/getReviewlist", method=RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> getReviewlist(@RequestParam String areaName) {
+		logger.info("컨트롤러로 들어온(서비스에 넘겨주는) areaName : ", areaName);
+		return service.getAreaInfo(areaName);
+	}
+
 }
