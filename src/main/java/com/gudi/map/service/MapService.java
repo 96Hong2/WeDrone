@@ -16,6 +16,7 @@ public class MapService {
 	
 	public HashMap<String, Object> getAreaInfo(String areaName) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("서비스로 들어온(DAO에 넘겨주는) areaName : ", areaName);
 		// 지역의 후기개수
 		int cnt = dao.getReviewCnt(areaName);
 		map.put("reviewCnt", cnt);

@@ -72,14 +72,12 @@ footer {
 }
 
 .gauge1{
-	width:40px;
 	height:10px;
 	background-color: pink;
 	display:inline-block;"
 }
 
 .gauge2{
-	width:50px;
 	height:10px;
 	background-color: #ccc;
 	display:inline-block;"
@@ -152,7 +150,6 @@ footer {
 
 
 	<!-- 들어갈 내용 -->
-
 	<h4>Map - 지도 - 후기마커 보기</h4>
 	<button type="button" onclick="location.reload(true)" class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn">전체지역보기</button>
 	<!-- 지도를 표시할 div 입니다 -->
@@ -191,10 +188,70 @@ footer {
 		})
 		
 
-		var polygons = [];
 		//function 안 쪽에 지역변수로 넣으니까 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을대 전체를 못 없애줌. 그래서 전역변수로 만듦.
+		var polygons = [];
+		//현재 지도에 띄워지는 커스텀 오버레이 변수 설정
+		var customOverlay = new kakao.maps.CustomOverlay();	
+		
+		function selectArea(name){ //선택 버튼 클릭 시 해당 지역 확대
+			console.log("selectArea Name : ",name);
+			//현재 지도 레벨에서 2레벨 확대한 레벨
+			var level = map.getLevel() - 2;
+			
+			//지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다.
+			map.setLevel(level, {
+				anchor : centroid(name),
+				animate : {
+				duration : 350
+				//확대 애니메이션 시간
+				}
+			});
 
-		//행정구역 폴리곤
+			deletePolygon(polygons); //폴리곤 제거 
+		}
+		
+		//클릭한 지역의 이름으로 중심좌표를 받아오기 위한 함수
+		function centroid(name) {
+			console.log('centroid name : ' + name);
+			var centroids = {
+				'오산시' : new kakao.maps.LatLng(37.1636128389639,
+						127.05518990396887),
+				'화성시' : new kakao.maps.LatLng(37.168493, 126.841265),
+				'평택시' : new kakao.maps.LatLng(37.008281, 126.995842),
+				'안성시' : new kakao.maps.LatLng(37.036418285338,
+						127.31163550418967),
+				'이천시' : new kakao.maps.LatLng(37.194796, 127.498984),
+				'여주시' : new kakao.maps.LatLng(37.31013340253336,
+						127.62002734684562),
+				'광주시' : new kakao.maps.LatLng(37.41199111803577,
+						127.30495011990648),
+				'성남시 수정구' : new kakao.maps.LatLng(37.4339550640178,
+						127.11274158158241),
+				'성남시 중원구' : new kakao.maps.LatLng(37.4339550640178,
+						127.11274158158241),
+				'성남시 분당구' : new kakao.maps.LatLng(37.37226033286201,
+						127.10497215484288),
+				'용인시처인구' : new kakao.maps.LatLng(37.204791007297956,
+						127.25902175816543),
+				'용인시기흥구' : new kakao.maps.LatLng(37.26318902336213,
+						127.11591365849698),
+				'용인시수지구' : new kakao.maps.LatLng(37.33098226611915,
+						127.0713122103596),
+				'수원시 권선구' : new kakao.maps.LatLng(37.26295579915725,
+						126.98033915258203),
+				'수원시 팔달구' : new kakao.maps.LatLng(37.27845432258514,
+						127.01551540817815),
+				'수원시 영통구' : new kakao.maps.LatLng(37.272604514228604,
+						127.05348793494832),
+				'수원시 장안구' : new kakao.maps.LatLng(37.313055030637294,
+						127.00579838179321)
+			};
+			console.log('centroid 선택한 위치값 : ', centroids[name]);
+
+			return centroids[name];
+		}
+
+		//행정구역 폴리곤 그려주기 + 각 폴리곤에 이벤트리스너 달기
 		function displayArea(coordinates, name) {
 
 			var path = []; //폴리곤 그려줄 path
@@ -223,84 +280,68 @@ footer {
 
 			polygons.push(polygon); //폴리곤 제거하기 위한 배열
 
-			//커스텀 오버레이 변수 설정
-			var customOverlay = new kakao.maps.CustomOverlay();			
-
 			//다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다.
 			//지역명을 표시하는 커스텀 오버레이를 지도 위에 표시합니다.
 			kakao.maps.event.addListener(polygon,'mouseover',function(mouseEvent) {
 				polygon.setOptions({ //마우스오버된 폴리곤의 배경색 옵션 변경
-									fillColor : '#09f'
+						fillColor : '#09f'
 				});
 				
-				var reviewCnt = 0;
-				var areaRating = 0.0;
-				$.ajax({
-					url:'getAreaInfo',
-					type:'GET',
-					data:{'areaName' : '광주시'},
-					dataType:'JSON',
-					success:function(data){
-						console.log("후기마커개수 : ", data.reviewCnt);
-						console.log("지역평점", data.areaRating);
-						reviewCnt = data.reviewCnt;
-						areaRating = data.areaRating;
-					},
-					error:function(e){
-						console.log("에러발생 : ", e);
-					}
-				});	
-				console.log(data.reviewCnt);
-				console.log(data.areaRating);
-				
-								
-				//커스텀 오버레이의 내용 설정
-				customOverlay.setContent('<div class="overlay">'
-					+'<div class="overlay_top"><span class="left">'
-					+ name
-					+ '</span><span class="right">등록된 후기 '+reviewCnt+'개</span></div>'
-					+'<div class="overlay_bot"><span>'
-					+ '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
-					+ '</span><span><div class="gauge1"></div><div class="gauge2"></div></span></div>'
-					+'</div>');
-					customOverlay.setPosition(mouseEvent.latLng);
-					customOverlay.setMap(map);
 			});
-
-			//다각형에 mousemove 이벤트를 등록하고 이벤트 발생 시 커스텀 오버레이의 위치를 변경
+				
+			/* //다각형에 mousemove 이벤트를 등록하고 이벤트 발생 시 커스텀 오버레이의 위치를 변경
 			kakao.maps.event.addListener(polygon, 'mousemove', function(
 					mouseEvent) {
 
 				customOverlay.setPosition(mouseEvent.latLng);
-			});
-
+			}); */
+			
 			//다각형에 mouseout 이벤트를 등록하고 이벤트 발생 시 폴리곤의 채움색을 원래대로 변경
-			//커스텀 오버레이를 지도에서 제거
 			kakao.maps.event.addListener(polygon, 'mouseout', function() {
 				polygon.setOptions({
 					fillColor : '#fff'
 				});
-				customOverlay.setMap(null);
 			});
-
-			//다각형에 클릭 이벤트를 등록하고 이벤트가 발생하면 해당 지역을 확대합니다.
-			kakao.maps.event.addListener(polygon, 'click', function() {
-
-				//현재 지도 레벨에서 2레벨 확대한 레벨
-				var level = map.getLevel() - 2;
-
-				//지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다.
-				map.setLevel(level, {
-					anchor : centroid(name),
-					animate : {
-						duration : 350
-					//확대 애니메이션 시간
-					}
+			
+			//다각형에 클릭 이벤트를 등록
+			kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+				polygon.setOptions({ //폴리곤의 배경색 옵션 변경
+					fillColor : '#09f'
 				});
-
-				deletePolygon(polygons); //폴리곤 제거 
-			});
-
+				customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
+				
+				$.ajax({
+					url:'getAreaInfo',
+					type:'GET',
+					data : {"areaName" : name},
+					dataType:'JSON',
+					success:function(data){
+						reviewCnt = data.reviewCnt;
+						areaRating = data.areaRating;
+						console.log("후기마커개수 : ", data.reviewCnt);
+						console.log("지역평점", data.areaRating);
+						
+						//커스텀 오버레이의 내용 설정
+						customOverlay.setContent('<div class="overlay">'
+							+'<div class="overlay_top"><span class="left">'
+							+ name
+							+ '</span><span class="right">등록된 후기 '+data.reviewCnt+'개</span></div>'
+							+'<div class="overlay_bot"><span>'
+							+ '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
+							+ '</span><span><div class="gauge1" style="width:'+((data.areaRating/5)*100)+'px"></div>'
+							+ '<div class="gauge2" style="width:'+(100-((data.areaRating/5)*100))+'px"></div></span></div>'
+							+ '<div><button onclick="selectArea(\''+name+'\')" class="btn btn-sm btn-outline-dark mx-1 me-1">선택하기</button></div>'
+							+'</div>');
+						customOverlay.setPosition(centroid(name));
+						customOverlay.setMap(map);					
+					},
+					error:function(e){
+						console.log("에러발생 : ", e);
+					}					
+				}); //end ajax()
+				
+			}); //end 클릭이벤트리스너
+			
 			/*  
 			//centroid 알고리즘 (폴리곤 중심좌표 구하기 위함)
 			   function centroid (point) {
@@ -320,57 +361,18 @@ footer {
 			   }
 			 */
 
-			//클릭한 지역의 이름으로 중심좌표를 받아오기 위한 함수
-			function centroid(name) {
-				console.log('name : ' + name);
-				var centroids = {
-					'오산시' : new kakao.maps.LatLng(37.1636128389639,
-							127.05518990396887),
-					'화성시' : new kakao.maps.LatLng(37.168493, 126.841265),
-					'평택시' : new kakao.maps.LatLng(37.008281, 126.995842),
-					'안성시' : new kakao.maps.LatLng(37.036418285338,
-							127.31163550418967),
-					'이천시' : new kakao.maps.LatLng(37.194796, 127.498984),
-					'여주시' : new kakao.maps.LatLng(37.31013340253336,
-							127.62002734684562),
-					'광주시' : new kakao.maps.LatLng(37.41199111803577,
-							127.30495011990648),
-					'성남시 수정구' : new kakao.maps.LatLng(37.4339550640178,
-							127.11274158158241),
-					'성남시 중원구' : new kakao.maps.LatLng(37.4339550640178,
-							127.11274158158241),
-					'성남시 분당구' : new kakao.maps.LatLng(37.37226033286201,
-							127.10497215484288),
-					'용인시처인구' : new kakao.maps.LatLng(37.204791007297956,
-							127.25902175816543),
-					'용인시기흥구' : new kakao.maps.LatLng(37.26318902336213,
-							127.11591365849698),
-					'용인시수지구' : new kakao.maps.LatLng(37.33098226611915,
-							127.0713122103596),
-					'수원시 권선구' : new kakao.maps.LatLng(37.26295579915725,
-							126.98033915258203),
-					'수원시 팔달구' : new kakao.maps.LatLng(37.27845432258514,
-							127.01551540817815),
-					'수원시 영통구' : new kakao.maps.LatLng(37.272604514228604,
-							127.05348793494832),
-					'수원시 장안구' : new kakao.maps.LatLng(37.313055030637294,
-							127.00579838179321)
-				};
-				console.log('선택한 위치값 : ', centroids[name]);
+			
 
-				return centroids[name];
-			}
-
-			function deletePolygon(polygons) {
-				for (var i = 0; i < polygons.length; i++) {
-					polygons[i].setMap(null);
-				}
-				polygons = [];
-			}
 			
 			
 		} //end display
+		
+		function deletePolygon(polygons) {
+			for (var i = 0; i < polygons.length; i++) {
+				polygons[i].setMap(null);
+			}
+			polygons = [];
+		}
 	</script>
-	</div>
 </body>
 </html>

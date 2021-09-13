@@ -20,7 +20,7 @@
 		</property>
 		<property name="configLocation" value="classpath:config/aliase.xml"/>
 	</bean>	
-		
+	
 	<!-- 마이바티스 간편 설정(마이바티스를 별다른 코드 없이 실행할수 있도록 빈 등록) -->
 	<mybatis-spring:scan base-package="com.gudi.board.dao"/>
 	<mybatis-spring:scan base-package="com.gudi.member.dao"/>

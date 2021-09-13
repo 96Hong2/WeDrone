@@ -24,6 +24,7 @@ public class MapController {
 	@RequestMapping(value = "/getAreaInfo", method=RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> getAreaInfo(@RequestParam String areaName) {
+		logger.info("컨트롤러로 들어온(서비스에 넘겨주는) areaName : ", areaName);
 		return service.getAreaInfo(areaName);
 	}
 }

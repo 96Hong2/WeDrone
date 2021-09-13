@@ -9,7 +9,7 @@
 <mapper namespace="com.gudi.map.dao.MapDAO">	
 
 	<select id="getReviewCnt" parameterType="String" resultType="int">
-		SELECT COUNT(reviewId) FROM reviewMK WHERE areaName = #{areaName}
+		SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{areaName})
 	</select>
 	
 	<select id="getAreaRating" parameterType="String" resultType="int">
