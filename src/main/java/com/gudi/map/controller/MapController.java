@@ -29,7 +29,7 @@ public class MapController {
 	@RequestMapping(value = "/getAreaInfo", method=RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> getAreaInfo(@RequestParam String areaName) {
-		logger.info("areaName : ", areaName);
+		logger.info("areaName : {}", areaName);
 		return service.getAreaInfo(areaName);
 	}
 	
@@ -37,7 +37,7 @@ public class MapController {
 	@RequestMapping(value = "/getReviewList", method=RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> getReviewList(@RequestParam String areaName, @RequestParam String order, HttpSession session) {
-		logger.info("areaName/order : "+areaName+"/"+order);
+		logger.info("areaName/order : {}"+areaName+"/"+order);
 		return service.getReviewList(areaName, order, session);
 	}
 

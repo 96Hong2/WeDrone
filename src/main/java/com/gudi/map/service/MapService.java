@@ -20,7 +20,7 @@ public class MapService {
 	
 	public HashMap<String, Object> getAreaInfo(String areaName) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		logger.info("서비스로 들어온(DAO에 넘겨주는) areaName : ", areaName);
+		logger.info("서비스로 들어온(DAO에 넘겨주는) areaName : {}", areaName);
 		// 지역의 후기개수
 		int cnt = dao.getReviewCnt(areaName);
 		map.put("reviewCnt", cnt);
@@ -45,9 +45,11 @@ public class MapService {
 		
 		session.setAttribute("loginId", "aa123"); //테스트용 세션
 		String loginId = (String) session.getAttribute("loginId");
+		logger.info("loginId 세션 : ", loginId);
 		
-		list = dao.getReviewList(areaName, order, loginId);
-		logger.info("리뷰리스트 개수 : ",list.size());
+		list = (ArrayList<MapDTO>)dao.getReviewList(areaName, order, loginId);
+		logger.info("리뷰리스트 개수 : {}",list.size());
+		logger.info("리뷰리스트 : {}",list);
 		map.put("list", list);
 		return map;
 	}

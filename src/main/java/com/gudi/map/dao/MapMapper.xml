@@ -17,10 +17,10 @@
 	</select>
 	
 	<select id="getReviewList" resultType="com.gudi.map.dto.MapDTO">
-		<if test="param3.equals('reviewDate')">
+		<if test='param2.equals("reviewDate")'>
 		SELECT r.reviewId, r.nickName, r.address, r.rating,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
-		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') reviewCnt,
+		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{param3}) isLike,
 		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{param3}) isBookMark
@@ -29,11 +29,11 @@
 		ORDER BY reviewDate DESC
 		</if>
 		
-		<if test="param3.equals('like')">
+		<if test='param2.equals("like")'>
 		SELECT * FROM(
 		SELECT r.reviewId, r.nickName, r.address, r.rating, r.reviewDate,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
-		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') reviewCnt,
+		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{param3}) isLike,
 		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{param3}) isBookMark

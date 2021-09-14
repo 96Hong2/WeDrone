@@ -12,8 +12,15 @@ public class MapDTO {
 	private int reviewId;
 	private int isLike;
 	private int isBookMark;
-	
+	private int commentCnt;
 
+	
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
 	public int getIsLike() {
 		return isLike;
 	}
