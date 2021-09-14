@@ -23,9 +23,56 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-	
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
+<script>
+	$(document).ready(function() {
+		var idCheck = false;
+		var nickCheck = false;
+
+		$("#joinBtn").on("click", function() {
+			if ($("#userId").val() == "") {
+				alert("아이디를 입력해주세요.");
+				$("#userId").focus();
+				return false;
+			}
+			if ($("#pw").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#pw").focus();
+				return false;
+			}
+			if ($("#nickName").val() == "") {
+				alert("닉네임을 입력해주세요.");
+				$("#nickName").focus();
+				return false;
+			}
+			if ($("#pw").val() != $("#UserPwch").val()){
+				alert("비밀번호를 다시한번 확인해주세요.")
+				$("#UserPwch").val("");
+				$("#UserPwch").focus();
+				return false;
+			}
+			if ($("#userId").val().length < 3) {
+				alert("아이디는 4글자 이상이어야 합니다.")				
+				$("#userId").focus();
+				return false;
+			}
+			if ($("#pw").val().length < 5) {
+				alert("비밀번호는 6글자 이상이어야 합니다.")				
+				$("#pw").focus();
+				return false;
+			}
+			if ($("#nickName").val().length < 1) {
+				alert("닉네임은 2글자 이상이어야 합니다.")				
+				$("#nickname").focus();
+				return false;
+			}
+			
+		});
+	})
+</script>
 <title>위드론</title>
 <body>
 	<!-- 상단 메뉴바 -->
@@ -38,22 +85,21 @@
 
 	</c:if>
 
-
-
 	<!-- 들어갈 내용 -->
 	<div class="wrap">
 		<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
 			<h4 class="mb-3 fw-bold">회원가입</h4>
 			<hr />
 			<form action="join" method="post" class="needs-validation"
-				novalidate>
+				onsubmit="return check();" novalidate>
+
 				<div class="form-floating col-md-9 mb-3">
 					<input type="text" class="form-control" name="userId" id="userId"
 						placeholder="아이디(4~10자)" maxlength="10" value="" required>
-					<label for="validationTooltip01" class="fw-bold"></label>									
-					<input type="button" class="btn btn-dark btn-sm mt-2" id="idCheck"
-						value="중복확인">					
-					
+					<label for="validationTooltip01" class="fw-bold"></label> <input
+						type="button" class="btn btn-dark btn-sm mt-2" id="idCheck"
+						value="중복확인">
+
 				</div>
 				<div class="form-floating col-md-9 mb-3">
 					<input type="password" class="nullchecks form-control" name="pw"
@@ -71,21 +117,21 @@
 					<input type="text" class="nullchecks nullcheck form-control"
 						id="nickName" name="nickName" placeholder="닉네임(2~7자)"
 						maxlength="7" required> <label for="validationTooltip04"
-						class="fw-bold"></label>					
-					<input type="button" class="btn btn-dark btn-sm mt-2" id="nickCheck"
-						value="중복확인">					
+						class="fw-bold"></label> <input type="button"
+						class="btn btn-dark btn-sm mt-2" id="nickCheck" value="중복확인">
+						
 				</div>
 
 				<div class="col-md-9 mb-3">
 					<label for="validationTooltip05" class="fw-bold">메시지 좋아요 알림
 						수신 여부</label>
 					<div class="form-check form-check-inline mx-3">
-						<input class="form-check-input" type="radio" name="alertradio"
+						<input class="form-check-input" type="radio" name="chkAlert"
 							id="alertradio1" value="Y" checked> <label
 							class="form-check-label" for="alertradio">동의 </label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="alertradio"
+						<input class="form-check-input" type="radio" name="chkAlert"
 							id="alertradio2" value="N"> <label
 							class="form-check-label" for="alertradio2"> 거부 </label>
 					</div>
@@ -93,125 +139,55 @@
 
 				<hr />
 				<div class="col text-center">
-					<input class="btn btn-dark" type="button" id="joinBtn"
-						value="가입하기" onclick="join()">
+					<input class="btn btn-dark" type="submit" id="joinBtn" value="가입하기">
 				</div>
+
 			</form>
 		</div>
 	</div>
 	<script>
-	
-	var idCheck = false;
-	var nickCheck = false;
-	
-		function join(){
-			var $userId = $("input[name='userId']");
-			var $pw = $("input[name='pw']");
-			var $nickName = $("input[name='nickName']");
-			var chkAlert = $('input:radio[name="alertradio"]:checked');
-			
-			if($userId.val() == ""||$pw.val()==""||$nickName.val() == ""){         
-			      alert("빈칸을 입력해 주세요.");
-		}else/* (nickCheck==true && idCheck==true) */{
-	         console.log('save!!')
-	         var param = {};
-	         param.userId = $userId.val();
-	         param.pw = $pw.val();	         
-	         param.nickName = $nickName.val();
-	         param.chkAlert = chkAlert.val();
-	        
-	         $.ajax({
-	             type:'POST',
-	             url:'join',
-	             data:param,
-	             dataType:'JSON',
-	             success:function(data){
-	                console.log(data);
-	                if(data.success > 0){
-	                   alert('가입이 완료되었습니다.');	                  
-	                }else{              
-	               	alert('가입에 실패했습니다.')
-	             }
-	          },
-	            error:function(e){
-	                console.log(e);
-	             }
-	          });
-		}
-		}
-	      /*  }else if(nickCheck==true && idCheck==false){
-	     	  alert('아이디 중복체크를 진행해주세요.');
-	     	  return;
-	       }else if(idCheck==true && nickCheck==false){
-	     	  alert('닉네임 중복체크를 진행해주세요.');
-	     	  return;
-	        }else if(idCheck==false && nickCheck==false){
-	      	  alert('아이디와 닉네임 중복체크를 진행해주세요.');
-	      	  return;
-	        } */         
-		
-		
-		
-	
+		$("#idCheck").click(function() {
+			console.log(userId);
+			$.ajax({
+				type : 'post',
+				url : 'idCheck',
+				data : {
+					"userId" : $("#userId").val()
+				},
+				dataType : 'JSON',
+				success : function(data) {
+					console.log(data);
+					if (data == 1) {
+						alert("중복된 아이디입니다.");
+					} else if (data == 0) {
+						alert("사용 가능한 아이디입니다.");
+						$("#idCheckOk").attr("value", "Y");
+					}
+				}
+			})
+		})
 
-
-
-	/*  $("#idCheck").click(function(){
-	    var userId = $("input[name='userId']").val();
-	    console.log(userId);
-	    $.ajax({
-	       type:'post',
-	       url:'idCheck',
-	       data:{'userId':userId},
-	       dataType:'JSON',
-	       success:function(data){
-	          console.log(data);
-	          if(!data.success){
-	             alert("처리중 문제가 발생 했습니다. 다시 시도해 주세요!");
-	          }else{
-	             if(data.idCheck){
-	                alert("중복된 아이디입니다.");
-	                 $("input[name='userId']").val("");
-	             }else{
-	                alert("아이디를 사용할 수 있습니다.");
-	                overChk = true;
-	             }
-	          }            
-	       },
-	       error:function(e){
-	          console.log(e);
-	       }         
-	    });
-	 });
-
-	 $("#nickCheck").click(function(){
-	    var nickName = $("input[name='nickName']").val();
-	    console.log(nickName);
-	    $.ajax({
-	       type:'post',
-	       url:'nickCheck',
-	       data:{'nickName':nickName},
-	       dataType:'JSON',
-	       success:function(data){
-	          console.log(data);
-	          if(!data.success){
-	             alert("처리중 문제가 발생 했습니다. 다시 시도해 주세요!");
-	          }else{
-	             if(data.overlay1){
-	                alert("중복된 닉네임입니다.");
-	                 $("input[name='nickName']").val("");
-	             }else{
-	                alert("닉네임을 사용할 수 있습니다.");
-	                nickChk = true;
-	             }
-	          }            
-	       },
-	       error:function(e){
-	          console.log(e);
-	       }         
-	    });
-	 }); */
-	
+		$("#nickCheck").click(function() {
+			;
+			console.log(nickName);
+			$.ajax({
+				type : 'post',
+				url : 'nickCheck',
+				data : {
+					"nickName" : $("#nickName").val()
+				},
+				dataType : 'JSON',
+				success : function(data) {
+					console.log(data);
+					if (data == 1) {
+						alert("중복된 닉네임입니다.");
+					} else if (data == 0) {
+						alert("사용 가능한 닉네임입니다.");
+						$("#nickCheckOk").attr("value", "Y");
+					}
+				}
+			})
+		})
 	</script>
 </body>
 

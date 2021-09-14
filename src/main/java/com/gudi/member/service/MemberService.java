@@ -1,10 +1,13 @@
 package com.gudi.member.service;
 
-import java.util.HashMap;
+
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,51 +17,67 @@ import com.gudi.member.dto.MemberDTO;
 @Service
 public class MemberService {
 
-Logger logger = LoggerFactory.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	ModelAndView mav = new ModelAndView();
 	
-	@Autowired(required=false) MemberDAO dao;
+	@Autowired(required = false)
+	MemberDAO dao;
 
-	public ModelAndView join(HashMap<String, String> params) {
-		
-		MemberDTO dto = new MemberDTO();
+	public ModelAndView join(MemberDTO dto) {
 		logger.info("서비스 조인 들어옴");
-		dto.setUserId(params.get("userId"));
-		dto.setPw(params.get("pw"));
-		dto.setNickName(params.get("nickName"));
-		dto.setChkAlert(params.get("chkAlert"));
-		logger.info("서비스 조인 : {}", params);
-		int success = dao.join(dto);		
-		logger.info("success : "+success);
-		String msg = "등록에 실패 했습니다.";
-		String page = "joinForm";
-		if(success >0 ) {
-			msg = "등록에 성공 했습니다.";
-			page = "home";
+		logger.info("회원가입 요청dto : " + dto);
+		
+		String msg = "회원가입에 실패했습니다.";
+
+		String plainPw = dto.getPw();
+		logger.info("들어온 pw값 : " + plainPw);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String HashPw = encoder.encode(plainPw);
+		logger.info("암호화된 pw값 : " + HashPw);
+		dto.setPw(HashPw);
+		logger.info("dto에 들어간 pw값 : " + dto.getPw());
+
+		int success = dao.join(dto);
+		if (success > 0) {
+			msg = "회원가입에 성공했습니다. 로그인해주세요!";
 		}
-		
-				
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", msg);
-		mav.setViewName(page);
-		
+		mav.setViewName("home");
 		return mav;
 	}
 
 	public int idCheck(String userId) throws Exception {
-	    int result = dao.idCheck(userId);
-	    return result;
-	}
-	
-	public int nickCheck(String nickName) throws Exception {
-	    int result = dao.nickCheck(nickName);
-	    return result;
+		int result = dao.idCheck(userId);
+		return result;
 	}
 
-	public MemberDTO login(MemberDTO info) {	
-		logger.info("서비스 로그인 :{}",info.getUserId()+"/"+info.getPw());	
-		MemberDTO dto = dao.login(info);	
-		logger.info("dto : "+dto);
+	public int nickCheck(String nickName) throws Exception {
+		int result = dao.nickCheck(nickName);
+		return result;
+	}
+
+	public ModelAndView login(String userId, String pw, HttpSession session, String nickName) {
+		logger.info("서비스 로그인요청 id/pw : "+userId+ "/" + pw);
+		String page = "loginForm";
+		String msg = "아이디 또는 비밀번호를 확인하세요.";
 		
-		return dto;
+		String DBPw = dao.login(userId);
+		logger.info("들어온 pw값/DB의 pw : "+pw+"/"+DBPw);
+		
+		if(DBPw != null && DBPw != "") {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			boolean matched = encoder.matches(pw, DBPw);
+			logger.info("PW 일치 여부 : "+matched);
+			
+			if(matched) {
+				session.setAttribute("loginId", userId);
+				session.setAttribute("loginNickName", nickName);
+				page = "home";
+				msg = "로그인 성공";
+			}
+		}
+		mav.addObject("msg", msg);
+		mav.setViewName(page);
+		return mav;
 	}
 }

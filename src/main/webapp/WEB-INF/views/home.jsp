@@ -97,9 +97,9 @@ footer {
 					</div>
 					<div class="d-flex">
 						<a class="btn btn-sm btn-outline-light mx-3 me-1"
-							href="${path}/login" role="button">로그인</a> <a
+							href="${path}/loginForm" role="button" onclick="location='./loginForm'">로그인</a> <a
 							class="btn btn-sm btn-outline-light me-1 mx-1"
-							href="${path}/signup" role="button">회원가입</a> <a
+							href="${path}/joinForm" role="button" onclick="location='./joinForm'">회원가입</a> <a
 							class="btn btn-sm btn-outline-light mx-1 me-1"
 							href="${path}/mypages" role="button">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"

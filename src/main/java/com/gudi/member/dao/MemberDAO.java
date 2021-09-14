@@ -9,5 +9,5 @@ public interface MemberDAO {
 	int idCheck(String userId);
 	int nickCheck(String nickName);
 
-	MemberDTO login(MemberDTO info);	
+	String login(String userId);	
 }

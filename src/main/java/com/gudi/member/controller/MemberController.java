@@ -1,7 +1,5 @@
 package com.gudi.member.controller;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.gudi.member.dto.MemberDTO;
 import com.gudi.member.service.MemberService;
 
@@ -27,16 +26,16 @@ public class MemberController {
 	@Autowired(required = false)
 	MemberService service;
 
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String home(Model model) {
+	@RequestMapping(value = "/joinForm")
+	public String joinForm(Model model) {
 		return "joinForm";
 	}
 
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public ModelAndView home(@RequestParam HashMap<String, String> params) {
+	@RequestMapping(value = "/join")
+	public ModelAndView join(@ModelAttribute MemberDTO dto) {
 		logger.info("컨트롤 조인 들어옴");
-		logger.info("join : {}", params);
-		return service.join(params);
+		logger.info("join : {}", dto);
+		return service.join(dto);
 	}
 
 	@ResponseBody
@@ -57,24 +56,25 @@ public class MemberController {
         return result;
     }
     
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String home1(Model model) {
-		return "login";
+    @RequestMapping(value = "/loginForm")
+	public String loginForm(Model model) {    	
+		return "loginForm";
 	}
     
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(Model model, HttpSession session,@ModelAttribute MemberDTO info) {	
+    @RequestMapping(value = "/login")
+	public ModelAndView login(@RequestParam String userId, @RequestParam String pw, HttpSession session, String nickName) {	
 		
-		logger.info("컨트롤 로그인 :{}",info.getUserId()+"/"+info.getPw());				
-		String page = "login";
-				
-		MemberDTO loginInfo= service.login(info);
-		if(loginInfo != null) {
-			page = "redirect:/";
-			session.setAttribute("loginId", loginInfo);
-		}else {
-			model.addAttribute("msg", "아이디 패스워드를 확인 하세요");
-		}		
-		return page;
+		logger.info("컨트롤 로그인 요청");				
+		return service.login(userId, pw, session, nickName);
 	}
+    
+    @RequestMapping(value = "/logout")
+    public String logout(HttpSession session) {
+        logger.info("컨트롤 로그아웃 요청");
+        session.invalidate();    
+        
+        return "redirect:/";
+    }
+
+
 }

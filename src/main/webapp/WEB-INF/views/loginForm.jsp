@@ -81,32 +81,5 @@ if(msg != ""){
 	alert(msg);
 }
 
-$("button").click(function(){
-	var param = {};
-	param.userId = $("input[name='userId']").val();
-	param.pw = $("input[name='pw']").val();
-	console.log("**param :"+param);
-	
-	$.ajax({
-		type:'POST',
-		url:'login',
-		data:param,
-		dataType:'JSON',
-		success:function(data){
-			//console.log("**success : "+data.success);
-			if(data.success){		
-				alert('로그인에 성공했습니다.');
-				location.href='./';
-			}else{				
-					alert('아이디/패스워드가 틀렸습니다.');
-					location.href='login.jsp';						
-			}
-			
-		},
-		error:function(e){
-			console.log("ajax 실패 : "+e);
-		}
-	});				
-});
 </script>
 </html>

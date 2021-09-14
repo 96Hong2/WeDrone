@@ -13,19 +13,19 @@
 	</insert>
 
 	<select id="idCheck"
-		parameterType="member" resultType="member">
-		SELECT userId FROM members
+		parameterType="member" resultType="int">
+		SELECT COUNT(*) FROM members
 		WHERE userId = #{userId}
 	</select>
 
 	<select id="nickCheck"
-		parameterType="member" resultType="member">
-		SELECT nickName FROM members
+		parameterType="member" resultType="int">
+		SELECT COUNT(*) FROM members
 		WHERE nickName = #{nickName}
 	</select>
 
-	<select id="login" parameterType="member" resultType="member">
-		SELECT * FROM members WHERE userId = #{userId} AND pw = #{pw}
+	<select id="login" parameterType="String" resultType="String">
+		SELECT pw, nickName FROM members WHERE userId = #{userId}
 	</select>
 	
 </mapper>
