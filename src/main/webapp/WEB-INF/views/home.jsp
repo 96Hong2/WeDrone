@@ -55,7 +55,7 @@ body, html {
 
 </style>
 </head>
-<title>드론</title>
+<title>드론2</title>
 <body>
 
 <!-- 상단 메뉴바 -->
