@@ -74,13 +74,62 @@ public class BoardController {
 		}
 
 		// 마이페이지
-		@RequestMapping("/mypage")
+		@RequestMapping("/mypages")
 		public String springView5(HttpServletRequest request, Model model) throws Exception {
 
-			return "navbar/mypage";
+			return "mypage/mypages";
 		}
-		
-		
+
+
+	
+		// 내 정보
+		@RequestMapping("/myinfo")
+		public String springView8(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/myinfo";
+		}
+
+		// 내가 쓴 글
+		@RequestMapping("/mypost")
+		public String springView9(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/mypost";
+		}
+
+		// 내가 쓴 댓글
+		@RequestMapping("/mycomment")
+		public String springView10(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/mycomment";
+		}
+
+		// 내가 후기마커
+		@RequestMapping("/myreview")
+		public String springView11(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/myreview";
+		}
+
+		// 알림리스트
+		@RequestMapping("/alarmlist")
+		public String springView12(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/alarmlist";
+		}
+
+		// 즐겨찾기
+		@RequestMapping("/bookmark")
+		public String springView13(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/bookmark";
+		}
+
+		//회원탈퇴
+		@RequestMapping("/userout")
+		public String springView14(HttpServletRequest request, Model model) throws Exception {
+
+			return "mypage/userout";
+		}
 	}
 
 }

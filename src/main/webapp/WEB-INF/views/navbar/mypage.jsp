@@ -112,7 +112,7 @@ body, html {
 							type="submit" onclick="location='./join'">회원가입</button>
 
 						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
-							href="${path}/mypage">마이페이지</a>
+							href="${path}/mypages">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
 							aria-controls="offcanvasRight">메시지</button>

@@ -267,4 +267,3 @@ body, html {
 		<p class="m-0 text-center text-white">Copyright &copy; Website
 			2021</p>
 	</footer>
-</html>
