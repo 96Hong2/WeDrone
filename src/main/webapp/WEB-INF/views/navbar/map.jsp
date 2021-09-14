@@ -160,7 +160,6 @@ ul.tabs li.current {
 }
 
 #orderMenu a:hover {
-   color: pink;
    font-weight: bold;
 }
 
@@ -287,8 +286,6 @@ ul.tabs li.current {
                            class="btn btn-sm btn-outline-dark mx-1 me-1">전체지역보기</button>
                      </div>
                      <div id='orderMenu'>
-                        <a href="javascript:selectArea(name, \'like\')">좋아요순</a>&nbsp;|&nbsp;<a
-                           href="javascript:selectArea(name, \'latest\')">최신순</a>
                      </div>
                   </div>
 
@@ -340,7 +337,7 @@ ul.tabs li.current {
       
 $(document).ready(function(){
    
-   //$('#reviewListArea').hide();
+   $('#reviewListArea').hide();
    
    $('ul.tabs li').click(function(){
       var tab_id = $(this).attr('data-tab');
@@ -438,6 +435,11 @@ $(document).ready(function(){
             },
             dataType:'JSON',
             success:function(data){
+            	var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
+            	+'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
+            	$('#orderMenu').empty();
+            	$('#orderMenu').append(orderStr);
+            	
                console.log("후기마커 data : ", data);
                console.log("후기마커 list : ", data.list);
                console.log("후기마커 list[0] : ", data.list[0]);
@@ -451,6 +453,7 @@ $(document).ready(function(){
             	   }
             	  
             	   var element = "<li class='list-group-item'>"
+            	   +"<a href=# class='reviewAnchor'>"
             	   +"<div class='reviewWrap'>"
             	   //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
             	   +"<div class='revBox1'>"
@@ -483,7 +486,7 @@ $(document).ready(function(){
             		   element += "<div class='revIsBookMark'>☆</div>";
             	   }
             	   element += "</div></div>"; //end .revBox2_1, .revBox2
-            	   element += "</li><hr/></div>";
+            	   element += "</div></a></li><hr/>";
             	   content += element;
                })
                $("#reviewUl").empty();
@@ -494,6 +497,15 @@ $(document).ready(function(){
                console.log("에러발생 : ", e);
             }
          });
+         
+         //마우스오버된 후기 하이라이트
+         $('.reviewWrap').on('mouseover',function(){
+        	$(this).css("background-color", "aliceblue"); 
+         });
+         
+         $('.reviewWrap').on('mouseout',function(){
+         	$(this).css("background-color", "white"); 
+          });
          
          
          // 지도를 클릭한 위치에 표출할 마커입니다
@@ -561,7 +573,8 @@ $(document).ready(function(){
          });
          
          
-      }
+         
+      } //end selectArea()
       
       
       

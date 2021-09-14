@@ -3,10 +3,20 @@
 /* 
 <link href="${path}/resources/css/reviewMK.css" rel="stylesheet">
  */
+ 
+/* 앵커요소 */
+.reviewAnchor{
+	text-decoration : none;
+	color: black;
+}
+
+.reviewAnchor:hover{
+	color : darkgray;
+}
 
 /* Wrap */
 .reviewWrap {
-	background-color: snow;
+	/* background-color: snow; */
 }
 
 /* revBox1 : 썸네일, 닉네임, 주소 */
@@ -36,7 +46,7 @@
 
 /* revBox2 : Rating, revBox2_1*/
 .revBox2{
-	margin-left: 60px;
+	margin-left: 65px;
 }
 
 
