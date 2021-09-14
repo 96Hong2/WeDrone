@@ -13,7 +13,7 @@
 	</appender>
 
 	<!-- Application Loggers -->
-	<logger name="com.gudi.member">
+	<logger name="com.gudi">
 		<level value="info" />
 	</logger>
 
@@ -24,7 +24,7 @@
 	</logger>
 
 	<!-- 쿼리실행 + 쿼리결과값 -->
-	<logger name="jdbc.resultset" additivity="false">
+	<logger name="jdbc.sqlresultset" additivity="false">
 		<level value="info" />
 		<appender-ref ref="console" />
 	</logger>
@@ -37,7 +37,7 @@
 
 	<!-- 쿼리실행 + 커넥션 열고 닫음 -->
 	<logger name="jdbc.connection" additivity="false">
-		<level value="info" />
+		<level value="off" />
 		<appender-ref ref="console" />
 	</logger>
 
