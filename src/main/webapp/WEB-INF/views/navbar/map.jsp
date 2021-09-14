@@ -289,6 +289,28 @@ ul.tabs li.current{
 	<div id="map"></div>
 	
 	</div>
+	
+	<!-- Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" name="reviewContents" id="reviewContents">
+        <input type="button" value="파일 업로드" onclick="fileUp()"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+	
 </body>
 	
 <script>
@@ -313,12 +335,21 @@ $(document).ready(function(){
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(37.21953563998351, 127.21194259376661), // 지도의 중심좌표
+			draggable: false,
 			level : 10
 		// 지도의 확대 레벨
 		};
 
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption);
+		
+		//지도를 불러올 때 줌 못하게 막음
+		function setZoomable(zoomable) {
+   			 // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+    		map.setZoomable(false);    
+		}
+		
+		var geocoder = new kakao.maps.services.Geocoder();
 		
 		//#지역 폴리곤 나누기
 		$.getJSON("resources/geojson/gyeonggi-do.geojson", function(geojson) {
@@ -365,6 +396,11 @@ $(document).ready(function(){
 
 				deletePolygon(polygons); //폴리곤 제거
 				customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
+				map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
+				/*
+				map.setMinLevel(3); //지도 최소 확대레벨
+				map.setMaxLevel(9); //지도 최대 확대레벨*/
+				
 			
 				$("#firstComment").hide();
 				$('#reviewListArea').show();				
@@ -388,6 +424,71 @@ $(document).ready(function(){
 				error:function(e){
 					console.log("에러발생 : ", e);
 				}
+			});
+			
+			
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var marker = new kakao.maps.Marker({ 
+			    // 지도 중심좌표에 마커를 생성합니다 
+			    position: map.getCenter() 
+			}); 
+			// 지도에 마커를 표시합니다
+			marker.setMap(map);
+			
+			var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
+			
+			// 지도에 클릭 이벤트를 등록합니다
+			// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+			kakao.maps.event.addListener(map, 'click', function reviewMarkerAdd(mouseEvent, name){
+				
+				infowindow.close();
+
+
+					    // 클릭한 위도, 경도 정보를 가져옵니다 
+					    var latlng = mouseEvent.latLng; 
+					    
+					    
+					    //클릭한 위치의 주소 받아오기
+					    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+					        if (status === kakao.maps.services.Status.OK) {
+					            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+					            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+					            
+					            var content = '<div class="bAddr">' +
+					                            '<span class="title">법정동 주소정보</span>' + 
+					                            detailAddr + 
+					                        '</div>'+
+					                        '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\')">'+
+					                        '후기 작성'+
+					                      '</button>';
+					                        
+					    // 마커 위치를 클릭한 위치로 옮깁니다
+					    marker.setPosition(latlng);
+					    marker.setMap(map);
+
+					                        infowindow.setContent(content);
+					                       
+					    
+					                     // 마커에 마우스오버 이벤트를 등록합니다
+					                        kakao.maps.event.addListener(marker, 'click', function() {
+					                          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+					                            infowindow.open(map, marker);
+					                        });
+
+					                     /*
+					                        // 마커에 마우스아웃 이벤트를 등록합니다
+					                        kakao.maps.event.addListener(marker, 'mouseout', function() {
+					                            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+					                            infowindow.close();
+					                        });*/
+					    
+					    /*var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+					    message += '경도는 ' + latlng.getLng() + ' 입니다';
+					    
+					    var resultDiv = document.getElementById('clickLatlng'); 
+					    resultDiv.innerHTML = message;*/
+					        }
+					    });
 			});
 			
 			
@@ -416,11 +517,11 @@ $(document).ready(function(){
 						127.11274158158241),
 				'성남시 분당구' : new kakao.maps.LatLng(37.37226033286201,
 						127.10497215484288),
-				'용인시처인구' : new kakao.maps.LatLng(37.204791007297956,
+				'용인시 처인구' : new kakao.maps.LatLng(37.204791007297956,
 						127.25902175816543),
-				'용인시기흥구' : new kakao.maps.LatLng(37.26318902336213,
+				'용인시 기흥구' : new kakao.maps.LatLng(37.26318902336213,
 						127.11591365849698),
-				'용인시수지구' : new kakao.maps.LatLng(37.33098226611915,
+				'용인시 수지구' : new kakao.maps.LatLng(37.33098226611915,
 						127.0713122103596),
 				'수원시 권선구' : new kakao.maps.LatLng(37.26295579915725,
 						126.98033915258203),
@@ -558,6 +659,35 @@ $(document).ready(function(){
 			}
 			polygons = [];
 		}
+		
+		function searchAddrFromCoords(coords, callback) {
+		    // 좌표로 행정동 주소 정보를 요청합니다
+		    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+		}
+
+		function searchDetailAddrFromCoords(coords, callback) {
+		    // 좌표로 법정동 상세 주소 정보를 요청합니다
+		    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+		}
+		
+		//후기 작성 버튼을 눌렀을 때
+		function reviewWrite(detailAddr){
+			console.log("리뷰 작성");
+			console.log("주소 : "+detailAddr);
+			$("#exampleModalLabel").html(detailAddr);
+		}
+		
+		/*
+		function setZoomable(zoomable) {
+		    // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+		    map.setZoomable(false);    
+		}*/
+		
+		function setMapLevel(){
+			map.setMinLevel(3);
+			map.setMaxLevel(10);
+		}
+		
 		
 </script>
 </html>
