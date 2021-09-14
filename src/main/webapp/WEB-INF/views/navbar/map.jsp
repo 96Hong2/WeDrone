@@ -53,22 +53,21 @@ body, html {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
-
 /* 후기마커 */
 .overlay {
 	margin-bottom: 60px;
 	background-color: rgba(248, 210, 221, 0.5);
-	padding : 10px;
+	padding: 10px;
 }
 
-.overlay .left{
+.overlay .left {
 	font-size: 18px;
 	font-weight: 900;
 	display: flex;
 	justify-content: left;
 }
 
-.overlay .right{
+.overlay .right {
 	font-size: 12px;
 	display: flex;
 	justify-content: right;
@@ -78,45 +77,46 @@ body, html {
 	vertical-align: center;
 }
 
-.gauge1{
-	height:10px;
+.gauge1 {
+	height: 10px;
 	background-color: pink;
-	display:inline-block;"
+	display: inline-block;
+	"
 }
 
-.gauge2{
-	height:10px;
+.gauge2 {
+	height: 10px;
 	background-color: #ccc;
-	display:inline-block;"
+	display: inline-block;
+	"
 }
 
-#reloadBtn{
+#reloadBtn {
 	position: absolute;
-	top:80px;
-	right:20px;
+	top: 80px;
+	right: 20px;
 }
 
 /* 사이드메뉴+지도 */
-#contentWrap{
+#contentWrap {
 	display: flex;
 }
 
 /* 사이드메뉴 탭 */
-#sideArea{
-	width:30%;
-	height:600px;
-	margin:0 auto;
-	
+#sideArea {
+	width: 30%;
+	height: 600px;
+	margin: 0 auto;
 	justify-content: left;
 }
 
-ul.tabs{
+ul.tabs {
 	margin: 0px;
 	padding: 0px;
 	list-style: none;
 }
 
-ul.tabs li{
+ul.tabs li {
 	background: none;
 	color: #222;
 	display: inline-block;
@@ -124,63 +124,64 @@ ul.tabs li{
 	cursor: pointer;
 }
 
-ul.tabs li.current{
+ul.tabs li.current {
 	background: #ededed;
 	color: #222;
 }
 
-.tab-content{
+.tab-content {
 	display: none;
 	background: #ededed;
 	padding: 15px;
 }
 
-.tab-content.current{
+.tab-content.current {
 	display: inherit;
 }
 
 /* 지도 */
-#map{
-	width: 70%; 
+#map {
+	width: 70%;
 	height: 600px;
 	justify-content: right;
 }
 
 /* 후기마커 리스트 */
-#listTopArea{
+#listTopArea {
 	display: flex;
 	justify-content: space-between;
 	margin: 10px;
 }
 
-#orderMenu a{
-	color : black;
-	text-decoration : none;
+#orderMenu a {
+	color: black;
+	text-decoration: none;
 }
 
-#orderMenu a:hover{
-	color : pink;
-	font-weight : bold;
+#orderMenu a:hover {
+	color: pink;
+	font-weight: bold;
 }
 
-#reloadBtn2{
+#reloadBtn2 {
 	/* justify-content: left; */
+	
 }
 
-#orderMenu{
+#orderMenu {
 	/* display:inline-block;margin-left:270px; margin-bottom:15px; */
 	/* justify-content: right; */
+	
 }
 
 /* .overlay .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 50px;font-size: 12px;line-height: 50px;}
 .overlay .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 7px;}
 .overlay .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 6px;} */
-
 </style>
 </head>
 <title>드론</title>
 <body>
-<!-- 상단 메뉴바 -->
+	<!-- 상단 메뉴바 -->
 	<!-- 아이디가 있다면 -->
 	<%-- <c:if test="${sessionScope.userId ne null}">
 		<jsp:include page="${path}/lognav"></jsp:include>
@@ -209,19 +210,22 @@ ul.tabs li.current{
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active text-center"
-							aria-current="page" href="${path}/map"><h4>Map</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/calendar"><h4>Calendar</h4></a></li>
-						<a class="nav-link active" href="${path}/news"><h4>News</h4></a>
-						</li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/notice"><h4>Notice</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/board"><h4>Board</h4></a></li>
-
-
-						<li class="nav-item"></li>
+						<li class="nav-item dropdown "><a
+							class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
+							href="#" role="button" aria-expanded="false"><h4>Map</h4></a>
+							<ul class="dropdown-menu active">
+								<li><a class="dropdown-item" href="#">비행지역 조회</a></li>
+								<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li></li>
+					</ul>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/calendar"><h4>Calendar</h4></a></li> <a
+						class="nav-link active" href="${path}/news"><h4>News</h4></a>
+					</li>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/notice"><h4>Notice</h4></a></li>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/board"><h4>Board</h4></a></li>
+					<li class="nav-item"></li>
 					</ul>
 					<div class="d-flex" id="alarmalert">
 						<i id="bell" class="bi bi-bell-fill"
@@ -230,12 +234,12 @@ ul.tabs li.current{
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div>
 					<div class="d-flex">
-						<button class="btn btn-sm btn-outline-light mx-1 me-1" onclick="location='./login'">로그인</button>
-						<button class="btn btn-sm btn-outline-light me-1 mx-1"
-							type="submit" onclick="location='./join'">회원가입</button>
-
-						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
-							href="${path}/mypage">마이페이지</a>
+						<a class="btn btn-sm btn-outline-light mx-3 me-1"
+							href="${path}/login" role="button">로그인</a> <a
+							class="btn btn-sm btn-outline-light me-1 mx-1"
+							href="${path}/signup" role="button">회원가입</a> <a
+							class="btn btn-sm btn-outline-light mx-1 me-1"
+							href="${path}/mypages" role="button">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
 							aria-controls="offcanvasRight">메시지</button>
@@ -243,92 +247,98 @@ ul.tabs li.current{
 				</div>
 		</nav>
 
-	<!-- 들어갈 내용 -->
-	<h4>&nbsp;Map - 지도</h4>
-	<button type="button" onclick="location.reload(true)" class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn">전체지역보기</button>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
-	
-	<div id="contentWrap">
-	<!-- 사이드메뉴 영역 -->
-	<div id="sideArea">
-	<div style="margin:40px; text-align:center;">
-		<h5><b>Enjoy your flight, WeDrone</b></h5>
-		<h6>${sessionScope.nickName}닉네임 님, 환영합니다 ^ㅇ^</h6>
-	</div>
-		<ul class="tabs">
-			<li class="tab-link" data-tab="tab-myLocationMK">내위치마커</li>
-			<li class="tab-link current" data-tab="tab-reviewMK">후기마커</li>
-			<li class="tab-link" data-tab="tab-bookmark">즐겨찾기</li>
-			<li class="tab-link" data-tab="tab-myReviewMK">내후기마커</li>
-		</ul>
-		
-	<div id="tab-myLocationMK" class="tab-content">
-		내위치마커 내용
-	</div>
-	
-	<div id="tab-reviewMK" class="tab-content current">
-		<h4 id="firstComment" style="color:crimson;text-align:center;">♥ 지역을 선택해주세요! ♥</h4>
-		<div id='reviewListArea'>
-			<div>지도를 클릭하여 후기마커를 등록해보세요.</div>
-			<div id="listTopArea">
-			<div id="reloadBtn2"><button type="button" onclick="location.reload(true)" style="display:inline-block;"  
-			class="btn btn-sm btn-outline-dark mx-1 me-1">전체지역보기</button></div>
-			<div id='orderMenu'>
-				<a href="javascript:selectArea(name, \'like\')">좋아요순</a>&nbsp;|&nbsp;<a href="javascript:selectArea(name, \'latest\')">최신순</a>
+
+
+		<!-- 들어갈 내용 -->
+		<h4>&nbsp;Map - 지도</h4>
+		<button type="button" onclick="location.reload(true)"
+			class="btn btn-sm btn-outline-dark mx-1 me-1" id="reloadBtn">전체지역보기</button>
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
+
+		<div id="contentWrap">
+			<!-- 사이드메뉴 영역 -->
+			<div id="sideArea">
+				<div style="margin: 40px; text-align: center;">
+					<h5>
+						<b>Enjoy your flight, WeDrone</b>
+					</h5>
+					<h6>${sessionScope.nickName}닉네임님, 환영합니다 ^ㅇ^</h6>
+				</div>
+				<ul class="tabs">
+					<li class="tab-link" data-tab="tab-myLocationMK">내위치마커</li>
+					<li class="tab-link current" data-tab="tab-reviewMK">후기마커</li>
+					<li class="tab-link" data-tab="tab-bookmark">즐겨찾기</li>
+					<li class="tab-link" data-tab="tab-myReviewMK">내후기마커</li>
+				</ul>
+
+				<div id="tab-myLocationMK" class="tab-content">내위치마커 내용</div>
+
+				<div id="tab-reviewMK" class="tab-content current">
+					<h4 id="firstComment" style="color: crimson; text-align: center;">♥
+						지역을 선택해주세요! ♥</h4>
+					<div id='reviewListArea'>
+						<div>지도를 클릭하여 후기마커를 등록해보세요.</div>
+						<div id="listTopArea">
+							<div id="reloadBtn2">
+								<button type="button" onclick="location.reload(true)"
+									style="display: inline-block;"
+									class="btn btn-sm btn-outline-dark mx-1 me-1">전체지역보기</button>
+							</div>
+							<div id='orderMenu'>
+								<a href="javascript:selectArea(name, \'like\')">좋아요순</a>&nbsp;|&nbsp;<a
+									href="javascript:selectArea(name, \'latest\')">최신순</a>
+							</div>
+						</div>
+
+						<div id='reviewList'>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">An item</li>
+								<li class="list-group-item">A second item</li>
+								<li class="list-group-item">A third item</li>
+								<li class="list-group-item">A fourth item</li>
+								<li class="list-group-item">And a fifth one</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div id="tab-bookmark" class="tab-content">즐겨찾기 내용</div>
+
+				<div id="tab-myReviewMK" class="tab-content">내후기마커 내용</div>
+
 			</div>
-			</div>
-			
-			<div id='reviewList'>
-			<ul class="list-group list-group-flush">
- 	 			<li class="list-group-item">An item</li>
-  				<li class="list-group-item">A second item</li>
-  				<li class="list-group-item">A third item</li>
-  				<li class="list-group-item">A fourth item</li>
-  				<li class="list-group-item">And a fifth one</li>
-			</ul>
+
+			<!-- 지도 영역 -->
+			<div id="map"></div>
+
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="reviewModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel"></h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="text" name="reviewContents" id="reviewContents">
+						<input type="button" value="파일 업로드" onclick="fileUp()" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save
+							changes</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div id="tab-bookmark" class="tab-content">
-		즐겨찾기 내용
-	</div>
-	
-	<div id="tab-myReviewMK" class="tab-content">
-		내후기마커 내용
-	</div>
-	
-	</div>
-	
-	<!-- 지도 영역 -->
-	<div id="map"></div>
-	
-	</div>
-	
-	<!-- Modal -->
-<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" name="reviewContents" id="reviewContents">
-        <input type="button" value="파일 업로드" onclick="fileUp()"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-	
-	
 </body>
-	
+
 <script>
 		
 $(document).ready(function(){

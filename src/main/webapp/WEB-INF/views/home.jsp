@@ -55,7 +55,7 @@ body, html {
 
 </style>
 </head>
-<title>드론2</title>
+<title>드론</title>
 <body>
 
 <!-- 상단 메뉴바 -->
@@ -69,7 +69,7 @@ body, html {
 	</c:if> --%>
 
 	<div class="wrap">
-	<div class="wrap">
+
 		<!-- 네비게이션바 -->
 		<nav class="navbar navbar-expand-lg navbar-dark"
 			style="background-color: #3c3c3c;">

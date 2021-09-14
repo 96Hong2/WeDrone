@@ -125,46 +125,48 @@ body, html {
 		</nav>
 
 		<!-- 사이드바 -->
-		<div class="d-flex" style="height: auto; width:auto;  min-height: 100vh;">
+		<div class="d-flex"
+			style="height: auto; width: auto; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
-					<a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
+					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/mycomment" style="cursor: pointer;"><h5>내가 쓴 댓글</h5></a> <a
+						href="${path}/mycomment" style="cursor: pointer;"><h5>내가
+							쓴 댓글</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기 마커</h5></a> <a
+						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기
+							마커</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
+						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림
+							리스트</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림 리스트</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
+						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a>
+					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
 				</div>
 			</nav>
 
-		
-		<!--들어갈 내용-->
-		<div class="cont container mx-10 py-5">
-			<div class="d-flex align-items-center">
-				<button type="button" id="sidebarCollapse"
-					class="me-2 btn btn-warning">
-					<i class="bi bi-book"></i>
-				</button>
-				<h2 class="fw-bold my-3">마이 페이지</h2>
+
+			<!--들어갈 내용-->
+			<div class="cont container mx-10 py-5">
+				<div class="d-flex align-items-center">
+					<button type="button" id="sidebarCollapse"
+						class="me-2 btn btn-warning">
+						<i class="bi bi-book"></i>
+					</button>
+					<h2 class="fw-bold my-3">마이 페이지</h2>
+				</div>
+				<hr />
+				<div class="cont container w-50">
+					<!-- 내 정보 수정 폼 -->
+
+				</div>
 			</div>
-			<hr />
-			<div class="cont container w-50">
-				<!-- 내 정보 수정 폼 -->
-				
-	</div>
-	</div>
-	</div>
+		</div>
 	</div>
 	<!-- 하단 푸터 -->
 
