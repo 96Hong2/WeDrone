@@ -19,7 +19,9 @@
 <!-- css cdn 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
+	rel="stylesheet">
 
 <!-- 아이콘 -->
 <link rel="stylesheet"
@@ -47,11 +49,25 @@ footer {
 	margin-top: auto
 }
 
+body, html {
+	font-family: 'Do Hyeon', sans-serif;
+}
 
 </style>
 </head>
 <title>드론</title>
 <body>
+
+<!-- 상단 메뉴바 -->
+	<!-- 아이디가 있다면 -->
+	<%-- <c:if test="${sessionScope.userId ne null}">
+		<jsp:include page="${path}/lognav"></jsp:include>
+	</c:if>
+	<!-- 아이디가 없을때 네비바-->
+	<c:if test="${sessionScope.userId eq null}">
+		<jsp:include page="${path}/navbar"></jsp:include>
+	</c:if> --%>
+
 	<div class="wrap">
 		<!-- 네비게이션바 -->
 		<nav class="navbar navbar-expand-lg navbar-dark"
@@ -100,7 +116,7 @@ footer {
 							href="${path}/mypage">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">기타</button>
+							aria-controls="offcanvasRight">메시지</button>
 					</div>
 				</div>
 		</nav>
@@ -125,28 +141,29 @@ footer {
 					<img src="resources/img/c2.jpg" height="850" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
-						<h2>
-Welcome to  to the drone world</h2>
-						<hr />
-						<h4>We are people who love drones. Anyone interested in drones is welcome</h4>
+						<h2>드론 세상에 오신 것을 환영합니다</h2>
+						<hr style="border: groove 3px white">
+
+						<h4>우리는 드론을 사랑하는 사람들입니다. 드론에 관심 있는 사람이라면 언제든 환영합니다</h4>
 					</div>
 				</div>
 				<div class="carousel-item">
 					<img src="resources/img/c1.jpg" height="850" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
-						<h2>share your flight information</h2>
-						<hr />
-						<h4>Share your review of the pleasant drone flight. It's going to be fun for everyone</h4>
+						<h2>비행 정보를 나누어보세요</h2>
+						<hr style="border: groove 3px white">
+						<h4>비행 후기를 들려주세요. 그것은 모든 사람들에게 즐거운 일이 될 것입니다</h4>
 					</div>
 				</div>
 				<div class="carousel-item">
 					<img src="resources/img/c3.jpg" height="850" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
-						<h2>Check out the real-time weather information</h2>
-						<hr/>
-						<h4>There is nothing more important than safety in drones. Check the magnetic field index, wind speed, and fine dust index in advance.</h4>
+						<h2>비행관련 실시간 기상정보를 확인하세요</h2>
+						<hr style="border: groove 3px white">
+						<h4>드론 비행에 있어 안전보다 중요한 일은 없습니다. 비행 전에 자기장 지수와 풍속, 미세먼지 등을
+							확인하세요</h4>
 					</div>
 				</div>
 			</div>
@@ -177,35 +194,62 @@ Welcome to  to the drone world</h2>
 		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
 			data-bs-backdrop="false">
 			<div class="offcanvas-header">
-				<h3 id="offcanvasRightLabel">상세정보</h3>
+				<h3 id="offcanvasRightLabel">Message</h3>
 				<button type="button" class="btn-close text-reset"
 					data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 			<div class="offcanvas-body">
-				<script type="text/javascript"
-					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789"></script>
-				<div id="map" style="width: 100%; height: 350px;"></div>
 
-
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-					mapOption = {
-						center : new kakao.maps.LatLng(37.47795229044443,
-								126.87895054846138), // 지도의 중심좌표
-						level : 3
-					// 지도의 확대 레벨
-					};
-
-					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new kakao.maps.Map(mapContainer, mapOption);
-				</script>
+				<!-- 메시지 UI 샘플-->
 				<body>
-				</body>
+					<div class="list-group">
+						<a href="#" class="list-group-item list-group-item-action"
+							aria-current="true">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">드로니</h5>
+								<span class=" badge bg-secondary rounded-pill"
+									style="text-align: right">14</span> <small class="text-muted">4
+									days ago</small>
+							</div>
+							<p class="mb-1" style="text-align: left">지난 비행에서 사용하신 드론 모델명이
+								무엇인가요?</p>
+						</a> <a href="#" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">김광배</h5>
+								<span class="badge bg-secondary rounded-pill">2</span> <small
+									class="text-muted">6 days ago</small>
+							</div>
+							<p class="mb-1" style="text-align: left">다음 비행모임에 오실거죠?</p>
+
+						</a> <a href="#" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">한솔</h5>
+								<span class="badge bg-secondary rounded-pill">7</span> <small
+									class="text-muted">1 days ago</small>
+							</div>
+							<p class="mb-1" style="text-align: left">다음에도 같이 비행하러 가실거죠? 꼭
+								오세요!</p>
+						</a> <a href="#" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">드론왕</h5>
+								<span class="badge bg-secondary rounded-pill">7</span> <small
+									class="text-muted">1 days ago</small>
+							</div>
+							<p class="mb-1" style="text-align: left">구매하신 드론 부품 구매처가
+								어디신가요? 저도 알려주세요</p>
+						</a>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<button class="btn btn-warning btn-sm" type="button">방나가기</button>
+						</div>
+					</div>
+
+
+					</div>
+		</div>
 			</div>
 		</div>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</body>
 
+</body>
 
 
 <!-- 하단 푸터 -->

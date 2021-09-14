@@ -19,9 +19,7 @@
 <!-- css cdn 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 
 <!-- 아이콘 -->
 <link rel="stylesheet"
@@ -32,7 +30,6 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -49,25 +46,11 @@ footer {
 	margin-top: auto
 }
 
-body, html {
-	font-family: 'Do Hyeon', sans-serif;
-}
 
 </style>
 </head>
 <title>드론</title>
 <body>
-
-	<!-- 상단 메뉴바 -->
-	<!-- 아이디가 있다면 -->
-	<%-- <c:if test="${sessionScope.userId ne null}">
-		<jsp:include page="${path}/lognav"></jsp:include>
-	</c:if>
-	<!-- 아이디가 없을때 네비바-->
-	<c:if test="${sessionScope.userId eq null}">
-		<jsp:include page="${path}/navbar"></jsp:include>
-	</c:if> --%>
-
 	<div class="wrap">
 		<!-- 네비게이션바 -->
 		<nav class="navbar navbar-expand-lg navbar-dark"
@@ -108,21 +91,74 @@ body, html {
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div>
 					<div class="d-flex">
-						<button class="btn btn-sm btn-outline-light mx-1 me-1" onclick="location='./login'">로그인</button>
+						<button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button>
 						<button class="btn btn-sm btn-outline-light me-1 mx-1"
-							type="submit" onclick="location='./join'">회원가입</button>
+							type="submit">회원가입</button>
 
 						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
 							href="${path}/mypage">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">메시지</button>
+							aria-controls="offcanvasRight">기타</button>
 					</div>
 				</div>
 		</nav>
+<!--메인 슬라이드바  -->
+		<div id="carouselExampleCaptions" class="carousel slide"
+			data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="0" class="active" aria-current="true"
+					aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="resources/img/c2.jpg" height="850" class="d-block w-100"
+						alt="...">
+					<div class="carousel-caption d-none d-md-block">
+						<h2>
+Welcome to  to the drone world</h2>
+						<hr />
+						<h4>We are people who love drones. Anyone interested in drones is welcome</h4>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img src="resources/img/c1.jpg" height="850" class="d-block w-100"
+						alt="...">
+					<div class="carousel-caption d-none d-md-block">
+						<h2>share your flight information</h2>
+						<hr />
+						<h4>Share your review of the pleasant drone flight. It's going to be fun for everyone</h4>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img src="resources/img/c3.jpg" height="850" class="d-block w-100"
+						alt="...">
+					<div class="carousel-caption d-none d-md-block">
+						<h2>Check out the real-time weather information</h2>
+						<hr/>
+						<h4>There is nothing more important than safety in drones. Check the magnetic field index, wind speed, and fine dust index in advance.</h4>
+					</div>
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
 
 
-		<!-- 들어갈 내용 -->
-		<h3>뉴스탭입니다</h3>
-</body>
+
+		
+	</body>
 </html>

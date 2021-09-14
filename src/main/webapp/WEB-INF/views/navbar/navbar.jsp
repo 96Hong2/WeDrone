@@ -19,7 +19,9 @@
 <!-- css cdn 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
+	rel="stylesheet">
 
 <!-- 아이콘 -->
 <link rel="stylesheet"
@@ -30,6 +32,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -46,11 +49,24 @@ footer {
 	margin-top: auto
 }
 
+body, html {
+	font-family: 'Do Hyeon', sans-serif;
+}
 
 </style>
 </head>
 <title>드론</title>
 <body>
+	<!-- 상단 메뉴바 -->
+	<!-- 아이디가 있다면 -->
+	<%-- <c:if test="${sessionScope.userId ne null}">
+		<jsp:include page="${path}/lognav"></jsp:include>
+	</c:if>
+	<!-- 아이디가 없을때 네비바-->
+	<c:if test="${sessionScope.userId eq null}">
+		<jsp:include page="${path}/navbar"></jsp:include>
+	</c:if> --%>
+
 	<div class="wrap">
 		<!-- 네비게이션바 -->
 		<nav class="navbar navbar-expand-lg navbar-dark"
@@ -68,21 +84,10 @@ footer {
 					aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				
-				<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item dropdown">
-						<a  class="nav-link dropdown-toggle"
-							aria-current="page" href="${path}/map"
-							id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<h4>Map</h4></a>
-			<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-            <li><a class="dropdown-item" href="/map">지도 보기</a></li>
-            <li><a class="dropdown-item" href="#">비행 구역 조회</a></li>
-          </ul>   
-							
-							
-						<ul>	
+						<li class="nav-item"><a class="nav-link active text-center"
+							aria-current="page" href="${path}/map"><h4>Map</h4></a></li>
 						<li class="nav-item"><a class="nav-link active text-center "
 							href="${path}/calendar"><h4>Calendar</h4></a></li>
 						<a class="nav-link active" href="${path}/news"><h4>News</h4></a>
@@ -102,15 +107,15 @@ footer {
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div>
 					<div class="d-flex">
-						<button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button>
+						<button class="btn btn-sm btn-outline-light mx-1 me-1" onclick="location='./login'">로그인</button>
 						<button class="btn btn-sm btn-outline-light me-1 mx-1"
-							type="submit">로그아웃</button>
+							type="submit" onclick="location='./join'">회원가입</button>
 
 						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
 							href="${path}/mypage">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">기타</button>
+							aria-controls="offcanvasRight">메시지</button>
 					</div>
 				</div>
 		</nav>
