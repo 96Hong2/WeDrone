@@ -7,22 +7,14 @@
 <head>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 부트스트랩 파일 -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-	crossorigin="anonymous">
-	
-</script>
 <link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
 <!-- css cdn 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap"
+	rel="stylesheet">
+<!--폰트-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
-	rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap" rel="stylesheet">
 <!-- 아이콘 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
@@ -32,7 +24,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 부트스트랩 파일 -->
+
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -49,7 +43,7 @@ footer {
 	margin-top: auto
 }
 
-body, html {
+body,html {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
