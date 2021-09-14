@@ -7,8 +7,25 @@
 <!-- XML 이 어떤interface 와 연결이 되는가? -->
 <mapper namespace="com.gudi.member.dao.MemberDAO">	
 
+<insert id="join" parameterType="member">
+		INSERT INTO members(userId,pw,nickName,chkAlert) VALUES
+		(#{userId},#{pw},#{nickName},#{chkAlert})
+	</insert>
+
+	<select id="idCheck"
+		parameterType="member" resultType="member">
+		SELECT userId FROM members
+		WHERE userId = #{userId}
+	</select>
+
+	<select id="nickCheck"
+		parameterType="member" resultType="member">
+		SELECT nickName FROM members
+		WHERE nickName = #{nickName}
+	</select>
+
 	<select id="login" parameterType="member" resultType="member">
-		SELECT * FROM member WHERE id = #{id} AND pw = #{pw}
+		SELECT * FROM members WHERE userId = #{userId} AND pw = #{pw}
 	</select>
 	
 </mapper>

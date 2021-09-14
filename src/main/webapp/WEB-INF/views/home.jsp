@@ -30,6 +30,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -91,9 +92,9 @@ footer {
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div>
 					<div class="d-flex">
-						<button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button>
+						<button class="btn btn-sm btn-outline-light mx-1 me-1" onclick="location='./login'">로그인</button>
 						<button class="btn btn-sm btn-outline-light me-1 mx-1"
-							type="submit">로그아웃</button>
+							type="submit" onclick="location='./join'">회원가입</button>
 
 						<a class="btn btn-sm btn-outline-light  mx-1" role="button"
 							href="${path}/mypage">마이페이지</a>
@@ -213,5 +214,10 @@ Welcome to  to the drone world</h2>
 	<p class="m-0 text-center text-white">구디아카데미 프로젝트 1조</p>
 	<p class="m-0 text-center text-white">Copyright &copy; Website 2021</p>
 </footer>
-
+<script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+</script>
 </html>
