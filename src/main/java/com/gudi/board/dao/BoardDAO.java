@@ -23,6 +23,11 @@ public interface BoardDAO {
 
 	int fbdel(String postId);
 
-	int fileupdate(HashMap<String, String> params);
+	int fbcmtwrite(BoardDTO dto);
 
+	ArrayList<BoardDTO> list(int start, int end);
+
+	int allCount();
+
+	
 }

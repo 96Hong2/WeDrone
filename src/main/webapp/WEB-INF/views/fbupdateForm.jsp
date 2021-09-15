@@ -136,7 +136,7 @@ table, th, td{
 				</div>
 		</nav>
 		
-		<form action="fbupdate" method="post" >
+		<form action="fbupdate" method="post" enctype="multipart/form-data">
 
      <h1>자유게시판 글 수정</h1>
 		<table style="width: 800px; margin-left: auto; margin-right: auto;">
@@ -154,19 +154,15 @@ table, th, td{
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>
-				 <div class="form-floating mb-3">
-				<textarea name="postContent"
-						style="height: 200px; width: 300px;" class="form-control" id="floatingInput" required >${post.postContent}</textarea>
-			<label for="floatingInput" class="opacity-25">content</label>
-          </div>
-			</td>
+				<td>${post.postContent}<input type="text"
+				  name="postContent" value ="${post.postContent}"/>
+            </td>
 			</tr>
 			<tr>
 				<th>사진</th>
 				<td><img src="/photo/${image.newFileName}" width="500px" />
 					<p>
-						<input type="file" name="PostPic"/>
+						<input type="file" name="photo"/>
 					</p></td>
 			</tr>
 
@@ -196,9 +192,6 @@ table, th, td{
 
 <!-- 하단 푸터 -->
 
-<footer class="py-3 bg-dark bg-gradient">
-	<p class="m-0 text-center text-white">구디아카데미 프로젝트 1조</p>
-	<p class="m-0 text-center text-white">Copyright &copy; Website 2021</p>
-</footer>
+
 
 </html>

@@ -31,6 +31,7 @@ public class BoardService {
 
 Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+//자유 게시판 서비스 입니다~~
 	@Value("#{config['Globals.filePath']}")String root;
 	
 	
@@ -153,7 +154,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		return mav;
 	}
 
-	//게시판 수정 폼
+	       //게시판 수정 폼//지윤쓰
 			public ModelAndView fbupdateForm(String postId) {
 				ModelAndView mav = new ModelAndView();
 				mav.addObject("post", dao.fbdetail(postId));
@@ -161,15 +162,16 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return mav;
 			}
 
-			//게시판 수정
+			//게시판 수정//지윤쓰
 			public ModelAndView fbupdate(HashMap<String, String> params) {
 				ModelAndView mav = new ModelAndView();
 				dao.fbupdate(params);
+				logger.info("params"+params );
 				mav.setViewName("redirect:/member/fbdetail?postId="+params.get("postId"));		
 				return mav;
 			}
 
-			//게시판 삭제
+			//게시판 삭제//지윤쓰
 			public ModelAndView fbdel(String postId) {
 				int success = dao.fbdel(postId);
 				ModelAndView mav = new ModelAndView();
@@ -178,20 +180,51 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return mav;
 			}
 
-			//파일 업데이트 폼
-			public ModelAndView fileupdateForm(String postId) {
+			
+			
+
+			public ModelAndView fbcmtwrite(BoardDTO dto) {
 				ModelAndView mav = new ModelAndView();
-				mav.addObject("post", dao.fbdetail(postId));
-				mav.setViewName("fileupdate");
+				int success = dao.fbcmtwrite(dto);
+				logger.info("dto :"+dto);
+				logger.info("자유 게시판 글 쓰기 성공 여부 "+success);
+				mav.setViewName("redirect:/fbdetail");
 				return mav;
 			}
 
-			//파일 업데이트 
-			public ModelAndView fileupdate(HashMap<String, String> params) {
-			ModelAndView mav = new ModelAndView();
-			dao.fileupdate(params);
-			mav.setViewName("redirect:/member/fbdetail?postId="+params.get("postId"));
-				return mav;
+			public HashMap<String, Object> list(int page, int pagePerNum, HttpSession session) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				int end = page * pagePerNum;//현재 페이지 * 댓글 갯수
+				int start = end - pagePerNum+1;//마지막 페이지 - 댓글 갯수-1
+				
+				ArrayList<BoardDTO> list = dao.list(start,end);//1. list			
+				//2. 데이터 총 갯수 -> 만들수 있는 페이지 수
+				int totalCnt = dao.allCount();
+				logger.info(list.size()+"/"+totalCnt);
+				map.put("list", list);
+				map.put("cnt", totalCnt);
+				
+				//총 갯수 21 개 pagePerNum 5 일 경우 몇 페이지로 만들어야 하나?
+				int pages = (int) (totalCnt%pagePerNum>0 
+						? Math.floor(totalCnt/pagePerNum)+1 : Math.floor(totalCnt/pagePerNum));
+				
+				page = page>pages ? pages:page;
+						
+				map.put("currPage", page);
+				map.put("pages", pages);
+						
+				return map;
 			}
 	
 }
+
+
+
+
+
+
+
+
+
+
+

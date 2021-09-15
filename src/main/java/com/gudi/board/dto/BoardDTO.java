@@ -15,7 +15,45 @@ public class BoardDTO {
 	private String postDel;
 	private String nickName;
 	private String userId;
+	private String cmtId;
+	private String cmtContent;
+	private Date cmtDate;
+	private String isDel;
+	private String cmtField;
 	
+	
+	
+	
+	public String getCmtId() {
+		return cmtId;
+	}
+	public void setCmtId(String cmtId) {
+		this.cmtId = cmtId;
+	}
+	public String getCmtContent() {
+		return cmtContent;
+	}
+	public void setCmtContent(String cmtContent) {
+		this.cmtContent = cmtContent;
+	}
+	public Date getCmtDate() {
+		return cmtDate;
+	}
+	public void setCmtDate(Date cmtDate) {
+		this.cmtDate = cmtDate;
+	}
+	public String getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
+	public String getCmtField() {
+		return cmtField;
+	}
+	public void setCmtField(String cmtField) {
+		this.cmtField = cmtField;
+	}
 	public int getPostId() {
 		return postId;
 	}

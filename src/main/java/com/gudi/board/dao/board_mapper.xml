@@ -12,13 +12,13 @@
 		keyColumn="postId"
 		keyProperty="postId"
 		parameterType="board">
-		INSERT INTO post(postId,title,postContent, nickName) 
-		VALUES(post_seq.NEXTVAL,#{title},#{postContent},#{nickName})
+		INSERT INTO post(postId,title,postContent, nickName,postField) 
+		VALUES(post_seq.NEXTVAL,#{title},#{postContent},#{nickName},'post')
 	</insert>
 
 	<insert id="fbfileWrite">
-		INSERT INTO image(imgId, oriFileName, newFileName, postId)
-			VALUES(image_seq.NEXTVAL, #{param1},#{param2},#{param3})
+		INSERT INTO image(imgId, oriFileName, newFileName, postId,imgField)
+			VALUES(image_seq.NEXTVAL, #{param1},#{param2},#{param3},'post')
 	</insert>
 	
 	
@@ -28,7 +28,7 @@
 	
 	
 	<select id="fileList" parameterType="String" resultType="file">
-		SELECT imgId, newFileName, oriFileName, postId 
+		SELECT imgId, oriFileName, newFileName, postId 
 			FROM image WHERE postId = #{postId} ORDER BY imgId
 	</select>
 	
@@ -37,14 +37,31 @@
 	  WHERE postId = #{postId}
 	</update>
 	
-	<update id="fileupdate" parameterType="hashmap">
-	  UPDATE image SET newFileName =#{newFileName}, oriFileName =#{oriFileName} WHERE postId = #{postId}
-	</update>
 	
 	<delete id="fbdel" parameterType="String">
 	UPDATE post SET postDel = 'Y' WHERE postId = #{postId}
+    </delete>
 	
-	</delete>
+	<insert id="fbcmtwrite" parameterType="board">
+	INSERT INTO comments(cmtId, cmtContent,postId,cmtField) VALUES(comment_seq.NEXTVAL,#{cmtContent},#{postId},'Fbpost')
 	
+	</insert>
+	
+	
+	
+    <select id="list" resultType="board">
+		SELECT cmtId, cmtContent
+			FROM
+		(SELECT 
+		    ROW_NUMBER() OVER (ORDER BY cmtId DESC)rnum,
+		    cmtId, cmtContent   
+		FROM comments) WHERE rnum BETWEEN #{param1} AND #{param2}
+	</select>
+
+	<select id="allCount" resultType="int">
+		SELECT COUNT(cmtId) FROM comments
+	</select>
+   
+    
 	
 </mapper>
