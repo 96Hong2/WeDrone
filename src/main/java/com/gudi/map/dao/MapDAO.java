@@ -11,6 +11,10 @@ public interface MapDAO {
 	int getAreaRating(String areaName);
 
 	ArrayList<MapDTO> getReviewList(String areaName, String order, String loginId);
+
+	int rmFileUpload(String fileName, String newFileName);
+
+	int rmWrite(MapDTO dto);
 }
 
 

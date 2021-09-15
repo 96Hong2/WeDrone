@@ -308,15 +308,13 @@ ul.tabs li.current {
 
       </div>
 
-      <!-- Modal -->
-
+	<!-- 모달 영역 -->
       <div class="modal fade" id="reviewModal" tabindex="-1"
          aria-labelledby="reviewModalLabel" aria-hidden="true">
          <div class="modal-dialog">
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title" id="reviewModalLabel"></h5>
-                     <input type="hidden" id="rmDetailAddr" name="rmDetailAddr" value=""/>
                      <input type="hidden" id="rmLat" name="rmLat" value=""/>
                      <input type="hidden" id="rmLng" name="rmLng" value=""/>
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -324,11 +322,20 @@ ul.tabs li.current {
                </div>
                <div class="modal-body">
                   <input id="content" type="text" name="content" value=""/>
-                  <input type="file" name="rmPhoto"/>
+                  	<!--  <form id="fileUpload" enctype="multipart/form-data"> -->
+                  		<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
+                 	 <!--  </form>-->
                </div>
                <div class="modal-footer">
+               <select name="rating" id="rating" style="width:100px; height:30px;">
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+				</select>
                   <button type="button" class="btn btn-secondary"
-                     data-bs-dismiss="modal">취소</button>
+                     data-bs-dismiss="modal" id="closeBtn">취소</button>
                   <button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
                </div>
             </div>
@@ -834,33 +841,104 @@ $(document).ready(function(){
          map.setMaxLevel(10);
       }
       
+      //파일업로드 메소드
+    	  const file = $("#rmPhoto")[0];
+    
+      /*
+      function fileUpload(){
+    	  
+    	  console.log("file : "+file.files[0].name);
+          console.log("file : "+file.files[0].value);
+          console.log("file : "+file.files[0].size);
+          
+          const formData = new FormData();
+          formData.append("file", file.files[0]);
+          
+          $.ajax({
+           	url:'rmFileUpload',
+             type:'POST',
+             processData: false,
+             contentType: false,
+             data : formData,
+             dataType:'JSON',
+             success:function(data){
+                
+             },
+             error:function(e){
+                 console.log("에러발생 : ", e);
+              }  
+        }); // end ajax 
+          
+      }*/
+      
       
       $("#rmSubmit").click(function(){
-         
-         var rmLat = $("#rmLat").val();
-         var rmLng = $("#rmLng").val();
-         var rmDetailAddr = $("#rmDetailAddr").val();
-         var content = $("#content").val();
-         
-         $.ajax({
-            url:'rmWrite',
-              type:'POST',
-              data : {
-                 "lat" : rmLat,
-                 "lon" : rmLng,
-                 "address" : rmDetailAddr,
-                 "reviewContent" : content,
-                 },
-              dataType:'JSON',
-              success:function(data){
-                 
-                 
-              },
-              error:function(e){
-                  console.log("에러발생 : ", e);
-               }  
-         }); // end ajax 왜안되세요
-      })
+          
+          var rmLat = $("#rmLat").val();
+          var rmLng = $("#rmLng").val();
+          var rmDetailAddr = $("#reviewModalLabel").html();
+          var content = $("#content").val();
+          var rating = $("#rating option:selected").val();
+          
+          if(file.files.length === 0){
+        	    alert("이미지를 첨부하고 등록해주세요.");
+        	    return;
+        	  }
+          
+          console.log("rmLat : "+rmLat);
+    	 	 console.log("rmLng : "+rmLng);
+    	  	console.log("rmDetailAddr : "+rmDetailAddr);
+    	  	console.log("content : "+content);
+    	  	console.log("rating : "+rating);
+    	  	
+    	  	console.log("file : "+file.files[0].name);
+            console.log("file : "+file.files[0].value);
+            console.log("file : "+file.files[0].size);
+            
+            const formData = new FormData();
+            formData.append("file", file.files[0]);
+            
+    	 	
+          $.ajax({
+             	url:'rmWrite',
+               type:'POST',
+               data : {
+                  "lat" : rmLat,
+                  "lon" : rmLng,
+                  "address" : rmDetailAddr,
+                  "reviewContent" : content,
+                  "rating" : rating,
+                  },
+               dataType:'JSON',
+               success:function(data){
+					
+            	   console.log(data);
+            	   
+            	   $.ajax({
+                     	url:'rmFileUpload',
+                       type:'POST',
+                       processData: false,
+                       contentType: false,
+                       data : formData,
+                       dataType:'JSON',
+                       success:function(data){
+                          console.log(data);
+                          alert("등록이 완료되었습니다!");
+                       },
+                       error:function(e){
+                           console.log("에러발생 : ", e);
+                           alert("등록에 실패하였습니다!");
+                        }  
+                  }); // end ajax     
+               },
+               error:function(e){
+                   console.log("에러발생 : ", e);
+                }  
+          }); // end ajax */
+          
+       $("#closeBtn").click();
+           
+       })
       
       function deleteMarkers(markers) {
          for (var i = 0; i < markers.length; i++) {

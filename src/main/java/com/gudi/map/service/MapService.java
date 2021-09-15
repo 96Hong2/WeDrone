@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.map.dao.MapDAO;
@@ -62,10 +64,46 @@ public class MapService {
 		return map;
 	}
 	
-		public ModelAndView rmWrite(MapDTO dto) {
-		
+		@Transactional
+		public HashMap<String, Object> rmWrite(MapDTO dto) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("작성 서비스 접근");
+			boolean success = false;
+			
+			if(dao.rmWrite(dto)>0) {
+				success = true;
+			}
 
-			return null;
+			map.put("success", success);			
+			return map;
+		}
+
+		public HashMap<String, Object> rmFileUpload(MapDTO dto) {
+			
+			String fileName = dto.getFile().getOriginalFilename();
+			String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			boolean success = false;
+			
+			try {
+				byte[] bytes = dto.getFile().getBytes();
+				Path filePath = Paths.get(root+newFileName);
+				Files.write(filePath, bytes);
+				
+				 String path = "/photo/"+newFileName;
+				 logger.info("upload path : "+path);
+				
+				if(dao.rmFileUpload(fileName, newFileName)>0) {
+					success = true;
+				}
+				 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			map.put("success", success);			
+			return map;
+			
 		}
 
 }

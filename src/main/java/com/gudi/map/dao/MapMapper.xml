@@ -43,4 +43,14 @@
 		</if>
 	</select>
 	
+	<insert id="rmFileUpload" parameterType="String">
+		INSERT INTO image(imgId, oriFileName, newFileName, imgField, imgPath) 
+		VALUES(image_SEQ.NEXTVAL, #{param1}, #{param2}, 'review', 'C:/upload')
+	</insert>
+	
+	<insert id="rmWrite" parameterType="com.gudi.map.dto.MapDTO">
+		INSERT INTO reviewmk(reviewid, rating, reviewcontent, address, lat, lon, userid, areaid, nickname) 
+		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, 'test', '1', '테스트')
+	</insert>
+	
 </mapper>
