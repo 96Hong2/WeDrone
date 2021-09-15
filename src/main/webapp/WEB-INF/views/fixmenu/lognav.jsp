@@ -22,9 +22,8 @@
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
 <style>
-<style>
-/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
-.wrap {
+<
+style> /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */ .wrap {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -37,17 +36,34 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-
-
 </style>
+
+<script>
+	$('.dropdown').hover(
+			function() {
+				$(this).find('.dropdown-menu active').stop(true, true).delay(
+						200).fadeIn();
+			},
+			function() {
+				$(this).find('.dropdown-menu active').stop(true, true).delay(
+						200).fadeOut();
+			});
+
+	$('.dropdown-menu active').hover(function() {
+		$(this).stop(true, true);
+	}, function() {
+		$(this).stop(true, true).delay(200).fadeOut();
+	});
+</script>
 </head>
+
 <title>드론</title>
 <body>
 	<div class="wrap">
 		<nav class="navbar navbar-expand-lg navbar-dark"
 			style="background-color: #3c3c3c;">
 			<div class="d-flex justify-content-end">
-			
+
 				<a
 					class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
 					href="${path}/"> <img src="resources/img/LOGO.png"
@@ -78,7 +94,7 @@ footer {
 					<li class="nav-item"><a class="nav-link active text-center "
 						href="${path}/board"><h4>Board</h4></a></li>
 
-						<li class="nav-item"></li>
+					<li class="nav-item"></li>
 					</ul>
 					<div class="d-flex" id="alarmalert">
 						<i id="bell" class="bi bi-bell-fill"
@@ -99,7 +115,7 @@ footer {
 					</div>
 				</div>
 		</nav>
-</div>
+	</div>
 
 
-		
+	</script>

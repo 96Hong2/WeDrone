@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 /* 기본 세팅 */
 
+
 h1, h2, h5, h3, h4, p, html, body, nav {
     margin: 0;
     padding: 0;
@@ -33,4 +34,10 @@ h1, h2, h5, h3, h4, p, html, body, nav {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
 }
