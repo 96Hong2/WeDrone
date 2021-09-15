@@ -6,22 +6,38 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<%-- 부트 스트랩 메타태그 --%>
+<!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%-- 부트 스트랩 아이콘 --%>
+<!-- 부트스트랩 파일 -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+	crossorigin="anonymous">
+	
+</script>
+<link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
+<!-- css cdn 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
+	rel="stylesheet">
+<!-- 아이콘 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
+	integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"
+	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-<!-- 부트스트랩 css 추가 -->
-<%--<link href="${path}/resources/css/bootstrap.css" rel="stylesheet">--%>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-	crossorigin="anonymous">
-<%-- 공통 css --%>
-<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
-</head>
-<style>
+
+<link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -45,13 +61,15 @@ body, html {
 </head>
 <title>드론</title>
 <body>
-
-	<c:if test="${sessionScope.loginId eq null}">
-		<jsp:include page="../fixmenu/navbar.jsp" />
+	<!-- 상단 메뉴바 -->
+	<!-- 아이디가 있다면 -->
+	<%-- <c:if test="${sessionScope.userId ne null}">
+		<jsp:include page="${path}/lognav"></jsp:include>
 	</c:if>
-	<c:if test="${sessionScope.loginId ne null}">
-		<jsp:include page="../fixmenu/lognav.jsp" />
-	</c:if>
+	<!-- 아이디가 없을때 네비바-->
+	<c:if test="${sessionScope.userId eq null}">
+		<jsp:include page="${path}/navbar"></jsp:include>
+	</c:if> --%>
 
 	<div class="wrap">
 		<!-- 네비게이션바 -->
@@ -109,7 +127,6 @@ body, html {
 		<!-- 사이드바 -->
 		<div class="d-flex"
 			style="height: auto; width: auto; min-height: 100vh;">
-
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
@@ -122,7 +139,8 @@ body, html {
 							쓴 댓글</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기
-							마커</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
+							마커</h5></a> <a
+						class="ps-4 fw-bold list-group-item list-group-item-action active"
 						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림
 							리스트</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
@@ -132,25 +150,54 @@ body, html {
 				</div>
 			</nav>
 
-
 			<!--들어갈 내용-->
 			<div class="cont container mx-10 py-5">
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
 						class="me-2 btn btn-warning">
-						<i class="bi bi-book"></i>
+						<i class="bi bi-bell"></i>
 					</button>
-					<h2 class="fw-bold my-3">마이 페이지</h2>
+					<h2 class="fw-bold my-3">알림 리스트</h2>
 				</div>
 				<hr />
 				<div class="cont container w-50">
-					<!-- 내 정보 수정 폼 -->
-
+					<!-- 알림리스트 -->
+					<div id="alarmBox" class="cont container w-50">
+						<c:if test="${alarmList[0].alarmContent ne null}">
+							<c:forEach items="${alarmList}" var="alarmLists">
+								<div class="d-flex form-check align-items-center m-0 p-0">
+									<input class="form-check-input me-2" type="checkbox"
+										value="${alarmLists.alarmNum}" id="flexCheckChecked"
+										name="alarmDelNum">
+									<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">${alarmLists.alarmContent}</div>
+								</div>
+							</c:forEach>
+							<div class="form-check my-1">
+								<input class="form-check-input" type="checkbox" value="1"
+									id="allCheck"> <label class="form-check-label fw-bold"
+									for="defaultCheck1">전체선택</label>
+								<div class="invalid-feedback">약관에 동의해주세요</div>
+							</div>
+							<div class="col text-center">
+								<button id="cafeAlarmDelBtn" class="btn btn-dark" type="button">삭제</button>
+							</div>
+						</c:if>
+						<c:if test="${AlarmList[0].alarmContent eq null}">
+							<div class="text-center text-muted">
+								<h3>등록된 알림이 없습니다</h3>
+							</div>
+						</c:if>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- 하단 푸터 -->
 
-	<jsp:include page="../fixmenu/footer.jsp"></jsp:include>
+
+		<!-- 하단 푸터 -->
+
+		<footer class="py-3 bg-dark bg-gradient">
+			<p class="m-0 text-center text-white">구디아카데미 프로젝트 1조</p>
+			<p class="m-0 text-center text-white">Copyright &copy; Website
+				2021</p>
+		</footer>
 </html>
