@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+/* 
+<link href="${path}/resources/css/reviewMK.css" rel="stylesheet">
+ */
+ 
+/* 앵커요소 */
+.reviewAnchor{
+	text-decoration : none;
+	color: black;
+}
+
+.reviewAnchor:hover{
+	color : skyblue;
+}
+
+/* Wrap */
+.reviewWrap {
+	/* background-color: snow; */
+}
+
+/* revBox1 : 썸네일, 닉네임, 주소 */
+.revBox1{
+	display	: flex;
+}
+
+.reviewThumb {
+	height: 50px;
+	width: 50px;
+	margin: 10px;
+	justify-content: left;
+}
+
+.revBox1_1{
+	text-align: left;	
+}
+
+.revNickName{
+	font-size : 22px;
+}
+
+.revAddress{
+	font-size : 15px;
+}
+
+
+/* revBox2 : Rating, revBox2_1*/
+.revBox2{
+	margin-left: 65px;
+}
+
+
+/* Rating : 평점 (구름)*/
+.revRating{
+	display : flex;
+	justify-content: left;
+}
+
+.revRatingImg{
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	margin : 3px;
+}
+
+
+/* revBox2_1 : 댓글, 좋아요, 즐겨찾기 */
+.revBox2_1{
+	display : flex;
+	justify-content: space-between;
+}
+
+.revBox2_2{
+	text-align :left;
+	font-size : 15px;
+}
+
+.revIsBookMark{
+	font-size : 30px;
+	color : orange;
+	margin-right : 8px;
+}
+
+.revBookMarkImg{
+	height: 40px;
+	width: 40px;
+/* 	display: inline-block; */
+}

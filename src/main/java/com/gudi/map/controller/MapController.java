@@ -66,4 +66,19 @@ public class MapController {
 			return service.rmFileUpload(dto);
 		}
 
+		//은홍
+		//후기마커 상세정보 모달창에 넣을 jsp로 이동 (임시로 만듬)
+		@RequestMapping(value = "/modal", method=RequestMethod.GET)
+		public String modal() {
+			return "reviewDetail";
+		}
+		
+		//은홍
+		//후기마커의 상세정보를 가져오는 메소드
+		@RequestMapping(value = "/getReviewDetail", method=RequestMethod.GET)
+		@ResponseBody
+		public HashMap<String, Object> getReviewDetail(@RequestParam String areaName) {
+			logger.info("areaName : {}", areaName);
+			return service.getAreaInfo(areaName);
+		}
 }
