@@ -310,30 +310,30 @@ ul.tabs li.current {
 
       <!-- Modal -->
 
-		<div class="modal fade" id="reviewModal" tabindex="-1"
-			aria-labelledby="reviewModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="reviewModalLabel"></h5>
-							<input type="hidden" id="rmDetailAddr" name="rmDetailAddr" value=""/>
-							<input type="hidden" id="rmLat" name="rmLat" value=""/>
-							<input type="hidden" id="rmLng" name="rmLng" value=""/>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<input id="content" type="text" name="content" value=""/>
-						<input type="file" name="rmPhoto"/>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div class="modal fade" id="reviewModal" tabindex="-1"
+         aria-labelledby="reviewModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="reviewModalLabel"></h5>
+                     <input type="hidden" id="rmDetailAddr" name="rmDetailAddr" value=""/>
+                     <input type="hidden" id="rmLat" name="rmLat" value=""/>
+                     <input type="hidden" id="rmLng" name="rmLng" value=""/>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <input id="content" type="text" name="content" value=""/>
+                  <input type="file" name="rmPhoto"/>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"
+                     data-bs-dismiss="modal">취소</button>
+                  <button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
+               </div>
+            </div>
+         </div>
+      </div>
 
 </body>
 
@@ -439,77 +439,77 @@ $(document).ready(function(){
             },
             dataType:'JSON',
             success:function(data){
-            	var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
-            	+'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
-            	$('#orderMenu').empty();
-            	$('#orderMenu').append(orderStr);
-            	
+               var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
+               +'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
+               $('#orderMenu').empty();
+               $('#orderMenu').append(orderStr);
+               
                console.log("후기마커 data : ", data);
                console.log("후기마커 list : ", data.list);
                console.log("후기마커 list[0] : ", data.list[0]);
                var content = "";
                var list = data.list;
                list.forEach(function(review, index){
-            	   console.log("후기마커"+index+"번째 : ", review);
-            	   var rating = "";
-            	   for(var i=0; i<review.rating; i++){
-            		   rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
-            	   }
-            	  
-            	   var element = "<li class='list-group-item'>"
-            	   +"<a href=# class='reviewAnchor'>"
-            	   +"<div class='reviewWrap'>"
-            	   //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
-            	   +"<div class='revBox1'>"
-            	   +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
-            	   +"<div class='revBox1_1'>"
-            	   +"<div class='revNickName'>"+review.nickName+"</div>"
-            	   +"<div calss='revAddress'>"+review.address+"</div>"
-            	   +"</div>"
-            	   +"</div>"
-            	   +"<div class='invisibleBox'></div>"
-            	   +"<div class='revBox2'>"
-            	   +"<div class='revRating'>"+rating+"</div>"
-            	   +"<div class='revBox2_1'>"
-            	   +"<div class='revBox2_2'>"
-            	   +"<div calss='revCmtCnt'> ♥ 댓글 : "+review.commentCnt+" 개</div>"
-            	   +"<div calss='revLikeCnt'> ♥ 좋아요 : "+review.likeCnt+" 개</div>"
-            	   +"</div>"; //end revBox2_2
+                  console.log("후기마커"+index+"번째 : ", review);
+                  var rating = "";
+                  for(var i=0; i<review.rating; i++){
+                     rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+                  }
+                 
+                  var element = "<li class='list-group-item'>"
+                  +"<a href=# class='reviewAnchor'>"
+                  +"<div class='reviewWrap'>"
+                  //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
+                  +"<div class='revBox1'>"
+                  +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
+                  +"<div class='revBox1_1'>"
+                  +"<div class='revNickName'>"+review.nickName+"</div>"
+                  +"<div calss='revAddress'>"+review.address+"</div>"
+                  +"</div>"
+                  +"</div>"
+                  +"<div class='invisibleBox'></div>"
+                  +"<div class='revBox2'>"
+                  +"<div class='revRating'>"+rating+"</div>"
+                  +"<div class='revBox2_1'>"
+                  +"<div class='revBox2_2'>"
+                  +"<div calss='revCmtCnt'> ♥ 댓글 : "+review.commentCnt+" 개</div>"
+                  +"<div calss='revLikeCnt'> ♥ 좋아요 : "+review.likeCnt+" 개</div>"
+                  +"</div>"; //end revBox2_2
 
-            	   /*
-            	   if(review.isLike > 0){
-            		   element += "<div calss='revIsLike'>"+"♥"+"좋아요 : "+review.likeCnt+" 개</div>"; 
-            	   }else{
-            		   element += "<div calss='revIsLike'>"+"♡"+"</div>";
-            	   }
-            	   */
-            	   
-            	   if(review.isBookMark > 0){
-            		   element += "<div class='revIsBookMark'>★</div>";
-            	   }else{
-            		   element += "<div class='revIsBookMark'>☆</div>";
-            	   }
-            	   element += "</div></div>"; //end .revBox2_1, .revBox2
-            	   element += "</div></a></li><hr/>";
-            	   content += element;
+                  /*
+                  if(review.isLike > 0){
+                     element += "<div calss='revIsLike'>"+"♥"+"좋아요 : "+review.likeCnt+" 개</div>"; 
+                  }else{
+                     element += "<div calss='revIsLike'>"+"♡"+"</div>";
+                  }
+                  */
+                  
+                  if(review.isBookMark > 0){
+                      element += "<div class='revIsBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
+                   }else{
+                      element += "<div class='revIsBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div>";
+                   }
+                  element += "</div></div>"; //end .revBox2_1, .revBox2
+                  element += "</div></a></li><hr/>";
+                  content += element;
                })
                $("#reviewUl").empty();
                $("#reviewUl").append(content);
+               
+               //마우스오버된 후기 하이라이트
+               $('.reviewWrap').hover(
+               function(){ //mouseover
+                  $(this).css("background-color", "aliceblue"); 
+                  },function(){ //mouseout
+                     $(this).css("background-color", "white")
+                  }
+               );
                
             },
             error:function(e){
                console.log("에러발생 : ", e);
             }
          });
-         
-         //마우스오버된 후기 하이라이트
-         $('.reviewWrap').on('mouseover',function(){
-        	$(this).css("background-color", "aliceblue"); 
-         });
-         
-         $('.reviewWrap').on('mouseout',function(){
-         	$(this).css("background-color", "white"); 
-          });
          
          
          // 지도를 클릭한 위치에 표출할 마커입니다
@@ -769,30 +769,30 @@ $(document).ready(function(){
       
       
       $("#rmSubmit").click(function(){
-    	  
-    	  var rmLat = $("#rmLat").val();
-    	  var rmLng = $("#rmLng").val();
-    	  var rmDetailAddr = $("#rmDetailAddr").val();
-    	  var content = $("#content").val();
-    	  
-    	  $.ajax({
-    		  url:'rmWrite',
+         
+         var rmLat = $("#rmLat").val();
+         var rmLng = $("#rmLng").val();
+         var rmDetailAddr = $("#rmDetailAddr").val();
+         var content = $("#content").val();
+         
+         $.ajax({
+            url:'rmWrite',
               type:'POST',
               data : {
-            	  "lat" : rmLat,
-            	  "lon" : rmLng,
-            	  "address" : rmDetailAddr,
-            	  "reviewContent" : content,
-            	  },
+                 "lat" : rmLat,
+                 "lon" : rmLng,
+                 "address" : rmDetailAddr,
+                 "reviewContent" : content,
+                 },
               dataType:'JSON',
               success:function(data){
-            	  
-            	  
+                 
+                 
               },
               error:function(e){
                   console.log("에러발생 : ", e);
                }  
-    	  }); // end ajax 왜안되세요
+         }); // end ajax 왜안되세요
       })
       
 

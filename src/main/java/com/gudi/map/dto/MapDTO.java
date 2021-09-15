@@ -7,8 +7,6 @@ public class MapDTO {
 	private String imgPath;
 	private String address;
 	private String reviewContent;
-	private int lat;
-	private int lon;
 	private int rating;
 	private int reviewCnt;
 	private int likeCnt;
@@ -16,24 +14,33 @@ public class MapDTO {
 	private int isLike;
 	private int isBookMark;
 	private int commentCnt;
+	private String reviewDate;
+	private double lat;
+	private double lon;
 
+	public String getReviewDate() {
+		return reviewDate;
+	}
+	public void setReviewDate(String reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLon() {
+		return lon;
+	}
+	public void setLon(double lon) {
+		this.lon = lon;
+	}
 	public String getReviewContent() {
 		return reviewContent;
 	}
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
-	}
-	public int getLat() {
-		return lat;
-	}
-	public void setLat(int lat) {
-		this.lat = lat;
-	}
-	public int getLon() {
-		return lon;
-	}
-	public void setLon(int lon) {
-		this.lon = lon;
 	}
 	
 	public int getCommentCnt() {

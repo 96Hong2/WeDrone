@@ -18,27 +18,27 @@
 	
 	<select id="getReviewList" resultType="com.gudi.map.dto.MapDTO">
 		<if test='param2.equals("reviewDate")'>
-		SELECT r.reviewId, r.nickName, r.address, r.rating,
+		SELECT r.reviewId, r.nickName, r.address, r.rating, TO_CHAR(r.reviewDate, 'YYYY-MM-DD') reviewDate, r.lat, r.lon,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
 		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{param3}) isLike,
 		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{param3}) isBookMark
 		FROM
-		(SELECT reviewId, nickName, address, rating, reviewDate FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{param1})) r
+		(SELECT reviewId, nickName, address, rating, reviewDate, lat, lon FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{param1}) AND isdel='N') r
 		ORDER BY reviewDate DESC
 		</if>
 		
 		<if test='param2.equals("likeCnt")'>
 		SELECT * FROM(
-		SELECT r.reviewId, r.nickName, r.address, r.rating, r.reviewDate,
+		SELECT r.reviewId, r.nickName, r.address, r.rating, TO_CHAR(r.reviewDate, 'YYYY-MM-DD') reviewDate, r.lat, r.lon,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
 		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
 		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{param3}) isLike,
 		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{param3}) isBookMark
 		FROM
-		(SELECT reviewId, nickName, address, rating, reviewDate FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{param1})) r)
+		(SELECT reviewId, nickName, address, rating, reviewDate, lat, lon FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{param1}) AND isdel='N') r)
 		ORDER BY likeCnt DESC, reviewDate DESC
 		</if>
 	</select>

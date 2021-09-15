@@ -11,7 +11,7 @@
 }
 
 .reviewAnchor:hover{
-	color : darkgray;
+	color : skyblue;
 }
 
 /* Wrap */
@@ -79,4 +79,10 @@
 	font-size : 30px;
 	color : orange;
 	margin-right : 8px;
+}
+
+.revBookMarkImg{
+	height: 40px;
+	width: 40px;
+/* 	display: inline-block; */
 }
