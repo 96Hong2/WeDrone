@@ -396,8 +396,9 @@ $(document).ready(function(){
       //function 안 쪽에 지역변수로 넣으니까 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을대 전체를 못 없애줌. 그래서 전역변수로 만듦.
       var polygons = [];
       //현재 지도에 띄워지는 커스텀 오버레이 변수 설정
-      var customOverlay = new kakao.maps.CustomOverlay();   
-      
+      var customOverlay = new kakao.maps.CustomOverlay();
+      //현재 지도에 띄워져있는 후기마커들을 저장하는 배열 //지울 때 한꺼번에 지우기 위함
+      var markers = [];
       
       //#지역 오버레이에서 선택버튼 클릭 시 수행되는 함수 
       //해당 지역 확대 및 리스트,마커 가져오기
@@ -405,6 +406,8 @@ $(document).ready(function(){
          //정렬기준 : default는 지역선택에 의한 함수실행으로 지역 확대가 이루어짐,
          //like는 좋아요순, latest는 최신순 선택에 의한 함수실행으로 지역확대X
          console.log("selectArea name/order : "+name+"/"+order);
+      
+         deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
          
          if(order=='default'){
             //현재 지도 레벨에서 2레벨 확대한 레벨
@@ -447,10 +450,14 @@ $(document).ready(function(){
                console.log("후기마커 data : ", data);
                console.log("후기마커 list : ", data.list);
                console.log("후기마커 list[0] : ", data.list[0]);
+               
                var content = "";
                var list = data.list;
+               
                list.forEach(function(review, index){
                   console.log("후기마커"+index+"번째 : ", review);
+                  
+                  //평점(구름아이콘)
                   var rating = "";
                   for(var i=0; i<review.rating; i++){
                      rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
@@ -458,7 +465,7 @@ $(document).ready(function(){
                  
                   var element = "<li class='list-group-item'>"
                   +"<a href=# class='reviewAnchor'>"
-                  +"<div class='reviewWrap'>"
+                  +"<div class='reviewWrap"+index+"'>"
                   //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
                   +"<div class='revBox1'>"
                   +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
@@ -492,18 +499,78 @@ $(document).ready(function(){
                   element += "</div></div>"; //end .revBox2_1, .revBox2
                   element += "</div></a></li><hr/>";
                   content += element;
-               })
+                  
+                //지도에 후기마커 생성
+                  var imageSrc = "resources/img/marker1.png";
+                  var imageSize = new kakao.maps.Size(45, 50);
+                  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                  
+                  var revMarker = new kakao.maps.Marker({
+                	  map : map,
+                	  position: new kakao.maps.LatLng(review.lat, review.lon),
+                	  image : markerImage
+                  });
+                  
+                  kakao.maps.event.addListener(revMarker, 'click', function() {
+                	    alert('marker click!');
+                	    //마커 상세보기 모달창 열기 //review.reviewId 사용
+                	});
+                  
+                  kakao.maps.event.addListener(revMarker, 'mouseover', function() {
+                	    //마커 하이라이트
+                	    imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
+                	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                	    revMarker.setImage(markerImage);
+                	    revMarker.setMap(map);
+                	    
+                	    //리스트 하이라이트
+                	    $('.reviewWrap'+index).css("background-color", "aliceblue");
+                	});
+                  
+                  kakao.maps.event.addListener(revMarker, 'mouseout', function() {
+                	    
+                	    //마커 원래대로
+                	    imageSize = new kakao.maps.Size(45, 50); //원래 크기로
+                	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                	    revMarker.setImage(markerImage);
+                	    revMarker.setMap(map);
+                	    
+                	  	//리스트 원래대로
+                	    $('.reviewWrap'+index).css("background-color", "white");
+                	});
+
+                  
+                  markers.push(revMarker); //마커배열에 이 마커 추가
+                  
+                  
+                //마우스오버된 후기 하이라이트
+                  $('.reviewWrap'+index).hover(
+                  function(){ //mouseover
+                     $(this).css("background-color", "aliceblue"); 	
+                  	//마커 하이라이트
+             	    imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+             	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+             	    revMarker.setImage(markerImage);
+             	   	revMarker.setMap(map);
+             	    },
+             	  function(){ //mouseout
+                      $(this).css("background-color", "white");
+             	  
+                    //마커 원래대로
+            	     imageSize = new kakao.maps.Size(45, 50); //원래 크기로
+            		 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+            	    revMarker.setImage(markerImage);
+            	    revMarker.setMap(map);
+                	    }
+                  );
+               }) //end forEach()
+               
                $("#reviewUl").empty();
                $("#reviewUl").append(content);
                
-               //마우스오버된 후기 하이라이트
-               $('.reviewWrap').hover(
-               function(){ //mouseover
-                  $(this).css("background-color", "aliceblue"); 
-                  },function(){ //mouseout
-                     $(this).css("background-color", "white")
-                  }
-               );
+               
+               
+             
                
             },
             error:function(e){
@@ -795,7 +862,12 @@ $(document).ready(function(){
          }); // end ajax 왜안되세요
       })
       
-
+      function deleteMarkers(markers) {
+         for (var i = 0; i < markers.length; i++) {
+        	 markers[i].setMap(null);
+         }
+         markers = [];
+      }
       
       
 </script>
