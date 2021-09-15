@@ -309,28 +309,32 @@ ul.tabs li.current {
       </div>
 
       <!-- Modal -->
-      <div class="modal fade" id="reviewModal" tabindex="-1"
-         aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                     aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
-                  <input type="text" name="reviewContents" id="reviewContents">
-                  <input type="button" value="파일 업로드" onclick="fileUp()" />
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary"
-                     data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save
-                     changes</button>
-               </div>
-            </div>
-         </div>
-      </div>
+
+		<div class="modal fade" id="reviewModal" tabindex="-1"
+			aria-labelledby="reviewModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="reviewModalLabel"></h5>
+							<input type="hidden" id="rmDetailAddr" name="rmDetailAddr" value=""/>
+							<input type="hidden" id="rmLat" name="rmLat" value=""/>
+							<input type="hidden" id="rmLng" name="rmLng" value=""/>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input id="content" type="text" name="content" value=""/>
+						<input type="file" name="rmPhoto"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 </body>
 
 <script>
@@ -535,11 +539,14 @@ $(document).ready(function(){
                            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
                            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
                            
+                           var rmLat = latlng.getLat(); 
+                           var rmLng = latlng.getLng(); 
+                           
                            var content = '<div class="bAddr">' +
                                            '<span class="title">법정동 주소정보</span>' + 
                                            detailAddr + 
                                        '</div>'+
-                                       '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\')">'+
+                                       '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\', '+rmLat+', '+rmLng+')">'+
                                        '후기 작성'+
                                      '</button>';
                                        
@@ -548,13 +555,8 @@ $(document).ready(function(){
                    marker.setMap(map);
 
                                        infowindow.setContent(content);
-                                      
-                   
-                                    // 마커에 마우스오버 이벤트를 등록합니다
-                                       kakao.maps.event.addListener(marker, 'click', function() {
-                                         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-                                           infowindow.open(map, marker);
-                                       });
+                                       infowindow.open(map, marker);
+                                     
 
                                     /*
                                        // 마커에 마우스아웃 이벤트를 등록합니다
@@ -753,22 +755,47 @@ $(document).ready(function(){
       }
       
       //후기 작성 버튼을 눌렀을 때
-      function reviewWrite(detailAddr){
-         console.log("리뷰 작성");
+      function reviewWrite(detailAddr, rmLat, rmLng){
          console.log("주소 : "+detailAddr);
-         $("#exampleModalLabel").html(detailAddr);
+         $("#reviewModalLabel").html(detailAddr);
+         $("#rmLat").val(rmLat);
+         $("#rmLng").val(rmLng);
       }
-      
-      /*
-      function setZoomable(zoomable) {
-          // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
-          map.setZoomable(false);    
-      }*/
       
       function setMapLevel(){
          map.setMinLevel(3);
          map.setMaxLevel(10);
       }
+      
+      
+      $("#rmSubmit").click(function(){
+    	  
+    	  var rmLat = $("#rmLat").val();
+    	  var rmLng = $("#rmLng").val();
+    	  var rmDetailAddr = $("#rmDetailAddr").val();
+    	  var content = $("#content").val();
+    	  
+    	  $.ajax({
+    		  url:'rmWrite',
+              type:'POST',
+              data : {
+            	  "lat" : rmLat,
+            	  "lon" : rmLng,
+            	  "address" : rmDetailAddr,
+            	  "reviewContent" : content,
+            	  },
+              dataType:'JSON',
+              success:function(data){
+            	  
+            	  
+              },
+              error:function(e){
+                  console.log("에러발생 : ", e);
+               }  
+    	  }); // end ajax
+      })
+      
+
       
       
 </script>

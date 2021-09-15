@@ -30,16 +30,7 @@
 		function fbfileUpload(){
 			$('form').submit();
 		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 	</script>
 </html>

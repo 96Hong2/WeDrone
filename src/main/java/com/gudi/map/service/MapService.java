@@ -1,5 +1,9 @@
 package com.gudi.map.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +12,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.map.dao.MapDAO;
 import com.gudi.map.dto.MapDTO;
@@ -17,6 +24,7 @@ import com.gudi.map.dto.MapDTO;
 public class MapService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired(required=false) MapDAO dao;
+	@Value("#{config['Globals.filePath']}")String root;
 	
 	public HashMap<String, Object> getAreaInfo(String areaName) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -53,5 +61,11 @@ public class MapService {
 		map.put("list", list);
 		return map;
 	}
+	
+		public ModelAndView rmWrite(MapDTO dto) {
+		
+
+			return null;
+		}
 
 }
