@@ -558,55 +558,36 @@ $(document).ready(function(){
                $("#reviewUl").empty();
                $("#reviewUl").append(content);
                
-               console.log("마커스 길이 : ",markers.length);
-               console.log("마커스  : ",markers);
-               console.log("마커스 0 : ",markers[0]);
-               
                //마우스오버된 후기 하이라이트
-            	 for(var i=0; i<listCnt; i++){
-  	             	console.log("reviewIndex : ","reviewWrap"+i);
-  	               	var reviewWrap = document.getElementsByClassName("reviewWrap"+i)[0];
-  	               	var marker = {};
-  	               	//var iStr = i.toString();
-  	               	//marker.i = markers[i];
-  	               	console.log("markers["+i+"] : ", markers[i]);
+            	 for(var i=0; i<listCnt; i++){ 
+  	             	//console.log("reviewIndex : ","reviewWrap"+i);
+  	               	
   	               	var imageSrc = "resources/img/marker1.png";
-  	               
-  	               	reviewWrap.addEventListener("mouseover",function(){
-  	               		$(this).css("background-color", "aliceblue");
-  	               		console.log("marker : ",marker);
-		       		  	//마커 하이라이트
-		       		  	marker.setMap(null);
-		       		  	var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-		       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-		       		  	marker.setImage(markerImage);
-		       		  	marker.setMap(map);
-  	               		//reviewMouseover(marker);
-  	               	});
   	               	
-  	               	/*
-  	               	function reviewMouseover(marker){
-  	               		console.log("marker : ",marker);
-  		       		  	//마커 하이라이트
-  		       		  	marker.setMap(null);
-  		       		  	var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-  		       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  		       		  	marker.setImage(markerImage);
-  		       		  	marker.setMap(map);
-  	               	}
-  	               	*/
-  	                 
+  	               	(function(i){
+	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseover",function(){
+  		               		$(this).css("background-color", "aliceblue");
+  	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
+		       			  	//마커 하이라이트
+		       			  	markers[i].setMap(null);
+		       		  		var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+			       		 	markers[i].setImage(markerImage);
+			       			markers[i].setMap(map);
+  	        	       	});
+  	               		
+	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseout",function(e){
+	  	               		$(this).css("background-color", "white");
+	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+	  	           		 	//마커 원래대로
+	  	           		 	markers[i].setMap(null);
+	  	           		 	var imageSize = new kakao.maps.Size(45, 50); //원래크기로
+	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+	  	           		 	markers[i].setImage(markerImage);
+	  	           		 	markers[i].setMap(map);
+	  	        	    });
+  	               	})(i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
   	               	
-  	              	reviewWrap.addEventListener("mouseout",function(e){
-  	               	 $(this).css("background-color", "white");
-  	               	 console.log("markers[i] : ",markers[i]);
-  	           		 //마커 원래대로
-  	           		 markers[i].setMap(null);
-  	           		 var imageSize = new kakao.maps.Size(45, 50); //원래크기로
-  	           		 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  	           		 markers[i].setImage(markerImage);
-  	           		 markers[i].setMap(map);
-  	        	    });
   	               	
                 }
              
