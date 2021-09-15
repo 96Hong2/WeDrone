@@ -308,7 +308,7 @@ ul.tabs li.current {
 
       </div>
 
-	<!-- 모달 영역 -->
+   <!-- 모달 영역 -->
       <div class="modal fade" id="reviewModal" tabindex="-1"
          aria-labelledby="reviewModalLabel" aria-hidden="true">
          <div class="modal-dialog">
@@ -322,18 +322,18 @@ ul.tabs li.current {
                </div>
                <div class="modal-body">
                   <input id="content" type="text" name="content" value=""/>
-                  	<!--  <form id="fileUpload" enctype="multipart/form-data"> -->
-                  		<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
-                 	 <!--  </form>-->
+                     <!--  <form id="fileUpload" enctype="multipart/form-data"> -->
+                        <input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
+                     <!--  </form>-->
                </div>
                <div class="modal-footer">
                <select name="rating" id="rating" style="width:100px; height:30px;">
-					<option value='1'>1</option>
-					<option value='2'>2</option>
-					<option value='3'>3</option>
-					<option value='4'>4</option>
-					<option value='5'>5</option>
-				</select>
+               <option value='1'>1</option>
+               <option value='2'>2</option>
+               <option value='3'>3</option>
+               <option value='4'>4</option>
+               <option value='5'>5</option>
+            </select>
                   <button type="button" class="btn btn-secondary"
                      data-bs-dismiss="modal" id="closeBtn">취소</button>
                   <button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
@@ -406,6 +406,8 @@ $(document).ready(function(){
       var customOverlay = new kakao.maps.CustomOverlay();
       //현재 지도에 띄워져있는 후기마커들을 저장하는 배열 //지울 때 한꺼번에 지우기 위함
       var markers = [];
+   	 //후기마커의 개수 저장
+      var listCnt = 0;
       
       //#지역 오버레이에서 선택버튼 클릭 시 수행되는 함수 
       //해당 지역 확대 및 리스트,마커 가져오기
@@ -460,6 +462,7 @@ $(document).ready(function(){
                
                var content = "";
                var list = data.list;
+               listCnt = list.length;
                
                list.forEach(function(review, index){
                   console.log("후기마커"+index+"번째 : ", review);
@@ -513,70 +516,99 @@ $(document).ready(function(){
                   var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
                   
                   var revMarker = new kakao.maps.Marker({
-                	  map : map,
-                	  position: new kakao.maps.LatLng(review.lat, review.lon),
-                	  image : markerImage
+                     map : map,
+                     position: new kakao.maps.LatLng(review.lat, review.lon),
+                     image : markerImage
                   });
                   
                   kakao.maps.event.addListener(revMarker, 'click', function() {
-                	    alert('marker click!');
-                	    //마커 상세보기 모달창 열기 //review.reviewId 사용
-                	});
+                       alert('marker click!');
+                       //마커 상세보기 모달창 열기 //review.reviewId 사용
+                   });
                   
                   kakao.maps.event.addListener(revMarker, 'mouseover', function() {
-                	    //마커 하이라이트
-                	    imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
-                	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                	    revMarker.setImage(markerImage);
-                	    revMarker.setMap(map);
-                	    
-                	    //리스트 하이라이트
-                	    $('.reviewWrap'+index).css("background-color", "aliceblue");
-                	});
+                       //마커 하이라이트
+                       imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
+                       markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                       revMarker.setImage(markerImage);
+                       revMarker.setMap(map);
+                       
+                       //리스트 하이라이트
+                       $('.reviewWrap'+index).css("background-color", "aliceblue");
+                   });
                   
                   kakao.maps.event.addListener(revMarker, 'mouseout', function() {
-                	    
-                	    //마커 원래대로
-                	    imageSize = new kakao.maps.Size(45, 50); //원래 크기로
-                	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                	    revMarker.setImage(markerImage);
-                	    revMarker.setMap(map);
-                	    
-                	  	//리스트 원래대로
-                	    $('.reviewWrap'+index).css("background-color", "white");
-                	});
+                       
+                       //마커 원래대로
+                       imageSize = new kakao.maps.Size(45, 50); //원래 크기로
+                       markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                       revMarker.setImage(markerImage);
+                       revMarker.setMap(map);
+                       
+                        //리스트 원래대로
+                       $('.reviewWrap'+index).css("background-color", "white");
+                   });
 
                   
                   markers.push(revMarker); //마커배열에 이 마커 추가
                   
                   
-                //마우스오버된 후기 하이라이트
-                  $('.reviewWrap'+index).hover(
-                  function(){ //mouseover
-                     $(this).css("background-color", "aliceblue"); 	
-                  	//마커 하이라이트
-             	    imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-             	    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-             	    revMarker.setImage(markerImage);
-             	   	revMarker.setMap(map);
-             	    },
-             	  function(){ //mouseout
-                      $(this).css("background-color", "white");
-             	  
-                    //마커 원래대로
-            	     imageSize = new kakao.maps.Size(45, 50); //원래 크기로
-            		 markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-            	    revMarker.setImage(markerImage);
-            	    revMarker.setMap(map);
-                	    }
-                  );
                }) //end forEach()
                
                $("#reviewUl").empty();
                $("#reviewUl").append(content);
                
+               console.log("마커스 길이 : ",markers.length);
+               console.log("마커스  : ",markers);
+               console.log("마커스 0 : ",markers[0]);
                
-               
+               //마우스오버된 후기 하이라이트
+            	 for(var i=0; i<listCnt; i++){
+  	             	console.log("reviewIndex : ","reviewWrap"+i);
+  	               	var reviewWrap = document.getElementsByClassName("reviewWrap"+i)[0];
+  	               	var marker = {};
+  	               	//var iStr = i.toString();
+  	               	//marker.i = markers[i];
+  	               	console.log("markers["+i+"] : ", markers[i]);
+  	               	var imageSrc = "resources/img/marker1.png";
+  	               
+  	               	reviewWrap.addEventListener("mouseover",function(){
+  	               		$(this).css("background-color", "aliceblue");
+  	               		console.log("marker : ",marker);
+		       		  	//마커 하이라이트
+		       		  	marker.setMap(null);
+		       		  	var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+		       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+		       		  	marker.setImage(markerImage);
+		       		  	marker.setMap(map);
+  	               		//reviewMouseover(marker);
+  	               	});
+  	               	
+  	               	/*
+  	               	function reviewMouseover(marker){
+  	               		console.log("marker : ",marker);
+  		       		  	//마커 하이라이트
+  		       		  	marker.setMap(null);
+  		       		  	var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+  		       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  		       		  	marker.setImage(markerImage);
+  		       		  	marker.setMap(map);
+  	               	}
+  	               	*/
+  	                 
+  	               	
+  	              	reviewWrap.addEventListener("mouseout",function(e){
+  	               	 $(this).css("background-color", "white");
+  	               	 console.log("markers[i] : ",markers[i]);
+  	           		 //마커 원래대로
+  	           		 markers[i].setMap(null);
+  	           		 var imageSize = new kakao.maps.Size(45, 50); //원래크기로
+  	           		 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  	           		 markers[i].setImage(markerImage);
+  	           		 markers[i].setMap(map);
+  	        	    });
+  	               	
+                }
              
                
             },
@@ -842,12 +874,12 @@ $(document).ready(function(){
       }
       
       //파일업로드 메소드
-    	  const file = $("#rmPhoto")[0];
+         const file = $("#rmPhoto")[0];
     
       /*
       function fileUpload(){
-    	  
-    	  console.log("file : "+file.files[0].name);
+         
+         console.log("file : "+file.files[0].name);
           console.log("file : "+file.files[0].value);
           console.log("file : "+file.files[0].size);
           
@@ -855,7 +887,7 @@ $(document).ready(function(){
           formData.append("file", file.files[0]);
           
           $.ajax({
-           	url:'rmFileUpload',
+              url:'rmFileUpload',
              type:'POST',
              processData: false,
              contentType: false,
@@ -881,26 +913,26 @@ $(document).ready(function(){
           var rating = $("#rating option:selected").val();
           
           if(file.files.length === 0){
-        	    alert("이미지를 첨부하고 등록해주세요.");
-        	    return;
-        	  }
+               alert("이미지를 첨부하고 등록해주세요.");
+               return;
+             }
           
           console.log("rmLat : "+rmLat);
-    	 	 console.log("rmLng : "+rmLng);
-    	  	console.log("rmDetailAddr : "+rmDetailAddr);
-    	  	console.log("content : "+content);
-    	  	console.log("rating : "+rating);
-    	  	
-    	  	console.log("file : "+file.files[0].name);
+            console.log("rmLng : "+rmLng);
+            console.log("rmDetailAddr : "+rmDetailAddr);
+            console.log("content : "+content);
+            console.log("rating : "+rating);
+            
+            console.log("file : "+file.files[0].name);
             console.log("file : "+file.files[0].value);
             console.log("file : "+file.files[0].size);
             
             const formData = new FormData();
             formData.append("file", file.files[0]);
             
-    	 	
+           
           $.ajax({
-             	url:'rmWrite',
+                url:'rmWrite',
                type:'POST',
                data : {
                   "lat" : rmLat,
@@ -911,11 +943,11 @@ $(document).ready(function(){
                   },
                dataType:'JSON',
                success:function(data){
-					
-            	   console.log(data);
-            	   
-            	   $.ajax({
-                     	url:'rmFileUpload',
+               
+                  console.log(data);
+                  
+                  $.ajax({
+                        url:'rmFileUpload',
                        type:'POST',
                        processData: false,
                        contentType: false,
@@ -942,7 +974,7 @@ $(document).ready(function(){
       
       function deleteMarkers(markers) {
          for (var i = 0; i < markers.length; i++) {
-        	 markers[i].setMap(null);
+            markers[i].setMap(null);
          }
          markers = [];
       }
