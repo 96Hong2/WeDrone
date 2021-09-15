@@ -792,7 +792,7 @@ $(document).ready(function(){
               error:function(e){
                   console.log("에러발생 : ", e);
                }  
-    	  }); // end ajax
+    	  }); // end ajax 왜안되세요
       })
       
 
