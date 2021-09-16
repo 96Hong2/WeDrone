@@ -442,161 +442,8 @@ $(document).ready(function(){
             $('#reviewListArea').show();            
          }
          
-         $.ajax({
-            url:'getReviewList',
-            type:'GET',
-            data : {
-               "areaName" : name,
-               "order" : order
-            },
-            dataType:'JSON',
-            success:function(data){
-               var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
-               +'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
-               $('#orderMenu').empty();
-               $('#orderMenu').append(orderStr);
-               
-               console.log("후기마커 data : ", data);
-               console.log("후기마커 list : ", data.list);
-               console.log("후기마커 list[0] : ", data.list[0]);
-               
-               var content = "";
-               var list = data.list;
-               listCnt = list.length;
-               
-               list.forEach(function(review, index){
-                  console.log("후기마커"+index+"번째 : ", review);
-                  
-                  //평점(구름아이콘)
-                  var rating = "";
-                  for(var i=0; i<review.rating; i++){
-                     rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
-                  }
-                 
-                  var element = "<li class='list-group-item'>"
-                  +"<a href=# class='reviewAnchor'>"
-                  +"<div class='reviewWrap"+index+"'>"
-                  //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
-                  +"<div class='revBox1'>"
-                  +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
-                  +"<div class='revBox1_1'>"
-                  +"<div class='revNickName'>"+review.nickName+"</div>"
-                  +"<div calss='revAddress'>"+review.address+"</div>"
-                  +"</div>"
-                  +"</div>"
-                  +"<div class='invisibleBox'></div>"
-                  +"<div class='revBox2'>"
-                  +"<div class='revRating'>"+rating+"</div>"
-                  +"<div class='revBox2_1'>"
-                  +"<div class='revBox2_2'>"
-                  +"<div calss='revCmtCnt'> ♥ 댓글 : "+review.commentCnt+" 개</div>"
-                  +"<div calss='revLikeCnt'> ♥ 좋아요 : "+review.likeCnt+" 개</div>"
-                  +"</div>"; //end revBox2_2
-
-                  /*
-                  if(review.isLike > 0){
-                     element += "<div calss='revIsLike'>"+"♥"+"좋아요 : "+review.likeCnt+" 개</div>"; 
-                  }else{
-                     element += "<div calss='revIsLike'>"+"♡"+"</div>";
-                  }
-                  */
-                  
-                  if(review.isBookMark > 0){
-                      element += "<div class='revIsBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
-                   }else{
-                      element += "<div class='revIsBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div>";
-                   }
-                  element += "</div></div>"; //end .revBox2_1, .revBox2
-                  element += "</div></a></li><hr/>";
-                  content += element;
-                  
-                //지도에 후기마커 생성
-                  var imageSrc = "resources/img/marker1.png";
-                  var imageSize = new kakao.maps.Size(45, 50);
-                  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                  
-                  var revMarker = new kakao.maps.Marker({
-                     map : map,
-                     position: new kakao.maps.LatLng(review.lat, review.lon),
-                     image : markerImage
-                  });
-                  
-                  kakao.maps.event.addListener(revMarker, 'click', function() {
-                       alert('marker click!');
-                       //마커 상세보기 모달창 열기 //review.reviewId 사용
-                   });
-                  
-                  kakao.maps.event.addListener(revMarker, 'mouseover', function() {
-                       //마커 하이라이트
-                       imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
-                       markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                       revMarker.setImage(markerImage);
-                       revMarker.setMap(map);
-                       
-                       //리스트 하이라이트
-                       $('.reviewWrap'+index).css("background-color", "aliceblue");
-                   });
-                  
-                  kakao.maps.event.addListener(revMarker, 'mouseout', function() {
-                       
-                       //마커 원래대로
-                       imageSize = new kakao.maps.Size(45, 50); //원래 크기로
-                       markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                       revMarker.setImage(markerImage);
-                       revMarker.setMap(map);
-                       
-                        //리스트 원래대로
-                       $('.reviewWrap'+index).css("background-color", "white");
-                   });
-
-                  
-                  markers.push(revMarker); //마커배열에 이 마커 추가
-                  
-                  
-               }) //end forEach()
-               
-               $("#reviewUl").empty();
-               $("#reviewUl").append(content);
-               
-               //마우스오버된 후기 하이라이트
-            	 for(var i=0; i<listCnt; i++){ 
-  	             	//console.log("reviewIndex : ","reviewWrap"+i);
-  	               	
-  	               	var imageSrc = "resources/img/marker1.png";
-  	               	
-  	               	(function(i){
-	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseover",function(){
-  		               		$(this).css("background-color", "aliceblue");
-  	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
-		       			  	//마커 하이라이트
-		       			  	markers[i].setMap(null);
-		       		  		var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-			       		 	markers[i].setImage(markerImage);
-			       			markers[i].setMap(map);
-  	        	       	});
-  	               		
-	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseout",function(e){
-	  	               		$(this).css("background-color", "white");
-	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
-	  	           		 	//마커 원래대로
-	  	           		 	markers[i].setMap(null);
-	  	           		 	var imageSize = new kakao.maps.Size(45, 50); //원래크기로
-	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-	  	           		 	markers[i].setImage(markerImage);
-	  	           		 	markers[i].setMap(map);
-	  	        	    });
-  	               	})(i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
-  	               	
-  	               	
-                }
-             
-               
-            },
-            error:function(e){
-               console.log("에러발생 : ", e);
-            }
-         });
+         //리뷰마커를 로드하는 함수
+         loadReviews(name, order);
          
          
          // 지도를 클릭한 위치에 표출할 마커입니다
@@ -665,6 +512,165 @@ $(document).ready(function(){
          
       } //end selectArea()
       
+      
+      function loadReviews(name, order){ //리뷰리스트와 후기마커를 로드하는 메소드
+    	  
+    	  $.ajax({
+              url:'getReviewList',
+              type:'GET',
+              data : {
+                 "areaName" : name,
+                 "order" : order
+              },
+              dataType:'JSON',
+              success:function(data){
+                 var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
+                 +'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
+                 $('#orderMenu').empty();
+                 $('#orderMenu').append(orderStr);
+                 
+                 console.log("후기마커 data : ", data);
+                 console.log("후기마커 list : ", data.list);
+                 console.log("후기마커 list[0] : ", data.list[0]);
+                 
+                 var content = "";
+                 var list = data.list;
+                 listCnt = list.length;
+                 
+                 list.forEach(function(review, index){
+                    console.log("후기마커"+index+"번째 : ", review);
+                    
+                    //평점(구름아이콘)
+                    var rating = "";
+                    for(var i=0; i<review.rating; i++){
+                       rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+                    }
+                   
+                    var element = "<li class='list-group-item'>"
+                    +"<a href=# class='reviewAnchor'>"
+                    +"<div class='reviewWrap"+index+"'>"
+                    //+"<div> 후기마커 번호 : "+review.reviewId+"</div>"
+                    +"<div class='revBox1'>"
+                    +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
+                    +"<div class='revBox1_1'>"
+                    +"<div class='revNickName'>"+review.nickName+"</div>"
+                    +"<div calss='revAddress'>"+review.address+"</div>"
+                    +"</div>"
+                    +"</div>"
+                    +"<div class='invisibleBox'></div>"
+                    +"<div class='revBox2'>"
+                    +"<div class='revRating'>"+rating+"</div>"
+                    +"<div class='revBox2_1'>"
+                    +"<div class='revBox2_2'>"
+                    +"<div calss='revCmtCnt'> ♥ 댓글 : "+review.commentCnt+" 개</div>"
+                    +"<div calss='revLikeCnt'> ♥ 좋아요 : "+review.likeCnt+" 개</div>"
+                    +"</div>"; //end revBox2_2
+
+                    /*
+                    if(review.isLike > 0){
+                       element += "<div calss='revIsLike'>"+"♥"+"좋아요 : "+review.likeCnt+" 개</div>"; 
+                    }else{
+                       element += "<div calss='revIsLike'>"+"♡"+"</div>";
+                    }
+                    */
+                    
+                    if(review.isBookMark > 0){
+                        element += "<div class='revIsBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
+                     }else{
+                        element += "<div class='revIsBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div>";
+                     }
+                    element += "</div></div>"; //end .revBox2_1, .revBox2
+                    element += "</div></a></li><hr/>";
+                    content += element;
+                    
+                  //지도에 후기마커 생성
+                    var imageSrc = "resources/img/marker1.png";
+                    var imageSize = new kakao.maps.Size(45, 50);
+                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                    
+                    var revMarker = new kakao.maps.Marker({
+                       map : map,
+                       position: new kakao.maps.LatLng(review.lat, review.lon),
+                       image : markerImage
+                    });
+                    
+                    kakao.maps.event.addListener(revMarker, 'click', function() {
+                         alert('marker click!');
+                         //마커 상세보기 모달창 열기 //review.reviewId 사용
+                     });
+                    
+                    kakao.maps.event.addListener(revMarker, 'mouseover', function() {
+                         //마커 하이라이트
+                         imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
+                         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                         revMarker.setImage(markerImage);
+                         revMarker.setMap(map);
+                         
+                         //리스트 하이라이트
+                         $('.reviewWrap'+index).css("background-color", "aliceblue");
+                     });
+                    
+                    kakao.maps.event.addListener(revMarker, 'mouseout', function() {
+                         
+                         //마커 원래대로
+                         imageSize = new kakao.maps.Size(45, 50); //원래 크기로
+                         markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                         revMarker.setImage(markerImage);
+                         revMarker.setMap(map);
+                         
+                          //리스트 원래대로
+                         $('.reviewWrap'+index).css("background-color", "white");
+                     });
+
+                    
+                    markers.push(revMarker); //마커배열에 이 마커 추가
+                    
+                    
+                 }) //end forEach()
+                 
+                 $("#reviewUl").empty();
+                 $("#reviewUl").append(content);
+                 
+                 //마우스오버된 후기 하이라이트
+              	 for(var i=0; i<listCnt; i++){ 
+    	             	//console.log("reviewIndex : ","reviewWrap"+i);
+    	               	
+    	               	var imageSrc = "resources/img/marker1.png";
+    	               	
+    	               	(function(i){
+  	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseover",function(){
+    		               		$(this).css("background-color", "aliceblue");
+    	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
+  		       			  	//마커 하이라이트
+  		       			  	markers[i].setMap(null);
+  		       		  		var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+  			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  			       		 	markers[i].setImage(markerImage);
+  			       			markers[i].setMap(map);
+    	        	       	});
+    	               		
+  	  	              	document.getElementsByClassName("reviewWrap"+i)[0].addEventListener("mouseout",function(e){
+  	  	               		$(this).css("background-color", "white");
+  	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+  	  	           		 	//마커 원래대로
+  	  	           		 	markers[i].setMap(null);
+  	  	           		 	var imageSize = new kakao.maps.Size(45, 50); //원래크기로
+  	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  	  	           		 	markers[i].setImage(markerImage);
+  	  	           		 	markers[i].setMap(map);
+  	  	        	    });
+    	               	})(i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
+    	               	
+    	               	
+                  }
+               
+                 
+              },
+              error:function(e){
+                 console.log("에러발생 : ", e);
+              }
+           });
+      } //end loadReviews()
       
       
       //클릭한 지역의 이름으로 중심좌표를 받아오기 위한 함수
