@@ -43,7 +43,7 @@
 		</if>
 	</select>
 	
-	<insert id="rmFileUpload" parameterType="String">
+	<insert id="rmFileUpload" parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO image(imgId, oriFileName, newFileName, imgField, imgPath, postId) 
 		VALUES(image_SEQ.NEXTVAL, #{param1}, #{param2}, 'review', 'C:/upload', #{param3})
 	</insert>

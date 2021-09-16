@@ -376,6 +376,9 @@ $(document).ready(function(){
       // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
       var map = new kakao.maps.Map(mapContainer, mapOption);
       
+      //지도 클릭시 나타나는 인포윈도우
+      var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
+      
       //지도를 불러올 때 줌 못하게 막음
       function setZoomable(zoomable) {
              // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
@@ -454,7 +457,7 @@ $(document).ready(function(){
          // 지도에 마커를 표시합니다
          marker.setMap(map);
          
-         var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
+         //var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
          
          // 지도에 클릭 이벤트를 등록합니다
          // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
@@ -991,22 +994,21 @@ $(document).ready(function(){
                dataType:'JSON',
                success:function(data){
                
-                  console.log(data);
+            	   console.log("작성된 글 아이디 : "+data.reviewId);
+                   formData.append("reviewId", data.reviewId);
                   
                   $.ajax({
                         url:'rmFileUpload',
                        type:'POST',
                        processData: false,
                        contentType: false,
-                       data : {
-                    	   "formData" : formData,
-                    	   "reviewId" : reviewId
-                       },
+                       data : formData,
                        dataType:'JSON',
                        success:function(data){
                           console.log(data);
                           alert("등록이 완료되었습니다!");
                           loadReviews(areaName, 'default');
+                          infowindow.close();
                        },
                        error:function(e){
                            console.log("에러발생 : ", e);

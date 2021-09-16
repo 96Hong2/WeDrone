@@ -60,6 +60,7 @@ function loadComments(page) { //댓글 데이터를 불러오는 함수
 				},
 				dataType : 'JSON',
 				success : function(data) {
+					
 					if (data.list != null) { //DB에서 댓글 데이터를 정상적으로 가져왔다면
 						$(".commentAreaBox").show(); //만약 숨겨져있으면 보이게 한다
 						$('#cmtCount').html(data.totalCnt);
@@ -74,9 +75,7 @@ function loadComments(page) { //댓글 데이터를 불러오는 함수
 							}
 						});
 					} else { //등록된 댓글이 없다면
-						$("#emptyComment")
-								.html(
-										"<b>댓글이 없습니다</b>");
+						$("#emptyComment").html("<b>댓글이 없습니다</b>");
 						$(".commentAreaBox").hide();
 					}
 				},
@@ -284,7 +283,7 @@ function cmtUpdateExecute(idx, commentId, lev) {
 			}
 		}
 	})
-}
+})
 
 
 
