@@ -50,8 +50,8 @@
 	
 	<insert id="rmWrite"
 		useGeneratedKeys="true"
-		keyColumn="reviewid"
-		keyProperty="reviewid" 
+		keyColumn="reviewId"
+		keyProperty="reviewId" 
 		parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO reviewmk(reviewid, rating, reviewcontent, address, lat, lon, userid, areaid, nickname) 
 		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, #{userId}, #{areaId}, #{nickName})
