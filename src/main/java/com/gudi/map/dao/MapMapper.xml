@@ -74,7 +74,7 @@
 	</select>
 
 	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">
-		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating,
+		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating, address,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=#{param1}) newFileName
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1}) likeCnt
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1} AND userId=#{param2}) isLike

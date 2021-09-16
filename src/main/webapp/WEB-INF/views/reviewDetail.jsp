@@ -44,7 +44,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="reviewTitle">닉네임 님의 후기마커</h5>
+					<h5 class="modal-title" id="reviewTitle"></h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">X</span>
@@ -52,30 +52,8 @@
 				</div>
 				<div class="modal-body">
 
-
-
-					<h5>리뷰아이디 받아와야함</h5>
 					<div class='revContainer'>
-						<div class='revContainer1'>
-							<img class='reviewImg' src='/photo/"+review.newFileName+"' />
-						</div>
-						<div class='revContainer2'>
-							<div id='revContent'>review.content내용내용~~~~~~~~~~~~~~~~~~~~~~~~~</div>
-							<div id='revRating'>
-								♧ ♧ ♧
-								<%-- //평점(구름아이콘)
-                  var rating = "";
-                  for(var i=0; i<review.rating; i++){
-                     rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
-                  } --%>
-							</div>
-							<div id='revDate'>review.reviewDate</div>
-							<div class='revContainer2_1'>
-								<div id='revLike'>♥ 좋아요(review.likeCnt)</div>
-								<div id='revCmt'>■ 댓글(review.CommentCnt)</div>
-								<div id='revBookMark'>★ 즐겨찾기 review.isBookMark</div>
-							</div>
-						</div>
+						
 					</div>
 
 					<hr />
@@ -85,9 +63,9 @@
 
 				</div>
 				<div class="modal-footer">
-					<a class="btn" id="modalY" href="#">예</a>
-					<button class="btn" type="button" data-dismiss="modal">아니요</button>
-					<button id="close" type="button" class="btn btn-default"
+					<!-- <a class="btn" id="modalY" href="#">예</a>
+					<button class="btn" type="button" data-dismiss="modal">아니요</button> -->
+					<button class="close" type="button" class="btn btn-default"
 						data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -107,6 +85,9 @@
 	});
 
 	var reviewId = 26; //테스트용 리뷰아이디  //리뷰아이디 받아와야함
+	var userId = "${sessionScope.userId}";
+	console.log("reviewId : ", reviewId);
+	console.log("userId : ", userId);
 	//상세정보 불러오기 
 	$.ajax({
 		url : 'getReviewDetail',
@@ -119,14 +100,31 @@
 		success : function(review) {
 			console.log("review dto: ",review);
 			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부
-			$('#reviewTitle').apppend("<b>"+review.nickName+" 님의 후기마커</b>");
+			$('#reviewTitle').append("<b>"+review.nickName+" 님의 후기마커</b>");
+			
+			//평점(구름아이콘)
+			var rating = "";
+			for(var i=0; i<review.rating; i++){
+			    rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+			}
 			
 			var content = "";
 			content = "<div class='revContainer1'>" 
 			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
+			+"</div>"
+			+"<div class='revContainer2'>"
+			+"<div id='revContent'>"+review.reviewContent+"</div>"
+			+"<div id='revRating'>"
+			+ rating
+			+"</div>"
+			+"<div id='revDate'>"+review.reviewDate+"</div>"
+			+"<div id='revAddress'>"+review.address+"</div>"
+			+"<div class='revContainer2_1'>"
+				+"<div id='revLike'>♥ 좋아요("+review.likeCnt+")</div>"
+				+"<div id='revCmt'>■ 댓글("+review.commentCnt+")</div>"
+				+"<div id='revBookMark'>★ 즐겨찾기 "+review.isBookMark+"</div>"
+			+"</div>"
 			+"</div>";
-			
-			
 			
 			$('.revContainer').append(content);
 		},

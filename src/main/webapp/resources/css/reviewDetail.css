@@ -1,34 +1,26 @@
 @charset "UTF-8";
 
 /* 
-<link href="${path}/resources/css/reviewMK.css" rel="stylesheet">
+<link href="${path}/resources/css/reviewDetail.css" rel="stylesheet">
  */
- 
-/* 앵커요소 */
-.reviewAnchor{
-	text-decoration : none;
-	color: black;
-}
 
-.reviewAnchor:hover{
-	color : skyblue;
-}
 
 /* Wrap */
-.reviewWrap {
-	/* background-color: snow; */
-}
-
-/* revBox1 : 썸네일, 닉네임, 주소 */
-.revBox1{
+.revContainer {
 	display	: flex;
 }
 
-.reviewThumb {
-	height: 50px;
-	width: 50px;
-	margin: 10px;
+/* revContainer1 : 이미지가 담기는 컨테이너, 이미지는 비율 맞춰서 넣자.. */
+.revContainer1{
+	width: 300px;
+	height: 250px;
+	background-color : pink;
 	justify-content: left;
+}
+
+.reviewImg {
+	width: 300px;
+	height: 250px;
 }
 
 .revBox1_1{
