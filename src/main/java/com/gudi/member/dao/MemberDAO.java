@@ -1,5 +1,7 @@
 package com.gudi.member.dao;
 
+import java.util.HashMap;
+
 import com.gudi.member.dto.MemberDTO;
 
 public interface MemberDAO {
@@ -9,5 +11,5 @@ public interface MemberDAO {
 	int idCheck(String userId);
 	int nickCheck(String nickName);
 
-	String login(String userId);	
+	HashMap<String, String> login(String userId);	
 }

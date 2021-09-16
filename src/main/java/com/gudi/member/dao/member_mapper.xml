@@ -24,7 +24,7 @@
 		WHERE nickName = #{nickName}
 	</select>
 
-	<select id="login" parameterType="String" resultType="String">
+	<select id="login" parameterType="String" resultType="java.util.HashMap">
 		SELECT pw, nickName FROM members WHERE userId = #{userId}
 	</select>
 	

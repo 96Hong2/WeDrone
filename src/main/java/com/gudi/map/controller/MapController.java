@@ -82,8 +82,8 @@ public class MapController {
 		//후기마커의 상세정보를 가져오는 메소드
 		@RequestMapping(value = "/getReviewDetail", method=RequestMethod.GET)
 		@ResponseBody
-		public HashMap<String, Object> getReviewDetail(@RequestParam String areaName) {
-			logger.info("areaName : {}", areaName);
-			return service.getAreaInfo(areaName);
+		public MapDTO getReviewDetail(@RequestParam int areaId, @RequestParam String userId) {
+			logger.info("상세보기 areaId/userId : {}/{}", areaId, userId);
+			return service.getReviewDetail(areaId, userId);
 		}
 }

@@ -57,7 +57,7 @@
 						<div class="invalid-feedback">비밀번호를 입력해주세요</div>	</div>
 					
 				
-				<c:if test="${success eq 'fail'}">
+				<c:if test='${success eq "fail"}'>
 					<div id="redalert"
 						class=" alert alert-danger d-flex align-items-center" role="alert">
 						<svg class="bi flex-shrink-0 me-2" width="24" height="24"

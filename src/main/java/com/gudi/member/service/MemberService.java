@@ -2,6 +2,8 @@ package com.gudi.member.service;
 
 
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -56,13 +58,17 @@ public class MemberService {
 		return result;
 	}
 
-	public ModelAndView login(String userId, String pw, HttpSession session, String nickName) {
+	public ModelAndView login(String userId, String pw, HttpSession session) {
 		logger.info("서비스 로그인요청 id/pw : "+userId+ "/" + pw);
 		String page = "loginForm";
 		String msg = "아이디 또는 비밀번호를 확인하세요.";
 		
-		String DBPw = dao.login(userId);
+		HashMap<String, String> map = dao.login(userId);
+		String DBPw = map.get("PW");
+		String nickName = map.get("NICKNAME");
 		logger.info("들어온 pw값/DB의 pw : "+pw+"/"+DBPw);
+		logger.info("들어온 nickName : {}",nickName);
+		logger.info("DBPw : {}", DBPw);
 		
 		if(DBPw != null && DBPw != "") {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

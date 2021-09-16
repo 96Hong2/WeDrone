@@ -20,6 +20,8 @@ public interface MapDAO {
 	int updateAreaRating(int areaId, int rating);
 
 	int updateAreaRating(HashMap<String, Object> params);
+
+	MapDTO getReviewDetail(int areaId, String userId);
 }
 
 

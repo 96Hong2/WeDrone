@@ -114,8 +114,8 @@ footer {
 							aria-controls="offcanvasRight">기타</button>
 					</div>
 				</div>
+				</div>
 		</nav>
 	</div>
-
-
-	</script>
+</body>
+</html>

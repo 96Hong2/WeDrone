@@ -62,10 +62,10 @@ public class MemberController {
 	}
     
     @RequestMapping(value = "/login")
-	public ModelAndView login(@RequestParam String userId, @RequestParam String pw, HttpSession session, String nickName) {	
+	public ModelAndView login(@RequestParam String userId, @RequestParam String pw, HttpSession session) {	
 		
 		logger.info("컨트롤 로그인 요청");				
-		return service.login(userId, pw, session, nickName);
+		return service.login(userId, pw, session);
 	}
     
     @RequestMapping(value = "/logout")

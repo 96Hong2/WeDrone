@@ -44,7 +44,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">닉네임 님의 후기마커</h5>
+					<h5 class="modal-title" id="reviewTitle">닉네임 님의 후기마커</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">X</span>
@@ -54,12 +54,12 @@
 
 
 
-					<h3>♥바디!!!!!!!!♥</h3>
-					<div class='revContainer1'>
-						<div class='revContainer1_1'>
+					<h5>리뷰아이디 받아와야함</h5>
+					<div class='revContainer'>
+						<div class='revContainer1'>
 							<img class='reviewImg' src='/photo/"+review.newFileName+"' />
 						</div>
-						<div class='revContainer1_2'>
+						<div class='revContainer2'>
 							<div id='revContent'>review.content내용내용~~~~~~~~~~~~~~~~~~~~~~~~~</div>
 							<div id='revRating'>
 								♧ ♧ ♧
@@ -69,7 +69,8 @@
                      rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
                   } --%>
 							</div>
-							<div class='revContainer1_2_1'>
+							<div id='revDate'>review.reviewDate</div>
+							<div class='revContainer2_1'>
 								<div id='revLike'>♥ 좋아요(review.likeCnt)</div>
 								<div id='revCmt'>■ 댓글(review.CommentCnt)</div>
 								<div id='revBookMark'>★ 즐겨찾기 review.isBookMark</div>
@@ -105,18 +106,28 @@
 		$('#detailModal').modal('hide');
 	});
 
-	//상세정보 불러오기
+	var reviewId = 26; //테스트용 리뷰아이디  //리뷰아이디 받아와야함
+	//상세정보 불러오기 
 	$.ajax({
 		url : 'getReviewDetail',
 		type : 'POST',
 		data : {
-			"lat" : rmLat
+			"reviewId" : reviewId,
+			"userId" : '${sessionScope.userId}'
 		},
 		dataType : 'JSON',
-		success : function(data) {
-
+		success : function(review) {
+			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부, 삭제여부
+			$('#reviewTitle').apppend("<b>"+review.nickName+" 님의 후기마커</b>");
 			
-			}); // end ajax     
+			var content = "";
+			content = "<div class='revContainer1'>" 
+			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
+			+"</div>";
+			
+			
+			
+			$('.revContainer').append(content);
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);

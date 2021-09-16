@@ -111,4 +111,10 @@ public class MapService {
 			
 		}
 
+		public MapDTO getReviewDetail(int areaId, String userId) {
+			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부, 삭제여부
+			MapDTO dto = dao.getReviewDetail(areaId, userId);
+			return dto;
+		}
+
 }

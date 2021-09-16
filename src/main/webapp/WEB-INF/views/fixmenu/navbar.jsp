@@ -103,7 +103,7 @@ footer {
 				<div class="d-flex">
 
 					<a class="btn btn-sm btn-outline-light mx-1 me-1" role="button"
-						href="${patn}/loginForm">로그인</a> <a
+						href="${path}/loginForm">로그인</a> <a
 						class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 						href="${path}/joinForm">회원가입</a>
 
