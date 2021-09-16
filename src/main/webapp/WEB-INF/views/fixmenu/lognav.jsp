@@ -43,7 +43,7 @@ footer {
 	<div class="wrap">
 		<nav class="navbar navbar-expand-lg navbar-dark"
 			style="background-color: #3c3c3c;">
-			<div class="d-flex justify-content-end">
+			<div class="d-flex justify-content-between">
 
 				<a
 					class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
@@ -78,32 +78,30 @@ footer {
 					<li class="nav-item"></li>
 					</ul>
 
-					<!-- <div class="d-flex" id="alarmalert">
-				
-						<i id="bell" class="bi bi-bell-fill"
-							style="font-size: 1.8rem; color: white"></i><br> <span
-							id="cartalertnum"
-							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
-					</div> -->
 
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<a class="btn btn-sm btn-outline-light  me-md-2" role="button"
-							href="${path}/loginForm">로그인</a> <a
-							class="btn btn-sm btn-outline-light " role="button"
-							href="${path}/joinForm">회원가입</a>
 
-						<%-- 	<a class="btn btn-sm btn-outline-light  mx-1" role="button"
-							href="${path}/mypage">마이페이지</a>
+					<div class="d-flex" id="alarmalert">
+						<i class="bi bi-envelope mx-3 " type="button"
+							style="font-size: 1.8rem; color: white"><span
+							class="position-absolute top-0 start-100 translate-middle badge border 
+  border-light rounded-circle bg-danger p-2"><span
+								class="visually-hidden"> </span></span></i> <i id="bell"
+							class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><br>
+						<span id="cartalertnum"
+							class="border border-dark position-absolute top-0 
+							mx-3 badge bg-white text-white rounded-pill mt-2"></span>
+					</div>
+					<div class="d-flex">
+
+
+						<!-- <button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button> -->
+						<a class="btn btn-sm btn-outline-light me-1 mx-2" roll="button"
+							href="${path}/logout"> 로그아웃</a> <a
+							class="btn btn-sm btn-outline-light  mx-1" role="button"
+							href="${path}/mypages">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">메시지</button> --%>
+							aria-controls="offcanvasRight">메시지</button>
 					</div>
 				</div>
-				</div>
 		</nav>
-<<<<<<< Updated upstream
-	</div>
-</body>
-</html>
-=======
->>>>>>> Stashed changes

@@ -41,10 +41,10 @@ footer {
 </head>
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+<c:if test="${sessionScope.userId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
-	<c:if test="${sessionScope.loginId ne null}">
+	<c:if test="${sessionScope.userId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 
