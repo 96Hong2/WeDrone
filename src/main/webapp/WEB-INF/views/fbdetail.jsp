@@ -320,7 +320,7 @@ $(document).on('click', '#proCommentBtn', function() {
 				},
 				dataType: 'JSON',
 				success: function(data) { //성공시
-					fbcmtlist(data);
+					      list(data);
 					$('#cmtContent').val("");
 					console.log("성공!");
 				},
