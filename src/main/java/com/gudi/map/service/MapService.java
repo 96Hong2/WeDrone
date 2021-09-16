@@ -53,7 +53,7 @@ public class MapService {
 			order = "reviewDate";
 		}
 		
-		session.setAttribute("loginId", "aa123"); //테스트용 세션
+		session.setAttribute("loginId", "king123"); //테스트용 세션 :: 세션완료되면 지울거임
 		String loginId = (String) session.getAttribute("loginId");
 		logger.info("loginId 세션 : ", loginId);
 		

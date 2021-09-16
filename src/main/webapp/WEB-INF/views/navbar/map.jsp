@@ -417,8 +417,6 @@ $(document).ready(function(){
          //정렬기준 : default는 지역선택에 의한 함수실행으로 지역 확대가 이루어짐,
          //like는 좋아요순, latest는 최신순 선택에 의한 함수실행으로 지역확대X
          console.log("selectArea name/order : "+name+"/"+order);
-      
-         deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
          
          if(order=='default'){
             //현재 지도 레벨에서 2레벨 확대한 레벨
@@ -525,6 +523,8 @@ $(document).ready(function(){
       
       function loadReviews(name, order){ //리뷰리스트와 후기마커를 로드하는 메소드
     	  
+    	  deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
+    	  
     	  $.ajax({
               url:'getReviewList',
               type:'GET',
@@ -534,6 +534,7 @@ $(document).ready(function(){
               },
               dataType:'JSON',
               success:function(data){
+            	  
                  var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
                  +'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
                  $('#orderMenu').empty();
@@ -802,8 +803,8 @@ $(document).ready(function(){
                      + '</span><span class="right">등록된 후기 '+data.reviewCnt+'개</span></div>'
                      +'<div class="overlay_bot"><span>'
                      + '<img src="resources/img/heart.png" alt="오버레이이미지" width="40" height="40">'
-                     + '</span><span><div class="gauge1" style="width:'+((data.areaRating/5)*100)+'px"></div>'
-                     + '<div class="gauge2" style="width:'+(100-((data.areaRating/5)*100))+'px"></div></span></div>'
+                     + '</span><span><div class="gauge1" style="width:'+((data.areaRating/5)*100)+'px;"></div>'
+                     + '<div class="gauge2" style="width:'+(100-((data.areaRating/5)*100))+'px;"></div></span></div>'
                      + '<div style="margin-left:70px;"><button onclick="selectArea(\''+name+'\',\'default\')" class="btn btn-sm btn-outline-dark mx-1 me-1">선택하기</button></div>'
                      +'</div>');
                   customOverlay.setPosition(centroid(name));
@@ -899,41 +900,59 @@ $(document).ready(function(){
           }
           
           var areaId;
+          var areaName = "";
           
           if(rmDetailAddr.indexOf('화성시') != -1){
         	  areaId = 1;
+        	  areaName = '화성시';
           }else if(rmDetailAddr.indexOf('오산시') != -1){
         	  areaId = 2;
+        	  areaName = '오산시';
           }else if(rmDetailAddr.indexOf('평택시') != -1){
         	  areaId = 3;
+        	  areaName = '평택시';
           }else if(rmDetailAddr.indexOf('안성시') != -1){
         	  areaId = 4;
+        	  areaName = '안성시';
           }else if(rmDetailAddr.indexOf('이천시') != -1){
         	  areaId = 5;
+        	  areaName = '이천시';
           }else if(rmDetailAddr.indexOf('여주시') != -1){
         	  areaId = 6;
+        	  areaName = '여주시';
           }else if(rmDetailAddr.indexOf('광주시') != -1){
         	  areaId = 7;
+        	  areaName = '광주시';
           }else if(rmDetailAddr.indexOf('성남시 수정구') != -1){
         	  areaId = 8;
+        	  areaName = '성남시 수정구';
           }else if(rmDetailAddr.indexOf('성남시 중원구') != -1){
         	  areaId = 9;
+        	  areaName = '성남시 중원구';
           }else if(rmDetailAddr.indexOf('성남시 분당구') != -1){
         	  areaId = 10;
+        	  areaName = '성남시 분당구';
           }else if(rmDetailAddr.indexOf('용인시 처인구') != -1){
         	  areaId = 11;
+        	  areaName = '용인시 처인구';
           }else if(rmDetailAddr.indexOf('용인시 기흥구') != -1){
         	  areaId = 12;
+        	  areaName = '용인시 기흥구';
           }else if(rmDetailAddr.indexOf('용인시 수지구') != -1){
         	  areaId = 13;
+        	  areaName = '용인시 수지구';
           }else if(rmDetailAddr.indexOf('수원시 권선구') != -1){
         	  areaId = 14;
+        	  areaName = '수원시 권선구';
           }else if(rmDetailAddr.indexOf('수원시 팔달구') != -1){
         	  areaId = 15;
+        	  areaName = '수원시 팔달구';
           }else if(rmDetailAddr.indexOf('수원시 영통구') != -1){
         	  areaId = 16;
+        	  areaName = '수원시 영통구';
           }else if(rmDetailAddr.indexOf('수원시 장안구') != -1){
         	  areaId = 17;
+        	  areaName = '수원시 장안구';
           }else{
         	  alert("지역을 확인해주세요!");
         	  return;
@@ -984,12 +1003,13 @@ $(document).ready(function(){
                        success:function(data){
                           console.log(data);
                           alert("등록이 완료되었습니다!");
+                          loadReviews(areaName, 'default');
                        },
                        error:function(e){
                            console.log("에러발생 : ", e);
                            alert("등록에 실패하였습니다!");
                         }  
-                  }); // end ajax     
+                  }); // end ajax  
                },
                error:function(e){
                    console.log("에러발생 : ", e);
