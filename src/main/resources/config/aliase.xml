@@ -11,6 +11,12 @@
 -->
 
 <configuration>
+    <settings>
+
+        <setting name="jdbcTypeForNull" value="NULL"/>
+
+    </settings>
+
    <typeAliases>
       <package name="com.gudi.board.dto"/>
       <package name="com.gudi.member.dto"/>

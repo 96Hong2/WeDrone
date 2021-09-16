@@ -49,13 +49,16 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		BoardDTO dto = new BoardDTO();
 		dto.setTitle(params.get("title"));
 		dto.setPostContent(params.get("postContent"));
-		dto.setNickName(params.get("nickName"));
+		
+		session.setAttribute("loginNickName","jiyun");//테스트 용
+		String loginNickName= (String) session.getAttribute("loginNickName");
+		logger.info("loginNickName : ",loginNickName);
 		
 		if(dao.fbwrite(dto)>0) {
 			page = "redirect:/fbdetail?postId="+dto.getPostId();			
 			if(fileList.size()>0) {
 				for(String key : fileList.keySet()) {
-					dao.fbfileWrite(key, fileList.get(key), dto.getPostId());
+					dao.fbfileWrite(key, fileList.get(key), dto.getPostId(),loginNickName);
 				}
 			}			
 		}else {	
@@ -155,19 +158,24 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 
 	       //게시판 수정 폼//지윤쓰
-			public ModelAndView fbupdateForm(String postId) {
+			public ModelAndView fbupdateForm(MultipartFile file, String postId, HttpSession session) {
 				ModelAndView mav = new ModelAndView();
 				mav.addObject("post", dao.fbdetail(postId));
 				mav.setViewName("fbupdateForm");
+				dao.fbfileupdate(file);
+				
+				
+				
+				
 				return mav;
 			}
 
 			//게시판 수정//지윤쓰
-			public ModelAndView fbupdate(HashMap<String, String> params) {
+			public ModelAndView fbupdate(HashMap<String, String> params, HttpSession session) {
 				ModelAndView mav = new ModelAndView();
 				dao.fbupdate(params);
 				logger.info("params"+params );
-				mav.setViewName("redirect:/member/fbdetail?postId="+params.get("postId"));		
+				mav.setViewName("redirect:/fbdetail?postId="+params.get("postId"));		
 				return mav;
 			}
 
@@ -215,6 +223,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 						
 				return map;
 			}
+
+			
 	
 }
 

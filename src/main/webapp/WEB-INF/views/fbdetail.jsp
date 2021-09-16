@@ -129,8 +129,8 @@ body,html {
 			<td>${post.postId}</td>
 		</tr>
 		<tr>
-			<th>작성자</th>
-			<td>${post.nickName}</td>
+			<th>닉네임</th>
+			<td>${sessionScope.loginNickName}</td>
 		</tr>
 		<tr>
 			<th>작성일</th>
@@ -381,7 +381,8 @@ $(document).on('click', '#proCommentBtn', function() {
 			content +="<tr>";
 			content += "<td>"+list[i].cmtId+"</td>";
 			content += "<td>"+list[i].cmtContent+"</td>";
-			content +="<td>"+list[i].cmtDate+"</td>";		
+			var date = new Date(list[i].cmtDate);			
+			content += "<td>"+date.toLocaleDateString("ko-KR")+"</td>";
 			content +="</tr>";
 		}
 		$("#list").empty();

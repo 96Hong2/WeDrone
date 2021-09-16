@@ -39,6 +39,8 @@ public class FbController {
 			HashMap<String, String> list = new HashMap<String, String>();
 			session.setAttribute("fileList", list);
 			logger.info("fbwriteForm 요청");		
+			
+			
 			return "fbwriteForm";
 		}
 		
@@ -81,21 +83,21 @@ public class FbController {
 		
 		//게시판 업데이트//지윤쓰
 		@RequestMapping(value = "/fbupdateForm")
-		public ModelAndView fbupdateForm(@RequestParam String postId) {
+		public ModelAndView fbupdateForm(MultipartFile file,@RequestParam String postId, HttpSession session) {
 		   logger.info("업데이트 폼 요청");
 	        	
 		   
-		 return service.fbupdateForm(postId);
+		 return service.fbupdateForm(file, postId, session);
 		}
 		
 		
 		//지윤쓰
 		@RequestMapping(value = "/fbupdate")
-		public ModelAndView fbupdate(@RequestParam HashMap<String, String> params) {
+		public ModelAndView fbupdate(@RequestParam HashMap<String, String> params, HttpSession session) {
 		    logger.info("업데이트  : {} ",params);
 		   
 		    
-			return service.fbupdate(params);
+			return service.fbupdate(params,session);
 		}
 		
 		
@@ -108,6 +110,7 @@ public class FbController {
 		    
 			return service.fbdel(postId);
 		}
+		
 		
 		
 		

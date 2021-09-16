@@ -147,24 +147,45 @@ table, th, td{
 				</td>
 			</tr>
 			<tr>
+				<th>제목</th>
+				<td><input type="text"
+					name="title" value="${post.title}" />
+				</td>
+			</tr>
+			<tr>
 				<th>닉네임</th>
 				<td>${post.nickName}<input type="hidden"
 					name="nickName" value="${post.nickName}" />
 				</td>
 			</tr>
 			<tr>
+				<th>작성 날짜</th>
+				<td>${post.postDate}<input type="hidden"
+					name="postDate" value="${post.postDate}" />
+				</td>
+			</tr>
+			<tr>
 				<th>내용</th>
-				<td>${post.postContent}<input type="text"
+				<td>
+				<div id="editable" contenteditable="true">
+				<input type="text"
 				  name="postContent" value ="${post.postContent}"/>
+            </div>
             </td>
 			</tr>
+
 			<tr>
 				<th>사진</th>
 				<td><img src="/photo/${image.newFileName}" width="500px" />
 					<p>
-						<input type="file" name="photo"/>
+						<input type="file" name="photo" onchange="fbfileUpload()"/>
 					</p></td>
 			</tr>
+			 <tr>
+         <td colspan="2">
+            <input type="button" class = "btn btn-dark" value="파일업로드" onclick="fileUp()"/>
+         </td>
+          </tr>
 
 			<tr>
 			<td>
