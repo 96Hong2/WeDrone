@@ -85,26 +85,25 @@ footer {
 							id="cartalertnum"
 							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
 					</div> -->
+</div>	
 
 
 
 
 
 
-
-				</div>					
-				<div class="form-row float-right">
-				<a class="btn btn-sm btn-outline-light  me-md-2" role="button"
-						href="${path}/loginForm">로그인</a> <a
+					<ul class="nav navbar-nav navbar-right">			
+				 <li><a class="btn btn-sm btn-outline-light  me-md-2" role="button"
+						href="${path}/loginForm">로그인</a></li> <li> <a
 						class="btn btn-sm btn-outline-light " role="button"
-						href="${path}/joinForm">회원가입</a>
-
+						href="${path}/joinForm">회원가입</a></li>
+</ul>
 					<%-- 	<a class="btn btn-sm btn-outline-light  mx-1" role="button"
 							href="${path}/mypage">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
 							aria-controls="offcanvasRight">메시지</button> --%>
-			</div>
+		
 
 		</nav>
 </body>
