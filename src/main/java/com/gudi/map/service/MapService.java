@@ -53,7 +53,6 @@ public class MapService {
 			order = "reviewDate";
 		}
 		
-		session.setAttribute("loginId", "king123"); //테스트용 세션 :: 세션완료되면 지울거임
 		String loginId = (String) session.getAttribute("loginId");
 		logger.info("loginId 세션 : ", loginId);
 		
@@ -114,10 +113,12 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return map;
 			
 		}
-
-		public MapDTO getReviewDetail(int areaId, String userId) {
-			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부, 삭제여부
-			MapDTO dto = dao.getReviewDetail(areaId, userId);
+		
+		public MapDTO getReviewDetail(int reviewId, String userId) {
+			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부
+			MapDTO dto = dao.getReviewDetail(reviewId, userId);
+			logger.info("상세보기 dto : {}", dto);
+			logger.info("작성날짜/사진/좋아요수/좋아요여부 : "+dto.getReviewDate()+"/"+dto.getNewFileName()+"/"+dto.getLikeCnt()+"/"+dto.getIsLike());
 			return dto;
 		}
 		

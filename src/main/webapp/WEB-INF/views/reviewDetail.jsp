@@ -117,7 +117,8 @@
 		},
 		dataType : 'JSON',
 		success : function(review) {
-			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부, 삭제여부
+			console.log("review dto: ",review);
+			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부
 			$('#reviewTitle').apppend("<b>"+review.nickName+" 님의 후기마커</b>");
 			
 			var content = "";

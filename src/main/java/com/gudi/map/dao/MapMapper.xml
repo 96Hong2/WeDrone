@@ -57,10 +57,6 @@
 		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, #{userId}, #{areaId}, #{nickName})
 	</insert>
 	
-	<select id="rmWrite" resultType="int">
-		SELECT 
-	</select>
-	
 	<update id="updateAreaRating" parameterType="hashmap">
 		UPDATE area SET areaRating=(((SELECT areaRating FROM area WHERE areaId=#{areaId})*((SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})-1)+#{rating})/(SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})) 
 		WHERE areaId=#{areaId}
@@ -76,5 +72,15 @@
 	<select id="allCount" resultType="int">
 		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N'
 	</select>
-	
+
+	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">
+		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating,
+		(SELECT newFileName FROM image WHERE imgField='review' AND postId=#{param1}) newFileName
+		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1}) likeCnt
+		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1} AND userId=#{param2}) isLike
+		,(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=#{param1}) commentCnt
+		,(SELECT COUNT(*) FROM bookMark WHERE reviewId=#{param1} AND userId=#{param2}) isBookMark
+		FROM reviewMK 
+		WHERE reviewId=#{param1}
+	</select>
 </mapper>

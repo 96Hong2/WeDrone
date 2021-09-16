@@ -81,11 +81,11 @@ public class MapController {
 		
 		//은홍
 		//후기마커의 상세정보를 가져오는 메소드
-		@RequestMapping(value = "/getReviewDetail", method=RequestMethod.GET)
+		@RequestMapping(value = "/getReviewDetail", method=RequestMethod.POST)
 		@ResponseBody
-		public MapDTO getReviewDetail(@RequestParam int areaId, @RequestParam String userId) {
-			logger.info("상세보기 areaId/userId : {}/{}", areaId, userId);
-			return service.getReviewDetail(areaId, userId);
+		public MapDTO getReviewDetail(@RequestParam int reviewId, @RequestParam String userId) {
+			logger.info("상세보기 areaId/userId : {}/{}", reviewId, userId);
+			return service.getReviewDetail(reviewId, userId);
 		}
 		
 		//지현 //후기마커 댓글 불러오기

@@ -21,7 +21,7 @@ public interface MapDAO {
 
 	int updateAreaRating(HashMap<String, Object> params);
 
-	MapDTO getReviewDetail(int areaId, String userId);
+	MapDTO getReviewDetail(int reviewId, String userId);
 	
 	int allCount();
 

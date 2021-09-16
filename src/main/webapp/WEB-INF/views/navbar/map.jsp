@@ -1001,7 +1001,7 @@ $(document).ready(function(){
                        data : {
                     	   "formData" : formData,
                     	   "reviewId" : reviewId
-                       }
+                       },
                        dataType:'JSON',
                        success:function(data){
                           console.log(data);

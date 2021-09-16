@@ -3,7 +3,6 @@ package com.gudi.map.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MapDTO {
-	//후기마커 번호, 닉네임, 상세주소, 별점, 썸네일, 댓글 개수, 좋아요 개수, 좋아요 여부, 즐겨찾기 여부
 	private String nickName;
 	private String newFileName;
 	private String imgPath;
@@ -20,9 +19,18 @@ public class MapDTO {
 	private int commentCnt;
 	private int rating;
 	private int areaId;
+	private String reviewDate;
 	
 	private MultipartFile file;
 
+	
+	
+	public String getReviewDate() {
+		return reviewDate;
+	}
+	public void setReviewDate(String reviewDate) {
+		this.reviewDate = reviewDate;
+	}
 	public String getReviewContent() {
 		return reviewContent;
 	}
