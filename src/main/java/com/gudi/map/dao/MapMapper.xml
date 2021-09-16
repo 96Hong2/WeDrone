@@ -44,18 +44,37 @@
 	</select>
 	
 	<insert id="rmFileUpload" parameterType="String">
-		INSERT INTO image(imgId, oriFileName, newFileName, imgField, imgPath) 
-		VALUES(image_SEQ.NEXTVAL, #{param1}, #{param2}, 'review', 'C:/upload')
+		INSERT INTO image(imgId, oriFileName, newFileName, imgField, imgPath, postId) 
+		VALUES(image_SEQ.NEXTVAL, #{param1}, #{param2}, 'review', 'C:/upload', #{param3})
 	</insert>
 	
-	<insert id="rmWrite" parameterType="com.gudi.map.dto.MapDTO">
+	<insert id="rmWrite"
+		useGeneratedKeys="true"
+		keyColumn="reviewid"
+		keyProperty="reviewid" 
+		parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO reviewmk(reviewid, rating, reviewcontent, address, lat, lon, userid, areaid, nickname) 
 		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, #{userId}, #{areaId}, #{nickName})
 	</insert>
+	
+	<select id="rmWrite" resultType="int">
+		SELECT 
+	</select>
 	
 	<update id="updateAreaRating" parameterType="hashmap">
 		UPDATE area SET areaRating=(((SELECT areaRating FROM area WHERE areaId=#{areaId})*((SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})-1)+#{rating})/(SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})) 
 		WHERE areaId=#{areaId}
 	</update>
+	
+	<select id="cmtList" resultType="com.gudi.map.dto.MapDTO">
+		SELECT cmtId, cmtContent, cmtDate, userId FROM 
+		(SELECT ROW_NUMBER() OVER (ORDER BY cmtDate DESC) rnum,
+		cmtId, cmtContent, cmtDate, userId FROM comments) 
+		WHERE cmtField = 'review' AND postId = #{param3} AND isDel = 'N' AND rnum BETWEEN #{param1} AND #{param2}
+	</select>
+	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N'
+	</select>
 	
 </mapper>

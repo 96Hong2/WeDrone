@@ -51,10 +51,10 @@ public class MapController {
 		public @ResponseBody HashMap<String, Object> rmWrite(@ModelAttribute MapDTO dto) {
 			logger.info("리뷰마커 작성 상세주소 : "+dto.getAddress());
 			logger.info("리뷰마커 작성 지역아이디 : "+dto.getAreaId());
-			logger.info("리뷰마커 작성 내용 : "+dto.getLat());
-			logger.info("리뷰마커 작성 위도 : "+dto.getLon());
-			logger.info("리뷰마커 작성 경도 : "+dto.getRating());
-			logger.info("리뷰마커 작성 평점 : "+dto.getReviewContent());
+			logger.info("리뷰마커 작성 내용 : "+dto.getReviewContent());
+			logger.info("리뷰마커 작성 위도 : "+dto.getLat());
+			logger.info("리뷰마커 작성 경도 : "+dto.getLon());
+			logger.info("리뷰마커 작성 평점 : "+dto.getRating());
 			logger.info("리뷰마커 작성 아이디 : "+dto.getUserId());
 			logger.info("리뷰마커 작성 닉네임 : "+dto.getNickName());
 			
@@ -67,6 +67,7 @@ public class MapController {
 		public @ResponseBody HashMap<String, Object> rmFileUpload(@ModelAttribute MapDTO dto) {
 			logger.info("리뷰마커 이미지 첨부 메소드 실행");
 			logger.info("file : "+dto.getFile().getOriginalFilename());
+			logger.info("리뷰 아이디 : "+dto.getReviewId());
 			
 			return service.rmFileUpload(dto);
 		}
@@ -86,4 +87,13 @@ public class MapController {
 			logger.info("상세보기 areaId/userId : {}/{}", areaId, userId);
 			return service.getReviewDetail(areaId, userId);
 		}
+		
+		//지현 //후기마커 댓글 불러오기
+				@RequestMapping(value = "/loadComments", method = RequestMethod.POST)
+				@ResponseBody
+				public HashMap<String, Object> loadComments(@RequestParam int reviewId, @RequestParam int page){
+					logger.info("댓글 불러올 리뷰마커 글 아이디 : "+reviewId);
+					logger.info("댓글 페이지 : "+page);
+					return service.loadComments(reviewId, page);
+				}
 }

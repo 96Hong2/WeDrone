@@ -69,6 +69,7 @@ public class MapService {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			logger.info("작성 서비스 접근");
 			boolean success = false;
+			int reviewId = 0;
 			
 			if(dao.rmWrite(dto)>0) {
 				HashMap<String, Object> params = new HashMap<String, Object>();
@@ -77,16 +78,19 @@ public class MapService {
 				int result = dao.updateAreaRating(params);
 				logger.info("지역평점 갱신 성공여부 : {}",result);
 				success = true;
+				reviewId = dto.getReviewId();
 			}
 			logger.info("success : {}",success);
-			map.put("success", success);			
+			map.put("success", success);		
+			map.put("reviewId", reviewId);
 			return map;
 		}
 
-		public HashMap<String, Object> rmFileUpload(MapDTO dto) {
+public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			
 			String fileName = dto.getFile().getOriginalFilename();
-			String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));			
+			String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));	
+			int reviewId = dto.getReviewId();
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			boolean success = false;
 			
@@ -98,7 +102,7 @@ public class MapService {
 				 String path = "/photo/"+newFileName;
 				 logger.info("upload path : "+path);
 				
-				if(dao.rmFileUpload(fileName, newFileName)>0) {
+				if(dao.rmFileUpload(fileName, newFileName, reviewId)>0) {
 					success = true;
 				}
 				 
@@ -116,5 +120,28 @@ public class MapService {
 			MapDTO dto = dao.getReviewDetail(areaId, userId);
 			return dto;
 		}
+		
+		public HashMap<String, Object> loadComments(int reviewId, int page) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int end = page*5;
+			int start = end-5+1;
+
+			ArrayList<MapDTO> list = dao.cmtList(start, end, reviewId); 
+			
+			int totalCnt = dao.allCount();
+			logger.info(list.size()+"/"+totalCnt);
+			map.put("list", list);
+			map.put("totalCnt", totalCnt);
+			map.put("currPage", page);
+			
+			int pages = (int) (totalCnt%5 > 0 
+					? Math.floor(totalCnt/5)+1 : Math.floor(totalCnt/5));
+			
+			map.put("pages", pages);
+			
+			return map;
+		}
+
 
 }

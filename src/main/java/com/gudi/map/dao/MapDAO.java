@@ -13,7 +13,7 @@ public interface MapDAO {
 
 	ArrayList<MapDTO> getReviewList(String areaName, String order, String loginId);
 
-	int rmFileUpload(String fileName, String newFileName);
+	int rmFileUpload(String fileName, String newFileName, int reviewId);
 
 	int rmWrite(MapDTO dto);
 
@@ -22,6 +22,10 @@ public interface MapDAO {
 	int updateAreaRating(HashMap<String, Object> params);
 
 	MapDTO getReviewDetail(int areaId, String userId);
+	
+	int allCount();
+
+	ArrayList<MapDTO> cmtList(int start, int end, int reviewId);
 }
 
 

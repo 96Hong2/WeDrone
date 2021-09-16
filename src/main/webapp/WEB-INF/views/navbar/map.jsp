@@ -998,7 +998,10 @@ $(document).ready(function(){
                        type:'POST',
                        processData: false,
                        contentType: false,
-                       data : formData,
+                       data : {
+                    	   "formData" : formData,
+                    	   "reviewId" : reviewId
+                       }
                        dataType:'JSON',
                        success:function(data){
                           console.log(data);
@@ -1013,6 +1016,7 @@ $(document).ready(function(){
                },
                error:function(e){
                    console.log("에러발생 : ", e);
+                   alert("등록에 실패하였습니다!");
                 }  
           }); // end ajax */
           
