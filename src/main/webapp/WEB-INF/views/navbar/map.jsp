@@ -489,17 +489,25 @@ $(document).ready(function(){
                                        '후기 작성'+
                                      '</button>';
                                      
+                                     var content2 = '<div class="bAddr">' +
+                                     '<span class="title">법정동 주소정보</span>' + 
+                                     detailAddr + 
+                                 '</div><div><p style="color:red;">선택 지역을 벗어났습니다.</p></div>';
+                                     
                            console.log("상세주소 : "+address_info);
                            console.log("지역명 : "+name);
+                           
+                           infowindow.setContent(content);
+                           
                            if(address_info.indexOf(name) == -1){
-                          	 return;
+                        	   infowindow.setContent(content2);
                            }
                                        
                    // 마커 위치를 클릭한 위치로 옮깁니다
                    marker.setPosition(latlng);
                    marker.setMap(map);
 
-                                       infowindow.setContent(content);
+                                       
                                        infowindow.open(map, marker);
                                      
 
