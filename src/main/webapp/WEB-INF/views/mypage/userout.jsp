@@ -22,8 +22,8 @@
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
 <style>
- /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
- .wrap {
+/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
+.wrap {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -36,20 +36,20 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-
 </style>
 </head>
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
-	<!-- 사이드바 -->
-		<div class="d-flex"
-			style="height: auto; width: auto; min-height: 100vh;">
+	<div class='row'>
+		<!-- 사이드바 -->
+		<div class="d-flex col-sm-2"
+			style="height: auto; width: 500px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
@@ -73,30 +73,30 @@ footer {
 						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
 				</div>
 			</nav>
-	
-			<!--들어갈 내용-->
-			<div class="cont container mx-10 py-5">
-				<div class="d-flex align-items-center">
-					<button type="button" id="sidebarCollapse"
-						class="me-2 btn btn-warning">
-						<i class="bi bi-exclamation-diamond"></i>
-					</button>
-					<h2 class="fw-bold my-3">회원탈퇴</h2>
-				</div>
-				<hr />
-					<div class="cont container">
-						<!-- 회원탈퇴 폼 -->
+		</div>
+		<!--들어갈 내용-->
+		<div class="cont container mx-10 py-5 col-sm-8">
+			<div class="d-flex align-items-center">
+				<button type="button" id="sidebarCollapse"
+					class="me-2 btn btn-warning">
+					<i class="bi bi-exclamation-diamond"></i>
+				</button>
+				<h2 class="fw-bold my-3">회원탈퇴</h2>
+			</div>
+			<hr />
+			<div class="cont container">
+				<!-- 회원탈퇴 폼 -->
 
-						<div id="ss" class="py-3">
-							<p class="fs-4 fw-bold">안내사항</p>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">* 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가
-									불가능합니다.<br /> 탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니 신중하게 선택하시기
-									바랍니다.
-								</li>
+				<div id="ss" class="py-3">
+					<p class="fs-4 fw-bold">안내사항</p>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">* 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가
+							불가능합니다.<br /> 탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니 신중하게 선택하시기
+							바랍니다.
+						</li>
 
-							</ul>
-							<textarea class="form-control my-3" rows="8" readonly>
+					</ul>
+					<textarea class="form-control my-3" rows="8" readonly>
 제1조(목적) 
 
   이 약관은 업체 회사(전자상거래 사업자)가 운영하는 업체 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -163,29 +163,30 @@ footer {
  
   ④ 회원은 회원가입 시 등록한 사항에 변경이 있는 경우, 상당한 기간 이내에 “몰”에 대하여
 	</textarea>
-							<div class="form-check my-3">
-								<input class="form-check-input" type="checkbox" value="1"
-									name="exitcheck" id="exitcheck"> <label
-									class="form-check-label fw-bold text-danger" for="exitcheck">안내
-									사항을 모두 확인하였으며, 이에 동의합니다 </label>
-								<div class="invalid-feedback">약관에 동의해주세요</div>
-							</div>
-							<hr />
-							<div class="col text-center">
-								<form action="${path}/userDel" method="post" id="delForm">
-									<input id="dropbtn" class="btn btn-dark mx-2" type="button"
-										value="탈퇴하기">
-								</form>
-							</div>
-						</div>
-					</div></body>
+					<div class="form-check my-3">
+						<input class="form-check-input" type="checkbox" value="1"
+							name="exitcheck" id="exitcheck"> <label
+							class="form-check-label fw-bold text-danger" for="exitcheck">안내
+							사항을 모두 확인하였으며, 이에 동의합니다 </label>
+						<div class="invalid-feedback">약관에 동의해주세요</div>
+					</div>
+					<hr />
+					<div class="col text-center">
+						<form action="${path}/userDel" method="post" id="delForm">
+							<input id="dropbtn" class="btn btn-dark mx-2" type="button"
+								value="탈퇴하기">
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
-
-	
+</body>
+</div>
+</div>
+</div>
+</div>
+</div>
 </script>
-		<script type="text/javascript">	
+<script type="text/javascript">	
 
 	$(document).ready(function() {
 		$('#dropbtn').click(function() {
@@ -210,12 +211,11 @@ footer {
 			
 		})
 	})
-	
-	
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="../fixmenu/footer.jsp"></jsp:include>
 <script>

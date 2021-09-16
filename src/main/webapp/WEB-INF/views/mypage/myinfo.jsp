@@ -22,8 +22,8 @@
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
 <style>
- /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
- .wrap {
+/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
+.wrap {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -36,118 +36,119 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-
 </style>
 </head>
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 
-<!-- 들어갈 내용 -->
-	
+	<!-- 들어갈 내용 -->
 
 
-		<!-- 사이드바 -->
-		<div class="d-flex"
-			style="height: auto; width: auto; min-height: 100vh;">
 
-			<nav id="sidebar" style="transition: all 0.3s;">
-				<div class="list-group list-group-flush mt-3 ">
-					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
-					<a
-						class="ps-4 fw-bold list-group-item list-group-item-action active"
-						href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/mycomment" style="cursor: pointer;"><h5>내가
-							쓴 댓글</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기
-							마커</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
+	<div class='row'>
+	<!-- 사이드바 -->
+		<div class="d-flex col-sm-2"
+		style="height: auto; width: 500px; min-height: 100vh;">
+
+		<nav id="sidebar" style="transition: all 0.3s;">
+			<div class="list-group list-group-flush mt-3 ">
+				<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
+				<a
+					class="ps-4 fw-bold list-group-item list-group-item-action active"
+					href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
+					class="ps-4 fw-bold list-group-item list-group-item-action"
+					href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
+					class="ps-4 fw-bold list-group-item list-group-item-action"
+					href="${path}/mycomment" style="cursor: pointer;"><h5>내가 쓴
+						댓글</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
+					href="${path}/myreview" style="cursor: pointer;"><h5>내 후기 마커</h5>
+					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림
 							리스트</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a>
 					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
-				</div>
-			</nav>
+				
+			</div>
+		</nav>
+</div>
 
+		<!--들어갈 내용-->
+	
+		<div class="cont container mx-10 py-5 col-sm-8" >
+			<div class="d-flex align-items-left">
+				<button type="button" id="sidebarCollapse"
+					class="me-2 btn btn-warning">
+					<i class="bi bi-info-circle"></i>
+				</button>
+				<h2 class="fw-bold my-3">내 정보 수정</h2>
+			</div>
+			<hr />
+			<div class="cont container w-50">
+				<!-- 내 정보 수정 폼 -->
+				<form id="myinfoform" action="/Project/memberupdate" method="post"
+					class="needs-validation py-3" novalidate>
+					<div class="form-floating col-md-9 mb-3">
+						<input type="text" class="form-control" name="nickName"
+							id="nickName" placeholder="닉네임" value="" required> <label
+							for="validationTooltip01" class="fw-bold">닉네임</label>
+						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
+						<div id="check2" class="invalid-feedback visually-hidden">필수
+							정보입니다(100자 이하만 가능)</div>
+						<input type="button" class="btn btn-dark mt-2" id="ckBtn"
+							value="중복확인">
+						<!-- 중복확인 끝 -->
+						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
+						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
+					</div>
 
-			<!--들어갈 내용-->
-			<div class="cont container mx-10 py-5">
-				<div class="d-flex align-items-center">
-					<button type="button" id="sidebarCollapse"
-						class="me-2 btn btn-warning">
-						<i class="bi bi-info-circle"></i>
-					</button>
-					<h2 class="fw-bold my-3">내 정보 수정</h2>
-				</div>
-				<hr />
-				<div class="cont container w-50">
-					<!-- 내 정보 수정 폼 -->
-					<form id="myinfoform" action="/Project/memberupdate" method="post"
-						class="needs-validation py-3" novalidate>
-						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" name="nickName"
-								id="nickName" placeholder="닉네임" value="" required> <label
-								for="validationTooltip01" class="fw-bold">닉네임</label>
-							<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
-							<div id="check2" class="invalid-feedback visually-hidden">필수
-								정보입니다(100자 이하만 가능)</div>
-							<input type="button" class="btn btn-dark mt-2" id="ckBtn"
-								value="중복확인">
-							<!-- 중복확인 끝 -->
-							<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
-							<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
-						</div>
+					<div class="form-floating col-md-9 mb-3">
+						<input type="password" class="nullchecks form-control"
+							name="UserPw" id="UserPw" placeholder="비밀번호" value="" required>
+						<label for="validationTooltip02" class="fw-bold">비밀번호</label>
+						<div class="invalid-feedback">10자 이상 입력해주세요</div>
+					</div>
+					<div class="form-floating col-md-9 mb-3">
+						<input type="password" class="form-control" id="UserPwch"
+							name="UserPwch" placeholder="비밀번호확인" value="" required> <label
+							for="validationTooltip02" class="fw-bold">비밀번호확인</label>
+						<div class="invalid-feedback">동일한지 확인해주세요</div>
+					</div>
 
-						<div class="form-floating col-md-9 mb-3">
-							<input type="password" class="nullchecks form-control"
-								name="UserPw" id="UserPw" placeholder="비밀번호" value="" required>
-							<label for="validationTooltip02" class="fw-bold">비밀번호</label>
-							<div class="invalid-feedback">10자 이상 입력해주세요</div>
+					<div class="col-md-9 mb-3">
+						<label for="checks" class="fw-bold" id="emailsusin"
+							name="emailsusin">알림 수신</label>
+						<div class="form-check form-check-inline mx-3">
+							<label class="form-check-label" for="emailcheckchange1">
+								동의 </label> <input class="form-check-input" type="radio" value="Y"
+								name="emailcheckchange" id="emailcheckchange1"
+								<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
 						</div>
-						<div class="form-floating col-md-9 mb-3">
-							<input type="password" class="form-control" id="UserPwch"
-								name="UserPwch" placeholder="비밀번호확인" value="" required>
-							<label for="validationTooltip02" class="fw-bold">비밀번호확인</label>
-							<div class="invalid-feedback">동일한지 확인해주세요</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio"
+								name="emailcheckchange" id="emailcheckchange2" value="N"
+								<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
+								class="form-check-label" for="emailcheckchange2"> 거부 </label>
 						</div>
-
-						<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold" id="emailsusin"
-								name="emailsusin">알림 수신</label>
-							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="emailcheckchange1">
-									동의 </label> <input class="form-check-input" type="radio" value="Y"
-									name="emailcheckchange" id="emailcheckchange1"
-									<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio"
-									name="emailcheckchange" id="emailcheckchange2" value="N"
-									<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
-									class="form-check-label" for="emailcheckchange2"> 거부 </label>
-							</div>
-						</div>
-						<hr />
-						<div class="col text-center">
-							<input id="infochange" class="btn btn-dark" type="button"
-								value="정보수정">
-						</div>
-					</form>
-				</div>
+					</div>
+					<hr />
+					<div class="col text-center">
+						<input id="infochange" class="btn btn-dark" type="button"
+							value="정보수정">
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 	</div>
+	</div></div>
 	<script>
 		$('#ckBtn').click(function() {
 			var userId = $('#UserId').val().trim();
@@ -188,13 +189,14 @@ footer {
 			}
 		})
 	</script>
-	</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/js.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="../fixmenu/footer.jsp"></jsp:include>
 <script>
+	
 </script>
 </html>
