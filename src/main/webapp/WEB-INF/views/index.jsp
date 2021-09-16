@@ -178,5 +178,14 @@
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${path}/resources/js/js.js"></script>
+<script src="${path}/resources/js/common.js"></script>
+
   </body>
+<!-- 하단 푸터 -->
+
+<script>
+</script>
 </html>

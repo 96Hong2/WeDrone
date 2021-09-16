@@ -22,8 +22,8 @@
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
 <style>
- /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
- .wrap {
+/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
+.wrap {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -36,26 +36,26 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-
 </style>
 </head>
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 
-<!-- 들어갈 내용 -->
-	
+	<!-- 들어갈 내용 -->
 
 
 
 
+	<div class='row'>
 		<!-- 사이드바 -->
-		<div class="d-flex" style="height: auto; width:auto;  min-height: 100vh;">
+		<div class="d-flex col-sm-2"
+			style="height: auto; width: 500px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
@@ -77,10 +77,10 @@ footer {
 						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
+		</div>
 
-		
 		<!--들어갈 내용-->
-		<div class="cont container mx-10 py-5">
+		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
 				<button type="button" id="sidebarCollapse"
 					class="me-2 btn btn-warning">
@@ -108,42 +108,43 @@ footer {
 						<label for="validationTooltipUsername" class="fw-bold">비밀번호</label>
 						<div class="invalid-feedback">필수 정보입니다</div>
 					</div>
-					
-					<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold" id="emailsusin"
-								name="emailsusin">알림 수신</label>
-							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="emailcheckchange1">
-									동의 </label> <input class="form-check-input" type="radio" value="Y"
-									name="emailcheckchange" id="emailcheckchange1"
-									<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio"
-									name="emailcheckchange" id="emailcheckchange2" value="N"
-									<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
-									class="form-check-label" for="emailcheckchange2"> 거부 </label>
-							</div>
-			</div>
-			<hr />
-			<div class="col text-center">
-				<input id="infochange" class="btn btn-dark" type="button"
-					value="정보수정">
-			</div>
 
-			</form>
+					<div class="col-md-9 mb-3">
+						<label for="checks" class="fw-bold" id="emailsusin"
+							name="emailsusin">알림 수신</label>
+						<div class="form-check form-check-inline mx-3">
+							<label class="form-check-label" for="emailcheckchange1">
+								동의 </label> <input class="form-check-input" type="radio" value="Y"
+								name="emailcheckchange" id="emailcheckchange1"
+								<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio"
+								name="emailcheckchange" id="emailcheckchange2" value="N"
+								<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
+								class="form-check-label" for="emailcheckchange2"> 거부 </label>
+						</div>
+					</div>
+					<hr />
+					<div class="col text-center">
+						<input id="infochange" class="btn btn-dark" type="button"
+							value="정보수정">
+					</div>
+
+				</form>
+			</div>
 		</div>
 	</div>
 	</div>
 	</div>
 	</div>
-	</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/js.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="../fixmenu/footer.jsp"></jsp:include>
 <script>
+	
 </script>
 </html>

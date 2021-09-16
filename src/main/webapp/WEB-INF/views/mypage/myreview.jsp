@@ -22,8 +22,8 @@
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
 <style>
- /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
- .wrap {
+/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
+.wrap {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -36,68 +36,71 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-
 </style>
 </head>
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
-<!-- 사이드바 -->
-		<div class="d-flex"
-			style="height: auto; width: auto; min-height: 100vh;">
+	<div class='row'>
+		<!-- 사이드바 -->
+		<div class="d-flex col-sm-2"
+			style="height: auto; width: 500px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
-					<a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
+					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/mycomment" style="cursor: pointer;"><h5>내가 쓴 댓글</h5></a> <a
+						href="${path}/mycomment" style="cursor: pointer;"><h5>내가
+							쓴 댓글</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action active"
-						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기 마커</h5></a> <a
+						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기
+							마커</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
+						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림
+							리스트</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림 리스트</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
+						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a>
+					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
 				</div>
 			</nav>
+		</div>
 
 
 
+		<!--들어갈 내용-->
+		<div class="cont container mx-10 py-5 col-sm-8">
+			<div class="d-flex align-items-center">
+				<button type="button" id="sidebarCollapse"
+					class="me-2 btn btn-warning">
+					<i class="bi bi-check-lg"></i>
+				</button>
+				<h2 class="fw-bold my-3">내 후기 마커</h2>
+			</div>
+			<hr />
+			<div class="cont container w-50">
+				<!-- 내 정보 수정 폼 -->
 
-			<!--들어갈 내용-->
-			<div class="cont container mx-10 py-5">
-				<div class="d-flex align-items-center">
-					<button type="button" id="sidebarCollapse"
-						class="me-2 btn btn-warning">
-						<i class="bi bi-check-lg"></i>
-					</button>
-					<h2 class="fw-bold my-3">내 후기 마커</h2>
-				</div>
-				<hr />
-				<div class="cont container w-50">
-					<!-- 내 정보 수정 폼 -->
-				
+			</div>
 		</div>
 	</div>
 	</div>
-	</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/js.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="../fixmenu/footer.jsp"></jsp:include>
 <script>
+	
 </script>
 </html>

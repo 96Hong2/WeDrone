@@ -129,14 +129,12 @@ body, html {
 </div>
 </div>
 
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
-
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="fixmenu/footer.jsp"></jsp:include>
 <script>

@@ -80,7 +80,7 @@ footer {
 						class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
 						href="#" role="button" aria-expanded="false"><h4>Map</h4></a>
 						<ul class="dropdown-menu active">
-							<li><a class="dropdown-item" href="#">비행지역 조회</a></li>
+							<li><a class="dropdown-item" href="${path}/index">비행지역 조회</a></li>
 							<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li></li>
 				</ul>
 				<li class="nav-item"><a class="nav-link active text-center "

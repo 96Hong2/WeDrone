@@ -50,13 +50,13 @@ footer {
 
 <!-- 들어갈 내용 -->
 	
-
-		<!-- 사이드바 -->
-		<div class="d-flex"
-			style="height: auto; width: auto; min-height: 100vh;">
+<div class='row'>
+	<!-- 사이드바 -->
+		<div class="d-flex col-sm-2"
+			style="height: auto; width: 500px; min-height: 100vh;">
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
-					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
+					<h2 class="fst-italic ms-3 fw-bold  item-align-center">마이페이지</h2>
 					<a class="ps-4 fw-bold list-group-item list-group-item-action"
 						href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
 						class="ps-4 fw-bold list-group-item list-group-item-action"
@@ -76,9 +76,8 @@ footer {
 						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
 				</div>
 			</nav>
-
-			<!--들어갈 내용-->
-			<div class="cont container mx-10 py-5">
+</div>
+			<div class="cont container mx-10 py-5 col-sm-8">
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
 						class="me-2 btn btn-warning">
@@ -119,13 +118,12 @@ footer {
 			</div>
 		</div>
 
-
 	
-</body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+</body>
 <!-- 하단 푸터 -->
 <jsp:include page="../fixmenu/footer.jsp"></jsp:include>
 <script>
