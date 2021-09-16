@@ -33,7 +33,18 @@ public class BoardController {
 
 		return "/index";
 	}
+	
+	@RequestMapping(value = "/navbar")
+	public String navbar(Model model) {
 
+		return "/navbar";
+	}
+
+	@RequestMapping(value = "/lognav")
+	public String lognav(Model model) {
+
+		return "/lognav";
+	}
 	
 	@Controller
 	public class Controller0 {

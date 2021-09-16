@@ -40,17 +40,18 @@ footer {
 body, html {
 	font-family: 'Do Hyeon', sans-serif;
 }
-
 </style>
 </head>
 <title>드론</title>
 <body>
-
-	<c:if test="${sessionScope.loginId eq null}">
-		<jsp:include page="fixmenu/navbar.jsp" />
+	<!-- 아이디 없을 때 네비바 -->
+	<c:if test="${sessionScope.userId eq null}">
+		<jsp:include page="fixmenu/lognav.jsp"></jsp:include>
 	</c:if>
-	<c:if test="${sessionScope.loginId ne null}">
-		<jsp:include page="fixmenu/lognav.jsp" />
+
+	<!-- 아이디 있을때 네비바 -->
+	<c:if test="${sessionScope.userId ne null}">
+		<jsp:include page="fixmenu/navbar.jsp"></jsp:include>
 	</c:if>
 
 	<div class="wrap">
@@ -70,7 +71,7 @@ body, html {
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="resources/img/c2.jpg" height="auto" width="auto" class="d-block w-100"
+					<img src="resources/img/c2.jpg" height="850" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
 						<h2>드론 세상에 오신 것을 환영합니다</h2>
@@ -80,7 +81,7 @@ body, html {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="resources/img/c1.jpg" height="auto" width="auto" class="d-block w-100"
+					<img src="resources/img/c1.jpg" height="1440" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
 						<h2>비행 정보를 나누어보세요</h2>
@@ -89,7 +90,7 @@ body, html {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="resources/img/c3.jpg" height="auto" width="auto" class="d-block w-100"
+					<img src="resources/img/c3.jpg" height="1440" class="d-block w-100"
 						alt="...">
 					<div class="carousel-caption d-none d-md-block">
 						<h2>비행관련 실시간 기상정보를 확인하세요</h2>
@@ -129,12 +130,14 @@ body, html {
 </div>
 </div>
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/js.js"></script>
-<script src="${path}/resources/js/common.js"></script>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${path}/resources/js/bootstrap.js"></script>
+<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/common.js"></script>
+
+
 <!-- 하단 푸터 -->
 <jsp:include page="fixmenu/footer.jsp"></jsp:include>
 <script>

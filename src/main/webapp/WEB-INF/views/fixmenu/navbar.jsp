@@ -37,81 +37,77 @@ footer {
 	margin-top: auto
 }
 </style>
-<script>
-    $('.dropdown').hover(
-        function() {
-            $(this).find('.dropdown-menu active').stop(true, true).delay(200).fadeIn();
-        },
-        function() {
-            $(this).find('.dropdown-menu active').stop(true, true).delay(200).fadeOut();
-        }
-    );
-
-    $('.dropdown-menu active').hover(
-        function() {
-            $(this).stop(true, true);
-        },
-        function() {
-            $(this).stop(true, true).delay(200).fadeOut();
-        }
-    );
-</script>
 </head>
 <title>드론</title>
 <body>
 	<div class="wrap">
 		<nav class="navbar navbar-expand-lg navbar-dark"
 			style="background-color: #3c3c3c;">
+			<div class="d-flex justify-content-end">
 
-			<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
-				href="${path}/"> <img src="resources/img/LOGO.png"
-				class="rounded float-end rounded mx-auto d-block mx-2" alt=""
-				width="50" height="50">WeDron
-			</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="dropdown"><a
-						class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
-						href="#" role="button" aria-expanded="false"><h4>Map</h4></a>
-						<ul class="dropdown-menu active">
-							<li><a class="dropdown-item" href="${path}/index">비행지역 조회</a></li>
-							<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li></li>
-				</ul>
-				<li class="nav-item"><a class="nav-link active text-center "
-					href="${path}/calendar"><h4>Calendar</h4></a></li> <a
-					class="nav-link active" href="${path}/news"><h4>News</h4></a>
-				</li>
-				<li class="nav-item"><a class="nav-link active text-center "
-					href="${path}/notice"><h4>Notice</h4></a></li>
-				<li class="nav-item"><a class="nav-link active text-center "
-					href="${path}/board"><h4>Board</h4></a></li>
+				<a
+					class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
+					href="${path}/"> <img src="resources/img/LOGO.png"
+					class="rounded float-end rounded mx-auto d-block mx-2" alt=""
+					width="50" height="50">WeDron
+				</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown "><a
+							class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
+							href="#" role="button" aria-expanded="false"><h4>Map</h4></a>
+							<ul class="dropdown-menu active">
+								<li><a class="dropdown-item" href="#">비행지역 조회</a></li>
+								<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li></li>
+					</ul>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/calendar"><h4>Calendar</h4></a></li> <a
+						class="nav-link active" href="${path}/news"><h4>News</h4></a>
+					</li>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/notice"><h4>Notice</h4></a></li>
+					<li class="nav-item"><a class="nav-link active text-center "
+						href="${path}/board"><h4>Board</h4></a></li>
 
-				<li class="nav-item"></li>
-				</ul>
-				<div class="d-flex" id="alarmalert">
-					<!-- <i id="bell" class="bi bi-bell-fill"
-							style="font-size: 1.8rem; color: white"></i> -->
-					<br> <span id="cartalertnum"
-						class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
-				</div>
-				<div class="d-flex">
+					<li class="nav-item"></li>
+					</ul>
+					
 
+<<<<<<< Updated upstream
 					<a class="btn btn-sm btn-outline-light mx-1 me-1" role="button"
 						href="${path}/loginForm">로그인</a> <a
 						class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 						href="${path}/joinForm">회원가입</a>
+=======
+					
+					<div class="d-flex" id="alarmalert">
+						<i class="bi bi-envelope mx-3 " type="button"
+							style="font-size: 1.8rem; color: white"><span class="position-absolute top-0 start-100 translate-middle badge border 
+  border-light rounded-circle bg-danger p-2"><span class="visually-hidden">
+  unread messages</span></span></i> <i id="bell"
+							class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><br>
+						<span id="cartalertnum"
+							class="border border-dark position-absolute top-0 
+							mx-3 badge bg-white text-white rounded-pill mt-2"></span>
+					</div>
+					<div class="d-flex">
+>>>>>>> Stashed changes
 
-					<%-- <a class="btn btn-sm btn-outline-light  mx-1" role="button"
-							href="${path}/mypage">마이페이지</a>
+						<!-- <button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button> -->
+						<a class="btn btn-sm btn-outline-light me-1 mx-2" roll="button"
+							href="${path}/logout"> 로그아웃</a> <a
+							class="btn btn-sm btn-outline-light  mx-1" role="button"
+							href="${path}/mypages">마이페이지</a>
 						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">기타</button> --%>
+							aria-controls="offcanvasRight">메시지</button>
+					</div>
 				</div>
-			</div>
 		</nav>
+	
