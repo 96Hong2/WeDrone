@@ -49,15 +49,20 @@ public class MapController {
 		//지현//후기마커 작성 메소드
 		@RequestMapping(value = "/rmWrite", method = RequestMethod.POST)
 		public @ResponseBody HashMap<String, Object> rmWrite(@ModelAttribute MapDTO dto) {
-			logger.info("리뷰마커 작성 메소드 실행");
-			logger.info(dto.getAddress()+"/"+dto.getReviewContent()+"/"+dto.getLat()+"/"+dto.getLon()+"/"+dto.getRating());
+			logger.info("리뷰마커 작성 상세주소 : "+dto.getAddress());
+			logger.info("리뷰마커 작성 지역아이디 : "+dto.getAreaId());
+			logger.info("리뷰마커 작성 내용 : "+dto.getLat());
+			logger.info("리뷰마커 작성 위도 : "+dto.getLon());
+			logger.info("리뷰마커 작성 경도 : "+dto.getRating());
+			logger.info("리뷰마커 작성 평점 : "+dto.getReviewContent());
+			logger.info("리뷰마커 작성 아이디 : "+dto.getUserId());
+			logger.info("리뷰마커 작성 닉네임 : "+dto.getNickName());
 			
-			//logger.info("file : "+dto.getFile().getOriginalFilename());
+			
 			return service.rmWrite(dto);
 		}
 		
 		//지현//후기마커 이미지 업로드 메소드
-
 		@RequestMapping(value = "/rmFileUpload", method = RequestMethod.POST)
 		public @ResponseBody HashMap<String, Object> rmFileUpload(@ModelAttribute MapDTO dto) {
 			logger.info("리뷰마커 이미지 첨부 메소드 실행");

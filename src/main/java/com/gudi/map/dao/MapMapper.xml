@@ -50,7 +50,7 @@
 	
 	<insert id="rmWrite" parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO reviewmk(reviewid, rating, reviewcontent, address, lat, lon, userid, areaid, nickname) 
-		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, 'test', '1', '테스트')
+		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, #{userId}, #{areaId}, #{nickName})
 	</insert>
 	
 </mapper>

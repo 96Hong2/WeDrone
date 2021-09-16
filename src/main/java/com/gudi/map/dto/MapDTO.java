@@ -9,6 +9,7 @@ public class MapDTO {
 	private String imgPath;
 	private String address;
 	private String reviewContent;
+	private String userId;
 	private double lat;
 	private double lon;
 	private int reviewCnt;
@@ -18,6 +19,7 @@ public class MapDTO {
 	private int isBookMark;
 	private int commentCnt;
 	private int rating;
+	private int areaId;
 	
 	private MultipartFile file;
 
@@ -111,6 +113,18 @@ public class MapDTO {
 	}
 	public void setLon(double lon) {
 		this.lon = lon;
+	}
+	public int getAreaId() {
+		return areaId;
+	}
+	public void setAreaId(int areaId) {
+		this.areaId = areaId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	

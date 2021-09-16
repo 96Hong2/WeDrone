@@ -317,11 +317,13 @@ ul.tabs li.current {
                   <h5 class="modal-title" id="reviewModalLabel"></h5>
                      <input type="hidden" id="rmLat" name="rmLat" value=""/>
                      <input type="hidden" id="rmLng" name="rmLng" value=""/>
+                     <input type="hidden" id="rmLoginId" name="rmLoginId" value="${sessionScope.loginId}"/>
+                     <input type="hidden" id="rmLoginNickName" name="rmLoginNickName" value="${sessionScope.loginNickName}"/>
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
                      aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                  <input id="content" type="text" name="content" value=""/>
+                  <input id="content" type="text" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"/>
                      <!--  <form id="fileUpload" enctype="multipart/form-data"> -->
                         <input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
                      <!--  </form>-->
@@ -458,7 +460,7 @@ $(document).ready(function(){
          
          // 지도에 클릭 이벤트를 등록합니다
          // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-         kakao.maps.event.addListener(map, 'click', function reviewMarkerAdd(mouseEvent, name){
+         kakao.maps.event.addListener(map, 'click', function reviewMarkerAdd(mouseEvent){
             
             infowindow.close();
 
@@ -476,6 +478,8 @@ $(document).ready(function(){
                            var rmLat = latlng.getLat(); 
                            var rmLng = latlng.getLng(); 
                            
+                           var address_info = result[0].address.address_name
+                           
                            var content = '<div class="bAddr">' +
                                            '<span class="title">법정동 주소정보</span>' + 
                                            detailAddr + 
@@ -483,6 +487,12 @@ $(document).ready(function(){
                                        '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\', '+rmLat+', '+rmLng+')">'+
                                        '후기 작성'+
                                      '</button>';
+                                     
+                           console.log("상세주소 : "+address_info);
+                           console.log("지역명 : "+name);
+                           if(address_info.indexOf(name) == -1){
+                          	 return;
+                           }
                                        
                    // 마커 위치를 클릭한 위치로 옮깁니다
                    marker.setPosition(latlng);
@@ -860,37 +870,9 @@ $(document).ready(function(){
          map.setMaxLevel(10);
       }
       
-      //파일업로드 메소드
          const file = $("#rmPhoto")[0];
-    
-      /*
-      function fileUpload(){
-         
-         console.log("file : "+file.files[0].name);
-          console.log("file : "+file.files[0].value);
-          console.log("file : "+file.files[0].size);
-          
-          const formData = new FormData();
-          formData.append("file", file.files[0]);
-          
-          $.ajax({
-              url:'rmFileUpload',
-             type:'POST',
-             processData: false,
-             contentType: false,
-             data : formData,
-             dataType:'JSON',
-             success:function(data){
-                
-             },
-             error:function(e){
-                 console.log("에러발생 : ", e);
-              }  
-        }); // end ajax 
-          
-      }*/
       
-      
+    //리뷰마커 작성하고 등록 버튼 눌렀을 때
       $("#rmSubmit").click(function(){
           
           var rmLat = $("#rmLat").val();
@@ -898,17 +880,73 @@ $(document).ready(function(){
           var rmDetailAddr = $("#reviewModalLabel").html();
           var content = $("#content").val();
           var rating = $("#rating option:selected").val();
+          var rmLoginId = $("#rmLoginId").val();
+          var rmLoginNickName = $("#rmLoginNickName").val();
           
           if(file.files.length === 0){
                alert("이미지를 첨부하고 등록해주세요.");
                return;
              }
           
+          if(content.length == 0){
+        	  alert("내용을 입력해주세요!");
+        	  return;
+          }
+          
+          if(content.length < 10){
+        	  alert("10자 이상 입력해주세요!");
+        	  return;
+          }
+          
+          var areaId;
+          
+          if(rmDetailAddr.indexOf('화성시') != -1){
+        	  areaId = 1;
+          }else if(rmDetailAddr.indexOf('오산시') != -1){
+        	  areaId = 2;
+          }else if(rmDetailAddr.indexOf('평택시') != -1){
+        	  areaId = 3;
+          }else if(rmDetailAddr.indexOf('안성시') != -1){
+        	  areaId = 4;
+          }else if(rmDetailAddr.indexOf('이천시') != -1){
+        	  areaId = 5;
+          }else if(rmDetailAddr.indexOf('여주시') != -1){
+        	  areaId = 6;
+          }else if(rmDetailAddr.indexOf('광주시') != -1){
+        	  areaId = 7;
+          }else if(rmDetailAddr.indexOf('성남시 수정구') != -1){
+        	  areaId = 8;
+          }else if(rmDetailAddr.indexOf('성남시 중원구') != -1){
+        	  areaId = 9;
+          }else if(rmDetailAddr.indexOf('성남시 분당구') != -1){
+        	  areaId = 10;
+          }else if(rmDetailAddr.indexOf('용인시 처인구') != -1){
+        	  areaId = 11;
+          }else if(rmDetailAddr.indexOf('용인시 기흥구') != -1){
+        	  areaId = 12;
+          }else if(rmDetailAddr.indexOf('용인시 수지구') != -1){
+        	  areaId = 13;
+          }else if(rmDetailAddr.indexOf('수원시 권선구') != -1){
+        	  areaId = 14;
+          }else if(rmDetailAddr.indexOf('수원시 팔달구') != -1){
+        	  areaId = 15;
+          }else if(rmDetailAddr.indexOf('수원시 영통구') != -1){
+        	  areaId = 16;
+          }else if(rmDetailAddr.indexOf('수원시 장안구') != -1){
+        	  areaId = 17;
+          }else{
+        	  alert("지역을 확인해주세요!");
+        	  return;
+          }
+          
           console.log("rmLat : "+rmLat);
             console.log("rmLng : "+rmLng);
             console.log("rmDetailAddr : "+rmDetailAddr);
             console.log("content : "+content);
             console.log("rating : "+rating);
+            console.log("로그인아이디: "+rmLoginId);
+            console.log("로그인닉네임: "+rmLoginNickName);
+            
             
             console.log("file : "+file.files[0].name);
             console.log("file : "+file.files[0].value);
@@ -927,6 +965,9 @@ $(document).ready(function(){
                   "address" : rmDetailAddr,
                   "reviewContent" : content,
                   "rating" : rating,
+                  "areaId" : areaId,
+                  "userId" : rmLoginId,
+                  "nickName" : rmLoginNickName
                   },
                dataType:'JSON',
                success:function(data){
@@ -956,8 +997,15 @@ $(document).ready(function(){
           }); // end ajax */
           
        $("#closeBtn").click();
-           
        })
+       
+       //모달창이 hidden일때 내용 초기화
+       $('.modal').on('hidden.bs.modal', function (e) {
+    		console.log('modal close');
+    		$("#content").val("");
+    		$("#rmPhoto").val("");
+		});
+      
       
       function deleteMarkers(markers) {
          for (var i = 0; i < markers.length; i++) {
