@@ -71,9 +71,14 @@ public class MapService {
 			boolean success = false;
 			
 			if(dao.rmWrite(dto)>0) {
+				HashMap<String, Object> params = new HashMap<String, Object>();
+				params.put("areaId", dto.getAreaId());
+				params.put("rating", dto.getRating());
+				int result = dao.updateAreaRating(params);
+				logger.info("지역평점 갱신 성공여부 : {}",result);
 				success = true;
 			}
-
+			logger.info("success : {}",success);
 			map.put("success", success);			
 			return map;
 		}

@@ -53,4 +53,9 @@
 		VALUES(reviewmk_SEQ.NEXTVAL, #{rating}, #{reviewContent}, #{address}, #{lat}, #{lon}, #{userId}, #{areaId}, #{nickName})
 	</insert>
 	
+	<update id="updateAreaRating" parameterType="hashmap">
+		UPDATE area SET areaRating=(((SELECT areaRating FROM area WHERE areaId=#{areaId})*((SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})-1)+#{rating})/(SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=#{areaId})) 
+		WHERE areaId=#{areaId}
+	</update>
+	
 </mapper>
