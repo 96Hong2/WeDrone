@@ -12,69 +12,93 @@
 
 /* revContainer1 : 이미지가 담기는 컨테이너, 이미지는 비율 맞춰서 넣자.. */
 .revContainer1{
-	width: 300px;
-	height: 250px;
+	width: 500px;
+	height: 400px;
 	background-color : pink;
 	justify-content: left;
+	margin : 10px;
+	overflow : auto;
 }
 
 .reviewImg {
-	width: 300px;
-	height: 250px;
 }
 
-.revBox1_1{
+
+/* revContainer2 : 내용, 평점, 날짜, 상세주소, 좋아요/댓글/즐찾  */
+.revContainer2{
+	margin-left : 5px;
+	width:350px;
 	text-align: left;	
 }
 
-.revNickName{
-	font-size : 22px;
+#revContent{
+	margin-top : 10px;
+	padding : 10px;
+	height : 200px;
+	background-color : aliceblue;
 }
-
-.revAddress{
-	font-size : 15px;
-}
-
-
-/* revBox2 : Rating, revBox2_1*/
-.revBox2{
-	margin-left: 65px;
-}
-
 
 /* Rating : 평점 (구름)*/
-.revRating{
+#revRating{
 	display : flex;
 	justify-content: left;
+	margin-top : 10px;
 }
 
 .revRatingImg{
-	height: 20px;
-	width: 20px;
+	height: 25px;
+	width: 25px;
 	display: inline-block;
 	margin : 3px;
 }
 
 
-/* revBox2_1 : 댓글, 좋아요, 즐겨찾기 */
-.revBox2_1{
+/* 상세주소, 작성날짜 */
+#revAddress{
+	/* font-size : 15px; */
+	margin-top : 10px;
+}
+
+#revDate{
+	/* font-size : 15px; */
+	margin-top : 5px;
+}
+
+/* 좋아요, 댓글, 즐찾 */
+.revContainer2_1{
+	padding-right : 10px;
+	margin-top : 60px;
 	display : flex;
 	justify-content: space-between;
 }
 
-.revBox2_2{
-	text-align :left;
-	font-size : 15px;
+.likeAnchor{
+	color : black;
+	text-decoration: none;
 }
 
-.revIsBookMark{
-	font-size : 30px;
-	color : orange;
-	margin-right : 8px;
+.likeAnchor:hover{
+	color : skyblue;
+	text-decoration: none;
+	font-weight : bold;
+}
+
+.revLikeImg{
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+	margin : 2px;
+}
+
+.revCommentImg{
+	height: 25px;
+	width: 25px;
+	display: inline-block;
+	margin : 2px;
 }
 
 .revBookMarkImg{
-	height: 40px;
-	width: 40px;
-/* 	display: inline-block; */
+	height: 30px;
+	width: 30px;
+	margin-bottom: 5px;
 }

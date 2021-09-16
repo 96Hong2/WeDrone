@@ -26,6 +26,12 @@ public interface MapDAO {
 	int allCount();
 
 	ArrayList<MapDTO> cmtList(int start, int end, int reviewId);
+
+	int doLike(int reviewId, String userId);
+
+	int getLikeCnt(int reviewId);
+
+	int undoLike(int reviewId, String userId);
 }
 
 

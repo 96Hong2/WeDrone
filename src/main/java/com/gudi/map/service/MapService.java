@@ -144,5 +144,25 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return map;
 		}
 
+		public HashMap<String, Object> doLike(int reviewId, String userId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int success = dao.doLike(reviewId, userId);
+			int likeCnt = dao.getLikeCnt(reviewId);
+			map.put("success", success);
+			map.put("likeCnt", likeCnt);
+			return map;
+		}
+
+		public HashMap<String, Object> undoLike(int reviewId, String userId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int success = dao.undoLike(reviewId, userId);
+			int likeCnt = dao.getLikeCnt(reviewId);
+			map.put("success", success);
+			map.put("likeCnt", likeCnt);
+			return map;
+		}
+
 
 }

@@ -83,4 +83,16 @@
 		FROM reviewMK 
 		WHERE reviewId=#{param1}
 	</select>
+	
+	<select id="getLikeCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM likes WHERE reviewId=#{reviewId}
+	</select>
+	
+	<insert id="doLike">
+		INSERT INTO likes(reviewId, userId) VALUES(#{param1}, #{param2})
+	</insert>
+	
+	<delete id="undoLike">
+		DELETE FROM likes WHERE reviewId=#{param1} AND userId=#{param2}
+	</delete>
 </mapper>

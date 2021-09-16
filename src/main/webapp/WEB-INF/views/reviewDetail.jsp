@@ -39,19 +39,18 @@
 <body>
 	<!-- 테스트 후 옮기거나 통째로 import하기 -->
 	<button id="testBtn" class="btn">모달 열기</button>
-	<div id="detailModal" class="modal fade" tabindex="-1" role="dialog"
+	<div id="detailModal" class="modal revModal fade" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="reviewTitle"></h5>
-					<button class="close" type="button" data-dismiss="modal"
-						aria-label="Close">
+					<button class="btn btn-default" type="button" data-dismiss="modal"
+						aria-label="Close" id="close">
 						<span aria-hidden="true">X</span>
 					</button>
 				</div>
 				<div class="modal-body">
-
 					<div class='revContainer'>
 						
 					</div>
@@ -65,27 +64,34 @@
 				<div class="modal-footer">
 					<!-- <a class="btn" id="modalY" href="#">예</a>
 					<button class="btn" type="button" data-dismiss="modal">아니요</button> -->
-					<button class="close" type="button" class="btn btn-default"
-						data-dismiss="modal">닫기</button>
+					<button type="button" class="btn btn-default"
+						data-dismiss="modal" id="close">닫기</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
+	var reviewId = 26; //테스트용 리뷰아이디  //리뷰아이디 받아와야함
+	var userId = "${sessionScope.loginId}";
+
 	//버튼 클릭 시 모달창 나옴 >> 테스트 후 지울 부분
 	$('#testBtn').click(function(e) {
 		e.preventDefault();
+		loadReviewDetail(reviewId, userId);
 		$('#detailModal').modal("show");
 	});
 
 	//모달창 닫기
-	$('.close').click(function(e) {
+	$('#close').click(function(e) {
 		$('#detailModal').modal('hide');
 	});
 
-	var reviewId = 26; //테스트용 리뷰아이디  //리뷰아이디 받아와야함
-	var userId = "${sessionScope.userId}";
+	
+function loadReviewDetail(reviewId, userId){
+	$('.revContainer').empty();
+	$('#reviewTitle').empty();
+	
 	console.log("reviewId : ", reviewId);
 	console.log("userId : ", userId);
 	//상세정보 불러오기 
@@ -94,7 +100,7 @@
 		type : 'POST',
 		data : {
 			"reviewId" : reviewId,
-			"userId" : '${sessionScope.userId}'
+			"userId" : userId
 		},
 		dataType : 'JSON',
 		success : function(review) {
@@ -117,20 +123,104 @@
 			+"<div id='revRating'>"
 			+ rating
 			+"</div>"
-			+"<div id='revDate'>"+review.reviewDate+"</div>"
 			+"<div id='revAddress'>"+review.address+"</div>"
+			+"<div id='revDate'>"+review.reviewDate+"</div>"
 			+"<div class='revContainer2_1'>"
-				+"<div id='revLike'>♥ 좋아요("+review.likeCnt+")</div>"
-				+"<div id='revCmt'>■ 댓글("+review.commentCnt+")</div>"
-				+"<div id='revBookMark'>★ 즐겨찾기 "+review.isBookMark+"</div>"
-			+"</div>"
-			+"</div>";
+			+"<div class='revLikeContainer'>";
+			
+			if(review.isLike > 0){
+				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+                content += "<div class='revLike'>";
+                content += "<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 ";
+                content += "<b>"+review.likeCnt+"</b></div></a></div>";
+             }else{
+            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+                content += "<div class='revLike'>";
+                content += "<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 ";
+                content += "<b>"+review.likeCnt+"</b></div></a></div>";
+             }
+			
+			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b>"+review.commentCnt+"</b></div>";
+			
+			if(review.isBookMark > 0){
+				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
+             }else{
+            	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div>";
+             }
+			
+			
+			content += "</div></div>"; //end .revContainer2_1, .revContainer2
+            
 			
 			$('.revContainer').append(content);
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
 		}
-	});
+	}); //end ajax()
+	
+} //end loadReviewDetail()
+
+function doLike(reviewId, userId){
+	console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
+	
+	$.ajax({
+		url : 'doLike',
+		type : 'GET',
+		data : {
+			"reviewId" : reviewId,
+			"userId" : userId
+		},
+		dataType : 'JSON',
+		success : function(data) {
+			//console.log("data.success : ",data.success);
+			//console.log("data.likeCnt : ",data.likeCnt);
+			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+			+"<div class='revLike'>"
+			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "
+            +"<b>"+data.likeCnt+"</b></div></a></div>";
+			
+			$('.revLikeContainer').empty();
+			$('.revLikeContainer').append(contents);
+			//loadReviewDetail(reviewId, userId);
+		},
+		error : function(e) {
+			console.log("에러 e : ", e);
+		}
+	}); //end ajax()
+	
+	
+}
+
+function undoLike(reviewId, userId){
+	console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
+	
+	$.ajax({
+		url : 'undoLike',
+		type : 'GET',
+		data : {
+			"reviewId" : reviewId,
+			"userId" : userId
+		},
+		dataType : 'JSON',
+		success : function(data) {
+			//console.log("data.success : ",data.success);
+			//console.log("data.likeCnt : ",data.likeCnt);
+			var contents = "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+			+"<div class='revLike'>"
+			+"<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 "
+            +"<b>"+data.likeCnt+"</b></div></a></div>";
+			
+			$('.revLikeContainer').empty();
+			$('.revLikeContainer').append(contents);
+			//$('.revContainer').append(content);
+			//loadReviewDetail(reviewId, userId);
+		},
+		error : function(e) {
+			console.log("에러 e : ", e);
+		}
+	}); //end ajax()
+	
+}
 </script>
 </html>

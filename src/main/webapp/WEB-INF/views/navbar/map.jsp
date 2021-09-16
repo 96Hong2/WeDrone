@@ -263,7 +263,7 @@ ul.tabs li.current {
                <h5>
                   <b>Enjoy your flight, WeDrone</b>
                </h5>
-               <h6>${sessionScope.nickName}닉네임님, 환영합니다 ^ㅇ^</h6>
+               <h6>${sessionScope.loginNickName} 님, 환영합니다 ^ㅇ^</h6>
             </div>
             <ul class="tabs">
                <li class="tab-link" data-tab="tab-myLocationMK">내위치마커</li>
