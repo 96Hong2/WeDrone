@@ -49,7 +49,7 @@
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="resources/img/c2.jpg" height="1000" class="d-block w-100"
+				<img src="resources/img/c2.jpg" height="850" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
 					<h2>드론 세상에 오신 것을 환영합니다</h2>
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 			<div class="carousel-item">
-				<img src="resources/img/c1.jpg" height="1000" class="d-block w-100"
+				<img src="resources/img/c1.jpg" height="850" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
 					<h2>비행 정보를 나누어보세요</h2>
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 			<div class="carousel-item">
-				<img src="resources/img/c3.jpg" height="1000" class="d-block w-100"
+				<img src="resources/img/c3.jpg" height="850" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
 					<h2>비행관련 실시간 기상정보를 확인하세요</h2>

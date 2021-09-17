@@ -28,10 +28,10 @@ public class BoardController {
 	
 	
 	
-	@RequestMapping(value = "/index")
-	public String index(Model model) {
+	@RequestMapping(value = "/warnmap")
+	public String warnmap(Model model) {
 
-		return "/index";
+		return "/warnmap";
 	}
 	
 	@RequestMapping(value = "/navbar")

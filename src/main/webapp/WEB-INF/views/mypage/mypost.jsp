@@ -91,7 +91,7 @@
 						</tbody>
 					</table>
 				</c:if>
-				<c:if test="${cafeMypageCommetList[0] eq null}">
+				<c:if test="${reviewCommetList[0] eq null}">
 					<div class="text-center text-muted">
 						<h3>작성한 글이 없습니다</h3>
 					</div>

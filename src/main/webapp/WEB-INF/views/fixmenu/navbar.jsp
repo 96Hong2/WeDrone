@@ -29,7 +29,7 @@
 					data-bs-toggle="dropdown" href="#" role="button"
 					aria-expanded="false">Map</a>
 					<ul class="dropdown-menu active">
-						<li><a class="dropdown-item" href="#">비행지역 조회</a></li>
+						<li><a class="dropdown-item" href="${path}/warnmap">비행지역 조회</a></li>
 						<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li>
 					</ul></li>
 				<li class="nav-item"><a
