@@ -24,7 +24,7 @@
 <title>드론</title>
 <body>
 
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
@@ -37,25 +37,24 @@
 	<div class='row'>
 		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
-			style="height: auto; width: 500px; min-height: 100vh;">
+			style="height: auto; width:  200px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
-					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
-					<a
-						class="ps-4 fw-bold list-group-item list-group-item-action active fs-5"
+					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
+					<a class="ps-4  list-group-item list-group-item-action active fs-5"
 						href="${path}/myinfo" style="cursor: pointer;">내 정보</a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/myreview" style="cursor: pointer;">내 후기 마커 <a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/alarmlist" style="cursor: pointer;">알림 리스트</a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
@@ -69,7 +68,7 @@
 					class="me-2 btn btn-warning">
 					<i class="bi bi-info-circle"></i>
 				</button>
-				<h2 class="fw-bold my-3">내 정보 수정</h2>
+				<h2 class="fw-bold my-3 fs-2">내 정보 수정</h2>
 			</div>
 			<hr />
 			<div class="cont container w-50">

@@ -34,26 +34,26 @@
 <!-- 들어갈 내용 -->
 		<div class='row'>
 	<!-- 사이드바 -->
-		<div class="d-flex col-sm-2" style="height: auto; width:500px;  min-height: 100vh;">
+		<div class="d-flex col-sm-2" style="height: auto; width: 200px;  min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
-					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
+					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
 					<a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
-						class="ps-4 fw-bold list-group-item list-group-item-action active"
-						href="${path}/mycomment" style="cursor: pointer;"><h5>내가 쓴 댓글</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/myreview" style="cursor: pointer;"><h5>내 후기 마커</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림 리스트</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/myinfo" style="cursor: pointer;">내 정보</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
+						class="ps-4 list-group-item list-group-item-action active fs-5"
+						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/myreview" style="cursor: pointer;">내 후기 마커</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/alarmlist" style="cursor: pointer;">알림 리스트</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 		</div>
@@ -64,7 +64,7 @@
 					class="me-2 btn btn-warning">
 					<i class="bi bi-pencil"></i>
 				</button>
-				<h2 class="fw-bold my-3">내가 쓴 댓글</h2>
+				<h2 class="fw-bold my-3 fs-2">내가 쓴 댓글</h2>
 			</div>
 			<hr />
 			<div class="cont container w-50">
