@@ -182,7 +182,6 @@ function doLike(reviewId, userId){
 			
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
-			//loadReviewDetail(reviewId, userId);
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -213,8 +212,6 @@ function undoLike(reviewId, userId){
 			
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
-			//$('.revContainer').append(content);
-			//loadReviewDetail(reviewId, userId);
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);

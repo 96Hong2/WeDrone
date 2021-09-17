@@ -247,7 +247,8 @@ ul.tabs li.current {
             </div>
       </nav>
 
-
+	<!-- 후기마커 상세보기 모달창 import -->
+	<c:import url="../reviewDetail.jsp"></c:import>
 
       <!-- 들어갈 내용 -->
       <h4>&nbsp;Map - 지도</h4>
@@ -616,9 +617,16 @@ $(document).ready(function(){
                        image : markerImage
                     });
                     
-                    kakao.maps.event.addListener(revMarker, 'click', function() {
-                         alert('marker click!');
-                         //마커 상세보기 모달창 열기 //review.reviewId 사용
+                    //클릭 시 후기마커 상세보기 모달창 열기
+                    kakao.maps.event.addListener(revMarker, 'click', function(e) {
+                        //alert('marker click!');
+                        //e.preventDefault();
+                        var userId = "${sessionScope.loginId}";
+                        var reviewId = review.reviewId;
+                        console.log("userId / reviewId : "+userId+"/"+reviewId);
+                        
+                     	loadReviewDetail(reviewId, userId);
+                     	$('#detailModal').modal("show");
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseover', function() {
