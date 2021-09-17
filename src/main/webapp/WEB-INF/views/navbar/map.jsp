@@ -366,7 +366,7 @@ $(document).ready(function(){
    })
    
    //자동 스크롤
-   $('#sideArea').scrollTop($('#sideArea').scrollHeight);
+   //$('#sideArea').scrollTop($('#sideArea').scrollHeight);
 
 })
       
@@ -1072,6 +1072,7 @@ $(document).ready(function(){
       
       function deleteMarkers(markers) {
          for (var i = 0; i < markers.length; i++) {
+        	console.log("deleteMarkers :: 마커 "+i+" 번째 제거");
             markers[i].setMap(null);
          }
          markers = [];

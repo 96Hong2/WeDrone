@@ -118,7 +118,7 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부
 			MapDTO dto = dao.getReviewDetail(reviewId, userId);
 			logger.info("상세보기 dto : {}", dto);
-			logger.info("댓글수/사진/좋아요수/좋아요여부 : "+dto.getCommentCnt()+"/"+dto.getNewFileName()+"/"+dto.getLikeCnt()+"/"+dto.getIsLike());
+			//logger.info("댓글수/사진/좋아요수/좋아요여부 : "+dto.getCommentCnt()+"/"+dto.getNewFileName()+"/"+dto.getLikeCnt()+"/"+dto.getIsLike());
 			return dto;
 		}
 		
@@ -185,6 +185,11 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			int success = dao.undoBookMark(reviewId, userId);
 			map.put("success", success);
 			return map;
+		}
+
+		public int deleteReview(int reviewId) {
+			int success = dao.deleteReview(reviewId);
+			return success;
 		}
 
 

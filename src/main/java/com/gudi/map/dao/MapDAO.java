@@ -36,6 +36,8 @@ public interface MapDAO {
 	int doBookMark(int reviewId, String userId);
 
 	int undoBookMark(int reviewId, String userId);
+
+	int deleteReview(int reviewId);
 }
 
 

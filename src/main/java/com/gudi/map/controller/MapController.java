@@ -103,7 +103,7 @@ public class MapController {
 	@RequestMapping(value = "/doLike", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> doLike(@RequestParam int reviewId, @RequestParam String userId) {
-		logger.info("좋아요 areaId/userId : {}/{}", reviewId, userId);
+		logger.info("좋아요 reviewId/userId : {}/{}", reviewId, userId);
 		return service.doLike(reviewId, userId);
 	}
 	
@@ -112,7 +112,7 @@ public class MapController {
 	@RequestMapping(value = "/undoLike", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> undoLike(@RequestParam int reviewId, @RequestParam String userId) {
-		logger.info("좋아요 취소 areaId/userId : {}/{}", reviewId, userId);
+		logger.info("좋아요 취소 reviewId/userId : {}/{}", reviewId, userId);
 		return service.undoLike(reviewId, userId);
 	}
 	
@@ -121,7 +121,7 @@ public class MapController {
 	@RequestMapping(value = "/doBookMark", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> doBookMark(@RequestParam int reviewId, @RequestParam String userId) {
-		logger.info("즐겨찾기 areaId/userId : {}/{}", reviewId, userId);
+		logger.info("즐겨찾기 reviewId/userId : {}/{}", reviewId, userId);
 		return service.doBookMark(reviewId, userId);
 	}
 		
@@ -130,7 +130,16 @@ public class MapController {
 	@RequestMapping(value = "/undoBookMark", method = RequestMethod.GET)
 	@ResponseBody
 	public HashMap<String, Object> undoBookMark(@RequestParam int reviewId, @RequestParam String userId) {
-		logger.info("즐겨찾기 취소 areaId/userId : {}/{}", reviewId, userId);
+		logger.info("즐겨찾기 취소 reviewId/userId : {}/{}", reviewId, userId);
 		return service.undoBookMark(reviewId, userId);
+	}
+	
+	// 은홍
+	// 후기마커를 삭제하는 메소드
+	@RequestMapping(value = "/deleteReview", method = RequestMethod.GET)
+	@ResponseBody
+	public int deleteReview(@RequestParam int reviewId) {
+		logger.info("후기마커 삭제  reviewId : {}", reviewId);
+		return service.deleteReview(reviewId);
 	}
 }

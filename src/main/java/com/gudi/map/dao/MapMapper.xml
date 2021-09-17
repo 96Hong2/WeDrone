@@ -76,12 +76,13 @@
 	</select>
 
 	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">
-		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating, address,
+		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating, address, userId,
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=#{param1}) newFileName
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1}) likeCnt
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1} AND userId=#{param2}) isLike
 		,(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=#{param1}) commentCnt
 		,(SELECT COUNT(*) FROM bookMark WHERE reviewId=#{param1} AND userId=#{param2}) isBookMark
+		,(SELECT areaName FROM area WHERE areaId=reviewMK.areaId) areaName
 		FROM reviewMK 
 		WHERE reviewId=#{param1}
 	</select>
@@ -91,7 +92,7 @@
 	</select>
 	
 	<insert id="doLike">
-		INSERT INTO likes(reviewId, userId) VALUES(#{param1}, #{param2})
+		INSERT INTO likes(likeId, reviewId, userId) VALUES(likes_seq.NEXTVAL, #{param1}, #{param2})
 	</insert>
 	
 	<delete id="undoLike">
@@ -105,4 +106,8 @@
 	<delete id="undoBookMark">
 		DELETE FROM bookMark WHERE reviewId=#{param1} AND userId=#{param2}
 	</delete>
+	
+	<update id="deleteReview" parameterType="int">
+		UPDATE reviewMK SET isDel='Y' WHERE reviewId=#{reviewId}
+	</update>
 </mapper>

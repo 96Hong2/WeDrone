@@ -201,17 +201,24 @@ function loadReviewDetail(reviewId, userId){
 			+ rating
 			+"</div>"
 			+"<div id='revAddress'>"+review.address+"</div>"
-			+"<div id='revDate'>"+review.reviewDate+"</div>"
-			+"<div class='revContainer2_1'>"
-			+"<div class='revLikeContainer'>";
+			+"<div id='revDate'>"+review.reviewDate+"</div>";
+			
+			if(review.userId == userId){
+				content += "<div style='margin:10px;'><span><button type='button' class='btn btn-outline-primary myRevBtns'>수정하기</button></span>";
+				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
+				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
+			}else{
+				content += "<div class='revContainer2_1' style='margin-top : 60px;'>";
+			}
+			content += "<div class='revLikeContainer'>";
 			
 			if(review.isLike > 0){
-				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
              }else{
-            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
@@ -222,10 +229,10 @@ function loadReviewDetail(reviewId, userId){
 			
 			content += "<div class='revBookMarkContainer'>";
 			if(review.isBookMark > 0){
-				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
 				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
              }else{
-            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
             	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
              }
 			
@@ -243,7 +250,37 @@ function loadReviewDetail(reviewId, userId){
 	
 } //end loadReviewDetail()
 
-function doLike(reviewId, userId){
+function deleteReview(reviewId, areaName){
+	//console.log("reviewId/areaName 삭제: "+reviewId+"/"+areaName);
+	
+	$.ajax({
+		url : 'deleteReview',
+		type : 'GET',
+		data : {
+			"reviewId" : reviewId,
+		},
+		dataType : 'JSON',
+		success : function(data) {
+			console.log("data : ",data);
+			if(data > 0){
+				alert("후기마커 삭제가 완료되었습니다.");
+
+				//해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
+				//모달창 닫기
+				$('#detailModal').modal('hide');
+			}else{
+				alert("후기마커 삭제에 실패했습니다.");
+			}
+		},
+		error : function(e) {
+			console.log("에러 e : ", e);
+		}
+	}); //end ajax()
+	
+}
+
+function doLike(reviewId, userId, areaName){
 	console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -264,6 +301,9 @@ function doLike(reviewId, userId){
 			
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
+			
+			//해당지역 후기마커리스트 새로고침
+			loadReviews(areaName, 'default');
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -271,7 +311,7 @@ function doLike(reviewId, userId){
 	}); //end ajax()
 }
 
-function undoLike(reviewId, userId){
+function undoLike(reviewId, userId, areaName){
 	console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -292,6 +332,9 @@ function undoLike(reviewId, userId){
 			
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
+			
+			//해당지역 후기마커리스트 새로고침
+			loadReviews(areaName, 'default');
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -299,7 +342,7 @@ function undoLike(reviewId, userId){
 	}); //end ajax()
 }
 	
-	function doBookMark(reviewId, userId){
+	function doBookMark(reviewId, userId, areaName){
 		console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -317,6 +360,9 @@ function undoLike(reviewId, userId){
 				
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
+				
+				//해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);
@@ -325,7 +371,7 @@ function undoLike(reviewId, userId){
 
 	}
 
-	function undoBookMark(reviewId, userId){
+	function undoBookMark(reviewId, userId, areaName){
 		console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -343,6 +389,9 @@ function undoLike(reviewId, userId){
 				
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
+				
+				//해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);

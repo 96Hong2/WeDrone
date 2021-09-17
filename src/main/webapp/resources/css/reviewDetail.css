@@ -11,7 +11,7 @@
 
 /* revContainer1 : 이미지가 담기는 컨테이너, 이미지는 비율 맞춰서 넣자.. */
 .revContainer1{
-	width: 600px;
+	width: 500px;
 	height: 400px;
 	background-color : pink;
 	justify-content: left;
@@ -19,10 +19,12 @@
 }
 
 .reviewImg {
+	width: 500px;
+	height: 400px;
 }
 
 
-/* revContainer2 : 내용, 평점, 날짜, 상세주소, 좋아요/댓글/즐찾  */
+/* revContainer2 : 내용, 평점, 날짜, 상세주소, 수정삭제, 좋아요/댓글/즐찾  */
 .revContainer2{
 	margin-left : 5px;
 	width:350px;
@@ -62,10 +64,15 @@
 	margin-top : 5px;
 }
 
+/* 수정, 삭제버튼 */
+/* 왜 안먹을까?ㅠ */
+.myRevBtns{
+	margin: 5px;
+}
+
 /* 좋아요, 댓글, 즐찾 */
 .revContainer2_1{
 	padding-right : 10px;
-	margin-top : 60px;
 	display : flex;
 	justify-content: space-between;
 }

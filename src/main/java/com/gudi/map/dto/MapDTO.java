@@ -27,11 +27,18 @@ public class MapDTO {
 	private Date cmtDate;
 	private int cmtId;
 	
+	private String areaName;
 	
 	private MultipartFile file;
 
 	
 	
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
 	public String getReviewDate() {
 		return reviewDate;
 	}
