@@ -74,7 +74,6 @@ footer {
 						href="${path}/notice"><h4>Notice</h4></a></li>
 					<li class="nav-item"><a class="nav-link active text-center "
 						href="${path}/board"><h4>Board</h4></a></li>
-
 					<li class="nav-item"></li>
 					</ul>
 
@@ -98,15 +97,13 @@ footer {
 
 
 					<!-- <button class="btn btn-sm btn-outline-light mx-1 me-1">로그인</button> -->
-					<ul class="nav navbar-nav navbar-right">
-						<li><a class="btn btn-sm btn-outline-light me-1 mx-1"
-							roll="button" href="${path}/logout"> 로그아웃</a></li>
-						<li><a class="btn btn-sm btn-outline-light  mx-1"
-							role="button" href="${path}/mypages">마이페이지</a></li>
-						<li>
-							<button class="btn btn-sm btn-outline-light mx-1 " type="button"
-								data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-								aria-controls="offcanvasRight">메시지</button>
-						</li>
-					</ul>
+
+					<a class="btn btn-sm btn-outline-light me-1 mx-1" roll="button"
+						href="${path}/logout"> 로그아웃</a> <a
+						class="btn btn-sm btn-outline-light  mx-1" role="button"
+						href="${path}/mypages">마이페이지</a>
+
+					<button class="btn btn-sm btn-outline-light mx-1 " type="button"
+						data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+						aria-controls="offcanvasRight">메시지</button>
 		</nav>

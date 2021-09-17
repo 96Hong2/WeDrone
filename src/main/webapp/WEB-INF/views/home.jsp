@@ -45,15 +45,15 @@ body, html {
 <title>드론</title>
 <body>
 	<!-- 아이디 있을 때 네비바 -->
-	<c:if test="${sessionScope.userId eq null}">
-		<jsp:include page="fixmenu/lognav.jsp"/>
+	<c:if test="${sessionScope.loginId eq null}">
+		<jsp:include page="fixmenu/navbar.jsp" />
 	</c:if>
 
-<%-- 	<!-- 아이디 없을때 네비바 -->
-	<c:if test="${sessionScope.userId ne null}">
-		<jsp:include page="fixmenu/navbar.jsp"/>
+	<!-- 아이디 없을때 네비바 -->
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="fixmenu/lognav.jsp" />
 	</c:if>
- --%>
+
 	<div class="wrap">
 
 		<!--메인 슬라이드바  -->
