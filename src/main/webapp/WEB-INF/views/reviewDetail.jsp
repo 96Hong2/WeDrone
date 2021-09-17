@@ -118,7 +118,13 @@
 						</div>
 					</c:forEach>-->
 				</div>
-				<div class="container px-5 py-4 my-4" id="pagination_area"></div>
+				<div class="container px-5 py-4 my-4" id="pagination_area">
+					<div class="pageContainer">
+								<nav aria-lable="Page navigation" style="text-align:center">
+									<ul class="pagination" id="pagination"></ul>
+								</nav>
+								</div>
+				</div>
 		</div>
 
 					</div>
@@ -138,9 +144,8 @@
 
 
 //var content = "";
-var reviewId_1 = $("#reviewId").val();
-var currPage = 1;
-var content = "";
+
+
 
 
 	//버튼 클릭 시 모달창 나옴 >> 테스트 후 지울 부분
@@ -160,6 +165,8 @@ var content = "";
 function loadReviewDetail(reviewId, userId){
 	$('.revContainer').empty();
 	$('#reviewTitle').empty();
+	
+	var currPage = 1;
 	
 	console.log("reviewId : ", reviewId);
 	console.log("userId : ", userId);
@@ -351,7 +358,12 @@ function undoLike(reviewId, userId){
 
 
 	function loadComments(reviewId, currPage) { //댓글 데이터를 불러오는 함수
-	
+		
+		//$("#pagination").twbsPagination('destroy');
+		
+		//var reviewId_1 = $("#reviewId").val();
+		
+		console.log("loadComments 실행 : "+reviewId+"/"+currPage);
 		
 		$.ajax({
 					type : "POST",
@@ -363,42 +375,25 @@ function undoLike(reviewId, userId){
 					dataType : 'JSON',
 					success : function(data) {
 						
-						if (data.list != null) { //DB에서 댓글 데이터를 정상적으로 가져왔다면
+							console.log("리스트 값이 null이 아닐 떄");
 							$("#rm_commentWrap").show(); //만약 숨겨져있으면 보이게 한다
-							$('#cmtCount').html(data.totalCnt);
+							//$('#cmtCount').html(data.totalCnt);
+							
+							$("#pagination").twbsPagination('destroy');
 							
 							drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
-							console.log('draw comment');
 
-							
-							if(data.totalCnt > 5){
-								console.log('data.totalCnt  : ',data.totalCnt);
-								var content2 = "";
-								content2 += '<div class="pageContainer">'+
-								'<nav aria-lable="Page navigation" style="text-align:center">'+
-								'<ul class="pagination" id="pagination"></ul>'+
-								'</nav>'+
-								'</div>';
-								
-								$('#pagination_area').append(content2);
-								
 								$("#pagination").twbsPagination({
 									startPage : data.currPage, //시작페이지
 									totalPages : data.pages, //총 페이지 개수
 									visiblePages : 5,
+									initiateStartPageClick: false,
 									onPageClick : function(e, page){
-										console.log(e, page);
-										loadComments(reviewId_1, page);
+										console.log("twbsPagination 에서 onPageClick 실행");
+										console.log(page+"번째 페이지 출력중");
+										loadComments(reviewId, page);
 									}
 								});
-							}
-						}else{
-							content += '<div class="text-center text-muted">작성한 댓글이 없습니다</div>';
-						
-							
-							$('#commentLists').empty();
-							$('#commentLists').append(content);
-						}
 					},
 					error : function(e) {
 						console.log("ajax loadComments() 에러 : " + e);

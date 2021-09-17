@@ -127,6 +127,7 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			
 			int end = page*5;
 			int start = end-5+1;
+			int pages = 0;
 
 			ArrayList<MapDTO> list = dao.cmtList(start, end, reviewId); 
 			
@@ -140,8 +141,10 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			map.put("currPage", page);
 			map.put("loginId", loginId);
 			
-			int pages = (int) (totalCnt%5 > 0 
+			
+			pages = (int) (totalCnt%5 > 0 
 					? Math.floor(totalCnt/5)+1 : Math.floor(totalCnt/5));
+			
 			
 			map.put("pages", pages);
 			
