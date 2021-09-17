@@ -55,7 +55,7 @@
 
 					<hr />
 					<div id='commentArea'>
-						<h5>댓글</h5>
+						<c:import url="../rmComment.jsp"></c:import>
 					</div>
 
 				</div>
@@ -82,6 +82,7 @@
 	$('#close').click(function(e) {
 		$('#detailModal').modal('hide');
 	});
+	
 
 	
 function loadReviewDetail(reviewId, userId){
@@ -153,6 +154,8 @@ function loadReviewDetail(reviewId, userId){
             
 			
 			$('.revContainer').append(content);
+			
+			loadComments(reviewId, currPage);	
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
