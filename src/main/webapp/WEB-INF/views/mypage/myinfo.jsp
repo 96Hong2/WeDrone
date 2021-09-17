@@ -83,7 +83,7 @@ footer {
 		<!--들어갈 내용-->
 	
 		<div class="cont container mx-10 py-5 col-sm-8" >
-			<div class="d-flex align-items-left">
+			<div class="d-flex align-items-center">
 				<button type="button" id="sidebarCollapse"
 					class="me-2 btn btn-warning">
 					<i class="bi bi-info-circle"></i>

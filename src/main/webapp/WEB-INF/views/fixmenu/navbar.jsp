@@ -58,7 +58,7 @@ footer {
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-left">
 						<li class="nav-item dropdown "><a
 							class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"
 							href="#" role="button" aria-expanded="false"><h4>Map</h4></a>
@@ -76,7 +76,7 @@ footer {
 						href="${path}/board"><h4>Board</h4></a></li>
 
 					<li class="nav-item"></li>
-					</ul>
+					
 
 					<!-- <div class="d-flex" id="alarmalert">
 				
