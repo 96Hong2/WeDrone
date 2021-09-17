@@ -21,23 +21,7 @@
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 </head>
-<style>
-<
-style> /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */ .wrap {
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%
-}
 
-footer {
-	width: 100%;
-	height: 80px;
-	background-color: #3c3c3c;;
-	margin-top: auto
-}
-</style>
-</head>
 <title>드론</title>
 <body>
 	<!-- 상단 메뉴바 -->

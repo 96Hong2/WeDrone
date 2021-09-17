@@ -27,11 +27,10 @@ public class BoardController {
 	}
 	
 	
-	
 	@RequestMapping(value = "/warnmap")
 	public String warnmap(Model model) {
 
-		return "/warnmap";
+		return "navbar/warnmap";
 	}
 	
 	@RequestMapping(value = "/navbar")

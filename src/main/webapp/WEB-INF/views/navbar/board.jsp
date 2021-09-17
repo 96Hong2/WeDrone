@@ -37,7 +37,7 @@
     <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
     <li class="breadcrumb-item active fs-4" aria-current="page">Board</li>
   </ol>
-	
+	</nav>
 
 
 

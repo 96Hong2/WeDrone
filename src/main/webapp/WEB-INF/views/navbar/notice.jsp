@@ -35,7 +35,7 @@
     <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
     <li class="breadcrumb-item active fs-4" aria-current="page">Notice</li>
   </ol>
-
+</nav>
 <!-- 들어갈 내용 -->
 
 
