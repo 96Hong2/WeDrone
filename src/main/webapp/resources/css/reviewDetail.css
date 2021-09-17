@@ -4,7 +4,6 @@
 <link href="${path}/resources/css/reviewDetail.css" rel="stylesheet">
  */
 
-
 /* Wrap */
 .revContainer {
 	display	: flex;
@@ -12,12 +11,11 @@
 
 /* revContainer1 : 이미지가 담기는 컨테이너, 이미지는 비율 맞춰서 넣자.. */
 .revContainer1{
-	width: 500px;
+	width: 600px;
 	height: 400px;
 	background-color : pink;
 	justify-content: left;
 	margin : 10px;
-	overflow : auto;
 }
 
 .reviewImg {

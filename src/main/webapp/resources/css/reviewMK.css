@@ -3,7 +3,11 @@
 /* 
 <link href="${path}/resources/css/reviewMK.css" rel="stylesheet">
  */
- 
+ /* tab-reviewMK */
+/* 전체 리스트 */
+#reviewUl{
+}
+
 /* 앵커요소 */
 .reviewAnchor{
 	text-decoration : none;

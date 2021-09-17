@@ -37,8 +37,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<!-- 테스트 후 옮기거나 통째로 import하기 -->
-	<button id="testBtn" class="btn">모달 열기</button>
 	<div id="detailModal" class="modal revModal fade" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
@@ -64,16 +62,14 @@
 				<div class="modal-footer">
 					<!-- <a class="btn" id="modalY" href="#">예</a>
 					<button class="btn" type="button" data-dismiss="modal">아니요</button> -->
-					<button type="button" class="btn btn-default"
-						data-dismiss="modal" id="close">닫기</button>
+					<!-- <button type="button" class="btn btn-default"
+						data-dismiss="modal" id="close">닫기</button> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
-	var reviewId = 26; //테스트용 리뷰아이디  //리뷰아이디 받아와야함
-	var userId = "${sessionScope.loginId}";
 
 	//버튼 클릭 시 모달창 나옴 >> 테스트 후 지울 부분
 	$('#testBtn').click(function(e) {
@@ -115,7 +111,8 @@ function loadReviewDetail(reviewId, userId){
 			}
 			
 			var content = "";
-			content = "<div class='revContainer1'>" 
+			content = "<input type='hidden' id='reviewId' value="+reviewId+"/>" 
+			+"<div class='revContainer1'>"
 			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
 			+"</div>"
 			+"<div class='revContainer2'>"
@@ -140,7 +137,7 @@ function loadReviewDetail(reviewId, userId){
                 content += "<b>"+review.likeCnt+"</b></div></a></div>";
              }
 			
-			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b>"+review.commentCnt+"</b></div>";
+			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b id='rm_cmtCnt'>"+review.commentCnt+"</b></div>";
 			
 			if(review.isBookMark > 0){
 				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
