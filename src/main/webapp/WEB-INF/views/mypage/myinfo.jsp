@@ -37,7 +37,7 @@
 	<div class='row'>
 		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
-			style="height: auto; width:  200px; min-height: 100vh;">
+			style="height: auto; width: 200px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
@@ -49,7 +49,7 @@
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/myreview" style="cursor: pointer;">내 후기 마커 <a
+						href="${path}/myreview" style="cursor: pointer;">내 후기 마커</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/alarmlist" style="cursor: pointer;">알림 리스트</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
@@ -73,7 +73,7 @@
 			<hr />
 			<div class="cont container w-50">
 				<!-- 내 정보 수정 폼 -->
-				<form id="myinfoform" action="/Project/memberupdate" method="post"
+				<form id="myinfoform" action="/Project2/memberupdate" method="post"
 					class="needs-validation py-3" novalidate>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="form-control" name="nickName"
@@ -132,7 +132,7 @@
 	</div>
 	<script>
 		$('#ckBtn').click(function() {
-			var userId = $('#UserId').val().trim();
+			var logId = $('#logId').val().trim();
 			console.log(userId);
 			if (userId != "" && userId.length <= 100) {
 				$('#check2').addClass('visually-hidden');
@@ -175,8 +175,5 @@
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 </body>
-
-
-
 </script>
 </html>

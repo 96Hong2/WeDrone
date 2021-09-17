@@ -33,7 +33,7 @@
 	<div class='row'>
 		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
-			style="height: auto; width:  200px; min-height: 100vh;">
+			style="height: auto; width: 200px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
@@ -43,16 +43,14 @@
 						class="ps-4  list-group-item list-group-item-action active fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/mycomment" style="cursor: pointer;">내가
-							쓴 댓글</a> <a
+						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/myreview" style="cursor: pointer;">내 후기
-							마커</a> <a class="ps-4 list-group-item list-group-item-action fs-5"
-						href="${path}/alarmlist" style="cursor: pointer;">알림
-							리스트</a> <a
+						href="${path}/myreview" style="cursor: pointer;">내 후기 마커</a> <a
+						class="ps-4 list-group-item list-group-item-action fs-5"
+						href="${path}/alarmlist" style="cursor: pointer;">알림 리스트</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a>
-					<a class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
@@ -106,5 +104,6 @@
 </body>
 
 <script>
+	
 </script>
 </html>
