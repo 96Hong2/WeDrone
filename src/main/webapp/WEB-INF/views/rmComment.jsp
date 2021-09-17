@@ -87,7 +87,7 @@ var currPage = 1;
 var content = "";
 
 
-function loadComments(reviewId_1, page) { //댓글 데이터를 불러오는 함수
+function loadComments(reviewId_1, currPage) { //댓글 데이터를 불러오는 함수
 	console.log(page+"가져오기");
 	$.ajax({
 				type : "POST",
@@ -134,7 +134,7 @@ function drawComments(list, loginId) {
 	console.log(list);
 	var loginId = loginId;
 
-	$.each(list, function(i, item) {
+	list.forEach(function(item, idx) {
 		var check = loginId == item.userId;
 		var checkT = loginId;
 		content += "<div class='updateCheck'>"

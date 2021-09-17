@@ -133,8 +133,8 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			String loginId = (String) session.getAttribute("loginId");
 			logger.info("loginId 세션 : ", loginId);
 			
-			int totalCnt = dao.allCount();
-			logger.info(list.size()+"/"+totalCnt);
+			int totalCnt = dao.allCount(reviewId);
+			logger.info("리스트 사이즈 : "+list.size()+"/ 댓글 총 개수"+totalCnt);
 			map.put("list", list);
 			map.put("totalCnt", totalCnt);
 			map.put("currPage", page);

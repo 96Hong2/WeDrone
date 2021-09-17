@@ -63,15 +63,16 @@
 	</update>
 	
 	<select id="cmtList" resultType="com.gudi.map.dto.MapDTO">
-		SELECT c.cmtId, c.cmtContent, c.cmtDate, c.userId, (SELECT nickName FROM members WHERE userId=c.userId) nickName 
-		FROM 
-		(SELECT ROW_NUMBER() OVER (ORDER BY cmtDate DESC) rnum,
-		cmtId, cmtContent, cmtDate, userId FROM comments) c 
-		WHERE cmtField = 'review' AND postId = #{param3} AND isDel = 'N' AND rnum BETWEEN #{param1} AND #{param2}
+		SELECT * FROM
+		(SELECT ROW_NUMBER() OVER (ORDER BY u.cmtdate DESC) rnum, u.*
+		FROM (SELECT c.cmtId, c.cmtContent, c.cmtDate, c.userId, (SELECT nickName FROM members WHERE userId=c.userId) nickName 
+		FROM (SELECT cmtId, cmtContent, cmtDate, userId, isDel, postId, cmtField FROM comments) c
+		WHERE cmtField = 'review' AND postId = #{param3} AND isDel = 'N') u)
+		WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	
 	<select id="allCount" resultType="int">
-		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N'
+		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N' AND postId = #{param1}
 	</select>
 
 	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">

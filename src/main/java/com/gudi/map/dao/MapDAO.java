@@ -23,7 +23,7 @@ public interface MapDAO {
 
 	MapDTO getReviewDetail(int reviewId, String userId);
 	
-	int allCount();
+	int allCount(int reviewId);
 
 	ArrayList<MapDTO> cmtList(int start, int end, int reviewId);
 
