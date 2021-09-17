@@ -19,25 +19,7 @@
 	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
 	crossorigin="anonymous">
 <%-- 공통 css --%>
-<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
-</head>
-<style>
- /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
- .wrap {
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%
-}
-
-footer {
-	width: 100%;
-	height: 80px;
-	background-color: #3c3c3c;;
-	margin-top: auto
-}
-
-</style>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 </head>
 <title>드론</title>
 <body>
@@ -48,8 +30,7 @@ footer {
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 
-<!-- 들어갈 내용 -->
-	
+
 <div class='row'>
 	<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
@@ -94,15 +75,12 @@ footer {
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>
-<!-- 하단 푸터 -->
-<jsp:include page="../fixmenu/footer.jsp"></jsp:include>
+
 <script>
 </script>
 </html>

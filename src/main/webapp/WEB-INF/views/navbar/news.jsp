@@ -60,8 +60,7 @@ footer {
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>
-<!-- 하단 푸터 -->
-<jsp:include page="../fixmenu/footer.jsp"></jsp:include>
+
 <script>
 </script>
 </html>

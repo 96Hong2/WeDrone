@@ -19,70 +19,51 @@
 	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
 	crossorigin="anonymous">
 <%-- 공통 css --%>
-<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
-</head>
-<style>
-/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
-.wrap {
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%
-}
-
-footer {
-	width: 100%;
-	height: 80px;
-	background-color: #3c3c3c;;
-	margin-top: auto
-}
-</style>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 </head>
 <title>드론</title>
 <body>
-	<c:if test="${sessionScope.loginId eq null}">
+
+<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
-
 	<!-- 들어갈 내용 -->
 
 
 
 	<div class='row'>
-	<!-- 사이드바 -->
+		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
-		style="height: auto; width: 500px; min-height: 100vh;">
+			style="height: auto; width: 500px; min-height: 100vh;">
 
-		<nav id="sidebar" style="transition: all 0.3s;">
-			<div class="list-group list-group-flush mt-3 ">
-				<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
-				<a
-					class="ps-4 fw-bold list-group-item list-group-item-action active"
-					href="${path}/myinfo" style="cursor: pointer;"><h5>내 정보</h5></a> <a
-					class="ps-4 fw-bold list-group-item list-group-item-action"
-					href="${path}/mypost" style="cursor: pointer;"><h5>내가 쓴 글</h5></a><a
-					class="ps-4 fw-bold list-group-item list-group-item-action"
-					href="${path}/mycomment" style="cursor: pointer;"><h5>내가 쓴
-						댓글</h5></a> <a class="ps-4 fw-bold list-group-item list-group-item-action"
-					href="${path}/myreview" style="cursor: pointer;"><h5>내 후기 마커</h5>
-					<a class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/alarmlist" style="cursor: pointer;"><h5>알림
-							리스트</h5></a> <a
-						class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/bookmark" style="cursor: pointer;"><h5>즐겨찾기</h5></a>
-					<a class="ps-4 fw-bold list-group-item list-group-item-action"
-						href="${path}/userout" style="cursor: pointer;"><h5>회원탈퇴</h5></a>
-				
-			</div>
-		</nav>
-</div>
+			<nav id="sidebar" style="transition: all 0.3s;">
+				<div class="list-group list-group-flush mt-3 ">
+					<h3 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h3>
+					<a
+						class="ps-4 fw-bold list-group-item list-group-item-action active fs-5"
+						href="${path}/myinfo" style="cursor: pointer;">내 정보</a> <a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/myreview" style="cursor: pointer;">내 후기 마커 <a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/alarmlist" style="cursor: pointer;">알림 리스트</a> <a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
+						class="ps-4 fw-bold list-group-item list-group-item-action fs-5"
+						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
+				</div>
+			</nav>
+		</div>
 
 		<!--들어갈 내용-->
-	
-		<div class="cont container mx-10 py-5 col-sm-8" >
+
+		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
 				<button type="button" id="sidebarCollapse"
 					class="me-2 btn btn-warning">
@@ -148,7 +129,8 @@ footer {
 		</div>
 	</div>
 	</div>
-	</div></div>
+	</div>
+	</div>
 	<script>
 		$('#ckBtn').click(function() {
 			var userId = $('#UserId').val().trim();
@@ -194,9 +176,8 @@ footer {
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 </body>
-<!-- 하단 푸터 -->
-<jsp:include page="../fixmenu/footer.jsp"></jsp:include>
-<script>
-	
+
+
+
 </script>
 </html>
