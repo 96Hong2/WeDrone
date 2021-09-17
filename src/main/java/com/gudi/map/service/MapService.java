@@ -164,5 +164,21 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return map;
 		}
 
+		public HashMap<String, Object> doBookMark(int reviewId, String userId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int success = dao.doBookMark(reviewId, userId);
+			map.put("success", success);
+			return map;
+		}
+
+		public HashMap<String, Object> undoBookMark(int reviewId, String userId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int success = dao.undoBookMark(reviewId, userId);
+			map.put("success", success);
+			return map;
+		}
+
 
 }

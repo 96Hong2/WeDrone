@@ -126,27 +126,30 @@ function loadReviewDetail(reviewId, userId){
 			+"<div class='revLikeContainer'>";
 			
 			if(review.isLike > 0){
-				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 ";
-                content += "<b>"+review.likeCnt+"</b></div></a></div>";
+                content += "<b>"+review.likeCnt+"</b></div></a>";
              }else{
-            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 ";
-                content += "<b>"+review.likeCnt+"</b></div></a></div>";
+                content += "<b>"+review.likeCnt+"</b></div></a>";
              }
 			
+			content += "</div>";
 			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b id='rm_cmtCnt'>"+review.commentCnt+"</b></div>";
 			
+			content += "<div class='revBookMarkContainer'>";
 			if(review.isBookMark > 0){
-				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div>";
+				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
              }else{
-            	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div>";
+            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>";
+            	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
              }
 			
-			
-			content += "</div></div>"; //end .revContainer2_1, .revContainer2
+			content += "</div></div></div>"; //end .revContainer2_1, .revContainer2
             
 			
 			$('.revContainer').append(content);
@@ -184,8 +187,6 @@ function doLike(reviewId, userId){
 			console.log("에러 e : ", e);
 		}
 	}); //end ajax()
-	
-	
 }
 
 function undoLike(reviewId, userId){
@@ -214,7 +215,58 @@ function undoLike(reviewId, userId){
 			console.log("에러 e : ", e);
 		}
 	}); //end ajax()
-	
 }
+	
+	function doBookMark(reviewId, userId){
+		console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
+		
+		$.ajax({
+			url : 'doBookMark',
+			type : 'GET',
+			data : {
+				"reviewId" : reviewId,
+				"userId" : userId
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log("data.success : ",data.success);
+				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+				+ "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
+				
+				$('.revBookMarkContainer').empty();
+				$('.revBookMarkContainer').append(contents);
+			},
+			error : function(e) {
+				console.log("에러 e : ", e);
+			}
+		}); //end ajax()
+
+	}
+
+	function undoBookMark(reviewId, userId){
+		console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
+		
+		$.ajax({
+			url : 'undoBookMark',
+			type : 'GET',
+			data : {
+				"reviewId" : reviewId,
+				"userId" : userId
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log("data.success : ",data.success);
+				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+				+ "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
+				
+				$('.revBookMarkContainer').empty();
+				$('.revBookMarkContainer').append(contents);
+			},
+			error : function(e) {
+				console.log("에러 e : ", e);
+			}
+		}); //end ajax()
+	}
+
 </script>
 </html>

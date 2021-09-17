@@ -95,4 +95,12 @@
 	<delete id="undoLike">
 		DELETE FROM likes WHERE reviewId=#{param1} AND userId=#{param2}
 	</delete>
+	
+	<insert id="doBookMark">
+		INSERT INTO bookMark(reviewId, userId) VALUES(#{param1}, #{param2})
+	</insert>
+	
+	<delete id="undoBookMark">
+		DELETE FROM bookMark WHERE reviewId=#{param1} AND userId=#{param2}
+	</delete>
 </mapper>

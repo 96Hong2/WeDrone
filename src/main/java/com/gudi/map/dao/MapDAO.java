@@ -32,6 +32,10 @@ public interface MapDAO {
 	int getLikeCnt(int reviewId);
 
 	int undoLike(int reviewId, String userId);
+
+	int doBookMark(int reviewId, String userId);
+
+	int undoBookMark(int reviewId, String userId);
 }
 
 

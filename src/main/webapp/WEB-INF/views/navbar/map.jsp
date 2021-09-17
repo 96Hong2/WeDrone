@@ -593,8 +593,8 @@ $(document).ready(function(){
                     +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
-                    +"<div calss='revCmtCnt'> ♥ 댓글 : "+review.commentCnt+" 개</div>"
-                    +"<div calss='revLikeCnt'> ♥ 좋아요 : "+review.likeCnt+" 개</div>"
+                    +"<div calss='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
+                    +"<div calss='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
                     +"</div>"; //end revBox2_2
 
                     /*

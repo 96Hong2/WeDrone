@@ -115,4 +115,22 @@ public class MapController {
 		logger.info("좋아요 취소 areaId/userId : {}/{}", reviewId, userId);
 		return service.undoLike(reviewId, userId);
 	}
+	
+	// 은홍
+	// 후기마커 상세페이지에서 좋아요를 눌렀을 때 실행되는 메소드
+	@RequestMapping(value = "/doBookMark", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> doBookMark(@RequestParam int reviewId, @RequestParam String userId) {
+		logger.info("즐겨찾기 areaId/userId : {}/{}", reviewId, userId);
+		return service.doBookMark(reviewId, userId);
+	}
+		
+	// 은홍
+	// 후기마커 상세페이지에서 좋아요를 취소했을 때 실행되는 메소드
+	@RequestMapping(value = "/undoBookMark", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> undoBookMark(@RequestParam int reviewId, @RequestParam String userId) {
+		logger.info("즐겨찾기 취소 areaId/userId : {}/{}", reviewId, userId);
+		return service.undoBookMark(reviewId, userId);
+	}
 }
