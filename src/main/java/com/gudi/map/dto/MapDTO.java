@@ -1,5 +1,7 @@
 package com.gudi.map.dto;
 
+import java.sql.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class MapDTO {
@@ -20,6 +22,11 @@ public class MapDTO {
 	private int rating;
 	private int areaId;
 	private String reviewDate;
+	
+	private String cmtContent;
+	private Date cmtDate;
+	private int cmtId;
+	
 	
 	private MultipartFile file;
 
@@ -133,6 +140,24 @@ public class MapDTO {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getCmtContent() {
+		return cmtContent;
+	}
+	public void setCmtContent(String cmtContent) {
+		this.cmtContent = cmtContent;
+	}
+	public Date getCmtDate() {
+		return cmtDate;
+	}
+	public void setCmtDate(Date cmtDate) {
+		this.cmtDate = cmtDate;
+	}
+	public int getCmtId() {
+		return cmtId;
+	}
+	public void setCmtId(int cmtId) {
+		this.cmtId = cmtId;
 	}
 
 	

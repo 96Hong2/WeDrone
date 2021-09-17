@@ -63,9 +63,10 @@
 	</update>
 	
 	<select id="cmtList" resultType="com.gudi.map.dto.MapDTO">
-		SELECT cmtId, cmtContent, cmtDate, userId FROM 
+		SELECT c.cmtId, c.cmtContent, c.cmtDate, c.userId, (SELECT nickName FROM members WHERE userId=c.userId) nickName 
+		FROM 
 		(SELECT ROW_NUMBER() OVER (ORDER BY cmtDate DESC) rnum,
-		cmtId, cmtContent, cmtDate, userId FROM comments) 
+		cmtId, cmtContent, cmtDate, userId FROM comments) c 
 		WHERE cmtField = 'review' AND postId = #{param3} AND isDel = 'N' AND rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	

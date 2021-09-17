@@ -92,10 +92,10 @@ public class MapController {
 	// 지현 //후기마커 댓글 불러오기
 	@RequestMapping(value = "/loadComments", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> loadComments(@RequestParam int reviewId, @RequestParam int page) {
+	public HashMap<String, Object> loadComments(@RequestParam int reviewId, @RequestParam int page, HttpSession session) {
 		logger.info("댓글 불러올 리뷰마커 글 아이디 : " + reviewId);
 		logger.info("댓글 페이지 : " + page);
-		return service.loadComments(reviewId, page);
+		return service.loadComments(reviewId, page, session);
 	}
 
 	// 은홍

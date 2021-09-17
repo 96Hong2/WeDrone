@@ -122,7 +122,7 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return dto;
 		}
 		
-		public HashMap<String, Object> loadComments(int reviewId, int page) {
+		public HashMap<String, Object> loadComments(int reviewId, int page, HttpSession session) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			int end = page*5;
@@ -130,11 +130,15 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 
 			ArrayList<MapDTO> list = dao.cmtList(start, end, reviewId); 
 			
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("loginId 세션 : ", loginId);
+			
 			int totalCnt = dao.allCount();
 			logger.info(list.size()+"/"+totalCnt);
 			map.put("list", list);
 			map.put("totalCnt", totalCnt);
 			map.put("currPage", page);
+			map.put("loginId", loginId);
 			
 			int pages = (int) (totalCnt%5 > 0 
 					? Math.floor(totalCnt/5)+1 : Math.floor(totalCnt/5));

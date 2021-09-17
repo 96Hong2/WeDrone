@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,6 @@
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 							<label for="commentContent">로그인 후 이용해주세요.</label>
 						</div>
-						
 					</div>
 				</c:if>
 				
@@ -41,7 +41,7 @@
 				</c:if>
 				
 				<div id="commentLists" class="container px-5 py-4 my-4">
-					<c:forEach items="123456789" var="commentLists">
+					<!--<c:forEach items="123456789" var="commentLists">
 						<div class="updateCheck">
 							<p class="fw-bold">dddddddd</p>
 							<p class="lh-sm">
@@ -72,10 +72,8 @@
 							</div>
 							<hr />
 						</div>
-					</c:forEach>
-					
-					
-		
+					</c:forEach>-->
+				</div>
 		</div>
 
 
@@ -104,7 +102,9 @@ function loadComments(reviewId_1, page) { //댓글 데이터를 불러오는 함
 					if (data.list != null) { //DB에서 댓글 데이터를 정상적으로 가져왔다면
 						$("#rm_commentWrap").show(); //만약 숨겨져있으면 보이게 한다
 						$('#cmtCount').html(data.totalCnt);
-						drawComments(data.list); //댓글리스트를 브라우저에 그려준다
+						
+						drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
+						
 						$("#pagination").twbsPagination({
 							startPage : data.currPage, //시작페이지
 							totalPages : data.pages, //총 페이지 개수
@@ -116,11 +116,11 @@ function loadComments(reviewId_1, page) { //댓글 데이터를 불러오는 함
 						});
 					}else{
 						content += '<div class="text-center text-muted">작성한 댓글이 없습니다</div>';
-					}
+					
 						
 						$('#commentLists').empty();
 						$('#commentLists').append(content);
-					
+					}
 				},
 				error : function(e) {
 					console.log("ajax loadComments() 에러 : " + e);
@@ -128,6 +128,59 @@ function loadComments(reviewId_1, page) { //댓글 데이터를 불러오는 함
 			})
 
 }//loadComments end
+
+
+function drawComments(list, loginId) {
+	console.log(list);
+	var loginId = loginId;
+
+	$.each(list, function(i, item) {
+		var check = loginId == item.userId;
+		var checkT = loginId;
+		content += "<div class='updateCheck'>"
+		content += "<p class='fw-bold'>" + item.nickName + "</p>";
+		content += "<p class='lh-sm'>";
+		content += item.cmtContent;
+		if(check){
+			content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.cmtId + "'>삭제</a>";
+			content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+		}
+		
+		content += "</p>";
+		content += "<hr/>";
+		content += "</div>";
+		content += "<div class='updateForm visually-hidden'>";
+		content += "<p class='fw-bold'>" + item.nickName + "</p>";
+		content += "<div class='form-floating flex-grow-1 px-2'>";
+		content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'";
+		content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cmtContent + "</textarea>";//댓글내용
+		content += "<div class='invalid-feedback'>1자 이상 입력해주세요</div>";//수정폼
+		content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>";
+		content += "</div>";
+		content += "<div class='d-flex justify-content-end mt-2' id='commentUpdateOut'>";
+		content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.cmtId + "'>등록</a>";
+		content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>";
+		content += "</div>";
+		content += "<hr />";
+		content += "</div>";
+		content += '<div class="pageContainer">'+
+							'<nav aria-lable="Page navigation" style="text-align:center">'+
+							'<ul class="pagination" id="pagination"></ul>'+
+							'</nav>'+
+							'</div>';
+	});
+	$('#commentLists').empty();
+	$('#commentLists').append(content);
+
+//	content = "";
+//	content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
+//	content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
+	//$('#commenticon').empty();
+	//$('#commenticon').append(content);
+	
+}//commentList end
+
+
 
 
 
