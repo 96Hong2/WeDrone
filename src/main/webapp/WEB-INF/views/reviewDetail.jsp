@@ -261,7 +261,7 @@ function deleteReview(reviewId, areaName){
 		},
 		dataType : 'JSON',
 		success : function(data) {
-			console.log("data : ",data);
+			//console.log("data : ",data);
 			if(data > 0){
 				alert("후기마커 삭제가 완료되었습니다.");
 
@@ -294,6 +294,7 @@ function doLike(reviewId, userId, areaName){
 		success : function(data) {
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
+			console.log("좋아요 알림 보내기 : ", data.informSuccess);
 			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "

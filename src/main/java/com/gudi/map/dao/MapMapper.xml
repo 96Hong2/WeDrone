@@ -110,4 +110,20 @@
 	<update id="deleteReview" parameterType="int">
 		UPDATE reviewMK SET isDel='Y' WHERE reviewId=#{reviewId}
 	</update>
+	
+	<select id="getWriterInform" parameterType="int" resultType="hashmap">
+		SELECT userId, nickName, chkAlert FROM members WHERE userId=(SELECT userId FROM reviewMK WHERE reviewId=#{reviewId})
+	</select>
+	
+	<select id="getInformCnt" parameterType="String" resultType="int">
+		SELECT COUNT(informId) FROM inform WHERE userId=#{writerId}
+	</select>
+	
+	<delete id="deleteOldInform">
+		DELETE FROM inform WHERE informDate=(SELECT MIN(informDate) FROM inform WHERE userId=#{param1})
+	</delete>
+	
+	<insert id="sendInform" parameterType="com.gudi.map.dto.MapDTO">
+		INSERT INTO inform(informId, userId, informField, relatedId, informContent) VALUES(inform_seq.NEXTVAL, #{userId}, #{informField}, #{relatedId}, #{informContent})
+	</insert>
 </mapper>

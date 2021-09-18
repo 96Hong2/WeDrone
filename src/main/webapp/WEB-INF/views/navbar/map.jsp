@@ -569,7 +569,7 @@ $(document).ready(function(){
                  listCnt = list.length;
                  
                  list.forEach(function(review, index){
-                    console.log("후기마커"+index+"번째 : ", review);
+                    //console.log("후기마커"+index+"번째 : ", review);
                     
                     //평점(구름아이콘)
                     var rating = "";
@@ -1072,7 +1072,6 @@ $(document).ready(function(){
       
       function deleteMarkers(markers) {
          for (var i = 0; i < markers.length; i++) {
-        	console.log("deleteMarkers :: 마커 "+i+" 번째 제거");
             markers[i].setMap(null);
          }
          markers = [];
