@@ -23,6 +23,8 @@
 <link
    href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
    rel="stylesheet">
+<%-- 공통 css --%>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
 <!-- 아이콘 -->
 <link rel="stylesheet"
