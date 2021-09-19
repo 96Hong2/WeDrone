@@ -139,6 +139,18 @@
 		ORDER BY reviewDate DESC
 	</select>
 	
+	<select id="getBookMarkList" parameterType="String" resultType="com.gudi.map.dto.MapDTO">
+		SELECT r.reviewId, r.nickName, r.address, r.rating, TO_CHAR(r.reviewDate, 'YYYY-MM-DD') reviewDate, r.lat, r.lon,
+		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
+		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
+		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
+		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{userId}) isLike,
+		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{userId}) isBookMark
+		FROM
+		(SELECT reviewId, nickName, address, rating, reviewDate, lat, lon FROM reviewMK WHERE reviewId IN (SELECT reviewId FROM bookmark WHERE userId=#{userId}) AND isdel='N') r
+		ORDER BY reviewDate DESC
+	</select>
+	
 	<insert id="rmCmtWrite" parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO comments(cmtId, cmtContent, postId, cmtField, userId) 
 		VALUES(comment_seq.NEXTVAL, #{cmtContent}, #{reviewId}, 'review', #{userId})

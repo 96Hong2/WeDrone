@@ -181,4 +181,11 @@ public class MapController {
 	       return service.rmCmtUpdate(dto);
 	    }
 
+	// 은홍 //즐겨찾기한 후기마커 리스트를 가져오는 메소드
+	@RequestMapping(value = "/getBookMarkList", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> getBookMarkList(@RequestParam String userId) {
+		logger.info("즐겨찾기 가져올 userId : {}" + userId);
+		return service.getBookMarkList(userId);
+	}
 }

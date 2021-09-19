@@ -261,7 +261,7 @@ function deleteReview(reviewId, areaName, tab){
 					loadMyReviews("${sessionScope.loginId}");
 				}else{
 					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
-					alert("즐겨찾기 탭 새로고침!");
+					loadBookMarks("${sessionScope.loginId}");
 				}
 				
 				//모달창 닫기
@@ -308,7 +308,7 @@ function doLike(reviewId, userId, areaName, tab){
 				loadMyReviews("${sessionScope.loginId}");
 			}else{
 				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
-				alert("즐겨찾기 탭 새로고침!");
+				loadBookMarks("${sessionScope.loginId}");
 			}
 		},
 		error : function(e) {
@@ -347,7 +347,7 @@ function undoLike(reviewId, userId, areaName, tab){
 				loadMyReviews("${sessionScope.loginId}");
 			}else{
 				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
-				alert("즐겨찾기 탭 새로고침!");
+				loadBookMarks("${sessionScope.loginId}");
 			}
 		},
 		error : function(e) {
@@ -383,7 +383,7 @@ function undoLike(reviewId, userId, areaName, tab){
 					loadMyReviews("${sessionScope.loginId}");
 				}else{
 					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
-					alert("즐겨찾기 탭 새로고침!");
+					loadBookMarks("${sessionScope.loginId}");
 				}
 			},
 			error : function(e) {
@@ -420,7 +420,7 @@ function undoLike(reviewId, userId, areaName, tab){
 					loadMyReviews("${sessionScope.loginId}");
 				}else{
 					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
-					alert("즐겨찾기 탭 새로고침!");
+					loadBookMarks("${sessionScope.loginId}");
 				}
 			},
 			error : function(e) {

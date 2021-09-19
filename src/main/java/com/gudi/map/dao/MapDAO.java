@@ -54,6 +54,8 @@ public interface MapDAO {
 	int rmCmtDelete(int cmtId);
 
 	int rmCmtUpdate(MapDTO dto);
+
+	ArrayList<MapDTO> getBookMarkList(String userId);
 }
 
 
