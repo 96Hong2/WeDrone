@@ -46,6 +46,8 @@ public interface MapDAO {
 	int deleteOldInform(String writerId);
 
 	int sendInform(MapDTO dto);
+
+	ArrayList<MapDTO> getMyReviewList(String userId);
 }
 
 

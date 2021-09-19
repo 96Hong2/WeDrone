@@ -142,4 +142,12 @@ public class MapController {
 		logger.info("후기마커 삭제  reviewId : {}", reviewId);
 		return service.deleteReview(reviewId);
 	}
+	
+	// 은홍 //내 후기마커 리스트를 가져오는 메소드
+	@RequestMapping(value = "/getMyReviewList", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> getMyReviewList(@RequestParam String userId) {
+		logger.info("내 후기마커 가져올 userId : {}" + userId);
+		return service.getMyReviewList(userId);
+	}
 }

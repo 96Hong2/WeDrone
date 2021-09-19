@@ -233,5 +233,18 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return success;
 		}
 
+		public HashMap<String, Object> getMyReviewList(String userId) {
+			//후기마커 번호, 닉네임, 상세주소, 별점, 썸네일path, 썸네일뉴네임, 댓글 개수, 좋아요 개수, 좋아요 여부, 즐겨찾기 여부
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<MapDTO> list = new ArrayList<MapDTO>();
+			
+			list = (ArrayList<MapDTO>)dao.getMyReviewList(userId);
+			logger.info("리뷰리스트 개수 : {}",list.size());
+			logger.info("리뷰리스트 : {}",list);
+			map.put("list", list);
+			return map;
+		}
+
 
 }

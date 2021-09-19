@@ -126,4 +126,16 @@
 	<insert id="sendInform" parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO inform(informId, userId, informField, relatedId, informContent) VALUES(inform_seq.NEXTVAL, #{userId}, #{informField}, #{relatedId}, #{informContent})
 	</insert>
+	
+	<select id="getMyReviewList" parameterType="String" resultType="com.gudi.map.dto.MapDTO">
+		SELECT r.reviewId, r.nickName, r.address, r.rating, TO_CHAR(r.reviewDate, 'YYYY-MM-DD') reviewDate, r.lat, r.lon,
+		(SELECT newFileName FROM image WHERE imgField='review' AND postId=r.reviewId) newFileName,
+		(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=r.reviewId AND isDel='N') commentCnt,
+		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId) likeCnt,
+		(SELECT COUNT(*) FROM likes WHERE reviewId=r.reviewId AND userId=#{userId}) isLike,
+		(SELECT COUNT(*) FROM bookmark WHERE reviewId=r.reviewId AND userId=#{userId}) isBookMark
+		FROM
+		(SELECT reviewId, nickName, address, rating, reviewDate, lat, lon FROM reviewMK WHERE userId=#{userId} AND isdel='N') r
+		ORDER BY reviewDate DESC
+	</select>
 </mapper>
