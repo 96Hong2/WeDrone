@@ -492,6 +492,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			var checkT = loginId;
 			content += "<div class='updateCheck'>"
 			content += "<p class='fw-bold'>" + item.nickName + "</p>";
+			//content += "<p class='fw-bold'>" + item.cmtDate + "</p>";
 			content += "<p class='lh-sm'>";
 			content += item.cmtContent;
 			if(check){
@@ -539,7 +540,8 @@ function undoLike(reviewId, userId, areaName, tab){
 		console.log("댓글 달 후기마커 아이디 : "+reviewId_1);
 		console.log("로그인된 아이디 : "+rmLoginId);
 		
-		if(cmtContent.trim() != null){
+		if(cmtContent.length != 0){
+			
 			$("#commentContent").removeClass("is-invalid");
 			
 			$.ajax({
@@ -566,6 +568,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			
 		}else{
 			$("#commentContent").addClass("is-invalid");
+			alert("내용을 입력해주세요!");
 		}
 		
 	});
@@ -606,7 +609,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		
 		console.log("수정할 댓글 내용 : "+cmtContent);
 		
-		if(cmtContent.trim() != null){
+		if(cmtContent.length != 0){
 			$("#commentUpdateContent").removeClass("is-invalid");
 				if(confirm("댓글을 수정하시겠습니까?")){
 					
