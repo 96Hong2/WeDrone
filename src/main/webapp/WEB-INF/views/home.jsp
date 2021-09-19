@@ -20,6 +20,8 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+
+
 </head>
 <title>드론</title>
 <body>
@@ -109,7 +111,6 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-<script>
-	
-</script>
+
+<%@ include file="./common/footer.jsp" %>
 </html>

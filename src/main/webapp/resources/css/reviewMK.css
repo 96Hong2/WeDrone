@@ -29,9 +29,9 @@
 }
 
 .reviewThumb {
-	height: 80px;
-	width: 80px;
-	/* margin: 10px; */
+	height: 50px;
+	width: 50px;
+	margin: 10px;
 	justify-content: left;
 }
 

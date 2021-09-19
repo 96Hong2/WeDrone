@@ -31,29 +31,8 @@ public class MapDTO {
 	
 	private MultipartFile file;
 
-	//알림관련
-	private String informField;
-	private int relatedId;
-	private String informContent;
 	
-	public String getInformField() {
-		return informField;
-	}
-	public void setInformField(String informField) {
-		this.informField = informField;
-	}
-	public int getRelatedId() {
-		return relatedId;
-	}
-	public void setRelatedId(int relatedId) {
-		this.relatedId = relatedId;
-	}
-	public String getInformContent() {
-		return informContent;
-	}
-	public void setInformContent(String informContent) {
-		this.informContent = informContent;
-	}
+	
 	public String getAreaName() {
 		return areaName;
 	}

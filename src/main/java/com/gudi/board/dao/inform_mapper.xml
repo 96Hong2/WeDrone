@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper 에 대한 선언 문 -->
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gudi.board.dao.InformDAO">	
+	
+	<select id="countInform" resultType="int">
+		SELECT count(informid) FROM INFORM WHERE userid=#{userid}  AND ISREAD='N'
+	</select>
+	
+	
+	<select id="selectInform" resultType="Map">
+		SELECT * FROM INFORM WHERE userid=#{userid}
+	</select>
+	
+	
+	<select id="selectInformDTO" resultType="com.gudi.board.dto.InformDTO">
+		SELECT * FROM INFORM WHERE userid=#{userid} AND ISREAD='N'
+	</select>
+	
+	
+	<insert id="insertInform">
+		INSERT INTO INFORM
+			(INFORMID, USERID,  INFORMFIELD, RELATEDID, INFORMCONTENT, REGUSERID)
+			VALUES(INFORM_SEQ.NEXTVAL, #{userId},  #{informField}, #{relateId}, #{informContent}, #{regUserid})		
+	</insert>
+
+	
+	<select id="informCount" resultType="int">
+			SELECT count(informid) FROM INFORM WHERE userid=#{userid}  
+	</select>
+	
+	<select id="selectListInform"  resultType="map"> 
+		SELECT * FROM  
+		(		
+			SELECT  rownum AS rn ,  A.INFORMID, A.USERID, TO_CHAR(A.INFORMDATE ,'YYYY-MM-DD AMHH:MI:SS') AS INFORMDATE , A.INFORMFIELD, A.RELATEDID, 
+			A.INFORMCONTENT, A.ISREAD, A.REGUSERID FROM 		
+			( SELECT * FROM INFORM WHERE  userid=#{userid}   ORDER BY informid DESC ) A	
+		)			
+		WHERE rn BETWEEN  #{pageBegin} AND #{pageEnd}   			
+	</select>
+	
+	
+	
+	<update id="alarmAllRead">
+		UPDATE INFORM SET  ISREAD='Y' WHERE userid=#{userid}
+	</update>
+	
+	<update id="alarmRead">
+		UPDATE INFORM SET  ISREAD='Y' WHERE userid=#{userid} AND  INFORMID =#{informid}
+	</update>
+	
+	
+	
+	
+</mapper>

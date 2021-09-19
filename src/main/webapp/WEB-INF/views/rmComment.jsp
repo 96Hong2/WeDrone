@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="resources/js/jquery.twbsPagination.js"></script>
 <style></style>
+
 </head>
 <body>
 
@@ -76,7 +77,7 @@
 				</div>
 		</div>
 
-
+<%@ include file="./common/footer.jsp" %>
 </body>
 <script>
 

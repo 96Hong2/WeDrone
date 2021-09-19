@@ -152,53 +152,12 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 		}
 
 		public HashMap<String, Object> doLike(int reviewId, String userId) {
-			HashMap<String, Object> map = new HashMap<String, Object>(); //리턴할 해시맵
-			HashMap<String, Object> informMap = new HashMap<String, Object>(); //알림정보가 들어갈 해시맵
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			//좋아요 추가
 			int success = dao.doLike(reviewId, userId);
-			map.put("success", success);
-			//좋아요 개수 가져오기
 			int likeCnt = dao.getLikeCnt(reviewId);
+			map.put("success", success);
 			map.put("likeCnt", likeCnt);
-			
-			//알림 보내기
-			int informSuccess = 0;
-			//알림을 보내기 위해 reviewId를 통해 글작성자의 아이디와 닉네임, 알림수신여부를 가져온다.
-			informMap = dao.getWriterInform(reviewId);
-			if((informMap.get("CHKALERT")).equals("Y")) {
-				String informContent = informMap.get("NICKNAME")+"님의 후기마커에 좋아요가 달렸습니다!";
-				String writerId = (String) informMap.get("USERID");
-				logger.info(writerId + "의 알림수신 : 수신함 , "+informContent);
-				
-				//알림수신자의 알림 개수가 20개 이상이면 가장 오래된 알림 제거 후 INSERT
-				int informCnt = dao.getInformCnt(writerId);
-				//logger.info(writerId+"의 현재 알림개수 "+informCnt+" 개");
-				if(informCnt >= 2) {
-					int oldInformDel = dao.deleteOldInform(writerId);
-					logger.info("현재 알림개수 "+informCnt+"개, 가장 오래된 알림 제거 성공여부: "+oldInformDel);
-				}
-				
-				MapDTO dto = new MapDTO();
-				dto.setUserId(writerId); //알림대상유저
-				dto.setInformField("likes"); //댓글일 경우 comments
-				dto.setRelatedId(reviewId); //후기마커 또는 게시글아이디
-				dto.setInformContent(informContent); //알림내용
-				
-				informSuccess = dao.sendInform(dto);
-				if(informSuccess > 0) {
-					logger.info("알림 보내기 성공");
-					map.put("informSuccess", "success");
-				}else {
-					logger.info("알림 보내기 실패");
-					map.put("informSuccess", "failed");
-				}
-				
-			}else {
-				logger.info(informMap.get("USERID") + "의 알림 수신 : X");
-				map.put("informSuccess", "blocked");
-			}
-			
 			return map;
 		}
 
@@ -231,110 +190,6 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 		public int deleteReview(int reviewId) {
 			int success = dao.deleteReview(reviewId);
 			return success;
-		}
-
-		public HashMap<String, Object> getMyReviewList(String userId) {
-			//후기마커 번호, 닉네임, 상세주소, 별점, 썸네일path, 썸네일뉴네임, 댓글 개수, 좋아요 개수, 좋아요 여부, 즐겨찾기 여부
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			
-			ArrayList<MapDTO> list = new ArrayList<MapDTO>();
-			
-			list = (ArrayList<MapDTO>)dao.getMyReviewList(userId);
-			logger.info("리뷰리스트 개수 : {}",list.size());
-			logger.info("리뷰리스트 : {}",list);
-			map.put("list", list);
-			return map;
-		}
-
-		public HashMap<String, Object> rmCmtWrite(MapDTO dto) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			HashMap<String, Object> informMap = new HashMap<String, Object>(); //알림정보가 들어갈 해시맵
-            boolean success = false; 
-            
-            if(dao.rmCmtWrite(dto) > 0) {
-            	success = true;
-            }
-            logger.info("dto :"+dto);
-            logger.info("후기마커 댓글 작성 : "+success);
-            map.put("success", success);
-            
-          //알림 보내기
-			int informSuccess = 0;
-			//알림을 보내기 위해 reviewId를 통해 글작성자의 아이디와 닉네임, 알림수신여부를 가져온다.
-			informMap = dao.getWriterInform(dto.getReviewId());
-			if((informMap.get("CHKALERT")).equals("Y")) {
-				String informContent = informMap.get("NICKNAME")+"님의 후기마커에 댓글이 달렸습니다!";
-				String writerId = (String) informMap.get("USERID");
-				logger.info(writerId + "의 알림수신 : 수신함 , "+informContent);
-				
-				//알림수신자의 알림 개수가 20개 이상이면 가장 오래된 알림 제거 후 INSERT
-				int informCnt = dao.getInformCnt(writerId);
-				//logger.info(writerId+"의 현재 알림개수 "+informCnt+" 개");
-				if(informCnt >= 2) {
-					int oldInformDel = dao.deleteOldInform(writerId);
-					logger.info("현재 알림개수 "+informCnt+"개, 가장 오래된 알림 제거 성공여부: "+oldInformDel);
-				}
-				
-				MapDTO dto2 = new MapDTO();
-				dto2.setUserId(writerId); //알림대상유저
-				dto2.setInformField("comments"); //댓글일 경우 comments
-				dto2.setRelatedId(dto.getReviewId()); //후기마커 또는 게시글아이디
-				dto2.setInformContent(informContent); //알림내용
-				
-				informSuccess = dao.sendInform(dto2);
-				if(informSuccess > 0) {
-					logger.info("알림 보내기 성공");
-					map.put("informSuccess", "success");
-				}else {
-					logger.info("알림 보내기 실패");
-					map.put("informSuccess", "failed");
-				}
-				
-			}else {
-				logger.info(informMap.get("USERID") + "의 알림 수신 : X");
-				map.put("informSuccess", "blocked");
-			}
-            
-            
-            return map;
-		}
-
-		public HashMap<String, Object> rmCmtDelete(int cmtId) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-            boolean success = false; 
-            
-            if(dao.rmCmtDelete(cmtId) > 0) {
-            	success = true;
-            }
-            
-            map.put("success", success);
-            return map;
-		}
-
-		public HashMap<String, Object> rmCmtUpdate(MapDTO dto) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-            boolean success = false; 
-            
-            if(dao.rmCmtUpdate(dto) > 0) {
-            	success = true;
-            }
-            logger.info("dto :"+dto);
-            logger.info("후기마커 댓글 수정 : "+success);
-            map.put("success", success);
-			return map;
-		}
-
-		public HashMap<String, Object> getBookMarkList(String userId) {
-			//후기마커 번호, 닉네임, 상세주소, 별점, 썸네일path, 썸네일뉴네임, 댓글 개수, 좋아요 개수, 좋아요 여부, 즐겨찾기 여부
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			
-			ArrayList<MapDTO> list = new ArrayList<MapDTO>();
-			
-			list = (ArrayList<MapDTO>)dao.getBookMarkList(userId);
-			logger.info("리뷰리스트 개수 : {}",list.size());
-			logger.info("리뷰리스트 : {}",list);
-			map.put("list", list);
-			return map;
 		}
 
 

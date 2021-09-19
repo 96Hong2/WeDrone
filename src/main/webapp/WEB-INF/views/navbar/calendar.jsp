@@ -20,6 +20,7 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <title>드론</title>
@@ -41,9 +42,10 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+<%@ include file="../common/footer.jsp" %>
 </body>
 
 <script>

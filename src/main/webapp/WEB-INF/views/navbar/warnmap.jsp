@@ -20,29 +20,22 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/js.js"></script>
-<script src="${path}/resources/js/common.js"></script>
-<!-- API script -->
-<script
-	src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=48073EB2-97FF-3571-8683-EEFD0567901F"></script>
+
+ 
 </head>
 <title>드론</title>
 <c:if test="${sessionScope.loginId eq null}">
-	<jsp:include page="../fixmenu/navbar.jsp" />
-</c:if>
-<c:if test="${sessionScope.loginId ne null}">
-	<jsp:include page="../fixmenu/lognav.jsp" />
-</c:if>
+		<jsp:include page="../fixmenu/navbar.jsp" />
+	</c:if>
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="../fixmenu/lognav.jsp" />
+	</c:if>
 
-<nav
-	style="-bs-breadcrumb-divider: url(&amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&amp;#34;);"
-	aria-label="breadcrumb">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
-		<li class="breadcrumb-item active fs-4" aria-current="page">Map >
-			비행지역 조회</li>
-	</ol>
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
+    <li class="breadcrumb-item active fs-4" aria-current="page">Map > 비행지역 조회</li>
+  </ol>
 </nav>
 <body>
 
@@ -69,7 +62,6 @@
 			<div id="wms_image"></div>
 		</div>
 	</div>
-</body>
 
 
 	<script>
@@ -200,7 +192,10 @@
 							console.log("-------------------------");
 						});
 
-	</script>
-	
-
+		
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/js.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
+	<%@ include file="../common/footer.jsp" %>
+</body>
 </html>

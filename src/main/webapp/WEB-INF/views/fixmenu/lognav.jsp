@@ -40,20 +40,23 @@
 					class="nav-link active text-center  fs-4 " href="${path}/notice">Notice</a></li>
 				<li class="nav-item"><a
 					class="nav-link active text-center fs-4 " href="${path}/board">Board</a></li>
+<li class="nav-item">
+<a class="nav-link active text-center fs-4 " href="${path}/fbList">fbList</a>
+</li>						
 			</ul>
 
-			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span
+			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span style="display: none;"
 				class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
 				class="visually-hidden">unread messages</span></span>
 
 
-			<button type="button"
+			<button type="button" onclick="alarmListMove()"
 				class="btn btn-sm btn-#3c3c3c; position-relative">
-				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span
+				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span id="alarm-span" style="display: none;"
 					class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-					class="visually-hidden">unread messages</span></span>
+					class="visually-hidden" id="alarm-span-count">unread messages</span></span>
 			</button>
-
+		
 			<form class="d-flex">
 				<a class="btn btn-sm btn-outline-light me-1 mx-1" roll="button"
 					href="${path}/logout"> 로그아웃</a> <a

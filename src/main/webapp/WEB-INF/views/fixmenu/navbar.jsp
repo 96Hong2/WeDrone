@@ -40,6 +40,10 @@
 					class="nav-link active text-center  fs-4 " href="${path}/notice">Notice</a></li>
 				<li class="nav-item"><a
 					class="nav-link active text-center fs-4 " href="${path}/board">Board</a></li>
+
+<li class="nav-item">
+<a class="nav-link active text-center fs-4 " href="${path}/fbList">fbList</a>
+</li>					
 			</ul>
 			<form class="d-flex">
 			<a class="btn btn-sm btn-outline-light me-1 mx-1" roll="button"

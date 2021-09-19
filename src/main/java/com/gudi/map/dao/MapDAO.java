@@ -38,24 +38,6 @@ public interface MapDAO {
 	int undoBookMark(int reviewId, String userId);
 
 	int deleteReview(int reviewId);
-
-	HashMap<String, Object> getWriterInform(int reviewId);
-
-	int getInformCnt(String writerId);
-
-	int deleteOldInform(String writerId);
-
-	int sendInform(MapDTO dto);
-
-	ArrayList<MapDTO> getMyReviewList(String userId);
-
-	int rmCmtWrite(MapDTO dto);
-
-	int rmCmtDelete(int cmtId);
-
-	int rmCmtUpdate(MapDTO dto);
-
-	ArrayList<MapDTO> getBookMarkList(String userId);
 }
 
 
