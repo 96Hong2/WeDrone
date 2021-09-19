@@ -496,13 +496,13 @@ function undoLike(reviewId, userId, areaName, tab){
 			content += item.cmtContent;
 			if(check){
 				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='"+item.cmtId+"' onclick='rmCmtDelete("+item.cmtId+")'>삭제</a>";
-				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm' onclick='updateFormSet()'>수정</a>";
 			}
 			
 			content += "</p>";
 			content += "<hr/>";
 			content += "</div>";
-			content += "<div class='updateForm visually-hidden'>";
+			content += "<div class='updateForm visually-hidden' id='updateForm'>";
 			content += "<p class='fw-bold'>" + item.nickName + "</p>";
 			content += "<div class='form-floating flex-grow-1 px-2'>";
 			content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'";
@@ -633,6 +633,10 @@ function undoLike(reviewId, userId, areaName, tab){
 		}else{
 			$("#commentUpdateContent").addClass("is-invalid");
 		}
+	}
+	
+	function updateFormSet(){
+		$("#updateForm").toggleClass("visually-hidden");
 	}
 
 </script>
