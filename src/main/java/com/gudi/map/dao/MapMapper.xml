@@ -138,4 +138,18 @@
 		(SELECT reviewId, nickName, address, rating, reviewDate, lat, lon FROM reviewMK WHERE userId=#{userId} AND isdel='N') r
 		ORDER BY reviewDate DESC
 	</select>
+	
+	<insert id="rmCmtWrite" parameterType="com.gudi.map.dto.MapDTO">
+		INSERT INTO comments(cmtId, cmtContent, postId, cmtField, userId) 
+		VALUES(comment_seq.NEXTVAL, #{cmtContent}, #{reviewId}, 'review', #{userId})
+	</insert>
+	
+	<update id="rmCmtDelete" parameterType="int">
+		UPDATE comments SET isDel='Y' WHERE cmtId =#{param1}
+	</update>
+	
+	<update id="rmCmtUpdate" parameterType="com.gudi.map.dto.MapDTO">
+		UPDATE comments SET cmtContent=#{cmtContent} WHERE cmtId =#{cmtId}
+	</update>
+	
 </mapper>

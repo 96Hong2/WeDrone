@@ -74,11 +74,12 @@
 				<c:if test="${sessionScope.loginNickName != null}">
 					<div class="d-flex align-items-center">
 						<div class="form-floating flex-grow-1 px-2">
+						<input type="hidden" id="rmLoginId" name="rmLoginId" value="${sessionScope.loginId}"/>
 							<textarea class="form-control" placeholder="Leave a comment here"
 								name="commentContent" id="commentContent"
-								style="height: 100px; resize: none;"></textarea>
+								style="height: 100px; resize: none;" maxlength="150"></textarea>
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
-							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+							<label for="commentContent">150자 이내로 입력해주세요.</label>
 						</div>
 						<a type="button" id="rmCommentBtn" class="btn btn-secondary btn-sm" title="글아이디">등록</a>
 					</div>
@@ -178,7 +179,7 @@ function loadReviewDetail(reviewId, userId, tab){
 			}
 			
 			var content = "";
-			content = "<input type='hidden' id='reviewId' value="+reviewId+"/>" 
+			content = "<input type='hidden' id='reviewId' value='"+reviewId+"' />" 
 			+"<div class='revContainer1'>"
 			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
 			+"</div>"
@@ -437,10 +438,6 @@ function undoLike(reviewId, userId, areaName, tab){
 
 	function loadComments(reviewId, currPage) { //댓글 데이터를 불러오는 함수
 		
-		//$("#pagination").twbsPagination('destroy');
-		
-		//var reviewId_1 = $("#reviewId").val();
-		
 		console.log("loadComments 실행 : "+reviewId+"/"+currPage);
 		
 		$.ajax({
@@ -466,6 +463,10 @@ function undoLike(reviewId, userId, areaName, tab){
 									totalPages : data.pages, //총 페이지 개수
 									visiblePages : 5,
 									initiateStartPageClick: false,
+									first : "<<",	// 페이지네이션 버튼중 처음으로 돌아가는 버튼에 쓰여 있는 텍스트
+								    prev : "<",	// 이전 페이지 버튼에 쓰여있는 텍스트
+								    next : ">",	// 다음 페이지 버튼에 쓰여있는 텍스트
+								    last : ">>",
 									onPageClick : function(e, page){
 										console.log("twbsPagination 에서 onPageClick 실행");
 										console.log(page+"번째 페이지 출력중");
@@ -494,7 +495,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			content += "<p class='lh-sm'>";
 			content += item.cmtContent;
 			if(check){
-				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.cmtId + "'>삭제</a>";
+				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='"+item.cmtId+"' onclick='rmCmtDelete("+item.cmtId+")'>삭제</a>";
 				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
 			}
 			
@@ -507,10 +508,10 @@ function undoLike(reviewId, userId, areaName, tab){
 			content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'";
 			content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cmtContent + "</textarea>";//댓글내용
 			content += "<div class='invalid-feedback'>1자 이상 입력해주세요</div>";//수정폼
-			content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>";
+			content += "<label for='commentUpdateContent'>수정할 내용을 작성하세요</label>";
 			content += "</div>";
 			content += "<div class='d-flex justify-content-end mt-2' id='commentUpdateOut'>";
-			content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.cmtId + "'>등록</a>";
+			content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.cmtId + "' onclick='rmCmtUpdate("+item.cmtId+")'>등록</a>";
 			content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>";
 			content += "</div>";
 			content += "<hr />";
@@ -527,6 +528,112 @@ function undoLike(reviewId, userId, areaName, tab){
 		//$('#commenticon').append(content);
 		
 	}//commentList end
+	
+	
+	//댓글 작성
+	$("#rmCommentBtn").click(function(){
+		var reviewId_1 = $("#reviewId").val();
+		var cmtContent = $("#commentContent").val();
+		var rmLoginId = $("#rmLoginId").val();
+		console.log("댓글 내용 : "+cmtContent);
+		console.log("댓글 달 후기마커 아이디 : "+reviewId_1);
+		console.log("로그인된 아이디 : "+rmLoginId);
+		
+		if(cmtContent.trim() != null){
+			$("#commentContent").removeClass("is-invalid");
+			
+			$.ajax({
+				type: 'POST',
+				url: 'rmCmtWrite',
+				data: {
+					"cmtContent" : cmtContent,
+					"reviewId" : reviewId_1,
+					"userId" : rmLoginId
+				},
+				dataType: 'JSON',
+				success: function(data){
+					console.log("댓글 작성 성공 여부 : "+data.success);
+					console.log("댓글 알림 보내기 : ", data.informSuccess);
+					$("#commentContent").val("");
+					alert("댓글을 등록했습니다.");
+					loadComments(reviewId_1, 1);
+				},
+				error: function(e){
+					console.log("댓글 작성 실패 :"+e);
+					alert("댓글을 등록하지 못했습니다.");
+				}
+			});
+			
+		}else{
+			$("#commentContent").addClass("is-invalid");
+		}
+		
+	});
+	
+	//댓글 삭제
+	function rmCmtDelete(cmtId){
+		
+		var reviewId_1 = $("#reviewId").val();
+		
+		if(confirm("이 댓글을 삭제하시겠습니까?")){
+		
+			$.ajax({
+				type: 'POST',
+				url: 'rmCmtDelete',
+				data: {
+					"cmtId" : cmtId,
+				},
+				dataType: 'JSON',
+				success: function(data){
+					console.log("댓글 삭제 성공 여부 : "+data.success);
+					$("#commentContent").val("");
+					alert("댓글을 삭제했습니다.");
+					loadComments(reviewId_1, 1);
+				},
+				error: function(e){
+					console.log("댓글 삭제 실패 :"+e);
+					alert("댓글을 삭제하지 못했습니다.");
+				}
+			});
+		}
+	}
+	
+	//댓글 수정
+	function rmCmtUpdate(cmtId){
+		var reviewId_1 = $("#reviewId").val();
+		var cmtContent = $("#commentUpdateContent").val();
+		var rmLoginId = $("#rmLoginId").val();
+		
+		console.log("수정할 댓글 내용 : "+cmtContent);
+		
+		if(cmtContent.trim() != null){
+			$("#commentUpdateContent").removeClass("is-invalid");
+				if(confirm("댓글을 수정하시겠습니까?")){
+					
+					$.ajax({
+						type: 'POST',
+						url: 'rmCmtUpdate',
+						data: {
+							"cmtContent" : cmtContent,
+							"cmtId" : cmtId,
+						},
+						dataType: 'JSON',
+						success: function(data){
+							console.log("댓글 수정 성공 여부 : "+data.success);
+							//$("#commentContent").val("");
+							alert("댓글을 수정했습니다.");
+							loadComments(reviewId_1, 1);
+						},
+						error: function(e){
+							console.log("댓글 수정 실패 :"+e);
+							alert("댓글을 수정하지 못했습니다.");
+						}
+					});
+				}
+		}else{
+			$("#commentUpdateContent").addClass("is-invalid");
+		}
+	}
 
 </script>
 </html>

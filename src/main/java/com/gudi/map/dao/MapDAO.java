@@ -48,6 +48,12 @@ public interface MapDAO {
 	int sendInform(MapDTO dto);
 
 	ArrayList<MapDTO> getMyReviewList(String userId);
+
+	int rmCmtWrite(MapDTO dto);
+
+	int rmCmtDelete(int cmtId);
+
+	int rmCmtUpdate(MapDTO dto);
 }
 
 

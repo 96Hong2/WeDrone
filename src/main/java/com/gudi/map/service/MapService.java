@@ -246,5 +246,83 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return map;
 		}
 
+		public HashMap<String, Object> rmCmtWrite(MapDTO dto) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> informMap = new HashMap<String, Object>(); //알림정보가 들어갈 해시맵
+            boolean success = false; 
+            
+            if(dao.rmCmtWrite(dto) > 0) {
+            	success = true;
+            }
+            logger.info("dto :"+dto);
+            logger.info("후기마커 댓글 작성 : "+success);
+            map.put("success", success);
+            
+          //알림 보내기
+			int informSuccess = 0;
+			//알림을 보내기 위해 reviewId를 통해 글작성자의 아이디와 닉네임, 알림수신여부를 가져온다.
+			informMap = dao.getWriterInform(dto.getReviewId());
+			if((informMap.get("CHKALERT")).equals("Y")) {
+				String informContent = informMap.get("NICKNAME")+"님의 후기마커에 댓글이 달렸습니다!";
+				String writerId = (String) informMap.get("USERID");
+				logger.info(writerId + "의 알림수신 : 수신함 , "+informContent);
+				
+				//알림수신자의 알림 개수가 20개 이상이면 가장 오래된 알림 제거 후 INSERT
+				int informCnt = dao.getInformCnt(writerId);
+				//logger.info(writerId+"의 현재 알림개수 "+informCnt+" 개");
+				if(informCnt >= 2) {
+					int oldInformDel = dao.deleteOldInform(writerId);
+					logger.info("현재 알림개수 "+informCnt+"개, 가장 오래된 알림 제거 성공여부: "+oldInformDel);
+				}
+				
+				MapDTO dto2 = new MapDTO();
+				dto2.setUserId(writerId); //알림대상유저
+				dto2.setInformField("comments"); //댓글일 경우 comments
+				dto2.setRelatedId(dto.getReviewId()); //후기마커 또는 게시글아이디
+				dto2.setInformContent(informContent); //알림내용
+				
+				informSuccess = dao.sendInform(dto2);
+				if(informSuccess > 0) {
+					logger.info("알림 보내기 성공");
+					map.put("informSuccess", "success");
+				}else {
+					logger.info("알림 보내기 실패");
+					map.put("informSuccess", "failed");
+				}
+				
+			}else {
+				logger.info(informMap.get("USERID") + "의 알림 수신 : X");
+				map.put("informSuccess", "blocked");
+			}
+            
+            
+            return map;
+		}
+
+		public HashMap<String, Object> rmCmtDelete(int cmtId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+            boolean success = false; 
+            
+            if(dao.rmCmtDelete(cmtId) > 0) {
+            	success = true;
+            }
+            
+            map.put("success", success);
+            return map;
+		}
+
+		public HashMap<String, Object> rmCmtUpdate(MapDTO dto) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+            boolean success = false; 
+            
+            if(dao.rmCmtUpdate(dto) > 0) {
+            	success = true;
+            }
+            logger.info("dto :"+dto);
+            logger.info("후기마커 댓글 수정 : "+success);
+            map.put("success", success);
+			return map;
+		}
+
 
 }

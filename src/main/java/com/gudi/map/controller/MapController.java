@@ -150,4 +150,35 @@ public class MapController {
 		logger.info("내 후기마커 가져올 userId : {}" + userId);
 		return service.getMyReviewList(userId);
 	}
+	
+	
+	 //지현 //후기마커 상세보기에서 댓글 작성
+	@RequestMapping(value = "/rmCmtWrite", method = RequestMethod.POST)
+    public @ResponseBody HashMap<String, Object> rmCmtWrite(@ModelAttribute MapDTO dto) {
+        logger.info("후기마커 상세보기에서 댓글 쓰기 요청 ");
+        logger.info("댓글 작성자 : "+dto.getUserId());
+        logger.info("댓글 달린 후기마커 아이디 : "+dto.getReviewId());
+        logger.info("댓글 내용 : "+dto.getCmtContent());
+        
+       return service.rmCmtWrite(dto);
+    }
+	
+	//지현 //후기마커 상세보기에서 댓글 삭제
+	@RequestMapping(value = "/rmCmtDelete", method = RequestMethod.POST)
+    public @ResponseBody HashMap<String, Object> rmCmtDelete(@RequestParam int cmtId) {
+        logger.info("삭제 요청한 댓글 아이디 : "+cmtId);
+        
+       return service.rmCmtDelete(cmtId);
+    }
+	
+	//지현 //후기마커 상세보기에서 댓글 수정
+		@RequestMapping(value = "/rmCmtUpdate", method = RequestMethod.POST)
+	    public @ResponseBody HashMap<String, Object> rmCmtUpdate(@ModelAttribute MapDTO dto) {
+	        logger.info("후기마커 상세보기에서 댓글 수정 요청 ");
+	        logger.info("수정할 댓글 아이디 : "+dto.getCmtId());
+	        logger.info("댓글 내용 : "+dto.getCmtContent());
+	        
+	       return service.rmCmtUpdate(dto);
+	    }
+
 }
