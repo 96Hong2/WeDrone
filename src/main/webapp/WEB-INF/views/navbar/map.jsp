@@ -15,6 +15,7 @@
    crossorigin="anonymous">
    
 </script>
+<!-- 부트스트랩 css 추가 -->
 <link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
 <!-- css cdn 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -185,16 +186,18 @@ ul.tabs li.current {
 <title>드론</title>
 <body>
    <!-- 상단 메뉴바 -->
-   <!-- 아이디가 있다면 -->
-   <%-- <c:if test="${sessionScope.userId ne null}">
-      <jsp:include page="${path}/lognav"></jsp:include>
-   </c:if>
-   <!-- 아이디가 없을때 네비바-->
-   <c:if test="${sessionScope.userId eq null}">
-      <jsp:include page="${path}/navbar"></jsp:include>
-   </c:if> --%>
+   <!-- 아이디 있을 때 네비바 -->
+   <c:if test="${sessionScope.loginId eq null}">
+		<jsp:include page="../fixmenu/navbar.jsp" />
+	</c:if>
 
-   <div class="wrap">
+	<!-- 아이디 없을때 네비바 -->
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="../fixmenu/lognav.jsp" />
+	</c:if>
+
+ 
+<%--    <div class="wrap">
       <!-- 네비게이션바 -->
       <nav class="navbar navbar-expand-lg navbar-dark"
          style="background-color: #3c3c3c;">
@@ -249,7 +252,8 @@ ul.tabs li.current {
                </div>
             </div>
       </nav>
-
+  --%>
+ 
 	<!-- 후기마커 상세보기 모달창 import -->
 	<c:import url="../reviewDetail.jsp"></c:import>
 
@@ -267,10 +271,10 @@ ul.tabs li.current {
                <h6>${sessionScope.loginNickName} 님, 환영합니다 ^ㅇ^</h6>
             </div>
             <ul class="tabs">
-               <li class="tab-link" id="tab-myLocationMK" data-tab="tab-myLocationMK">내위치마커</li>
-               <li class="tab-link current" id="tab-reviewMK" data-tab="tab-reviewMK">후기마커</li>
-               <li class="tab-link" id="tab-bookmark" data-tab="tab-bookmark">즐겨찾기</li>
-               <li class="tab-link" id="tab-myReviewMK" data-tab="tab-myReviewMK">내후기마커</li>
+               <li class="tab-link" id="tab-myLocationMK-li" data-tab="tab-myLocationMK">내위치마커</li>
+               <li class="tab-link current" id="tab-reviewMK-li" data-tab="tab-reviewMK">후기마커</li>
+               <li class="tab-link" id="tab-bookmark-li" data-tab="tab-bookmark">즐겨찾기</li>
+               <li class="tab-link" id="tab-myReviewMK-li" data-tab="tab-myReviewMK">내후기마커</li>
             </ul>
 			
 			<!-- 내 위치 마커 탭 -->
@@ -305,10 +309,21 @@ ul.tabs li.current {
 
             <!-- 내 후기 마커 탭 -->
             <div id="tab-myReviewMK" class="tab-content">
-				<div id='ReviewListArea_my'>
-                  <div>내 후기마커가 들어갈 자리입니다.</div>
+				<div id="ReviewListArea_my">
+				<c:if test="${sessionScope.loginId eq null}">
+					<div id="myRevComment" style="margin:10px;text-align:center;">
+						<h6>로그인이 필요한 서비스입니다.</h6>
+						<h6>로그인하고 나만의 후기마커를 남겨보세요!</h6>
+					</div>
+				</c:if>
+                <c:if test="${sessionScope.loginId ne null}">
+					<div id="myRevComment" style="margin:10px;text-align:center;">
+						<h6>등록된 후기마커가 없습니다.</h6>
+						<h6>후기마커 탭에서 새로운 후기마커를 등록해보세요!</h6>
+					</div>
+				</c:if>  
 
-                  <div id='reviewList_my'>
+                  <div id="reviewList_my">
                      <ul class="list-group list-group-flush" id="reviewUl_my">
                         
                      </ul>
@@ -381,12 +396,12 @@ $(document).ready(function(){
    })
    
    //후기마커 탭 클릭 시
-   $('#tab-reviewMK').click(function(){
+   $('#tab-reviewMK-li').click(function(){
 	   location.reload(true);       
    })
    
    //내후기마커 탭 클릭 시
-   $('#tab-myReviewMK').click(function(){
+   $('#tab-myReviewMK-li').click(function(){
 	 //지도 초기화
 	 deletePolygon(polygons); //폴리곤 제거
      customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
@@ -397,6 +412,7 @@ $(document).ready(function(){
      map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
      map.setZoomable(true);
      map.setMaxLevel(10);
+     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
      //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
      
      loadMyReviews("${sessionScope.loginId}");
@@ -670,7 +686,7 @@ $(document).ready(function(){
                         var reviewId = review.reviewId;
                         console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
-                     	loadReviewDetail(reviewId, userId);
+                     	loadReviewDetail(reviewId, userId, "reviewMK");
                      	$('#detailModal').modal("show");
                      });
                     
@@ -745,7 +761,7 @@ $(document).ready(function(){
 	                        var userId = "${sessionScope.loginId}";
 	                        console.log("userId / reviewId : "+userId+"/"+reviewId);
 	                        
-	                     	loadReviewDetail(reviewId, userId);
+	                     	loadReviewDetail(reviewId, userId,"reviewMK");
 	                     	$('#detailModal').modal("show");
 	        	       	});
 	  	  	            
@@ -1135,10 +1151,12 @@ $(document).ready(function(){
                  
                  var content = "";
                  var list = data.list;
-                 listCnt = list.length;
+                 if(list.length > 0){
+                	 $("#myRevComment").hide(); //등록된 리뷰가 없다는 문구 제거
+                 }
                  
                  list.forEach(function(review, index){
-                    console.log("내 후기마커"+index+"번째 : ", review);
+                    //console.log("내 후기마커"+index+"번째 : ", review);
                     
                     //평점(구름아이콘)
                     var rating = "";
@@ -1194,14 +1212,14 @@ $(document).ready(function(){
                        image : markerImage
                     });
                     
-                    /*
+                    
                     //클릭 시 후기마커 상세보기 모달창 열기
                     kakao.maps.event.addListener(revMarker, 'click', function(e) {
                         var userId = "${sessionScope.loginId}";
                         var reviewId = review.reviewId;
                         console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
-                     	loadReviewDetail(reviewId, userId);
+                     	loadReviewDetail(reviewId, userId, "myReviewMK");
                      	$('#detailModal').modal("show");
                      });
                     
@@ -1230,7 +1248,7 @@ $(document).ready(function(){
                          $('.reviewWrap'+review.reviewId).css("background-color", "white");
                          $('.reviewWrap'+review.reviewId).css("color", "black");
                      });
-					*/
+					
                     
                     markers.push(revMarker); //마커배열에 이 마커 추가
                   
@@ -1243,7 +1261,7 @@ $(document).ready(function(){
                  $("#reviewUl_my").append(content);
                  
                  
-                 /*
+                 
                 //마우스오버된 후기 하이라이트
               	reviewIds.forEach(function(reviewId, i){
     	             	//각각의 reviewId와 index i를 받아옴
@@ -1278,7 +1296,7 @@ $(document).ready(function(){
 	                        var userId = "${sessionScope.loginId}";
 	                        console.log("userId / reviewId : "+userId+"/"+reviewId);
 	                        
-	                     	loadReviewDetail(reviewId, userId);
+	                     	loadReviewDetail(reviewId, userId, "myReviewMK");
 	                     	$('#detailModal').modal("show");
 	        	       	});
 	  	  	            
@@ -1286,7 +1304,7 @@ $(document).ready(function(){
     	               	
     	               	
                   })
-               */
+               
                  
               },
               error:function(e){

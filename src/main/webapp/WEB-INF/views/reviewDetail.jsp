@@ -142,19 +142,6 @@
 </body>
 <script>
 
-
-//var content = "";
-
-
-
-
-	//버튼 클릭 시 모달창 나옴 >> 테스트 후 지울 부분
-	$('#testBtn').click(function(e) {
-		e.preventDefault();
-		loadReviewDetail(reviewId, userId);
-		$('#detailModal').modal("show");
-	});
-
 	//모달창 닫기
 	$('#close').click(function(e) {
 		$('#detailModal').modal('hide');
@@ -162,7 +149,7 @@
 	
 
 	
-function loadReviewDetail(reviewId, userId){
+function loadReviewDetail(reviewId, userId, tab){
 	$('.revContainer').empty();
 	$('#reviewTitle').empty();
 	
@@ -205,7 +192,7 @@ function loadReviewDetail(reviewId, userId){
 			
 			if(review.userId == userId){
 				content += "<div style='margin:10px;'><span><button type='button' class='btn btn-outline-primary myRevBtns'>수정하기</button></span>";
-				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
+				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
 				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
 			}else{
 				content += "<div class='revContainer2_1' style='margin-top : 60px;'>";
@@ -213,12 +200,12 @@ function loadReviewDetail(reviewId, userId){
 			content += "<div class='revLikeContainer'>";
 			
 			if(review.isLike > 0){
-				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
              }else{
-            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
@@ -229,10 +216,10 @@ function loadReviewDetail(reviewId, userId){
 			
 			content += "<div class='revBookMarkContainer'>";
 			if(review.isBookMark > 0){
-				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
 				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
              }else{
-            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
             	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
              }
 			
@@ -250,7 +237,7 @@ function loadReviewDetail(reviewId, userId){
 	
 } //end loadReviewDetail()
 
-function deleteReview(reviewId, areaName){
+function deleteReview(reviewId, areaName, tab){
 	//console.log("reviewId/areaName 삭제: "+reviewId+"/"+areaName);
 	
 	$.ajax({
@@ -265,8 +252,17 @@ function deleteReview(reviewId, areaName){
 			if(data > 0){
 				alert("후기마커 삭제가 완료되었습니다.");
 
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					alert("즐겨찾기 탭 새로고침!");
+				}
+				
 				//모달창 닫기
 				$('#detailModal').modal('hide');
 			}else{
@@ -280,7 +276,7 @@ function deleteReview(reviewId, areaName){
 	
 }
 
-function doLike(reviewId, userId, areaName){
+function doLike(reviewId, userId, areaName, tab){
 	console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -303,8 +299,16 @@ function doLike(reviewId, userId, areaName){
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
 			
-			//해당지역 후기마커리스트 새로고침
-			loadReviews(areaName, 'default');
+			if(tab == "reviewMK"){
+				//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
+			}else if(tab == "myReviewMK"){
+				//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+				loadMyReviews("${sessionScope.loginId}");
+			}else{
+				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+				alert("즐겨찾기 탭 새로고침!");
+			}
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -312,7 +316,7 @@ function doLike(reviewId, userId, areaName){
 	}); //end ajax()
 }
 
-function undoLike(reviewId, userId, areaName){
+function undoLike(reviewId, userId, areaName, tab){
 	console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -334,8 +338,16 @@ function undoLike(reviewId, userId, areaName){
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
 			
-			//해당지역 후기마커리스트 새로고침
-			loadReviews(areaName, 'default');
+			if(tab == "reviewMK"){
+				//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
+			}else if(tab == "myReviewMK"){
+				//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+				loadMyReviews("${sessionScope.loginId}");
+			}else{
+				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+				alert("즐겨찾기 탭 새로고침!");
+			}
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -343,7 +355,7 @@ function undoLike(reviewId, userId, areaName){
 	}); //end ajax()
 }
 	
-	function doBookMark(reviewId, userId, areaName){
+	function doBookMark(reviewId, userId, areaName, tab){
 		console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -362,8 +374,16 @@ function undoLike(reviewId, userId, areaName){
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
 				
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					alert("즐겨찾기 탭 새로고침!");
+				}
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);
@@ -372,7 +392,7 @@ function undoLike(reviewId, userId, areaName){
 
 	}
 
-	function undoBookMark(reviewId, userId, areaName){
+	function undoBookMark(reviewId, userId, areaName, tab){
 		console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -391,8 +411,16 @@ function undoLike(reviewId, userId, areaName){
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
 				
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					alert("즐겨찾기 탭 새로고침!");
+				}
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);
