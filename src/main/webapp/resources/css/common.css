@@ -3,7 +3,7 @@
 /* 기본 세팅 */
 
 
-h1, h2, h5, h3, h4, p, html, body, nav {
+h1, h2, h5, h3, h4, h6, p, html, body, nav, div {
     margin: 0;
     padding: 0;
   /*   height: 100%;

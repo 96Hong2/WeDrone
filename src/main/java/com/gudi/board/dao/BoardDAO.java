@@ -2,8 +2,6 @@ package com.gudi.board.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,35 +26,11 @@ public interface BoardDAO {
 
 	int fbcmtwrite(BoardDTO dto);
 
-	ArrayList<BoardDTO> list(int start, int end, int postId);
+	ArrayList<BoardDTO> list(int start, int end);
 
-	int allCount(int postId);
+	int allCount();
 
-	int fbfileupdate(MultipartFile file);
-
-	int fbcmtupdate(HashMap<String, String> params);
-
-	Object inform(String loginId);
-
-	int fbcmtDel(BoardDTO dto);
-
-	int fbTotalCount(Map<String, Object> map);
-
-	List<Map<String, Object>> fbList(Map<String, Object> map);
-
-	List<Map<String, Object>> fbcmtlist(Map<String, Object> map);
-
-	int fbcmtTotalCount(Map<String, Object> map);
-
-	HashMap<String, Object> getComment(Map<String, Object> map);
-
-	int fbcmtupdate(BoardDTO dto);
-
-	List<String> alarmSendUserList(BoardDTO dto);
-
-	int alarmDelete(Map<String, Object> map);
-
-	
+	void fbfileupdate(MultipartFile file);
 
 
 

@@ -13,7 +13,7 @@
 		keyProperty="postId"
 		parameterType="board">
 		INSERT INTO post(postId,title,postContent,postField,userId) 
-		VALUES(post_seq.NEXTVAL,#{title},#{postContent},'post',#{userId})
+		VALUES(post_seq.NEXTVAL,#{title},#{postContent},'post','test')
 	</insert>
 
 	<insert id="fbfileWrite">
@@ -23,8 +23,7 @@
 	
 	
 	<select id="fbdetail" parameterType="String" resultType="board">
-		SELECT p.postid, p.title,p.userid, p.postcontent, p.postdate , p.userid, p.postfield, p.postdel, m.nickname
-		FROM post  p  JOIN MEMBERS m ON p.USERID =m.USERID WHERE postId = #{postId}  AND postDel = 'N'		
+		SELECT * FROM post WHERE postId = #{postId} AND postDel = 'N'  
 	</select>
 	
 	
@@ -42,12 +41,12 @@
 	
 	
 	
-	<update id="fbdel" parameterType="String">
+	<delete id="fbdel" parameterType="String">
 	UPDATE post SET postDel = 'Y' WHERE postId = #{postId}
-    </update>
+    </delete>
 	
 	<insert id="fbcmtwrite" parameterType="board">
-	INSERT INTO comments(cmtId, cmtContent,postId,cmtField,userId) VALUES(comment_seq.NEXTVAL,#{cmtContent},#{postId},#{cmtField}, #{userId})
+	INSERT INTO comments(cmtId, cmtContent,postId,cmtField) VALUES(comment_seq.NEXTVAL,#{cmtContent},#{postId},'Fbpost')
 	
 	</insert>
 	
@@ -58,88 +57,19 @@
 	
 	
 	
-     <select id="list" resultType="board">
-		SELECT * FROM
-(SELECT ROW_NUMBER() OVER (ORDER BY u.cmtdate DESC) rnum, u.*
-FROM (SELECT c.cmtId, c.cmtContent, c.cmtDate, c.userId, (SELECT nickName FROM members WHERE userId=c.userId) nickName 
-FROM (SELECT cmtId, cmtContent, cmtDate, userId, isDel,postId,  cmtField FROM comments) c
-WHERE cmtField = 'Fbpost' AND postId =#{param3} AND isDel = 'N') u)
-WHERE rnum BETWEEN #{param1} AND #{param2}
-	</select> 
-
+    <select id="list" resultType="board">
+		SELECT cmtId, cmtContent, isDel
+			FROM
+		(SELECT 
+		    ROW_NUMBER() OVER (ORDER BY cmtId DESC)rnum,
+		    cmtId, cmtContent , isDel
+		FROM comments) WHERE rnum BETWEEN #{param1} AND #{param2} AND isDel = 'N'
+	</select>
 
 	<select id="allCount" resultType="int">
 		SELECT COUNT(cmtId) FROM comments
 	</select>
    
-   <update id="fbcmtupdate">
-		UPDATE comments SET cmtContent = #{cmtContent} 
-			WHERE cmtId = #{cmtId}
-	</update>
     
-    
-    <update id="inform">
-		UPDATE inform SET isRead='Y' WHERE userId=#{param1}
-	</update>
-	
-	<update id="fbcmtDel" parameterType="board" >
-	UPDATE comments SET isDel = 'Y' WHERE cmtId = #{cmtId}
-    </update>
-	
-	
-	<select id="fbTotalCount" resultType="int">
-	  <![CDATA[
-		SELECT count(postid) FROM  post WHERE postid >0  AND postdel ='N'
-	  ]]>
-	</select>
-	
-	
-	<select id="fbList" resultType="map">      
-        <![CDATA[    
-        SELECT * FROM
-        (
-            SELECT rn, postid , title, postdate, userid, postfield, postdel, nickname FROM 
-           	(
-            	SELECT  rownum AS rn , A.postid, A.title, A.postdate, A.userid, A.postfield, A.postdel , m.nickname FROM 
-            		( SELECT * FROM post   WHERE postdel ='N' ORDER BY postid DESC ) A   JOIN  members m             	
-            	ON a.userid =m.userid                
-          	)ORDER  BY rn ASC 
-		)		
-		WHERE rn BETWEEN  #{pageBegin} AND #{pageEnd}                 
-        ]]>
-                 
-    </select>
- 
-	
-	<select id="fbcmtTotalCount" resultType="int">
-		SELECT count(cmtid) FROM comments WHERE isdel ='N' AND postid =#{postId}
-	</select>
-	
-	<select id="fbcmtlist"  resultType="map"> 
-		SELECT * FROM
-        (
-            SELECT rn, cmtid, cmtcontent, TO_CHAR(cmtdate ,'YYYY-MM-DD') AS CMTDATE, isdel, cmtfield, postid, userid, nickname FROM 
-           	(
-            	SELECT  rownum AS rn , A.cmtid, A.cmtcontent, A.cmtdate, A.isdel, A.cmtfield, A.postid, A.userid , m.nickname FROM 
-            		( SELECT * FROM comments   WHERE isdel ='N'  AND  postid =#{postId}  ORDER BY cmtid DESC ) A   JOIN  members m             	
-            	ON a.userid =m.userid                
-          	)ORDER  BY rn ASC 
-		)	
-		WHERE rn BETWEEN  #{pageBegin} AND #{pageEnd}   			
-	</select>
-	
-	
-	<select id="getComment"  resultType="map"> 
-		SELECT * FROM comments WHERE  cmtid =#{cmtId}
-	</select>
-	
-	<select id="alarmSendUserList"  resultType="String"> 
-	SELECT DISTINCT userid FROM COMMENTS WHERE  isdel ='N' AND POSTID =#{postId}  AND USERID !=#{userId} 
-	</select>
-	
-	
-	<delete id="alarmDelete">
-		DELETE FROM INFORM WHERE INFORMID=#{informid}	
-	</delete>
 	
 </mapper>

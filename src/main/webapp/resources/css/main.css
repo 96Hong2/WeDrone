@@ -130,12 +130,3 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   }
   
 } 
-
-.pagination{
-	display: inline-flex !important;
-}
-
-.page-item.active .page-link {
-    background-color: #41464b;
-    border-color: #41464b;
-}

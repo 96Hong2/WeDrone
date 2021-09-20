@@ -20,13 +20,11 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
-
- 
 </head>
 
 <title>드론</title>
 <body>
-	<c:if test="${sessionScope.loginId eq null}">
+<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
@@ -44,6 +42,4 @@
 		<body>
 			<h3>마이페이지 입니다</h3>
 		</body>
-		
-		<%@ include file="../common/footer.jsp" %>
 </html>

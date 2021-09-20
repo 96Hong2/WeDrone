@@ -36,7 +36,6 @@
 <link href="${path}/resources/css/reviewDetail.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="resources/js/jquery.twbsPagination.js"></script>
-
 </head>
 <body>
 	<div id="detailModal" class="modal revModal fade" tabindex="-1" role="dialog"
@@ -75,11 +74,12 @@
 				<c:if test="${sessionScope.loginNickName != null}">
 					<div class="d-flex align-items-center">
 						<div class="form-floating flex-grow-1 px-2">
+						<input type="hidden" id="rmLoginId" name="rmLoginId" value="${sessionScope.loginId}"/>
 							<textarea class="form-control" placeholder="Leave a comment here"
 								name="commentContent" id="commentContent"
-								style="height: 100px; resize: none;"></textarea>
+								style="height: 100px; resize: none;" maxlength="150"></textarea>
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
-							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+							<label for="commentContent">150자 이내로 입력해주세요.</label>
 						</div>
 						<a type="button" id="rmCommentBtn" class="btn btn-secondary btn-sm" title="글아이디">등록</a>
 					</div>
@@ -140,24 +140,8 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	<%@ include file="./common/footer.jsp" %>
 </body>
 <script>
-
-
-//var content = "";
-
-
-
-
-	//버튼 클릭 시 모달창 나옴 >> 테스트 후 지울 부분
-	$('#testBtn').click(function(e) {
-		e.preventDefault();
-		loadReviewDetail(reviewId, userId);
-		$('#detailModal').modal("show");
-	});
 
 	//모달창 닫기
 	$('#close').click(function(e) {
@@ -166,7 +150,7 @@
 	
 
 	
-function loadReviewDetail(reviewId, userId){
+function loadReviewDetail(reviewId, userId, tab){
 	$('.revContainer').empty();
 	$('#reviewTitle').empty();
 	
@@ -195,7 +179,7 @@ function loadReviewDetail(reviewId, userId){
 			}
 			
 			var content = "";
-			content = "<input type='hidden' id='reviewId' value="+reviewId+"/>" 
+			content = "<input type='hidden' id='reviewId' value='"+reviewId+"' />" 
 			+"<div class='revContainer1'>"
 			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
 			+"</div>"
@@ -209,7 +193,7 @@ function loadReviewDetail(reviewId, userId){
 			
 			if(review.userId == userId){
 				content += "<div style='margin:10px;'><span><button type='button' class='btn btn-outline-primary myRevBtns'>수정하기</button></span>";
-				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
+				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
 				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
 			}else{
 				content += "<div class='revContainer2_1' style='margin-top : 60px;'>";
@@ -217,12 +201,12 @@ function loadReviewDetail(reviewId, userId){
 			content += "<div class='revLikeContainer'>";
 			
 			if(review.isLike > 0){
-				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
              }else{
-            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
                 content += "<div class='revLike'>";
                 content += "<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 ";
                 content += "<b>"+review.likeCnt+"</b></div></a>";
@@ -233,10 +217,10 @@ function loadReviewDetail(reviewId, userId){
 			
 			content += "<div class='revBookMarkContainer'>";
 			if(review.isBookMark > 0){
-				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
 				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
              }else{
-            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\")' class='likeAnchor'>";
+            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
             	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
              }
 			
@@ -254,7 +238,7 @@ function loadReviewDetail(reviewId, userId){
 	
 } //end loadReviewDetail()
 
-function deleteReview(reviewId, areaName){
+function deleteReview(reviewId, areaName, tab){
 	//console.log("reviewId/areaName 삭제: "+reviewId+"/"+areaName);
 	
 	$.ajax({
@@ -265,12 +249,21 @@ function deleteReview(reviewId, areaName){
 		},
 		dataType : 'JSON',
 		success : function(data) {
-			console.log("data : ",data);
+			//console.log("data : ",data);
 			if(data > 0){
 				alert("후기마커 삭제가 완료되었습니다.");
 
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					loadBookMarks("${sessionScope.loginId}");
+				}
+				
 				//모달창 닫기
 				$('#detailModal').modal('hide');
 			}else{
@@ -284,7 +277,7 @@ function deleteReview(reviewId, areaName){
 	
 }
 
-function doLike(reviewId, userId, areaName){
+function doLike(reviewId, userId, areaName, tab){
 	console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -298,6 +291,7 @@ function doLike(reviewId, userId, areaName){
 		success : function(data) {
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
+			console.log("좋아요 알림 보내기 : ", data.informSuccess);
 			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "
@@ -306,8 +300,16 @@ function doLike(reviewId, userId, areaName){
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
 			
-			//해당지역 후기마커리스트 새로고침
-			loadReviews(areaName, 'default');
+			if(tab == "reviewMK"){
+				//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
+			}else if(tab == "myReviewMK"){
+				//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+				loadMyReviews("${sessionScope.loginId}");
+			}else{
+				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+				loadBookMarks("${sessionScope.loginId}");
+			}
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -315,7 +317,7 @@ function doLike(reviewId, userId, areaName){
 	}); //end ajax()
 }
 
-function undoLike(reviewId, userId, areaName){
+function undoLike(reviewId, userId, areaName, tab){
 	console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
@@ -337,8 +339,16 @@ function undoLike(reviewId, userId, areaName){
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
 			
-			//해당지역 후기마커리스트 새로고침
-			loadReviews(areaName, 'default');
+			if(tab == "reviewMK"){
+				//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+				loadReviews(areaName, 'default');
+			}else if(tab == "myReviewMK"){
+				//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+				loadMyReviews("${sessionScope.loginId}");
+			}else{
+				//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+				loadBookMarks("${sessionScope.loginId}");
+			}
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -346,7 +356,7 @@ function undoLike(reviewId, userId, areaName){
 	}); //end ajax()
 }
 	
-	function doBookMark(reviewId, userId, areaName){
+	function doBookMark(reviewId, userId, areaName, tab){
 		console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -365,8 +375,16 @@ function undoLike(reviewId, userId, areaName){
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
 				
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					loadBookMarks("${sessionScope.loginId}");
+				}
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);
@@ -375,7 +393,7 @@ function undoLike(reviewId, userId, areaName){
 
 	}
 
-	function undoBookMark(reviewId, userId, areaName){
+	function undoBookMark(reviewId, userId, areaName, tab){
 		console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
@@ -394,8 +412,16 @@ function undoLike(reviewId, userId, areaName){
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
 				
-				//해당지역 후기마커리스트 새로고침
-				loadReviews(areaName, 'default');
+				if(tab == "reviewMK"){
+					//후기마커 탭이라면? 해당지역 후기마커리스트 새로고침
+					loadReviews(areaName, 'default');
+				}else if(tab == "myReviewMK"){
+					//내후기마커 탭이라면? 내 후기마커리스트 새로고침
+					loadMyReviews("${sessionScope.loginId}");
+				}else{
+					//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
+					loadBookMarks("${sessionScope.loginId}");
+				}
 			},
 			error : function(e) {
 				console.log("에러 e : ", e);
@@ -411,10 +437,6 @@ function undoLike(reviewId, userId, areaName){
 
 
 	function loadComments(reviewId, currPage) { //댓글 데이터를 불러오는 함수
-		
-		//$("#pagination").twbsPagination('destroy');
-		
-		//var reviewId_1 = $("#reviewId").val();
 		
 		console.log("loadComments 실행 : "+reviewId+"/"+currPage);
 		
@@ -441,6 +463,10 @@ function undoLike(reviewId, userId, areaName){
 									totalPages : data.pages, //총 페이지 개수
 									visiblePages : 5,
 									initiateStartPageClick: false,
+									first : "<<",	// 페이지네이션 버튼중 처음으로 돌아가는 버튼에 쓰여 있는 텍스트
+								    prev : "<",	// 이전 페이지 버튼에 쓰여있는 텍스트
+								    next : ">",	// 다음 페이지 버튼에 쓰여있는 텍스트
+								    last : ">>",
 									onPageClick : function(e, page){
 										console.log("twbsPagination 에서 onPageClick 실행");
 										console.log(page+"번째 페이지 출력중");
@@ -466,26 +492,27 @@ function undoLike(reviewId, userId, areaName){
 			var checkT = loginId;
 			content += "<div class='updateCheck'>"
 			content += "<p class='fw-bold'>" + item.nickName + "</p>";
+			//content += "<p class='fw-bold'>" + item.cmtDate + "</p>";
 			content += "<p class='lh-sm'>";
 			content += item.cmtContent;
 			if(check){
-				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.cmtId + "'>삭제</a>";
-				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='"+item.cmtId+"' onclick='rmCmtDelete("+item.cmtId+")'>삭제</a>";
+				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm' onclick='updateFormSet("+item.cmtId+")'>수정</a>";
 			}
 			
 			content += "</p>";
 			content += "<hr/>";
 			content += "</div>";
-			content += "<div class='updateForm visually-hidden'>";
+			content += "<div class='updateForm visually-hidden' id='updateForm"+item.cmtId+"'>";
 			content += "<p class='fw-bold'>" + item.nickName + "</p>";
 			content += "<div class='form-floating flex-grow-1 px-2'>";
 			content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'";
 			content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cmtContent + "</textarea>";//댓글내용
 			content += "<div class='invalid-feedback'>1자 이상 입력해주세요</div>";//수정폼
-			content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>";
+			content += "<label for='commentUpdateContent'>수정할 내용을 작성하세요</label>";
 			content += "</div>";
 			content += "<div class='d-flex justify-content-end mt-2' id='commentUpdateOut'>";
-			content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.cmtId + "'>등록</a>";
+			content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.cmtId + "' onclick='rmCmtUpdate("+item.cmtId+")'>등록</a>";
 			content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>";
 			content += "</div>";
 			content += "<hr />";
@@ -502,6 +529,118 @@ function undoLike(reviewId, userId, areaName){
 		//$('#commenticon').append(content);
 		
 	}//commentList end
+	
+	
+	//댓글 작성
+	$("#rmCommentBtn").click(function(){
+		var reviewId_1 = $("#reviewId").val();
+		var cmtContent = $("#commentContent").val();
+		var rmLoginId = $("#rmLoginId").val();
+		console.log("댓글 내용 : "+cmtContent);
+		console.log("댓글 달 후기마커 아이디 : "+reviewId_1);
+		console.log("로그인된 아이디 : "+rmLoginId);
+		
+		if(cmtContent.length != 0){
+			
+			$("#commentContent").removeClass("is-invalid");
+			
+			$.ajax({
+				type: 'POST',
+				url: 'rmCmtWrite',
+				data: {
+					"cmtContent" : cmtContent,
+					"reviewId" : reviewId_1,
+					"userId" : rmLoginId
+				},
+				dataType: 'JSON',
+				success: function(data){
+					console.log("댓글 작성 성공 여부 : "+data.success);
+					console.log("댓글 알림 보내기 : ", data.informSuccess);
+					$("#commentContent").val("");
+					alert("댓글을 등록했습니다.");
+					loadComments(reviewId_1, 1);
+				},
+				error: function(e){
+					console.log("댓글 작성 실패 :"+e);
+					alert("댓글을 등록하지 못했습니다.");
+				}
+			});
+			
+		}else{
+			$("#commentContent").addClass("is-invalid");
+			alert("내용을 입력해주세요!");
+		}
+		
+	});
+	
+	//댓글 삭제
+	function rmCmtDelete(cmtId){
+		
+		var reviewId_1 = $("#reviewId").val();
+		
+		if(confirm("이 댓글을 삭제하시겠습니까?")){
+		
+			$.ajax({
+				type: 'POST',
+				url: 'rmCmtDelete',
+				data: {
+					"cmtId" : cmtId,
+				},
+				dataType: 'JSON',
+				success: function(data){
+					console.log("댓글 삭제 성공 여부 : "+data.success);
+					$("#commentContent").val("");
+					alert("댓글을 삭제했습니다.");
+					loadComments(reviewId_1, 1);
+				},
+				error: function(e){
+					console.log("댓글 삭제 실패 :"+e);
+					alert("댓글을 삭제하지 못했습니다.");
+				}
+			});
+		}
+	}
+	
+	//댓글 수정
+	function rmCmtUpdate(cmtId){
+		var reviewId_1 = $("#reviewId").val();
+		var cmtContent = $("#commentUpdateContent").val();
+		var rmLoginId = $("#rmLoginId").val();
+		
+		console.log("수정할 댓글 내용 : "+cmtContent);
+		
+		if(cmtContent.length != 0){
+			$("#commentUpdateContent").removeClass("is-invalid");
+				if(confirm("댓글을 수정하시겠습니까?")){
+					
+					$.ajax({
+						type: 'POST',
+						url: 'rmCmtUpdate',
+						data: {
+							"cmtContent" : cmtContent,
+							"cmtId" : cmtId,
+						},
+						dataType: 'JSON',
+						success: function(data){
+							console.log("댓글 수정 성공 여부 : "+data.success);
+							//$("#commentContent").val("");
+							alert("댓글을 수정했습니다.");
+							loadComments(reviewId_1, 1);
+						},
+						error: function(e){
+							console.log("댓글 수정 실패 :"+e);
+							alert("댓글을 수정하지 못했습니다.");
+						}
+					});
+				}
+		}else{
+			$("#commentUpdateContent").addClass("is-invalid");
+		}
+	}
+	
+	function updateFormSet(cmtId){
+		$("#updateForm"+cmtId).toggleClass("visually-hidden");
+	}
 
 </script>
 </html>

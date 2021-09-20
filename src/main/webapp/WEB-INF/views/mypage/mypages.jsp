@@ -84,7 +84,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-<%@ include file="../common/footer.jsp" %>
 </body>
 
 <script>

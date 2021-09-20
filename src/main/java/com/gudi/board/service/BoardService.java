@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,18 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.board.dao.BoardDAO;
-import com.gudi.board.dao.InformDAO;
 import com.gudi.board.dto.BoardDTO;
 import com.gudi.board.dto.FileDTO;
-import com.gudi.map.dto.MapDTO;
 
 @Service
 public class BoardService {
 
-		@Autowired BoardDAO dao;
-		
-		@Autowired
-		InformDAO informDAO;
+@Autowired BoardDAO dao;
 
 Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -57,15 +50,12 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		dto.setTitle(params.get("title"));
 		dto.setPostContent(params.get("postContent"));
 		
-		//session.setAttribute("loginNickName","jiyun");//테스트 용
+		session.setAttribute("loginNickName","jiyun");//테스트 용
 		String loginNickName= (String) session.getAttribute("loginNickName");
-		dto.setNickName(loginNickName);
-		dto.setUserId((String) session.getAttribute("loginId"));
 		logger.info("loginNickName : ",loginNickName);
 		
 		if(dao.fbwrite(dto)>0) {
-			//page = "redirect:/fbdetail?postId="+dto.getPostId();
-			page="redirect:/fbList";
+			page = "redirect:/fbdetail?postId="+dto.getPostId();			
 			if(fileList.size()>0) {
 				for(String key : fileList.keySet()) {
 					dao.fbfileWrite(key, fileList.get(key), dto.getPostId(),loginNickName);
@@ -151,7 +141,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 	}
 
 	//게시판 상세보기//지윤쓰
-	public ModelAndView fbdetail(String postId) {		
+	public ModelAndView fbdetail(String postId) {
+		
 		ModelAndView mav = new ModelAndView();
 		BoardDTO dto = dao.fbdetail(postId);//글의 상세 정보
 		mav.addObject("post", dto);
@@ -161,7 +152,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		//해당 글의 파일 정보		
 		mav.setViewName("fbdetail");
-
+		
+		
 		return mav;
 	}
 
@@ -183,7 +175,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				ModelAndView mav = new ModelAndView();
 				dao.fbupdate(params);
 				logger.info("params"+params );
-				mav.setViewName("redirect:/fbdetail?update=ok&postId="+params.get("postId"));		
+				mav.setViewName("redirect:/fbdetail?postId="+params.get("postId"));		
 				return mav;
 			}
 
@@ -191,149 +183,48 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			public ModelAndView fbdel(String postId) {
 				int success = dao.fbdel(postId);
 				ModelAndView mav = new ModelAndView();
-				mav.setViewName("redirect:/fbList");
+				mav.setViewName("redirect:/");
 				
 				return mav;
 			}
 
-			public HashMap<String, Object> fbcmtwrite(BoardDTO dto) {
-				HashMap<String, Object> map = new HashMap<String, Object>();				
-				int success = dao.fbcmtwrite(dto);
-				logger.info("dto :"+dto);
-				logger.info("자유 게시판 댓글 쓰기 성공 여부 "+success);
-				map.put("success", success);
-
-				dto.setInformField("Fbpost");
-				dto.setRelateId(dto.getPostId());
-				dto.setInformContent(" '" +dto.getPostedTitle() +"' 의 게시글에 댓글이 달렸습니다.");
-								
-				if(success==1) {
-					/** 현재 댓글 작성자는 제외 발송 */
-					dto.setRegUserid(dto.getUserId());
-					List<String> alarmSendUserList=dao.alarmSendUserList(dto);
-					
-					/** 게시글 작성자와 댓글 작성자가 같지 않으면 알림 발송 */
-					if(!dto.getUserId().equals(dto.getPostedUserId())) {											
-						/** 1.게시판 글 작성자 PostedUserId 에게 발송  */
-						logger.info("1.게시판 글 작성자 PostedUserId 에게 발송 ");
-						dto.setUserId(dto.getPostedUserId());
-						informDAO.insertInform(dto);
-					}
-					
-										
-					for(String str:alarmSendUserList){
-						if(!str.equals(dto.getPostedUserId())) {
-							/** 2.댓글 작성자  에게 발송  */
-							logger.info("2.댓글 작성자  에게 발송 :  {} ", str);
-							dto.setUserId(str);
-							informDAO.insertInform(dto);
-						}						
-					}			
-				}
-								
-				return map;
-			}
-
-			public HashMap<String, Object> list(int page,HttpSession session, int postId) {
-				HashMap<String, Object> map = new HashMap<String, Object>();
-				
-				int end = page*5;
-				int start = end-5+1;
-				int pages = 0;
-
-				ArrayList<BoardDTO> list = dao.list(start, end, postId); 
-				
-				String loginId = (String) session.getAttribute("loginId");
-				logger.info("loginId 세션 : ", loginId);
-				
-				int totalCnt = dao.allCount(postId);
-				logger.info("리스트 사이즈 : "+list.size()+"/ 댓글 총 개수"+totalCnt);
-				map.put("list", list);
-				map.put("totalCnt", totalCnt);
-				map.put("currPage", page);
-				map.put("loginId", loginId);
-				
-				
-				pages = (int) (totalCnt%5 > 0 
-						? Math.floor(totalCnt/5)+1 : Math.floor(totalCnt/5));
-				
-				
-				map.put("pages", pages);
-				
-				return map;
-			}
-
-			//게시판 댓글 수정//지윤쓰
-			public HashMap<String, Object> fbcmtupdate(BoardDTO dto, HttpSession session) {
-				HashMap<String, Object> map = new HashMap<String, Object>();
-				int success = dao.fbcmtupdate(dto);
-				logger.info("dto :"+dto);
-				logger.info("자유 게시판 글 수정 성공 여부 "+success);
-				map.put("success", success);
-				return map;
-
-			}
-
-			public ModelAndView inform(HttpSession session) {
-				
-				ModelAndView mav = new ModelAndView();
-				
-				session.setAttribute("loginId","jiyun");//테스트 용
-				String loginId= (String) session.getAttribute("loginId");
-				logger.info("loginId : ",loginId);
-				
-				mav.addObject("inform", dao.inform(loginId));
-				
-				
-				mav.setViewName("/mypages/alarmlist");
-				
-				
-				
-				
-				
-				
-				return mav;
-			}
+			
 			
 
-			public HashMap<String, Object> fbcmtDel(BoardDTO dto, HttpSession session) {
+			public ModelAndView fbcmtwrite(BoardDTO dto) {
+				ModelAndView mav = new ModelAndView();
+				int success = dao.fbcmtwrite(dto);
+				logger.info("dto :"+dto);
+				logger.info("자유 게시판 글 쓰기 성공 여부 "+success);
+				mav.setViewName("redirect:/fbdetail");
+				return mav;
+			}
+
+			public HashMap<String, Object> list(int page, int pagePerNum, HttpSession session) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
-				int success = dao.fbcmtDel(dto);
-				logger.info("게시판 댓글 dto:"+dto);
-				logger.info("자유 게시판 댓글 삭제 성공 여부 "+success);
-				map.put("success", success);
+				int end = page * pagePerNum;//현재 페이지 * 댓글 갯수
+				int start = end - pagePerNum+1;//마지막 페이지 - 댓글 갯수-1
+				
+				ArrayList<BoardDTO> list = dao.list(start,end);//1. list			
+				//2. 데이터 총 갯수 -> 만들수 있는 페이지 수
+				int totalCnt = dao.allCount();
+				logger.info(list.size()+"/"+totalCnt);
+				map.put("list", list);
+				map.put("cnt", totalCnt);
+				
+				//총 갯수 21 개 pagePerNum 5 일 경우 몇 페이지로 만들어야 하나?
+				int pages = (int) (totalCnt%pagePerNum>0 
+						? Math.floor(totalCnt/pagePerNum)+1 : Math.floor(totalCnt/pagePerNum));
+				
+				page = page>pages ? pages:page;
+						
+				map.put("currPage", page);
+				map.put("pages", pages);
+						
 				return map;
 			}
 
-			public int fbTotalCount(Map<String, Object> map) {				
-				return dao.fbTotalCount(map);
-			}
-
-			public List<Map<String, Object>> fbList(Map<String, Object> map) {
-				return dao.fbList(map);
-			}
-
-			public List<Map<String, Object>> fbcmtlist(Map<String, Object> map) {
-				return dao.fbcmtlist(map);
-			}
-
-			public int fbcmtTotalCount(Map<String, Object> map) {
-				return dao.fbcmtTotalCount(map);
-			}
-
-			public HashMap<String, Object> getComment(Map<String, Object> map) {
-				return dao.getComment(map);
-			}
-
-			public List<String> alarmSendUserList(BoardDTO dto) {
-				return dao.alarmSendUserList(dto);
-			}
-
-			public int alarmDelete(Map<String, Object> map) {
-				return dao.alarmDelete(map);
-			}
-
-		
+			
 	
 }
 
