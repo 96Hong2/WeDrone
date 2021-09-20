@@ -445,17 +445,7 @@ $(document).ready(function(){
    //내후기마커 탭 클릭 시
    $('#tab-myReviewMK-li').click(function(){
     //지도 초기화
-    deletePolygon(polygons); //폴리곤 제거
-     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
-     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
-     deleteMarkers(markers);//마커 제거
-     marker.setMap(null);
-     
-     map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
-     map.setZoomable(true);
-     map.setMaxLevel(10);
-     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
-     //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
+    initMap();
      
      loadMyReviews("${sessionScope.loginId}");
    })
@@ -463,42 +453,37 @@ $(document).ready(function(){
    //즐겨찾기 탭 클릭 시
    $('#tab-bookmark-li').click(function(){
     //지도 초기화
-    deletePolygon(polygons); //폴리곤 제거
-     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
-     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
-     deleteMarkers(markers);//마커 제거
-     marker.setMap(null);
-     
-     map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
-     map.setZoomable(true);
-     map.setMaxLevel(10);
-     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
-     //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
+    initMap();
      
      loadBookMarks("${sessionScope.loginId}");
    })
    
    //내위치마커 탭 클릭 시
    $('#tab-myLocationMK-li').click(function(){
-    //지도 초기화
-    deletePolygon(polygons); //폴리곤 제거
-     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
-     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
-     deleteMarkers(markers);//마커 제거
-     marker.setMap(null);
-     
-     map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
-     map.setZoomable(true);
-     map.setMaxLevel(10);
-     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
-     //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
-     
-     loadAPICall();
+	   //지도 초기화
+	   initMap();
+	   
+	   loadAPICall();
    })
    
    //자동 스크롤
    //$('#sideArea').scrollTop($('#sideArea').scrollHeight);
 })
+
+//지도 초기화
+function initMap(){
+	deletePolygon(polygons); //폴리곤 제거
+    customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
+    map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
+    deleteMarkers(markers);//마커 제거
+    marker.setMap(null);
+    
+    map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
+    map.setZoomable(true);
+    map.setMaxLevel(10);
+    map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
+    //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
+}
       
       //#카카오맵 api 불러오기
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -761,13 +746,15 @@ $(document).ready(function(){
                     kakao.maps.event.addListener(revMarker, 'click', function(e) {
                         var userId = "${sessionScope.loginId}";
                         var reviewId = review.reviewId;
-                        console.log("userId / reviewId : "+userId+"/"+reviewId);
+                        console.log("상세보기 userId / reviewId : "+userId+"/"+reviewId);
                         
                         loadReviewDetail(reviewId, userId, "reviewMK");
                         $('#detailModal').modal("show");
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseover', function() {
+                    	console.log("loadReviews마커이벤트 마우스오버 markers["+index+"] : ",revMarker);
+                        console.log("loadReviews마커이벤트 reviewId : ", review.reviewId);
                          //마커 하이라이트
                          imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
                          markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -781,7 +768,8 @@ $(document).ready(function(){
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseout', function() {
-                         
+                    	console.log("loadReviews마커이벤트 마우스아웃 markers["+index+"] : ",revMarker);
+                        console.log("loadReviews마커이벤트 reviewId : ", review.reviewId);
                          //마커 원래대로
                          imageSize = new kakao.maps.Size(45, 50); //원래 크기로
                          markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -813,18 +801,20 @@ $(document).ready(function(){
                          (function(reviewId, i){
                               document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
                                $(this).css("background-color", "aliceblue");
-                               //console.log("마우스오버 markers["+i+"] : ",markers[i]);
+                               console.log("loadReviews 마우스오버 markers["+i+"] : ",markers[i]);
+                               console.log("loadReviews reviewId : ", reviewId);
                              //마커 하이라이트
                              markers[i].setMap(null);
                              var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
                              var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
                             markers[i].setImage(markerImage);
-                           markers[i].setMap(map);
+                           	markers[i].setMap(map);
                             });
                          
                               document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
                                   $(this).css("background-color", "white");
-                                //console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+                                console.log("loadReviews 마우스아웃 markers["+i+"] : ",markers[i]);
+                                console.log("loadReviews reviewId : ", reviewId);
                                //마커 원래대로
                                markers[i].setMap(null);
                                var imageSize = new kakao.maps.Size(45, 50); //원래크기로
@@ -1609,7 +1599,6 @@ $(document).ready(function(){
     	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
     			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
     		}
-    		
 
     		// 지도에서 클릭한 위도, 경도 가져오기 
     		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
