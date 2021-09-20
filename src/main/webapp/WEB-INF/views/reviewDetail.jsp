@@ -180,8 +180,8 @@ function loadReviewDetail(reviewId, userId, tab){
 			
 			var content = "";
 			content = "<input type='hidden' id='reviewId' value='"+reviewId+"' />" 
-			+"<div class='revContainer1'>"
-			+"<img class='reviewImg' src='/photo/"+review.newFileName+"' />"
+			+"<div class='revContainer1' id='revContainer1'>"
+			+"<img class='reviewImg' id='preview-image' src='/photo/"+review.newFileName+"' />"
 			+"</div>"
 			+"<div class='revContainer2'>"
 			+"<div id='revContent'>"+review.reviewContent+"</div>"
@@ -192,8 +192,8 @@ function loadReviewDetail(reviewId, userId, tab){
 			+"<div id='revDate'>"+review.reviewDate+"</div>";
 			
 			if(review.userId == userId){
-				content += "<div style='margin:10px;'><span><button type='button' class='btn btn-outline-primary myRevBtns'>수정하기</button></span>";
-				content += "<span><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns'>삭제하기</button></span></div>";
+				content += "<div style='margin:10px;'><span id='buttonArea2'><button type='button' id='updateBtn' class='btn btn-outline-primary myRevBtns' onclick='updateReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\",\""+userId+"\", "+review.rating+", "+review.areaId+")'>수정하기</button></span>";
+				content += "<span id='buttonArea'><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns' id='deleteBtn'>삭제하기</button></span></div>";
 				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
 			}else{
 				content += "<div class='revContainer2_1' style='margin-top : 60px;'>";
@@ -428,6 +428,132 @@ function undoLike(reviewId, userId, areaName, tab){
 			}
 		}); //end ajax()
 	}
+	
+	
+	function updateReview(reviewId, areaName, tab, userId, rating, areaId){
+		console.log("후기마커 수정하기 버튼 클릭");
+		$("#revContent").attr('contenteditable', 'true');
+		$("#revContent").focus();
+		$("#updateBtn").hide();
+		$("#deleteBtn").hide();
+		$("#revRating").empty();
+		
+		var selectRate = '<select name="rating" id="rating" style="width:100px; height:30px;">'+
+            '<option value="5">5</option>'+
+            '<option value="4">4</option>'+
+            '<option value="3">3</option>'+
+            '<option value="2">2</option>'+
+            '<option value="1">1</option>'+
+         	'</select>';
+		
+		$("#revRating").append(selectRate);
+		$('#rating option[value='+rating+']').prop('selected', 'selected').change();
+		
+		$("#revContainer1").append('<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*" onchange="fileChange()"/>');
+		
+		var cancelBtn = '<button type="button" class="btn btn-outline-danger myRevBtns" onclick="loadReviewDetail('+reviewId+',\''+userId+'\',\''+tab+'\')">취소</button>';
+		var updateBtn2 = '<button type="button" class="btn btn-outline-primary myRevBtns" id="reviewUpdateSubmitBtn">수정</button>';
+		
+		$("#buttonArea").append(cancelBtn);
+		$("#buttonArea2").append(updateBtn2);
+		
+		var fileOX = "";
+		
+		function readImage(input) {
+		    // 인풋 태그에 파일이 있는 경우
+		    if(input.files && input.files[0]) {
+		        // 이미지 파일인지 검사 (생략)
+		        // FileReader 인스턴스 생성
+		        const reader = new FileReader()
+		        // 이미지가 로드가 된 경우
+		        reader.onload = e => {
+		            const previewImage = document.getElementById("preview-image")
+		            previewImage.src = e.target.result
+		        }
+		        // reader가 이미지 읽도록 하기
+		        reader.readAsDataURL(input.files[0])
+		    }
+		}
+		
+		// input file에 change 이벤트 부여
+		const inputImage = document.getElementById("rmPhoto")
+		inputImage.addEventListener("change", e => {
+		    readImage(e.target)
+		    fileOX = "ok";
+		})
+		
+		$("#reviewUpdateSubmitBtn").click(function(){
+			
+			if(confirm("수정하시겠습니까?")){
+				
+				var reviewUpdateContent = $("#revContent").html();
+				var updateRating = $("#rating option:selected").val();
+				
+				console.log("수정된 내용 : "+reviewUpdateContent);
+				console.log("수정된 평점 : "+updateRating);
+				
+				$.ajax({
+	                url:'rmUpdate',
+	               type:'POST',
+	               data : {
+	                  "reviewContent" : reviewUpdateContent,
+	                  "rating" : updateRating,
+	                  "reviewId" : reviewId,
+	                  "areaId" : areaId
+	                  },
+	               dataType:'JSON',
+	               success:function(data){
+	               
+	                  console.log("수정 성공 여부 : "+data.success);
+	                  
+	                   if(fileOX != ""){
+	                	   
+	                	   const file = $("#rmPhoto")[0];
+	                	   
+	                	   console.log("file : "+file.files[0].name);
+	                	   
+	                	   const formData = new FormData();
+	                	   formData.append("reviewId", reviewId);
+	                	   formData.append("file", file.files[0]);
+	                	   
+		                  $.ajax({
+		                        url:'rmFileUpdate',
+		                       type:'POST',
+		                       processData: false,
+		                       contentType: false,
+		                       data : formData,
+		                       dataType:'JSON',
+		                       success:function(data){
+		                          console.log(data);
+		                          alert("수정이 완료되었습니다!+이미지");
+		                          loadReviews(areaName, 'default');
+		                          loadReviewDetail(reviewId, userId, tab);
+		                       },
+		                       error:function(e){
+		                           console.log("에러발생 : ", e);
+		                           alert("등록에 실패하였습니다!");
+		                        }  
+		                  }); // end ajax  
+	                   }else{
+	                	   alert("수정이 완료되었습니다.");
+	                	   loadReviews(areaName, 'default');
+	                       loadReviewDetail(reviewId, userId, tab);
+	                   }
+	               },
+	               error:function(e){
+	                   console.log("에러발생 : ", e);
+	                   alert("등록에 실패하였습니다!");
+	                }  
+	          }); // end ajax */
+			}
+			
+		});
+		
+		
+		
+		
+	}// updateReview end
+	
 	
 	
 	

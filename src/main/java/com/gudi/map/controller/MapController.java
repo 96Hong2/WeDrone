@@ -85,7 +85,7 @@ public class MapController {
 	@RequestMapping(value = "/getReviewDetail", method = RequestMethod.POST)
 	@ResponseBody
 	public MapDTO getReviewDetail(@RequestParam int reviewId, @RequestParam String userId) {
-		logger.info("상세보기 areaId/userId : {}/{}", reviewId, userId);
+		logger.info("상세보기 reviewId/userId : {}/{}", reviewId, userId);
 		return service.getReviewDetail(reviewId, userId);
 	}
 
@@ -188,4 +188,26 @@ public class MapController {
 		logger.info("즐겨찾기 가져올 userId : {}" + userId);
 		return service.getBookMarkList(userId);
 	}
+	
+	// 지현//후기마커 수정 메소드
+		@RequestMapping(value = "/rmUpdate", method = RequestMethod.POST)
+		public @ResponseBody HashMap<String, Object> rmUpdate(@ModelAttribute MapDTO dto) {
+			logger.info("리뷰마커 아이디 : " + dto.getReviewId());
+			logger.info("리뷰마커 작성 내용 : " + dto.getReviewContent());
+			logger.info("리뷰마커 작성 평점 : " + dto.getRating());
+
+			return service.rmUpdate(dto);
+		}
+
+		// 지현//후기마커 이미지 수정 메소드
+		@RequestMapping(value = "/rmFileUpdate", method = RequestMethod.POST)
+		public @ResponseBody HashMap<String, Object> rmFileUpdate(@ModelAttribute MapDTO dto) {
+			logger.info("리뷰마커 이미지 수정 메소드 실행");
+			logger.info("file : " + dto.getFile().getOriginalFilename());
+			logger.info("리뷰 아이디 : " + dto.getReviewId());
+
+			return service.rmFileUpdate(dto);
+		}
+	
+	
 }

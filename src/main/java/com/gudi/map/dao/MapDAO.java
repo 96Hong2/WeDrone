@@ -17,7 +17,7 @@ public interface MapDAO {
 
 	int rmWrite(MapDTO dto);
 
-	int updateAreaRating(int areaId, int rating);
+	//int updateAreaRating(int areaId, int rating);
 
 	int updateAreaRating(HashMap<String, Object> params);
 
@@ -56,6 +56,12 @@ public interface MapDAO {
 	int rmCmtUpdate(MapDTO dto);
 
 	ArrayList<MapDTO> getBookMarkList(String userId);
+
+	int rmUpdate(MapDTO dto);
+
+	int rmFileUpdate(String fileName, String newFileName, int reviewId);
+
+	int rmFileDelete(int reviewId);
 }
 
 

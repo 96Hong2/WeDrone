@@ -337,5 +337,57 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			return map;
 		}
 
+		@Transactional
+		public HashMap<String, Object> rmUpdate(MapDTO dto) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("수정 서비스 접근");
+			logger.info("지역 아이디 : "+dto.getAreaId());
+			boolean success = false;
+			
+			if(dao.rmUpdate(dto)>0) {
+				logger.info("업데이트 성공");
+				HashMap<String, Object> params = new HashMap<String, Object>();
+				params.put("areaId", dto.getAreaId());
+				params.put("rating", dto.getRating());
+				int result = dao.updateAreaRating(params);
+				logger.info("지역평점 갱신 성공여부 : {}",result);
+				success = true;
+			}
+			logger.info("success : {}",success);
+			map.put("success", success);		
+			return map;
+		}
+
+		public HashMap<String, Object> rmFileUpdate(MapDTO dto) {
+			String fileName = dto.getFile().getOriginalFilename();
+			String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));	
+			int reviewId = dto.getReviewId();
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			boolean success = false;
+			
+			try {
+				byte[] bytes = dto.getFile().getBytes();
+				Path filePath = Paths.get(root+newFileName);
+				Files.write(filePath, bytes);
+				
+				 String path = "/photo/"+newFileName;
+				 logger.info("upload path : "+path);
+				if(dao.rmFileDelete(reviewId) > 0) {
+					logger.info("원본 이미지 삭제");
+					if(dao.rmFileUpdate(fileName, newFileName, reviewId)>0) {
+						logger.info("이미지 업데이트 성공");
+						success = true;
+					}
+				}
+				 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			map.put("success", success);			
+			return map;
+			
+		}
+
 
 }

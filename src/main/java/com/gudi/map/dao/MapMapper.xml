@@ -76,7 +76,7 @@
 	</select>
 
 	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">
-		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating, address, userId,
+		SELECT TO_CHAR(reviewDate, 'YYYY-MM-DD') reviewDate, nickName, reviewContent, rating, address, userId, areaId, 
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=#{param1}) newFileName
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1}) likeCnt
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1} AND userId=#{param2}) isLike
@@ -163,5 +163,18 @@
 	<update id="rmCmtUpdate" parameterType="com.gudi.map.dto.MapDTO">
 		UPDATE comments SET cmtContent=#{cmtContent} WHERE cmtId =#{cmtId}
 	</update>
+	
+	<update id="rmUpdate" parameterType="com.gudi.map.dto.MapDTO">
+		UPDATE reviewMK SET reviewContent = #{reviewContent}, rating = #{rating} WHERE reviewId = #{reviewId}
+	</update>
+	
+	<insert id="rmFileUpdate" parameterType="com.gudi.map.dto.MapDTO">
+		INSERT INTO image(imgId, oriFileName, newFileName, imgField, imgPath, postId) 
+		VALUES(image_SEQ.NEXTVAL, #{param1}, #{param2}, 'review', 'C:/upload', #{param3})
+	</insert>
+	
+	<delete id="rmFileDelete" parameterType="int">
+		DELETE FROM image WHERE postId = #{param1} AND imgField = 'review'
+	</delete>
 	
 </mapper>

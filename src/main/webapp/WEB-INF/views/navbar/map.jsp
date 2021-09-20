@@ -114,7 +114,7 @@ body, html {
    margin: 0 auto;
    justify-content: left;
    /* 가로 스크롤바 숨기기 */
-	overflow-x: hidden;
+   overflow-x: hidden;
 }
 
 ul.tabs {
@@ -190,13 +190,13 @@ ul.tabs li.current {
    <!-- 상단 메뉴바 -->
    <!-- 아이디 있을 때 네비바 -->
    <c:if test="${sessionScope.loginId eq null}">
-		<jsp:include page="../fixmenu/navbar.jsp" />
-	</c:if>
+      <jsp:include page="../fixmenu/navbar.jsp" />
+   </c:if>
 
-	<!-- 아이디 없을때 네비바 -->
-	<c:if test="${sessionScope.loginId ne null}">
-		<jsp:include page="../fixmenu/lognav.jsp" />
-	</c:if>
+   <!-- 아이디 없을때 네비바 -->
+   <c:if test="${sessionScope.loginId ne null}">
+      <jsp:include page="../fixmenu/lognav.jsp" />
+   </c:if>
 
  
 <%--    <div class="wrap">
@@ -256,8 +256,8 @@ ul.tabs li.current {
       </nav>
   --%>
  
-	<!-- 후기마커 상세보기 모달창 import -->
-	<c:import url="../reviewDetail.jsp"></c:import>
+   <!-- 후기마커 상세보기 모달창 import -->
+   <c:import url="../reviewDetail.jsp"></c:import>
 
       <!-- 들어갈 내용 -->
       <script type="text/javascript"
@@ -278,11 +278,11 @@ ul.tabs li.current {
                <li class="tab-link" id="tab-bookmark-li" data-tab="tab-bookmark">즐겨찾기</li>
                <li class="tab-link" id="tab-myReviewMK-li" data-tab="tab-myReviewMK">내후기마커</li>
             </ul>
-			
-			<!-- 내 위치 마커 탭 -->
+         
+         <!-- 내 위치 마커 탭 -->
             <div id="tab-myLocationMK" class="tab-content">내위치마커 내용</div>
 
-			<!-- 후기마커 탭 -->
+         <!-- 후기마커 탭 -->
             <div id="tab-reviewMK" class="tab-content current">
                <h4 id="firstComment" style="color: crimson; text-align: center;">♥
                   지역을 선택해주세요! ♥</h4>
@@ -306,21 +306,21 @@ ul.tabs li.current {
                </div>
             </div>
 
-			<!-- 즐겨찾기 탭 -->
+         <!-- 즐겨찾기 탭 -->
             <div id="tab-bookmark" class="tab-content">
-            	<div id="bookmarkListArea">
-				<c:if test="${sessionScope.loginId eq null}">
-					<div id="bookmarkComment" style="margin:10px;text-align:center;">
-						<h6>로그인이 필요한 서비스입니다.</h6>
-						<h6>로그인하고 마음에 드는 후기마커를 즐겨찾기해보세요!</h6>
-					</div>
-				</c:if>
+               <div id="bookmarkListArea">
+            <c:if test="${sessionScope.loginId eq null}">
+               <div id="bookmarkComment" style="margin:10px;text-align:center;">
+                  <h6>로그인이 필요한 서비스입니다.</h6>
+                  <h6>로그인하고 마음에 드는 후기마커를 즐겨찾기해보세요!</h6>
+               </div>
+            </c:if>
                 <c:if test="${sessionScope.loginId ne null}">
-					<div id="bookmarkComment" style="margin:10px;text-align:center;">
-						<h6>즐겨찾기한 후기마커가 없습니다.</h6>
-						<h6>후기마커 탭에서 새로운 즐겨찾기를 등록해보세요!</h6>
-					</div>
-				</c:if>  
+               <div id="bookmarkComment" style="margin:10px;text-align:center;">
+                  <h6>즐겨찾기한 후기마커가 없습니다.</h6>
+                  <h6>후기마커 탭에서 새로운 즐겨찾기를 등록해보세요!</h6>
+               </div>
+            </c:if>  
 
                   <div id="bookmarkList">
                      <ul class="list-group list-group-flush" id="bookmarkUl">
@@ -332,28 +332,28 @@ ul.tabs li.current {
 
             <!-- 내 후기 마커 탭 -->
             <div id="tab-myReviewMK" class="tab-content">
-				<div id="ReviewListArea_my">
-				<c:if test="${sessionScope.loginId eq null}">
-					<div id="myRevComment" style="margin:10px;text-align:center;">
-						<h6>로그인이 필요한 서비스입니다.</h6>
-						<h6>로그인하고 나만의 후기마커를 남겨보세요!</h6>
-					</div>
-				</c:if>
+            <div id="ReviewListArea_my">
+            <c:if test="${sessionScope.loginId eq null}">
+               <div id="myRevComment" style="margin:10px;text-align:center;">
+                  <h6>로그인이 필요한 서비스입니다.</h6>
+                  <h6>로그인하고 나만의 후기마커를 남겨보세요!</h6>
+               </div>
+            </c:if>
                 <c:if test="${sessionScope.loginId ne null}">
-					<div id="myRevComment" style="margin:10px;text-align:center;">
-						<h6>등록된 후기마커가 없습니다.</h6>
-						<h6>후기마커 탭에서 새로운 후기마커를 등록해보세요!</h6>
-					</div>
-				</c:if>  
+               <div id="myRevComment" style="margin:10px;text-align:center;">
+                  <h6>등록된 후기마커가 없습니다.</h6>
+                  <h6>후기마커 탭에서 새로운 후기마커를 등록해보세요!</h6>
+               </div>
+            </c:if>  
 
                   <div id="reviewList_my">
                      <ul class="list-group list-group-flush" id="reviewUl_my">
                         
                      </ul>
                   </div>
-               </div>           	
-           	
-           	</div>
+               </div>              
+              
+              </div>
 
          </div>
 
@@ -384,11 +384,11 @@ ul.tabs li.current {
                </div>
                <div class="modal-footer">
                <select name="rating" id="rating" style="width:100px; height:30px;">
-               <option value='1'>1</option>
-               <option value='2'>2</option>
-               <option value='3'>3</option>
-               <option value='4'>4</option>
                <option value='5'>5</option>
+               <option value='4'>4</option>
+               <option value='3'>3</option>
+               <option value='2'>2</option>
+               <option value='1'>1</option>
             </select>
                   <button type="button" class="btn btn-secondary"
                      data-bs-dismiss="modal" id="closeBtn">취소</button>
@@ -404,7 +404,7 @@ ul.tabs li.current {
       
 $(document).ready(function(){
    
-	//리뷰리스트 숨기기
+   //리뷰리스트 숨기기
    $('#reviewListArea').hide();
    
    //탭 설정
@@ -420,13 +420,13 @@ $(document).ready(function(){
    
    //후기마커 탭 클릭 시
    $('#tab-reviewMK-li').click(function(){
-	   location.reload(true);       
+      location.reload(true);       
    })
    
    //내후기마커 탭 클릭 시
    $('#tab-myReviewMK-li').click(function(){
-	 //지도 초기화
-	 deletePolygon(polygons); //폴리곤 제거
+    //지도 초기화
+    deletePolygon(polygons); //폴리곤 제거
      customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
      map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
      deleteMarkers(markers);//마커 제거
@@ -443,8 +443,8 @@ $(document).ready(function(){
    
    //즐겨찾기 탭 클릭 시
    $('#tab-bookmark-li').click(function(){
-	 //지도 초기화
-	 deletePolygon(polygons); //폴리곤 제거
+    //지도 초기화
+    deletePolygon(polygons); //폴리곤 제거
      customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
      map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
      deleteMarkers(markers);//마커 제거
@@ -511,12 +511,12 @@ $(document).ready(function(){
       var customOverlay = new kakao.maps.CustomOverlay();
       //현재 지도에 띄워져있는 후기마커들을 저장하는 배열 //지울 때 한꺼번에 지우기 위함
       var markers = [];
-   	 //후기마커의 개수 저장
+       //후기마커의 개수 저장
       var listCnt = 0;
-   	 //후기마커들의 reviewId를 저장하는 배열
-   	 var reviewIds = [];
-   	 //후기작성 마커
-   	 var marker = new kakao.maps.Marker();
+       //후기마커들의 reviewId를 저장하는 배열
+       var reviewIds = [];
+       //후기작성 마커
+       var marker = new kakao.maps.Marker();
       
       //#지역 오버레이에서 선택버튼 클릭 시 수행되는 함수 
       //해당 지역 확대 및 리스트,마커 가져오기
@@ -566,7 +566,7 @@ $(document).ready(function(){
          // 지도에 클릭 이벤트를 등록합니다
          // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
          kakao.maps.event.addListener(map, 'click', function reviewMarkerAdd(mouseEvent){
-        	 
+            
             infowindow.close();
 
 
@@ -604,7 +604,7 @@ $(document).ready(function(){
                            infowindow.setContent(content);
                            
                            if(address_info.indexOf(name) == -1){
-                        	   infowindow.setContent(content2);
+                              infowindow.setContent(content2);
                            }
                                        
                    // 마커 위치를 클릭한 위치로 옮깁니다
@@ -637,11 +637,11 @@ $(document).ready(function(){
       
       
       function loadReviews(name, order){ //리뷰리스트와 후기마커를 로드하는 메소드
-    	  
-    	  deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
-    	  reviewIds = []; //reviewIds 초기화
-    	  
-    	  $.ajax({
+         
+         deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
+         reviewIds = []; //reviewIds 초기화
+         
+         $.ajax({
               url:'getReviewList',
               type:'GET',
               data : {
@@ -650,7 +650,7 @@ $(document).ready(function(){
               },
               dataType:'JSON',
               success:function(data){
-            	  
+                 
                  var orderStr = '<a href="javascript:selectArea(\''+name+'\', \'like\')">좋아요순</a>'
                  +'&nbsp;|&nbsp;<a href="javascript:selectArea(\''+name+'\', \'latest\')">최신순</a>';
                  $('#orderMenu').empty();
@@ -727,8 +727,8 @@ $(document).ready(function(){
                         var reviewId = review.reviewId;
                         console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
-                     	loadReviewDetail(reviewId, userId, "reviewMK");
-                     	$('#detailModal').modal("show");
+                        loadReviewDetail(reviewId, userId, "reviewMK");
+                        $('#detailModal').modal("show");
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseover', function() {
@@ -760,7 +760,7 @@ $(document).ready(function(){
                     
                     markers.push(revMarker); //마커배열에 이 마커 추가
                   
-    				reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
+                reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
                     
                     
                  }) //end forEach()
@@ -769,46 +769,46 @@ $(document).ready(function(){
                  $("#reviewUl").append(content);
                  
                 //마우스오버된 후기 하이라이트
-              	reviewIds.forEach(function(reviewId, i){
-    	             	//각각의 reviewId와 index i를 받아옴
-    	               	
-    	               	var imageSrc = "resources/img/marker1.png";
-    	               	
-    	               	(function(reviewId, i){
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
-    		               		$(this).css("background-color", "aliceblue");
-    	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
-  		       			  	//마커 하이라이트
-  		       			  	markers[i].setMap(null);
-  		       		  		var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-  			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  			       		 	markers[i].setImage(markerImage);
-  			       			markers[i].setMap(map);
-    	        	       	});
-    	               	
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
-  	  	               			$(this).css("background-color", "white");
-  	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
-  	  	           		 	//마커 원래대로
-  	  	           		 	markers[i].setMap(null);
-  	  	           		 	var imageSize = new kakao.maps.Size(45, 50); //원래크기로
-  	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  	  	           		 	markers[i].setImage(markerImage);
-  	  	           		 	markers[i].setMap(map);
-  	  	        	    });
-  	  	              	
-	        	       	//리뷰 클릭 시 상세보기 모달창 띄우기
-	  	  	            document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
-	                        var userId = "${sessionScope.loginId}";
-	                        console.log("userId / reviewId : "+userId+"/"+reviewId);
-	                        
-	                     	loadReviewDetail(reviewId, userId,"reviewMK");
-	                     	$('#detailModal').modal("show");
-	        	       	});
-	  	  	            
-    	               	})(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
-    	               	
-    	               	
+                 reviewIds.forEach(function(reviewId, i){
+                       //각각의 reviewId와 index i를 받아옴
+                         
+                         var imageSrc = "resources/img/marker1.png";
+                         
+                         (function(reviewId, i){
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
+                               $(this).css("background-color", "aliceblue");
+                               //console.log("마우스오버 markers["+i+"] : ",markers[i]);
+                             //마커 하이라이트
+                             markers[i].setMap(null);
+                             var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+                             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                            markers[i].setImage(markerImage);
+                           markers[i].setMap(map);
+                            });
+                         
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
+                                  $(this).css("background-color", "white");
+                                //console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+                               //마커 원래대로
+                               markers[i].setMap(null);
+                               var imageSize = new kakao.maps.Size(45, 50); //원래크기로
+                               var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                               markers[i].setImage(markerImage);
+                               markers[i].setMap(map);
+                         });
+                           
+                        //리뷰 클릭 시 상세보기 모달창 띄우기
+                         document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
+                           var userId = "${sessionScope.loginId}";
+                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           
+                           loadReviewDetail(reviewId, userId,"reviewMK");
+                           $('#detailModal').modal("show");
+                        });
+                         
+                         })(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
+                         
+                         
                   })
                
                  
@@ -1026,72 +1026,72 @@ $(document).ready(function(){
              }
           
           if(content.length == 0){
-        	  alert("내용을 입력해주세요!");
-        	  return;
+             alert("내용을 입력해주세요!");
+             return;
           }
           
           if(content.length < 10){
-        	  alert("10자 이상 입력해주세요!");
-        	  return;
+             alert("10자 이상 입력해주세요!");
+             return;
           }
           
           var areaId;
           var areaName = "";
           
           if(rmDetailAddr.indexOf('화성시') != -1){
-        	  areaId = 1;
-        	  areaName = '화성시';
+             areaId = 1;
+             areaName = '화성시';
           }else if(rmDetailAddr.indexOf('오산시') != -1){
-        	  areaId = 2;
-        	  areaName = '오산시';
+             areaId = 2;
+             areaName = '오산시';
           }else if(rmDetailAddr.indexOf('평택시') != -1){
-        	  areaId = 3;
-        	  areaName = '평택시';
+             areaId = 3;
+             areaName = '평택시';
           }else if(rmDetailAddr.indexOf('안성시') != -1){
-        	  areaId = 4;
-        	  areaName = '안성시';
+             areaId = 4;
+             areaName = '안성시';
           }else if(rmDetailAddr.indexOf('이천시') != -1){
-        	  areaId = 5;
-        	  areaName = '이천시';
+             areaId = 5;
+             areaName = '이천시';
           }else if(rmDetailAddr.indexOf('여주시') != -1){
-        	  areaId = 6;
-        	  areaName = '여주시';
+             areaId = 6;
+             areaName = '여주시';
           }else if(rmDetailAddr.indexOf('광주시') != -1){
-        	  areaId = 7;
-        	  areaName = '광주시';
+             areaId = 7;
+             areaName = '광주시';
           }else if(rmDetailAddr.indexOf('성남시 수정구') != -1){
-        	  areaId = 8;
-        	  areaName = '성남시 수정구';
+             areaId = 8;
+             areaName = '성남시 수정구';
           }else if(rmDetailAddr.indexOf('성남시 중원구') != -1){
-        	  areaId = 9;
-        	  areaName = '성남시 중원구';
+             areaId = 9;
+             areaName = '성남시 중원구';
           }else if(rmDetailAddr.indexOf('성남시 분당구') != -1){
-        	  areaId = 10;
-        	  areaName = '성남시 분당구';
+             areaId = 10;
+             areaName = '성남시 분당구';
           }else if(rmDetailAddr.indexOf('용인시 처인구') != -1){
-        	  areaId = 11;
-        	  areaName = '용인시 처인구';
+             areaId = 11;
+             areaName = '용인시 처인구';
           }else if(rmDetailAddr.indexOf('용인시 기흥구') != -1){
-        	  areaId = 12;
-        	  areaName = '용인시 기흥구';
+             areaId = 12;
+             areaName = '용인시 기흥구';
           }else if(rmDetailAddr.indexOf('용인시 수지구') != -1){
-        	  areaId = 13;
-        	  areaName = '용인시 수지구';
+             areaId = 13;
+             areaName = '용인시 수지구';
           }else if(rmDetailAddr.indexOf('수원시 권선구') != -1){
-        	  areaId = 14;
-        	  areaName = '수원시 권선구';
+             areaId = 14;
+             areaName = '수원시 권선구';
           }else if(rmDetailAddr.indexOf('수원시 팔달구') != -1){
-        	  areaId = 15;
-        	  areaName = '수원시 팔달구';
+             areaId = 15;
+             areaName = '수원시 팔달구';
           }else if(rmDetailAddr.indexOf('수원시 영통구') != -1){
-        	  areaId = 16;
-        	  areaName = '수원시 영통구';
+             areaId = 16;
+             areaName = '수원시 영통구';
           }else if(rmDetailAddr.indexOf('수원시 장안구') != -1){
-        	  areaId = 17;
-        	  areaName = '수원시 장안구';
+             areaId = 17;
+             areaName = '수원시 장안구';
           }else{
-        	  alert("지역을 확인해주세요!");
-        	  return;
+             alert("지역을 확인해주세요!");
+             return;
           }
           
           console.log("rmLat : "+rmLat);
@@ -1127,7 +1127,7 @@ $(document).ready(function(){
                dataType:'JSON',
                success:function(data){
                
-            	   console.log("작성된 글 아이디 : "+data.reviewId);
+                  console.log("작성된 글 아이디 : "+data.reviewId);
                    formData.append("reviewId", data.reviewId);
                   
                   $.ajax({
@@ -1160,10 +1160,10 @@ $(document).ready(function(){
        
        //모달창이 hidden일때 내용 초기화
        $('.modal').on('hidden.bs.modal', function (e) {
-    		console.log('modal close');
-    		$("#content").val("");
-    		$("#rmPhoto").val("");
-		});
+          console.log('modal close');
+          $("#content").val("");
+          $("#rmPhoto").val("");
+      });
       
       
       function deleteMarkers(markers) {
@@ -1175,10 +1175,11 @@ $(document).ready(function(){
       
       //내후기마커 불러오기
       function loadMyReviews(userId){
-    	  deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
-    	  reviewIds = []; //reviewIds 초기화
-    	  
-    	  $.ajax({
+         deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
+         reviewIds = []; //reviewIds 초기화
+         infowindow.close();
+         
+         $.ajax({
               url:'getMyReviewList',
               type:'GET',
               data : {
@@ -1193,7 +1194,7 @@ $(document).ready(function(){
                  var content = "";
                  var list = data.list;
                  if(list.length > 0){
-                	 $("#myRevComment").hide(); //등록된 리뷰가 없다는 문구 제거
+                    $("#myRevComment").hide(); //등록된 리뷰가 없다는 문구 제거
                  }
                  
                  list.forEach(function(review, index){
@@ -1204,7 +1205,7 @@ $(document).ready(function(){
                     for(var i=0; i<review.rating; i++){
                        rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
                     }
-                   	
+                      
                     var element = "<li class='list-group-item'>"
                     +"<a href=# class='reviewAnchor'>"
                     +"<div class='reviewWrap"+review.reviewId+"'>"
@@ -1260,8 +1261,8 @@ $(document).ready(function(){
                         var reviewId = review.reviewId;
                         console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
-                     	loadReviewDetail(reviewId, userId, "myReviewMK");
-                     	$('#detailModal').modal("show");
+                        loadReviewDetail(reviewId, userId, "myReviewMK");
+                        $('#detailModal').modal("show");
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseover', function() {
@@ -1289,11 +1290,11 @@ $(document).ready(function(){
                          $('.reviewWrap'+review.reviewId).css("background-color", "white");
                          $('.reviewWrap'+review.reviewId).css("color", "black");
                      });
-					
+               
                     
                     markers.push(revMarker); //마커배열에 이 마커 추가
                   
-    				reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
+                reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
                     
                     
                  }) //end forEach()
@@ -1304,46 +1305,46 @@ $(document).ready(function(){
                  
                  
                 //마우스오버된 후기 하이라이트
-              	reviewIds.forEach(function(reviewId, i){
-    	             	//각각의 reviewId와 index i를 받아옴
-    	               	
-    	               	var imageSrc = "resources/img/marker1.png";
-    	               	
-    	               	(function(reviewId, i){
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
-    		               		$(this).css("background-color", "aliceblue");
-    	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
-  		       			  	//마커 하이라이트
-  		       			  	markers[i].setMap(null);
-  		       		  		var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
-  			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  			       		 	markers[i].setImage(markerImage);
-  			       			markers[i].setMap(map);
-    	        	       	});
-    	               	
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
-  	  	               			$(this).css("background-color", "white");
-  	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
-  	  	           		 	//마커 원래대로
-  	  	           		 	markers[i].setMap(null);
-  	  	           		 	var imageSize = new kakao.maps.Size(45, 50); //원래크기로
-  	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  	  	           		 	markers[i].setImage(markerImage);
-  	  	           		 	markers[i].setMap(map);
-  	  	        	    });
-  	  	              	
-	        	       	//리뷰 클릭 시 상세보기 모달창 띄우기
-	  	  	            document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
-	                        var userId = "${sessionScope.loginId}";
-	                        console.log("userId / reviewId : "+userId+"/"+reviewId);
-	                        
-	                     	loadReviewDetail(reviewId, userId, "myReviewMK");
-	                     	$('#detailModal').modal("show");
-	        	       	});
-	  	  	            
-    	               	})(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
-    	               	
-    	               	
+                 reviewIds.forEach(function(reviewId, i){
+                       //각각의 reviewId와 index i를 받아옴
+                         
+                         var imageSrc = "resources/img/marker1.png";
+                         
+                         (function(reviewId, i){
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
+                               $(this).css("background-color", "aliceblue");
+                               //console.log("마우스오버 markers["+i+"] : ",markers[i]);
+                             //마커 하이라이트
+                             markers[i].setMap(null);
+                             var imageSize = new kakao.maps.Size(55, 60); //1.5배 크기로
+                             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                            markers[i].setImage(markerImage);
+                           markers[i].setMap(map);
+                            });
+                         
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
+                                  $(this).css("background-color", "white");
+                                //console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+                               //마커 원래대로
+                               markers[i].setMap(null);
+                               var imageSize = new kakao.maps.Size(45, 50); //원래크기로
+                               var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                               markers[i].setImage(markerImage);
+                               markers[i].setMap(map);
+                         });
+                           
+                        //리뷰 클릭 시 상세보기 모달창 띄우기
+                         document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
+                           var userId = "${sessionScope.loginId}";
+                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           
+                           loadReviewDetail(reviewId, userId, "myReviewMK");
+                           $('#detailModal').modal("show");
+                        });
+                         
+                         })(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
+                         
+                         
                   })
                
                  
@@ -1352,15 +1353,16 @@ $(document).ready(function(){
                  console.log("에러발생 : ", e);
               }
            });
-    	  
+         
       } //end loadMyReviews()
       
       //즐겨찾기한 후기마커 리스트 불러오기
       function loadBookMarks(userId){
-    	  deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
-    	  reviewIds = []; //reviewIds 초기화
-    	  
-    	  $.ajax({
+         deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
+         reviewIds = []; //reviewIds 초기화
+         infowindow.close();
+         
+         $.ajax({
               url:'getBookMarkList',
               type:'GET',
               data : {
@@ -1375,7 +1377,7 @@ $(document).ready(function(){
                  var content = "";
                  var list = data.list;
                  if(list.length > 0){
-                	 $("#bookmarkComment").hide(); //등록된 즐겨찾기가 없다는 문구 제거
+                    $("#bookmarkComment").hide(); //등록된 즐겨찾기가 없다는 문구 제거
                  }
                  
                  list.forEach(function(review, index){
@@ -1386,7 +1388,7 @@ $(document).ready(function(){
                     for(var i=0; i<review.rating; i++){
                        rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
                     }
-                   	
+                      
                     var element = "<li class='list-group-item'>"
                     +"<a href=# class='reviewAnchor'>"
                     +"<div class='reviewWrap"+review.reviewId+"'>"
@@ -1442,8 +1444,8 @@ $(document).ready(function(){
                         var reviewId = review.reviewId;
                         console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
-                     	loadReviewDetail(reviewId, userId, "bookmark");
-                     	$('#detailModal').modal("show");
+                        loadReviewDetail(reviewId, userId, "bookmark");
+                        $('#detailModal').modal("show");
                      });
                     
                     kakao.maps.event.addListener(revMarker, 'mouseover', function() {
@@ -1471,11 +1473,11 @@ $(document).ready(function(){
                          $('.reviewWrap'+review.reviewId).css("background-color", "white");
                          $('.reviewWrap'+review.reviewId).css("color", "black");
                      });
-					
+               
                     
                     markers.push(revMarker); //마커배열에 이 마커 추가
                   
-    				reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
+                reviewIds.push(review.reviewId); //reviewIds배열에 reviewId저장 //마커스의 인덱스와 같이 감
                     
                     
                  }) //end forEach()
@@ -1486,46 +1488,46 @@ $(document).ready(function(){
                  
                  
                 //마우스오버된 후기 하이라이트
-              	reviewIds.forEach(function(reviewId, i){
-    	             	//각각의 reviewId와 index i를 받아옴
-    	               	
-    	               	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-    	               	
-    	               	(function(reviewId, i){
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
-    		               		$(this).css("background-color", "aliceblue");
-    	        	       		//console.log("마우스오버 markers["+i+"] : ",markers[i]);
-  		       			  	//마커 하이라이트
-  		       			  	markers[i].setMap(null);
-  		       		  		var imageSize = new kakao.maps.Size(34, 45); //1.5배 크기로
-  			       		  	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  			       		 	markers[i].setImage(markerImage);
-  			       			markers[i].setMap(map);
-    	        	       	});
-    	               	
-  	  	              		document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
-  	  	               			$(this).css("background-color", "white");
-  	  	               	 	//console.log("마우스아웃 markers["+i+"] : ",markers[i]);
-  	  	           		 	//마커 원래대로
-  	  	           		 	markers[i].setMap(null);
-  	  	           		 	var imageSize = new kakao.maps.Size(24, 35); //원래크기로
-  	  	           		 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  	  	           		 	markers[i].setImage(markerImage);
-  	  	           		 	markers[i].setMap(map);
-  	  	        	    });
-  	  	              	
-	        	       	//리뷰 클릭 시 상세보기 모달창 띄우기
-	  	  	            document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
-	                        var userId = "${sessionScope.loginId}";
-	                        console.log("userId / reviewId : "+userId+"/"+reviewId);
-	                        
-	                     	loadReviewDetail(reviewId, userId, "bookmark");
-	                     	$('#detailModal').modal("show");
-	        	       	});
-	  	  	            
-    	               	})(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
-    	               	
-    	               	
+                 reviewIds.forEach(function(reviewId, i){
+                       //각각의 reviewId와 index i를 받아옴
+                         
+                         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+                         
+                         (function(reviewId, i){
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseover",function(){
+                               $(this).css("background-color", "aliceblue");
+                               //console.log("마우스오버 markers["+i+"] : ",markers[i]);
+                             //마커 하이라이트
+                             markers[i].setMap(null);
+                             var imageSize = new kakao.maps.Size(34, 45); //1.5배 크기로
+                             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                            markers[i].setImage(markerImage);
+                           markers[i].setMap(map);
+                            });
+                         
+                              document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("mouseout",function(e){
+                                  $(this).css("background-color", "white");
+                                //console.log("마우스아웃 markers["+i+"] : ",markers[i]);
+                               //마커 원래대로
+                               markers[i].setMap(null);
+                               var imageSize = new kakao.maps.Size(24, 35); //원래크기로
+                               var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+                               markers[i].setImage(markerImage);
+                               markers[i].setMap(map);
+                         });
+                           
+                        //리뷰 클릭 시 상세보기 모달창 띄우기
+                         document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
+                           var userId = "${sessionScope.loginId}";
+                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           
+                           loadReviewDetail(reviewId, userId, "bookmark");
+                           $('#detailModal').modal("show");
+                        });
+                         
+                         })(reviewId, i); //즉시실행함수 : 여기있는 인수가 바로 들어가서 실행된다
+                         
+                         
                   })
                
                  
