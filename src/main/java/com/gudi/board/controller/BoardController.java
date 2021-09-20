@@ -155,6 +155,7 @@ public class BoardController {
 				}
 
 
+
 		// 즐겨찾기
 		@RequestMapping("/bookmark")
 		public String springView13(HttpServletRequest request, Model model) throws Exception {

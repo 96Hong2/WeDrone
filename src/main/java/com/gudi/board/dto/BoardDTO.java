@@ -20,10 +20,44 @@ public class BoardDTO {
 	private Date cmtDate;
 	private String isDel;
 	private String cmtField;
-	
-	
-	
-	
+	private int informId;
+	private Date informDate;
+	private String informField;
+	private int relateId;
+	private String informContent;
+	private String postedUserId;
+	private String postedTitle;
+	private String regUserid;
+	public int getInformId() {
+		return informId;
+	}
+	public void setInformId(int informId) {
+		this.informId = informId;
+	}
+	public Date getInformDate() {
+		return informDate;
+	}
+	public void setInformDate(Date informDate) {
+		this.informDate = informDate;
+	}
+	public String getInformField() {
+		return informField;
+	}
+	public void setInformField(String informField) {
+		this.informField = informField;
+	}
+	public int getRelateId() {
+		return relateId;
+	}
+	public void setRelateId(int relateId) {
+		this.relateId = relateId;
+	}
+	public String getInformContent() {
+		return informContent;
+	}
+	public void setInformContent(String informContent) {
+		this.informContent = informContent;
+	}
 	public String getCmtId() {
 		return cmtId;
 	}
@@ -102,6 +136,38 @@ public class BoardDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getPostedUserId() {
+		return postedUserId;
+	}
+	public void setPostedUserId(String postedUserId) {
+		this.postedUserId = postedUserId;
+	}	
+	public String getPostedTitle() {
+		return postedTitle;
+	}
+	public void setPostedTitle(String postedTitle) {
+		this.postedTitle = postedTitle;
+	}
+	
+	public String getRegUserid() {
+		return regUserid;
+	}
+	public void setRegUserid(String regUserid) {
+		this.regUserid = regUserid;
+	}
+	
+	@Override
+	public String toString() {
+		return "BoardDTO [postId=" + postId + ", title=" + title + ", postContent=" + postContent + ", postDate="
+				+ postDate + ", postField=" + postField + ", postDel=" + postDel + ", nickName=" + nickName
+				+ ", userId=" + userId + ", cmtId=" + cmtId + ", cmtContent=" + cmtContent + ", cmtDate=" + cmtDate
+				+ ", isDel=" + isDel + ", cmtField=" + cmtField + ", informId=" + informId + ", informDate="
+				+ informDate + ", informField=" + informField + ", relateId=" + relateId + ", informContent="
+				+ informContent + ", postedUserId=" + postedUserId + ", postedTitle=" + postedTitle + ", regUserid="
+				+ regUserid + "]";
+	}
+	
+	
 	
 	
 }

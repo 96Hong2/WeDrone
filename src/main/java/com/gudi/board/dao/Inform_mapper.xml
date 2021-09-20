@@ -44,11 +44,11 @@
 	
 	
 	
-	<update id="alarmAllRead" parameterType="hashmap">
+	<update id="alarmAllRead">
 		UPDATE INFORM SET  ISREAD='Y' WHERE userid=#{userid}
 	</update>
 	
-	<update id="alarmRead" parameterType="hashmap">
+	<update id="alarmRead">
 		UPDATE INFORM SET  ISREAD='Y' WHERE userid=#{userid} AND  INFORMID =#{informid}
 	</update>
 	

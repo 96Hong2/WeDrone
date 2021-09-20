@@ -68,8 +68,18 @@ table, th, td{
 
    }
 
-
+.h1-title{
+ font-family: "Do Hyeon", sans-serif;
+ font-style: normal;
+ font-weight: 500;
+ color: #212529; 
+ font-size: 2.5rem;
+ margin-top: 30px;
+  margin-bottom: 20px;
+}
 </style>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+
 </head>
 <title>드론</title>
 <body>
@@ -83,62 +93,20 @@ table, th, td{
 		<jsp:include page="${path}/navbar"></jsp:include>
 	</c:if> --%>
 
+			<!-- 네비게이션바 -->
+		<c:if test="${sessionScope.loginId eq null}">
+			<jsp:include page="./fixmenu/navbar.jsp" />
+		</c:if>
+		<c:if test="${sessionScope.loginId ne null}">
+			<jsp:include page="./fixmenu/lognav.jsp" />
+		</c:if>
+		
 	<div class="wrap">
-		<!-- 네비게이션바 -->
-		<nav class="navbar navbar-expand-lg navbar-dark"
-			style="background-color: #3c3c3c;">
-			<div class="container-fluid">
-				<a
-					class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
-					href="${path}/"> <img src="resources/img/LOGO.png"
-					class="rounded float-end rounded mx-auto d-block mx-2" alt=""
-					width="50" height="50">WeDron
-				</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active text-center"
-							aria-current="page" href="${path}/map"><h4>Map</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/calendar"><h4>Calendar</h4></a></li>
-						<a class="nav-link active" href="${path}/news"><h4>News</h4></a>
-						</li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/notice"><h4>Notice</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/board"><h4>Board</h4></a></li>
-
-
-						<li class="nav-item"></li>
-					</ul>
-					<div class="d-flex" id="alarmalert">
-						<i id="bell" class="bi bi-bell-fill"
-							style="font-size: 1.8rem; color: white"></i><br> <span
-							id="cartalertnum"
-							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
-					</div>
-					<div class="d-flex">
-						<a class="btn btn-sm btn-outline-light mx-3 me-1"
-							href="${path}/login" role="button">로그인</a> <a
-							class="btn btn-sm btn-outline-light me-1 mx-1"
-							href="${path}/signup" role="button">회원가입</a> <a
-							class="btn btn-sm btn-outline-light mx-1 me-1"
-							href="${path}/mypages" role="button">마이페이지</a>
-						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
-							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">메시지</button>
-					</div>
-				</div>
-		</nav>
+		<h1 class="h1-title">자유게시판 글 수정 1</h1>
 		
 		<form action="fbupdate" method="post" enctype="multipart/form-data">
 
-     <h1>자유게시판 글 수정</h1>
+     
 		<table style="width: 800px; margin-left: auto; margin-right: auto;">
 			<tr>
 				<th>게시판 번호</th>
@@ -167,10 +135,9 @@ table, th, td{
 			<tr>
 				<th>내용</th>
 				<td>
-				<div id="editable" contenteditable="true">
-				<input type="text"
-				  name="postContent" value ="${post.postContent}"/>
-            </div>
+				<div id="editable" contenteditable="true">	
+				  <textarea name="postContent" rows="5" cols="" style="width: 100%">${post.postContent}</textarea>
+           		 </div>
             </td>
 			</tr>
 
@@ -189,7 +156,7 @@ table, th, td{
 
 			<tr>
 			<td>
-				   <input type="button" onclick="location.href='./'"
+				   <input type="button" onclick="location.href='${path}/fbList'"
 					value="자유게시판 리스트" class = "btn btn-dark" />
 					<button class = "btn btn-dark">저장</button></td>
 			</tr>
@@ -213,6 +180,6 @@ table, th, td{
 
 <!-- 하단 푸터 -->
 
-
+<%@ include file="./common/footer.jsp" %>
 
 </html>

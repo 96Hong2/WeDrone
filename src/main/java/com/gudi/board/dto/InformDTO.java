@@ -11,6 +11,7 @@ public class InformDTO {
 	private Integer relatedId;
 	private String informContent;
 	private String isRead;
+	
 	public Integer getInformId() {
 		return informId;
 	}
@@ -55,6 +56,14 @@ public class InformDTO {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "InformDTO [informId=" + informId + ", userId=" + userId + ", informDate=" + informDate
+				+ ", informField=" + informField + ", relatedId=" + relatedId + ", informContent=" + informContent
+				+ ", isRead=" + isRead + "]";
+	}
+	
 	
 	
 }
+

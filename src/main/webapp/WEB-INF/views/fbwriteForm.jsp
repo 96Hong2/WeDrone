@@ -75,106 +75,59 @@ body,html {
       overflow:auto;
       
    }
+   .h1-title{
+ font-family: "Do Hyeon", sans-serif;
+ font-style: normal;
+ font-weight: 500;
+ color: #212529; 
+ font-size: 2.5rem;
+ margin-top: 30px;
+  margin-bottom: 20px;
+}
 </style>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+
 </head>
 <title>드론</title>
 <body>
 
 	<!-- 상단 메뉴바 -->
-	<!-- 아이디가 있다면 -->
-	<%-- <c:if test="${sessionScope.userId ne null}">
-		<jsp:include page="${path}/lognav"></jsp:include>
+	<c:if test="${sessionScope.loginId eq null}">
+		<jsp:include page="./fixmenu/navbar.jsp" />
 	</c:if>
-	<!-- 아이디가 없ㅇ 네비바-->
-	<c:if test="${sessionScope.userId eq null}">
-		<jsp:include page="${path}/navbar"></jsp:include>
-	</c:if> --%>
-
-
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="./fixmenu/lognav.jsp" />
+	</c:if>
 
 
 	<div class="wrap">
-		<!-- 네비게이션바 -->
-		<nav class="navbar navbar-expand-lg navbar-dark"
-			style="background-color: #3c3c3c;">
-			<div class="container-fluid">
-				<a
-					class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
-					href="${path}/"> <img src="resources/img/LOGO.png"
-					class="rounded float-end rounded mx-auto d-block mx-2" alt=""
-					width="50" height="50">WeDron
-				</a>
-				<button class="navbar-toggler" type="button"
-					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active text-center"
-							aria-current="page" href="${path}/map"><h4>Map</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/calendar"><h4>Calendar</h4></a></li>
-						<a class="nav-link active" href="${path}/news"><h4>News</h4></a>
-						</li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/notice"><h4>Notice</h4></a></li>
-						<li class="nav-item"><a class="nav-link active text-center "
-							href="${path}/board"><h4>Board</h4></a></li>
 
-
-						<li class="nav-item"></li>
-					</ul>
-					<div class="d-flex" id="alarmalert">
-						<i id="bell" class="bi bi-bell-fill"
-							style="font-size: 1.8rem; color: white"></i><br> <span
-							id="cartalertnum"
-							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-white rounded-pill mt-2"></span>
-					</div>
-					
-					
-					<div class="d-flex">
-						<a class="btn btn-sm btn-outline-light mx-3 me-1"
-							href="${path}/login" role="button">로그인</a> <a
-							class="btn btn-sm btn-outline-light me-1 mx-1"
-							href="${path}/signup" role="button">회원가입</a> <a
-							class="btn btn-sm btn-outline-light mx-1 me-1"
-							href="${path}/mypages" role="button">마이페이지</a>
-						<button class="btn btn-sm btn-outline-light mx-1 " type="button"
-							data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-							aria-controls="offcanvasRight">메시지</button>
-					</div>
-					
-
-				</div>
-		</nav>
-		
-		<div class="col-6 center-block" style="margin-right:auto; margin-left:auto">
-				
+	 
+		<div class="col-6 center-block" style="margin-right:auto; margin-left:auto">				
 <form action="fbwrite" method="post">
-							<h1>자유 게시판 글쓰기</h1>
+							<h1 class="h1-title">자유 게시판 글쓰기</h1>
 <table> <!-- get은 보안상의 문제도 있지만 내용을 보내는데에 한계가 있다. -->
       
       <tr>
          <th>제목</th>
-         <td>
-         <div class="form-floating mb-3">
-  <input type="text" name="title" required class="form-control" id="floatingInput">
-  <label for="floatingInput">Title</label>
-</div>
+         <td> <!-- <div class="form-floating"> -->
+         <div class="">
+		  <input type="text" name="title" required class="form-control" id="floatingInput" placeholder="Title" >
+		  <!-- <label for="floatingInput">Title</label> --> 
+		</div>
          </td>
       </tr>
         <tr>
          <th>내용</th>
          <td>
-    <div id="editable" contenteditable="true">    
+<!--     <div id="editable" contenteditable="true">    
          <div class="form-floating mb-3">
     <input id="postContent" type="hidden" name="postContent" value="" required class="form-control" id="floatingInput">
-        
+       
           </div>
     </div>
-            
+            -->
+            <textarea id="postContent" name="postContent"  name="postContent"  rows="10" cols="" style="width: 100%"></textarea> 
          </td>
       </tr>
       <tr>
@@ -184,7 +137,7 @@ body,html {
       </tr>
       <tr>
          <td colspan="2">
-         <input type="button"  class = "btn btn-dark" onclick="location.href='./'" value="리스트"/>
+         <input type="button"  class = "btn btn-dark" onclick="location.href='${pageContext.request.contextPath}/fbList'" value="리스트"/>
          <button type="button"  class = "btn btn-dark" id="save">저장</button>
          </td>
       </tr>
@@ -202,6 +155,10 @@ body,html {
 	
 </script>
 		
+		
+		<%@ include file="./common/footer.jsp" %>
+		
+		
 		</body>
 		<!-- 들어갈 내용 -->
 		<script>
@@ -218,23 +175,28 @@ body,html {
 		}
 	  
 	  $("#save").click(function(){
-	  
-	  //a 태그 하위에 b 태그 삭제
-	  $("#editable a").find("b").remove();
-	  //a 태그 자체를 삭제? a 태그 하위에 onclick 만 삭제
-	  $("#editable a").removeAttr("onclick");
-	  
-    //저장된 파일 목록은 어떻게?
-   //1. UI 를 이용하여
-   // - input 에 넣는 방법
-   // - ajax 일 경우 : 파일 list 라는 별도의 파라메터를 사용
-
-   //2. session 을 이용한 방법(데이터 타입 object이니까 다 들어갈 수 있음)
-
-
-   //div태그 사이에 있는 내용이기에 html로 값 받아옴 
-   $("#postContent").val($("#editable").html());
-   $("form").submit();
+		var loginId='${loginId}';		
+		if(loginId==""){
+			alert("로그인후 이용 가능합니다.");
+			return;
+		}
+		  
+		  //a 태그 하위에 b 태그 삭제
+		  $("#editable a").find("b").remove();
+		  //a 태그 자체를 삭제? a 태그 하위에 onclick 만 삭제
+		  $("#editable a").removeAttr("onclick");
+		  
+	    //저장된 파일 목록은 어떻게?
+	   //1. UI 를 이용하여
+	   // - input 에 넣는 방법
+	   // - ajax 일 경우 : 파일 list 라는 별도의 파라메터를 사용
+	
+	   //2. session 을 이용한 방법(데이터 타입 object이니까 다 들어갈 수 있음)
+	
+	
+	   //div태그 사이에 있는 내용이기에 html로 값 받아옴 
+	   //$("#postContent").val($("#editable").html());
+	   $("form").submit();
 })
 
 function del(elem){

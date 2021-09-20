@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.gudi.board.dao.InformDAO;
 import com.gudi.board.dto.InformDTO;
 
+
 @Service
 public class InformService {
 
@@ -41,7 +42,6 @@ public class InformService {
 
 
 	public List<Map<String, Object>> selectListInform(Map<String, Object> map) {
-		dao.alarmAllRead(map);
 		return dao.selectListInform(map);
 	}
 
@@ -59,3 +59,5 @@ public class InformService {
 	
 
 }
+
+
