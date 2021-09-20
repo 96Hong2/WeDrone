@@ -2,20 +2,34 @@ package com.gudi.board.controller;
 
 
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.gudi.board.service.BoardService;
+import com.gudi.board.service.InformService;
+import com.gudi.util.PageMaker;
 
 
 
 @Controller
 public class BoardController {
+	
+	@Autowired
+	BoardService service;
+
+	@Autowired
+	InformService informService;
+	
 
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
@@ -120,12 +134,26 @@ public class BoardController {
 			return "mypage/myreview";
 		}
 
-		// 알림리스트
-		@RequestMapping("/alarmlist")
-		public String springView12(HttpServletRequest request, Model model) throws Exception {
+		// 내 알림리스트
+				@RequestMapping("/alarmlist")
+				public String springView12(PageMaker pageMaker, Model model, Map<String, Object> map,
+						HttpServletRequest request) throws Exception {
+					map.put("userid", (String)request.getSession().getAttribute("loginId") );
+					int totalCount=informService.informCount(map);
+					
+					pageMaker.setTotPage(totalCount);
+					map.put("pageBegin", pageMaker.getPageBegin());
+					map.put("pageEnd", pageMaker.getPageEnd());
+					List<Map<String, Object>> list=informService.selectListInform(map);
+					String pagination=pageMaker.bootStrapPagingHTML(request.getContextPath()  +"/alarmlist");
+					
+					model.addAttribute("list",list);
+					model.addAttribute("totalCount",totalCount);
+					model.addAttribute("pageMaker",pageMaker);
+					model.addAttribute("pagination", pagination);
+					return "mypage/alarmlist";
+				}
 
-			return "mypage/alarmlist";
-		}
 
 		// 즐겨찾기
 		@RequestMapping("/bookmark")
