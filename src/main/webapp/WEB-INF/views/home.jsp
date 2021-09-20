@@ -25,12 +25,12 @@
 <body>
 	<!-- 아이디 있을 때 네비바 -->
 	<c:if test="${sessionScope.loginId eq null}">
-		<jsp:include page="fixmenu/lognav.jsp" />
+		<jsp:include page="fixmenu/navbar.jsp" />
 	</c:if>
 
 	<!-- 아이디 없을때 네비바 -->
 	<c:if test="${sessionScope.loginId ne null}">
-		<jsp:include page="fixmenu/navbar.jsp" />
+		<jsp:include page="fixmenu/lognav.jsp" />
 	</c:if>
 
 
@@ -101,7 +101,6 @@
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="fixmenu/msgbar.jsp" />
 	</c:if>
-
 
 </body>
 
