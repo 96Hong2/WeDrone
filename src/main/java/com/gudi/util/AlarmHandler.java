@@ -125,19 +125,19 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		session.getAttribute("loginId"); 
 		이렇게 세션값을 가져오나 여기 웹소켓에서는 세션값을 WebSocketSession session  형태로 가져옵니다.
 		따라서 , 다음과 코드 형태로 세션값을 가져옵니다. 
-*/		
-        
+*/		    
+		
+		
 		Map<String, Object> httpSession = session.getAttributes();
 		String loginId = (String) httpSession.get("loginId");		
 		if (loginId == null) {
 			System.out.println("로그인 loginID 가 널일경우  :" + session.getId());
-			//브라우저가 열리고 해당 사이트에 접속하면 세션이 생깁니다.
-			//이때 로그인한 아이디값이 없을 경우 임의 값이 랜덤으로 생성합니다.
+			//브라우저가 열리고 해당 사이트에 접속하면 세션이 생긴다
+			//이때 로그인한 아이디값이 없을 경우 임의 값이 랜덤으로 생성된다.
 			//랜던으로 생성된 아이디값은 전체 접속자들 마다 전부 다름니다. 그럼 임의값을 주는 이유는 뭔가요??
-			
-			//알림 설정을 위해서 임니다.  로그인 한  접속한 유저들에게 보내는가? 아니면 사이트에만 접속을 해도 메시지를 보내는 가 입니다.
-			//아 그걸 구별하기 위해서 이군요??네
-			//원래 웹 소켓이 채팅이 주 목적입니다. 각종 채팅  사이트 아시죠?채팅을 위해 해당 사이트에 접속을 하면 임의 데이터 아이값이 부여 됩니다.
+			//알림 설정을 위해서 이다.  로그인 한  접속한 유저들에게 보내는가? 아니면 사이트에만 접속을 해도 메시지를 보내는 가 입니다.
+			//구별을 하기 위해서 이다.
+			//원래 웹 소켓이 채팅이 주 목적이다. 각종 채팅  사이트  생각해 보면?채팅을 위해 해당 사이트에 접속을 하면 임의 데이터 아이디값이 부여 된다
 			//ex ) vawpuj5h, 5qw40sff
 			return session.getId();
 		} else {
