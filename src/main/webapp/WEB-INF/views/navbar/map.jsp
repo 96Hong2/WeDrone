@@ -37,6 +37,9 @@
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
 <link href="${path}/resources/css/reviewMK.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 내위치마커 클릭한 곳 날씨정보 가져오는 API -->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c4f184a0580dc27199cd4d05a181a688"></script> -->
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -280,7 +283,23 @@ ul.tabs li.current {
             </ul>
          
          <!-- 내 위치 마커 탭 -->
-            <div id="tab-myLocationMK" class="tab-content">내위치마커 내용</div>
+            <div id="tab-myLocationMK" class="tab-content">
+            	<div id="myLocationMKArea">
+				<c:if test="${sessionScope.loginId eq null}">
+					<div id="myLocationMKComment" style="margin:10px;text-align:center;">
+						<h6>로그인이 필요한 서비스입니다.</h6>
+						<h6>로그인하고 내 비행위치를 공유해보세요!</h6>
+					</div>
+				</c:if>
+                <c:if test="${sessionScope.loginId ne null}">
+					<div id="myLocationMKComment" style="margin:10px;text-align:center;">
+						<h6>지도를 클릭하여 기상정보를 확인하거나</h6>
+						<h6>내 비행위치를 공유할 수 있습니다.</h6>
+						<div id="locationInfo">클릭한 곳의 날씨정보</div>
+					</div>
+				</c:if>
+            </div>
+           	</div>
 
          <!-- 후기마커 탭 -->
             <div id="tab-reviewMK" class="tab-content current">
@@ -459,9 +478,26 @@ $(document).ready(function(){
      loadBookMarks("${sessionScope.loginId}");
    })
    
+   //내위치마커 탭 클릭 시
+   $('#tab-myLocationMK-li').click(function(){
+    //지도 초기화
+    deletePolygon(polygons); //폴리곤 제거
+     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
+     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
+     deleteMarkers(markers);//마커 제거
+     marker.setMap(null);
+     
+     map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
+     map.setZoomable(true);
+     map.setMaxLevel(10);
+     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
+     //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
+     
+     loadAPICall();
+   })
+   
    //자동 스크롤
    //$('#sideArea').scrollTop($('#sideArea').scrollHeight);
-
 })
       
       //#카카오맵 api 불러오기
@@ -1537,6 +1573,176 @@ $(document).ready(function(){
               }
            });
       } //end loadBookMarks()
-      //주석
+      
+      
+      //내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
+      function loadAPICall(){
+    	  console.log("loadAPICALL")
+    	  	
+    	  	var APImarker = new kakao.maps.Marker({
+    			position : map.getCenter()
+    		});
+    		
+    	  	APImarker.setMap(map); //마커 찍기
+    	  	markers.push(APImarker);
+    	  	
+    	  	
+    	 	// 현재 위치 불러오기
+    		// HTML5의 geolocation으로 사용할 수 있는지 확인
+    		if (navigator.geolocation) {
+    		    navigator.geolocation.getCurrentPosition(function(position) {
+    		        
+    		        var lat = position.coords.latitude,
+    		            lon = position.coords.longitude;
+    		        weather(lat, lon);
+    		        
+    		        var locPosition = new kakao.maps.LatLng(lat, lon);
+    		        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+    				map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+    		      });
+    		} else {//못 불러오면
+    			//경기도 임의의 중심점을 중심으로 마커 찍기
+    		    var locPosition = new kakao.maps.LatLng(37.21953563998351, 127.21194259376661);
+    	        weather(lat, lon);
+    	        
+    	        var locPosition = new kakao.maps.LatLng(lat, lon);
+    	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+    			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+    		}
+    		
+
+    		// 지도에서 클릭한 위도, 경도 가져오기 
+    		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+    			var latlng = mouseEvent.latLng; //클릭한 위치 가져오기
+    			var lat = latlng.getLat(),
+    			lon = latlng.getLng();
+    			
+    			//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
+    			APImarker.setPosition(latlng); //해당 위치로 마커 이동
+    	        weather(lat, lon);
+    		
+    		});
+    		
+   	} //end loadAPICall()
+      
+    //일출, 일몰 시간 변환
+  	function unix_timestamp(t) {
+  		var date = new Date(t*1000);
+  		var hour = "0" + date.getHours();
+  		var minute = "0" + date.getMinutes();
+  		return hour.substr(-2) + ":" + minute.substr(-2);
+  	}
+
+  	// 풍향 변환
+  	function windDirection(deg) {
+  		 var result = Math.round((deg + 22.5 * 0.5) / 22.5);
+  		 var vector;
+  		 switch(result) {
+  		 case 0 :
+  			 vector = "북";
+  			 break;
+  			 
+  		 case 1 :
+  			 vector = "북북동";
+  			 break;
+  			 
+  		 case 2 :
+  			 vector = "북동";
+  			 break;
+  			 
+  		 case 3 :
+  			 vector = "동북동";
+  			 break;
+  			 
+  		 case 4 :
+  			 vector = "동";
+  			 break;
+  			 
+  		 case 5 :
+  			 vector = "동남동";
+  			 break;
+  			 
+  		 case 6 :
+  			 vector = "남동";
+  			 break;
+  			 
+  		 case 7 :
+  			 vector = "남남동";
+  			 break;
+  			 
+  		 case 8 :
+  			 vector = "남";
+  			 break;
+  			 
+  		 case 9 :
+  			 vector = "남남서";
+  			 break;
+  			 
+  		 case 10 :
+  			 vector = "남서";
+  			 break;
+  			 
+  		 case 11 :
+  			 vector = "서남서";
+  			 break;
+  			 
+  		 case 12 :
+  			 vector = "서";
+  			 break;
+  			 
+  		 case 13 :
+  			 vector = "서북서";
+  			 break;
+  			 
+  		 case 14 :
+  			 vector = "북서";
+  			 break;
+  			 
+  		 case 15 :
+  			 vector = "북북서";
+  			 break;
+  			 
+  		 case 16 :
+  			 vector = "북";
+  			 break;
+  		 }
+  		return vector;
+  	}
+
+  	//기상정보 불러오기 (ApiService랑 연동)
+  	function weather(lat, lon) {
+  		$.ajax({
+  			
+  		     url:'apiCall',
+  		     type:'post',
+  		     data:{
+  		         "lon" : lon,
+  		         "lat" : lat,
+  		     },
+  		     dataType:'json',
+  		     success:function(data){
+  		    	 var message = "현재위, 경도 : " + data.coord.lat + ", " + data.coord.lon + "<br>";
+  		    	 message += "현재온도 : "+ data.main.temp  + "°C" + "<br>";
+  		    	 message += "체감온도 : " + data.main.feels_like + "°C" + "<br>";
+  		    	 message += "현재습도 : "+ data.main.humidity + "%" + "<br>";
+  		    	 message += "날씨 : "+ data.weather[0].main + "<br>";
+  		    	 //message += "날씨 이미지 : "+ data.weather[0].icon + "<br>";
+  		    	 message += "풍속 : " + data.wind.speed + "m/s" + "<br>";
+  		    	 message += "풍향 : " + windDirection(data.wind.deg) + "<br>";
+  		    	 message += "구름  : "+ data.clouds.all +"%"  + "<br>";  
+  		    	 message += "일출 : " + unix_timestamp(data.sys.sunrise) + "<br>";
+  		    	 message += "일몰 : " + unix_timestamp(data.sys.sunset) + "<br>";
+  		    	 
+  		    	 var resultDiv = document.getElementById('locationInfo'); 
+  		    	 resultDiv.innerHTML = message;
+  		     },
+  		     error:function(e){
+  		         console.log(e);
+  		     }
+  		 });
+  	}
+  	
+  
 </script>
 </html>

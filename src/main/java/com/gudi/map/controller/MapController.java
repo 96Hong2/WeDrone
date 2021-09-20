@@ -29,6 +29,7 @@ public class MapController {
 
 	@Autowired(required = false)
 	MapService service;
+	@Autowired com.gudi.map.service.ApiService APIservice;
 
 	// 은홍
 	// 해당 지역의 후기개수, 평점을 map.jsp에 돌려주는 메소드
@@ -209,5 +210,11 @@ public class MapController {
 			return service.rmFileUpdate(dto);
 		}
 	
-	
+	//은홍 //내위치마커 클릭한 곳의 날씨정보API를 가져오는 메소드
+	@RequestMapping(value ="/apiCall", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> apiCall(@RequestParam HashMap<String, String> params) {
+		logger.info("params : {}", params);
+		
+		return APIservice.apiCall(params);
+	}
 }
