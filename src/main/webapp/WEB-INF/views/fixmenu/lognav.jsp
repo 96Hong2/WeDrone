@@ -47,11 +47,11 @@
 				class="visually-hidden">unread messages</span></span>
 
 
-			<button type="button"
+			<button type="button" onclick="alarmListMove()"
 				class="btn btn-sm btn-#3c3c3c; position-relative">
-				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span
+				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span id="alarm-span"
 					class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-					class="visually-hidden">unread messages</span></span>
+					class="" id="alarm-span-count"></span></span>
 			</button>
 
 			<form class="d-flex">

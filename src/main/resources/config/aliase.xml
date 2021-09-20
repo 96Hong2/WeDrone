@@ -18,7 +18,7 @@
     </settings>
 
    <typeAliases>
-      <package name="com.gudi.board.dto"/>
+      <package name="com.gudi.board.dto"  />
       <package name="com.gudi.member.dto"/>
    </typeAliases>
 </configuration>

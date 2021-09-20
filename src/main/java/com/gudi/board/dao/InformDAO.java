@@ -27,6 +27,8 @@ public interface InformDAO {
 
 	public int alarmRead(Map<String, Object> map);
 
+	public InformDTO selectLsatInform(String userId);
+
 
 	
 }

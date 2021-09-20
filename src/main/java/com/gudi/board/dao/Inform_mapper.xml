@@ -52,7 +52,11 @@
 		UPDATE INFORM SET  ISREAD='Y' WHERE userid=#{userid} AND  INFORMID =#{informid}
 	</update>
 	
-	
+	<select id="selectLsatInform" resultType="com.gudi.board.dto.InformDTO">
+		SELECT R.* , (SELECT count(INFORMID) FROM INFORM  WHERE userid=#{userid} AND ISREAD='N' ) countInform  FROM (
+		SELECT  * FROM INFORM i WHERE userid=#{userid} AND ISREAD='N'   ORDER BY INFORMID DESC  
+		) R WHERE  ROWNUM = 1
+	</select>
 	
 	
 </mapper>

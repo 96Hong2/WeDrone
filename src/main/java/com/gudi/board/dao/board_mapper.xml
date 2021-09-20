@@ -22,7 +22,7 @@
 	</insert>
 	
 	
-	<select id="fbdetail" parameterType="String" resultType="board">
+	<select id="fbdetail" parameterType="String" resultType="com.gudi.board.dto.BoardDTO">
 		SELECT p.postid, p.title,p.userid, p.postcontent, p.postdate , p.userid, p.postfield, p.postdel, m.nickname
 		FROM post  p  JOIN MEMBERS m ON p.USERID =m.USERID WHERE postId = #{postId}  AND postDel = 'N'		
 	</select>
@@ -46,7 +46,7 @@
 	UPDATE post SET postDel = 'Y' WHERE postId = #{postId}
     </update>
 	
-	<insert id="fbcmtwrite" parameterType="board">
+	<insert id="fbcmtwrite" parameterType="com.gudi.board.dto.BoardDTO">
 	INSERT INTO comments(cmtId, cmtContent,postId,cmtField,userId) VALUES(comment_seq.NEXTVAL,#{cmtContent},#{postId},#{cmtField}, #{userId})
 	
 	</insert>
@@ -58,7 +58,7 @@
 	
 	
 	
-     <select id="list" resultType="board">
+     <select id="list" resultType="com.gudi.board.dto.BoardDTO">
 		SELECT * FROM
 (SELECT ROW_NUMBER() OVER (ORDER BY u.cmtdate DESC) rnum, u.*
 FROM (SELECT c.cmtId, c.cmtContent, c.cmtDate, c.userId, (SELECT nickName FROM members WHERE userId=c.userId) nickName 
@@ -82,7 +82,7 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 		UPDATE inform SET isRead='Y' WHERE userId=#{param1}
 	</update>
 	
-	<update id="fbcmtDel" parameterType="board" >
+	<update id="fbcmtDel" parameterType="com.gudi.board.dto.BoardDTO" >
 	UPDATE comments SET isDel = 'Y' WHERE cmtId = #{cmtId}
     </update>
 	

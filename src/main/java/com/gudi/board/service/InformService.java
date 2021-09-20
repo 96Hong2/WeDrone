@@ -54,6 +54,11 @@ public class InformService {
 	public int alarmRead(Map<String, Object> map) {
 		return dao.alarmRead(map);				
 	}
+
+
+	public InformDTO selectLsatInform(String userId) {
+		return dao.selectLsatInform(userId);
+	}
 	
 	
 	

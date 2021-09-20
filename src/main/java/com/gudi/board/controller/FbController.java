@@ -12,17 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import com.gudi.board.service.BoardService;
+import com.gudi.board.service.InformService;
 import com.gudi.util.PageMaker;
 
 
@@ -35,6 +33,8 @@ public class FbController {
 	@Autowired BoardService service;
 	
 	
+	@Autowired
+	InformService informService;
 	
 	@RequestMapping(value = "/fbList")
 	public String fbList(PageMaker pageMaker,  Model model, Map<String, Object> map, HttpServletRequest request) {
@@ -122,6 +122,29 @@ public class FbController {
 
 	
 
+		
+	@RequestMapping("/alarmAllRead")
+	public String alarmAllRead(Map<String, Object> map, HttpSession session) throws Exception {
+		map.put("userid", (String)session.getAttribute("loginId") );
+		informService.alarmAllRead(map);
+		return "redirect:alarmlist";
+	}
+		
+		
+	@RequestMapping("/alarmLinkMove")
+	public String alarmLinkMove(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
+		String postId=(String)map.get("postId");			
+		map.put("userid", (String)session.getAttribute("loginId") );
+		informService.alarmRead(map);
+		return "redirect:fbdetail?postId="+postId;
+	}
+	
+	@RequestMapping(value = "/alarmDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public int alarmDelete(@RequestParam Map<String, Object> map) {							
+		return service.alarmDelete(map);
+	}
+		
 		
 		
 		

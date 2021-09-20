@@ -11,6 +11,8 @@ public class InformDTO {
 	private Integer relatedId;
 	private String informContent;
 	private String isRead;
+	private int countInform;
+	
 	
 	public Integer getInformId() {
 		return informId;
@@ -55,13 +57,20 @@ public class InformDTO {
 		this.isRead = isRead;
 	}
 	
-	
+	public int getCountInform() {
+		return countInform;
+	}
+	public void setCountInform(int countInform) {
+		this.countInform = countInform;
+	}
 	@Override
 	public String toString() {
 		return "InformDTO [informId=" + informId + ", userId=" + userId + ", informDate=" + informDate
 				+ ", informField=" + informField + ", relatedId=" + relatedId + ", informContent=" + informContent
-				+ ", isRead=" + isRead + "]";
+				+ ", isRead=" + isRead + ", countInform=" + countInform + "]";
 	}
+
+
 	
 	
 	
