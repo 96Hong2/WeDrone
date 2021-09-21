@@ -295,6 +295,9 @@ ul.tabs li.current {
 					<div id="myLocationMKComment" style="margin:10px;text-align:center;">
 						<h6>지도를 클릭하여 기상정보를 확인하거나</h6>
 						<h6>내 비행위치를 공유할 수 있습니다.</h6>
+						<div style="text-align:center;">
+							<button id="callMyLocBtn" type='button' style='margin:10px;' class="btn btn-sm btn-outline-dark mx-1 me-1" onclick='javascript:callMyLocation()'>현재위치 보기</button>
+						</div>
 						<div id="locationInfo">클릭한 곳의 날씨정보</div>
 					</div>
 				</c:if>
@@ -1565,55 +1568,103 @@ function initMap(){
       } //end loadBookMarks()
       
       
-      //내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
-      function loadAPICall(){
-    	  console.log("loadAPICALL")
-    	  	
-    	  	var APImarker = new kakao.maps.Marker({
-    			position : map.getCenter()
-    		});
-    		
-    	  	APImarker.setMap(map); //마커 찍기
-    	  	markers.push(APImarker);
-    	  	
-    	  	
-    	 	// 현재 위치 불러오기
-    		// HTML5의 geolocation으로 사용할 수 있는지 확인
-    		if (navigator.geolocation) {
-    		    navigator.geolocation.getCurrentPosition(function(position) {
-    		        
-    		        var lat = position.coords.latitude,
-    		            lon = position.coords.longitude;
-    		        weather(lat, lon);
-    		        
-    		        var locPosition = new kakao.maps.LatLng(lat, lon);
-    		        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
-    				map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
-    		      });
-    		} else {//못 불러오면
-    			//경기도 임의의 중심점을 중심으로 마커 찍기
-    		    var locPosition = new kakao.maps.LatLng(37.21953563998351, 127.21194259376661);
-    	        weather(lat, lon);
-    	        
-    	        var locPosition = new kakao.maps.LatLng(lat, lon);
-    	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
-    			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
-    		}
+    //#내위치마커
+    //내위치마커
+  	var myLocMarker = new kakao.maps.Marker({
+    	position : map.getCenter()
+    });
+      
+    //내위치마커 설정
+    function setMyLocMK(position){
+    	console.log("내 위치 마커 설정! MKposition : ", position);
+    	
+    	var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+        	imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+        	imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-    		// 지도에서 클릭한 위도, 경도 가져오기 
-    		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+    	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
-    			var latlng = mouseEvent.latLng; //클릭한 위치 가져오기
-    			var lat = latlng.getLat(),
-    			lon = latlng.getLng();
-    			
-    			//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
-    			APImarker.setPosition(latlng); //해당 위치로 마커 이동
-    	        weather(lat, lon);
+    	myLocMarker.setPosition(position);
+    	myLocMarker.setImage(markerImage);
+    	myLocMarker.setMap(map);
+    }
+    
+    //클릭한 곳의 기상정보를 알려주고 내위치마커로 찍을 수 있게 하는 마커 
+    var APImarker = new kakao.maps.Marker({
+    	position : map.getCenter()
+    });
+
+    //내위치마커로 설정하기 인포윈도우
+    var myLocMKinfo = new kakao.maps.InfoWindow({zindex:1});
+    var myLocMKPosition = map.getCenter(); //내위치마커의 위치
+    
+    var infoContent = "";
+   	/*
+    '<button type="button" class="btn btn-primary" onclick="setMyLocMK(myLocMKPosition)">'
+    +'내위치마커로 설정'
+    +'</button>';
+ 	myLocMKinfo.setContent(infoContent);
+  	*/
+ 	
+    //현재 위치에 마커를 찍고 해당 마커를 중심으로 지도를 이동시키는 메소드
+    function callMyLocation(){
+		// HTML5의 geolocation으로 사용할 수 있는지 확인
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		        
+		        var lat = position.coords.latitude,
+		            lon = position.coords.longitude;
+		        weather(lat, lon);
+		        
+		        var locPosition = new kakao.maps.LatLng(lat, lon);
+		        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+		        infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+locPosition+')">'+'내위치마커로 설정'+'</button>';
+		        myLocMKinfo.setContent(infoContent);
+		        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
+				map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+		      });
+		} else {//못 불러오면
+			//경기도 임의의 중심점을 중심으로 마커 찍기
+		    var locPosition = new kakao.maps.LatLng(37.21953563998351, 127.21194259376661);
+	        weather(lat, lon);
+	        
+	        var locPosition = new kakao.maps.LatLng(lat, lon);
+	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+	        infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+locPosition+')">'+'내위치마커로 설정'+'</button>';
+	        myLocMKinfo.setContent(infoContent);
+	        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
+			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+		}
+    }
+    
+	//내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
+	function loadAPICall(){
+   		console.log("loadAPICALL")
+   	
+	   	APImarker.setMap(map); //마커 찍기
+	   	markers.push(APImarker);
+	    
+	    callMyLocation();
+
+	    // 지도에서 클릭한 위도, 경도 가져오기 
+	    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+	    	myLocMKinfo.close();
+	    	
+			var latlng = mouseEvent.latLng; //클릭한 위치 가져오기
+	    	var lat = latlng.getLat(),
+	    	lon = latlng.getLng();
+	    	
+	    	//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
+	    	APImarker.setPosition(latlng); //해당 위치로 마커 이동
+	   		weather(lat, lon);
+	    	
+	    	infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+latlng+')">'+'내위치마커로 설정'+'</button>';
+	        myLocMKinfo.setContent(infoContent);
+	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
+	    });
     		
-    		});
-    		
-   	} //end loadAPICall()
+	} //end loadAPICall()
       
     //일출, 일몰 시간 변환
   	function unix_timestamp(t) {
@@ -1711,17 +1762,18 @@ function initMap(){
   		     },
   		     dataType:'json',
   		     success:function(data){
-  		    	 var message = "현재위, 경도 : " + data.coord.lat + ", " + data.coord.lon + "<br>";
-  		    	 message += "현재온도 : "+ data.main.temp  + "°C" + "<br>";
-  		    	 message += "체감온도 : " + data.main.feels_like + "°C" + "<br>";
-  		    	 message += "현재습도 : "+ data.main.humidity + "%" + "<br>";
-  		    	 message += "날씨 : "+ data.weather[0].main + "<br>";
+  		    	 var message = "";
+  		    	 //message += "현재위, 경도 : " + data.coord.lat + ", " + data.coord.lon + "<br>";
+  		    	 message += "현재온도  &nbsp;"+ data.main.temp  + "°C" + "<br>";
+  		    	 message += "체감온도  &nbsp;" + data.main.feels_like + "°C" + "<br>";
+  		    	 message += "현재습도  &nbsp;"+ data.main.humidity + "%" + "<br>";
+  		    	 message += "날씨  &nbsp;"+ data.weather[0].main + "<br>";
   		    	 //message += "날씨 이미지 : "+ data.weather[0].icon + "<br>";
-  		    	 message += "풍속 : " + data.wind.speed + "m/s" + "<br>";
-  		    	 message += "풍향 : " + windDirection(data.wind.deg) + "<br>";
-  		    	 message += "구름  : "+ data.clouds.all +"%"  + "<br>";  
-  		    	 message += "일출 : " + unix_timestamp(data.sys.sunrise) + "<br>";
-  		    	 message += "일몰 : " + unix_timestamp(data.sys.sunset) + "<br>";
+  		    	 message += "풍속  &nbsp;" + data.wind.speed + "m/s" + "<br>";
+  		    	 message += "풍향  &nbsp;" + windDirection(data.wind.deg) + "<br>";
+  		    	 message += "구름   &nbsp;"+ data.clouds.all +"%"  + "<br>";  
+  		    	 message += "일출  &nbsp;" + unix_timestamp(data.sys.sunrise) + "<br>";
+  		    	 message += "일몰  &nbsp;" + unix_timestamp(data.sys.sunset) + "<br>";
   		    	 
   		    	 var resultDiv = document.getElementById('locationInfo'); 
   		    	 resultDiv.innerHTML = message;
@@ -1732,6 +1784,6 @@ function initMap(){
   		 });
   	}
   	
-  
+  	
 </script>
 </html>
