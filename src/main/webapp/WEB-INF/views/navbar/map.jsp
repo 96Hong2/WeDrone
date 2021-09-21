@@ -186,6 +186,15 @@ ul.tabs li.current {
 /* .overlay .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 50px;font-size: 12px;line-height: 50px;}
 .overlay .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 7px;}
 .overlay .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 50px;overflow: hidden;vertical-align: center;width: 6px;} */
+
+#myLocON{
+	padding : 10px;
+	background-color:rgba(255, 253, 253, 0.7);
+	position : absolute;
+	z-index : 2;
+	top : 10px;
+	right : 10px;
+}
 </style>
 </head>
 <title>드론</title>
@@ -380,7 +389,7 @@ ul.tabs li.current {
          </div>
 
          <!-- 지도 영역 -->
-         <div id="map"></div>
+         <div id="map"><div id='myLocON'></div></div>
 
       </div>
 
@@ -428,6 +437,9 @@ $(document).ready(function(){
    
    //리뷰리스트 숨기기
    $('#reviewListArea').hide();
+   
+   //내위치마커 ON 숨기기
+   $('#myLocON').hide();
    
    //탭 설정
    $('ul.tabs li').click(function(){
@@ -479,7 +491,10 @@ function initMap(){
     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
     deleteMarkers(markers);//마커 제거
-    marker.setMap(null);
+    marker.setMap(null); //후기작성마커 제거
+    APImarker.setMap(null); //내위치마커-날씨마커 제거
+    myLocMarker.setMap(null); //내위치마커 제거
+	myLocMKinfo.close(); //내위치마커 인포윈도우 제거
     
     map.setLevel(10, {anchor: new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)});
     map.setZoomable(true);
@@ -1580,13 +1595,11 @@ function initMap(){
     	position : map.getCenter()
     });
 
-    //내위치마커로 설정하기 인포윈도우
+    //내위치마커로 설정하기 버튼 인포윈도우
     var myLocMKinfo = new kakao.maps.InfoWindow({zindex:1});
-    //인포윈도우의 버튼에 걸린 onclick="setMyLocMK()" 설정
-    var infoContent = ""; 
-    //'<button type="button" class="btn btn-primary" onclick="setMyLocMK('+map.getCenter()+')">내위치마커로 설정</button>';
- 	//myLocMKinfo.setContent(infoContent);
-  	
+    //인포윈도우의 버튼 onclick="setMyLocMK()" 설정
+    var infoContent = "";
+    
       
     //내위치마커 설정 (내위치마커 설정 버튼(인포윈도우) 클릭 시 실행됨)
     function setMyLocMK(lat, lon){
@@ -1596,7 +1609,7 @@ function initMap(){
 	    	
 	    	//인포윈도우, API마커 제거
 	    	//APImarker.setVisible(false);
-	    	APImarker.setMap(map);
+	    	APImarker.setMap(null);
 	    	myLocMKinfo.close();
 	    	
 	    	var imageSrc1 = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
@@ -1609,12 +1622,25 @@ function initMap(){
 	    	myLocMarker.setPosition(new kakao.maps.LatLng(lat, lon));
 	    	myLocMarker.setImage(markerImage1);
 	    	myLocMarker.setMap(map);
-
-
+			
+	    	//내위치마커 ON표시 , OFF버튼 띄우기
+	    	var content = "<b>내위치마커 ON &nbsp;"
+	    	+"<button id='myLocMKOFF' type='button' onclick='javascrirpt:myLocMKOFF()' class='btn btn-sm btn-outline-dark mx-1 me-1'>"
+	    	+"내위치마커 OFF</button></b>";
+	    	$('#myLocON').empty();
+	    	$('#myLocON').append(content);
+	    	$('#myLocON').show();
+	    	
     	}else{//취소
     		return;
     	}
     	
+    }
+    
+    function myLocMKOFF(){
+    	alert("내위치마커 OFF");
+    	$('#myLocON').hide();
+    	myLocMarker.setMap(null);
     }
     
  	
@@ -1630,6 +1656,7 @@ function initMap(){
 		        
 		        var locPosition = new kakao.maps.LatLng(lat, lon);
 		        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+		        APImarker.setMap(map);
 		        
 		        //현재위치를 내위치마커설정 버튼에 걸린 onclick이벤트의 매개변수로 연결
 		        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
@@ -1643,6 +1670,7 @@ function initMap(){
 	        weather(lat, lon);
 	        
 	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
+	        APImarker.setMap(map);
 	        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
 	        myLocMKinfo.setContent(infoContent);
 	        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
