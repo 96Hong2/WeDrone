@@ -123,6 +123,7 @@ public class FbController {
 	
 
 		
+	//알림을 한번에 읽을 수 있는 기능
 	@RequestMapping("/alarmAllRead")
 	public String alarmAllRead(Map<String, Object> map, HttpSession session) throws Exception {
 		map.put("userid", (String)session.getAttribute("loginId") );
@@ -130,7 +131,8 @@ public class FbController {
 		return "redirect:alarmlist";
 	}
 		
-		
+	
+	//알림에 링크를 줘서 상세보기로 들어가는 기능
 	@RequestMapping("/alarmLinkMove")
 	public String alarmLinkMove(@RequestParam Map<String, Object> map, HttpSession session) throws Exception {
 		String postId=(String)map.get("postId");			
@@ -139,6 +141,7 @@ public class FbController {
 		return "redirect:fbdetail?postId="+postId;
 	}
 	
+	//알림 삭제
 	@RequestMapping(value = "/alarmDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public int alarmDelete(@RequestParam Map<String, Object> map) {							
