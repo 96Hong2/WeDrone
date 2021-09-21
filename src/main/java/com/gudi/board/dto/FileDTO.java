@@ -11,6 +11,7 @@ public class FileDTO {
 	private String imgField;
 	private String postId;
 	private String imgPath;
+	private String ext;
 	
 	public int getImgId() {
 		return imgId;
@@ -48,6 +49,14 @@ public class FileDTO {
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
 	}
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+	
+	
 	
 	
 }

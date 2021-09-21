@@ -84,6 +84,13 @@ body,html {
  margin-top: 30px;
   margin-bottom: 20px;
 }
+.span-file a{
+ text-decoration: none;
+ color: black;
+}
+input[name=file]{
+	margin-bottom: 10px; 
+}
 </style>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
@@ -103,16 +110,18 @@ body,html {
 	<div class="wrap">
 
 	 
-		<div class="col-6 center-block" style="margin-right:auto; margin-left:auto">				
-<form action="fbwrite" method="post">
+		<div class="row">
+				<div class="col-md-12" style="margin-top: 30px">
+		<form action="fbwrite" method="post" enctype="multipart/form-data"> 		
+
 							<h1 class="h1-title">자유 게시판 글쓰기</h1>
-<table> <!-- get은 보안상의 문제도 있지만 내용을 보내는데에 한계가 있다. -->
+<table style="width: 80%; margin-left: auto; margin-right: auto;"> <!-- get은 보안상의 문제도 있지만 내용을 보내는데에 한계가 있다. -->
       
       <tr>
-         <th>제목</th>
-         <td> <!-- <div class="form-floating"> -->
+         <th width="15%">제목</th>
+         <td width="85%"> <!-- <div class="form-floating"> -->
          <div class="">
-		  <input type="text" name="title" required class="form-control" id="floatingInput" placeholder="Title" >
+		  <input type="text" name="title" required class="form-control" id="floatingInput" placeholder="Title" maxlength="20" >
 		  <!-- <label for="floatingInput">Title</label> --> 
 		</div>
          </td>
@@ -127,23 +136,29 @@ body,html {
           </div>
     </div>
             -->
-            <textarea id="postContent" name="postContent"  name="postContent"  rows="10" cols="" style="width: 100%"></textarea> 
+            <textarea id="postContent" name="postContent"    rows="10"  class="form-control"  style="width: 100%" ></textarea> 
          </td>
       </tr>
+      
+      <!--  
       <tr>
-         <td colspan="2">
-            <input type="button" class = "btn btn-dark" value="파일업로드" onclick="fileUp()"/>
+      	<td> <button type="button"  class="btn btn-dark" onclick="addFile()">파일추가</button></td>
+         <td id="file-add-td">          
          </td>
       </tr>
-      <tr>
+	-->
+      <tr> 
          <td colspan="2">
          <input type="button"  class = "btn btn-dark" onclick="location.href='${pageContext.request.contextPath}/fbList'" value="리스트"/>
          <button type="button"  class = "btn btn-dark" id="save">저장</button>
+         <button type="reset"  class = "btn btn-dark" id="save">취소</button>
          </td>
       </tr>
    </table>
    </form>
 		</div>
+		</div>
+		
 		</div>
 
 		
@@ -152,17 +167,24 @@ body,html {
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
 	crossorigin="anonymous">
-	
 </script>
-		
-		
+
+<!--  <script src="//cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+ -->
+	 <script src="${path}/resources/ckeditor/ckeditor.js"></script>
 		<%@ include file="./common/footer.jsp" %>
 		
 		
 		</body>
 		<!-- 들어갈 내용 -->
+	
 		<script>
-
+$(function(){
+	CKEDITOR.replace( 'postContent',{
+		height:350,
+		filebrowserUploadUrl:'${path}/ckUpload'				
+	} );
+});
 /*
      <a href='#' id ='${path}' onclick='del(this)'/>
 	  <img src='${path}' width='250'/>
@@ -174,17 +196,17 @@ body,html {
 		   window.open('fbuploadForm','file upload','width=400, height=100');
 		}
 	  
-	  $("#save").click(function(){
-		var loginId='${loginId}';		
-		if(loginId==""){
-			alert("로그인후 이용 가능합니다.");
-			return;
-		}
+	 // $("#save").click(function(){
+		//var loginId='${loginId}';		
+		//if(loginId==""){
+		//	alert("로그인후 이용 가능합니다.");
+		//	return;
+		//}
 		  
 		  //a 태그 하위에 b 태그 삭제
-		  $("#editable a").find("b").remove();
+		//  $("#editable a").find("b").remove();
 		  //a 태그 자체를 삭제? a 태그 하위에 onclick 만 삭제
-		  $("#editable a").removeAttr("onclick");
+		//  $("#editable a").removeAttr("onclick");
 		  
 	    //저장된 파일 목록은 어떻게?
 	   //1. UI 를 이용하여
@@ -196,8 +218,38 @@ body,html {
 	
 	   //div태그 사이에 있는 내용이기에 html로 값 받아옴 
 	   //$("#postContent").val($("#editable").html());
-	   $("form").submit();
-})
+	  // $("form").submit();
+	//});
+	  
+	  
+	  $("#save").click(function(){
+		var loginId='${loginId}';		
+		if(loginId==""){
+			alert("로그인후 이용 가능합니다.");
+			return;
+		}
+			
+		var title=$("#floatingInput").val();
+		//var postContent=$("#postContent").val();
+		var postContent=CKEDITOR.instances.postContent.getData();
+		if(title==""){
+			alert("제목을 입력하세요.");
+			$("#floatingInput").focus();
+			return;
+		}
+		
+		if(postContent==""){
+			alert("내용을 입력하세요.");
+			$("#postContent").focus();
+			return;			
+		}
+		
+		
+	    $("form").submit();
+	});	
+	  
+
+	  
 
 function del(elem){
 	//삭제 요청
@@ -225,5 +277,8 @@ function del(elem){
 	  });
 }
    
+
 </script>
+
+
 </html>

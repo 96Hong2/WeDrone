@@ -29,6 +29,8 @@ public interface InformDAO {
 
 	public InformDTO selectLsatInform(String userId);
 
+	public void fileWrite(Map<String, Object> map);
+
 
 	
 }

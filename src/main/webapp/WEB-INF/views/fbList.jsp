@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap">
 <!-- 아이콘 -->
 <link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link href="${path}/resources/css/main.css?ver=99" rel="stylesheet">
 
@@ -118,9 +119,16 @@ nav {
 						<c:forEach items="${list}" var="row" varStatus="status">
 							<tr onclick="detailMove('${row.POSTID}')">
 								<th scope="row">${totalCount-row.RN +1}</th>
-								<td><a href="${pageContext.request.contextPath}/fbdetail?postId=${row.POSTID}">${row.TITLE}</a></td>
+								<td><a href="${pageContext.request.contextPath}/fbdetail?postId=${row.POSTID}" >${row.TITLE}</a>
+								&nbsp;&nbsp;&nbsp;
+								<small>
+								 <c:if test="${row.CMTCOUNT >0}">
+								    <i class="fa fa-comments" title="댓글" ></i>&nbsp;${row.CMTCOUNT}
+								 </c:if>
+								 </small>
+								</td>
 								<td>${row.NICKNAME}</td>
-								<td><fmt:formatDate value="${row.POSTDATE}" pattern="yyyy-mm-dd ss:hh:MM"/></td>
+								<td>${row.POSTDATE}</td>
 							</tr>	
 						</c:forEach>						
 						</tbody>

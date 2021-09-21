@@ -11,7 +11,7 @@
 		useGeneratedKeys="true"
 		keyColumn="postId"
 		keyProperty="postId"
-		parameterType="board">
+		parameterType="com.gudi.board.dto.BoardDTO">
 		INSERT INTO post(postId,title,postContent,postField,userId) 
 		VALUES(post_seq.NEXTVAL,#{title},#{postContent},'post',#{userId})
 	</insert>
@@ -29,7 +29,7 @@
 	
 	
 	<select id="fileList" parameterType="String" resultType="file">
-		SELECT imgId, oriFileName, newFileName, postId 
+		SELECT imgId, oriFileName, newFileName, postId
 			FROM image WHERE postId = #{postId} ORDER BY imgId
 	</select>
 	
@@ -38,9 +38,7 @@
 	  WHERE postId = #{postId}
 	</update>
 	
-	
-	
-	
+
 	
 	<update id="fbdel" parameterType="String">
 	UPDATE post SET postDel = 'Y' WHERE postId = #{postId}
@@ -98,12 +96,16 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
         <![CDATA[    
         SELECT * FROM
         (
-            SELECT rn, postid , title, postdate, userid, postfield, postdel, nickname FROM 
+            SELECT rn, postid , title, TO_CHAR(postdate ,'YYYY-MM-DD AMHH:MI:SS') AS postdate , userid, postfield, postdel, nickname, 
+            	(SELECT count(CMTID) FROM COMMENTS WHERE  ISDEL='N' AND POSTID=RE.postid ) CMTCOUNT,
+        		(SELECT count(IMGID) FROM IMAGE WHERE   POSTID=RE.postid ) IMAGECOUNT   
+        		            
+            FROM 
            	(
             	SELECT  rownum AS rn , A.postid, A.title, A.postdate, A.userid, A.postfield, A.postdel , m.nickname FROM 
             		( SELECT * FROM post   WHERE postdel ='N' ORDER BY postid DESC ) A   JOIN  members m             	
             	ON a.userid =m.userid                
-          	)ORDER  BY rn ASC 
+          	) RE ORDER  BY rn ASC 
 		)		
 		WHERE rn BETWEEN  #{pageBegin} AND #{pageEnd}                 
         ]]>
@@ -141,5 +143,10 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 	<delete id="alarmDelete">
 		DELETE FROM INFORM WHERE INFORMID=#{informid}	
 	</delete>
+	
+		<delete id="fileDelete">
+		DELETE FROM IMAGE WHERE IMGID=#{imgid}		
+	</delete>
+	
 	
 </mapper>

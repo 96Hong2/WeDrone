@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.board.dao.BoardDAO;
@@ -39,24 +40,25 @@ InformDAO informDAO;
 Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 //자유 게시판 서비스 입니다~~
-	@Value("#{config['Globals.filePath']}")String root;
+	@Value("#{config['Globals.filePath']}")
+	String root;
 	
-	
-
 
 	//게시판 글쓰기//지윤쓰
 	@Transactional
-	public ModelAndView fbwrite(HashMap<String, String> params, HttpSession session) {
+	public BoardDTO fbwrite(BoardDTO  dto, HttpSession session) {
+		//상대 경로 업로드
+		root=session.getServletContext().getRealPath("/")+"resources" +File.separator+"upload"+File.separator;
+		File file=new File(root);
+		if(!file.isDirectory()) {
+			file.mkdir();
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		String page = "redirect:/fbwriteForm";		
 		HashMap<String, String> fileList 
 			= (HashMap<String, String>) session.getAttribute("fileList");
 		
-		
-		BoardDTO dto = new BoardDTO();
-		dto.setTitle(params.get("title"));
-		dto.setPostContent(params.get("postContent"));
 		
 		//session.setAttribute("loginNickName","jiyun");//테스트 용
 		String loginNickName= (String) session.getAttribute("loginNickName");
@@ -84,43 +86,55 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		}				
 		mav.setViewName(page);
 		
-		return mav;
+		return dto;
 	}
 
 	//파일 업로드//지윤쓰
-	public ModelAndView fbfileUpload(MultipartFile file, HttpSession session) {
+	public ModelAndView fbfileUpload(List<MultipartFile> multipartFile, HttpSession session,Map<String, Object> map) {
+		//상대 경로 업로드
+		root=session.getServletContext().getRealPath("/")+"resources" +File.separator+"upload"+File.separator;
+		File rootDir=new File(root);
+		if(!rootDir.isDirectory()) {
+			rootDir.mkdir();
+		}
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("fbuploadForm");
 		
-		//1. 파일명 추출
-		String fileName = file.getOriginalFilename();		
-		//2. 신규 파일명
-		String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));
-				
-		//3.파일 다운로드
-		try {
-			byte[] bytes = file.getBytes();
-			//이 저장 방법은 java 7 부터 가능(java.nio)
-			Path filePath = Paths.get(root+newFileName);//경로 지정
-			Files.write(filePath, bytes);//저장
-			//4. 저장된 파일 호출 경로 추출
-			String path = "/photo/"+newFileName;			
-			logger.info("upload path : "+path);		
-			//5. mav 에 저장하여 전송
-			mav.addObject("path", path);	
-			
-			//업로드된 파일목록을 세션에 저장
-			HashMap<String, String> fileList 
-				= (HashMap<String, String>) session.getAttribute("fileList");
-			fileList.put(newFileName, fileName);
-			logger.info("업로드된 파일 수 : "+fileList.size());
-			session.setAttribute("fileList", fileList);
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		// 파일이 있을때 탄다.
+	    if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+		
+				for (MultipartFile file : multipartFile) {
+		
+						
+					//1. 파일명 추출
+					String fileName = file.getOriginalFilename();
+					if(fileName!=null && !fileName.equals("")) {
+						//2. 신규 파일명
+						String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));
+								
+						//3.파일 다운로드
+						try {
+							byte[] bytes = file.getBytes();
+							//이 저장 방법은 java 7 부터 가능(java.nio)
+							Path filePath = Paths.get(root+newFileName);//경로 지정
+							Files.write(filePath, bytes);//저장
+							String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+							map.put("oriFileName", fileName);
+							map.put("newFileName", newFileName);
+							map.put("imgField", "post");
+							map.put("imgPath", "upload");
+							map.put("ext", ext.toUpperCase());
+							informDAO.fileWrite(map);
+							
+							
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}				
+				}		
+	    }
 		return mav;
 	}
 
@@ -174,18 +188,15 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				dao.fbfileupdate(file);
 				
 				
-				
+				ArrayList<FileDTO> fileList = dao.fileList(postId);
+				mav.addObject("fileList",fileList);
 				
 				return mav;
 			}
 
 			//게시판 수정//지윤쓰
-			public ModelAndView fbupdate(HashMap<String, String> params, HttpSession session) {
-				ModelAndView mav = new ModelAndView();
-				dao.fbupdate(params);
-				logger.info("params"+params );
-				mav.setViewName("redirect:/fbdetail?update=ok&postId="+params.get("postId"));		
-				return mav;
+			public int fbupdate(BoardDTO params, HttpSession session) {				
+				return dao.fbupdate(params);		
 			}
 
 			//게시판 삭제//지윤쓰
@@ -316,6 +327,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 
 			public int alarmDelete(Map<String, Object> map) {
 				return dao.alarmDelete(map);
+			}
+
+			public int fileDelete(String imgId) {
+				return dao.fileDelete(imgId);
 			}
 
 		

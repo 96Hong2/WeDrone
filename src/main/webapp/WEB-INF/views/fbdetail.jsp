@@ -21,12 +21,16 @@
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="${path}/resources/css/main.css?ver=95" rel="stylesheet">
 		
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/jquery.twbsPagination.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"> </script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 <style>
 /* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
 .wrap {
@@ -115,6 +119,10 @@ table {
 .td-180{
 	padding-left: 120px  !important;
 }
+.span-file a{
+ text-decoration: none;
+ color: black;
+}
 </style>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
  
@@ -150,6 +158,10 @@ table {
 			<td>${post.postId}</td>
 		</tr>
 		<tr>
+			<th>제목</th>
+			<td>${post.title}</td>
+		</tr>
+		<tr>
 			<th>닉네임</th>
 			<td>${post.nickName} (${post.userId})</td>
 		</tr>
@@ -161,8 +173,33 @@ table {
 			<th>내용</th>
 			<td>${post.postContent}</td>
 		</tr>
-		
-		
+	<!--  
+		<tr>
+			<th>첨부파일</th>
+			<td>
+			<c:forEach items="${fileList}" var="row" varStatus="status">			
+				<c:choose>
+					<c:when test="${(row.ext eq 'GIF') or  (row.ext eq 'JPEG') or (row.ext eq 'JPG') or (row.ext eq 'PNG')}">
+						<span class="span-file">
+							<a href="${path}/resources/upload/${row.newFileName}" data-fancybox data-caption="${row.oriFileName}">
+							<img src="${path}/resources/upload/${row.newFileName}" width="80" height="80"  class="img-responsive img-thumbnail">
+							</a>						
+						<a href="${path}/common/download.do?fileName=${row.newFileName}" ><i class="fa fa-download" ></i>&nbsp;${row.oriFileName}</a>
+						</span>
+					</c:when>
+					<c:otherwise>
+						<span class="span-file">
+							<a href="${path}/common/download.do?fileName=${row.newFileName}" ><i class="fa fa-save" ></i>&nbsp;${row.oriFileName}</a>
+						</span>
+					</c:otherwise>
+				</c:choose>
+				&nbsp;&nbsp;&nbsp;
+				<c:if test="${not status.last }">|</c:if>								
+				&nbsp;&nbsp;&nbsp;
+			</c:forEach>
+			</td>
+		</tr>
+		-->
 		<tr>
 			<td colspan="2">
 				<c:choose>
@@ -178,14 +215,14 @@ table {
 			<c:choose>			
 				<c:when test="${post.userId eq loginId}">
 					<button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
-					<button onclick="location.href='./fbdel?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>	
+					<button onclick="postDelete()"    class = "btn btn-dark" >삭제</button>	
 				</c:when>
 				<c:otherwise>
 					<button onclick="alert('작성자만 수정 가능합니다.')" class = "btn btn-dark" >수정</button>
 					<button onclick="alert('작성자만 삭제 가능합니다.')" class = "btn btn-dark" >삭제</button>	
 				</c:otherwise>
 			</c:choose>				
-		
+
 			</td>
 		</tr>
 	</table>
@@ -216,7 +253,7 @@ table {
 							<div class="d-flex align-items-center">
 								<div class="form-floating flex-grow-1 px-2">
 									<textarea class="form-control" placeholder="Leave a comment here"
-										name="cmtContent" id="cmtContent"
+										name="cmtContent" id="cmtContent"  maxlength="150"
 										style="height: 100px; resize: none;"></textarea>
 									<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 									<label for="cmtContent">로그인 후 이용해주세요.</label>
@@ -288,7 +325,7 @@ table {
 				</div>				
 				<div class="modal-body">
 				 <form id="frm-comment" >
-					<textarea rows="5" cols="" style="width: 100%" id="commnet-update-cmtcontent" name="cmtcontent"></textarea>
+					<textarea rows="5" cols="" style="width: 100%" id="commnet-update-cmtcontent" name="cmtcontent"  maxlength="150"></textarea>
 				 	<input type="hidden" id="commnet-update-cmtId"  name="cmtId">
 				 </form>
 				</div>
@@ -325,6 +362,12 @@ table {
 
 
 <script>
+function postDelete(){
+	if(confirm("정말 삭제 하시겠습니까?")){
+	location.href='./fbdel?postId=${post.postId}'
+	}			
+}
+
 function commentDelete(cmtId){	
 	var postId=$("#postId").val();
 	if(confirm("정말 삭제 하시겠습니까?")){

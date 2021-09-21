@@ -22,7 +22,7 @@ public interface BoardDAO {
 	ArrayList<FileDTO> fileList(String postId);
 
 
-	int fbupdate(HashMap<String, String> params);
+	int fbupdate(BoardDTO params);
 
 	int fbdel(String postId);
 
@@ -55,6 +55,8 @@ public interface BoardDAO {
 	List<String> alarmSendUserList(BoardDTO dto);
 
 	int alarmDelete(Map<String, Object> map);
+
+	int fileDelete(String imgId);
 
 	
 

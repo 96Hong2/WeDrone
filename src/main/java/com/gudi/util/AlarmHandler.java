@@ -118,6 +118,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		userSessionsMap.remove(session.getId());
 		//소켓 연결이 끊겼을 때 전체 접속자 아이디 해체 저리한다.
 		sessions.remove(session);
+		//CloseStatus 이게 뭔지 찾아봐도 알수가 없어서요 ㅜㅜ 소켓이 닫혀 있는지 상태 확인 입니다.아아 감
 	}
 	
 

@@ -22,7 +22,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/"/>
 		<beans:property name="suffix" value=".jsp"/>
 	</beans:bean>
-	
+	<context:component-scan base-package="com.gudi/**" />
 	<context:component-scan base-package="com.gudi.board" />
 	<context:component-scan base-package="com.gudi.member" />
 	<context:component-scan base-package="com.gudi.map" />
