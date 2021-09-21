@@ -53,10 +53,12 @@ import com.gudi.board.service.InformService;
  * 
  *  4.footer.jsp
  */
-@Component
+@Component//<Bean class=“…”/>와 동일한 표현이다
+//@Component 어노테이션을 이용하면 Bean Configuration 파일에 Bean을 따로 등록하지 않아도 사용할 수 있다.
+//빈 등록자체를 빈 클래스 자체에다가 할 수 있다는 의미이다.//@Autowired 비슷한 기능
 public class AlarmHandler extends TextWebSocketHandler  {
 		
-	// 로그인 한 전체
+	// 로그인 한 전체의 세션 값을 list로 가져온다.
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	// 1대1
 	Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
@@ -66,6 +68,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 	
 	
 
+	 // afterConnectionEstablished : 웹소켓이 연결되면 호출되는 함수
 	// 서버에 접속이 성공 했을때
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -94,7 +97,8 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		InformDTO selectLsatInform= informService.selectLsatInform(userId);
 		
 		WebSocketSession webSocketSession = userSessionsMap.get(userId);
-				
+		
+		//json으로 바꾸기 위해 gson 객체화//서버에 복잡한 데이터를 편리하게 보내기 위해 json으로 변환
 		Gson gson = new Gson();
 		//1.해당 유저 알림데이터 전체 가져오기일 경우 JSON 으로 전환 후 TextMessage 변환
 		//TextMessage textMessage = new TextMessage(gson.toJson(getInform));		
@@ -126,9 +130,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		이렇게 세션값을 가져오나 여기 웹소켓에서는 세션값을 WebSocketSession session  형태로 가져옵니다.
 		따라서 , 다음과 코드 형태로 세션값을 가져옵니다. 
 */		    
-		
-		
-		Map<String, Object> httpSession = session.getAttributes();
+        Map<String, Object> httpSession = session.getAttributes();
 		String loginId = (String) httpSession.get("loginId");		
 		if (loginId == null) {
 			System.out.println("로그인 loginID 가 널일경우  :" + session.getId());

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.gudi.board.dto.BoardDTO;
 import com.gudi.board.dto.InformDTO;
 
-@Repository
+@Repository//handler를 사용할 수 있게 repository 설정
 public interface InformDAO {
 
 	public Integer countInform(String userid);

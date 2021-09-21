@@ -50,7 +50,8 @@ function connectWs(){
 	    console.log("ReceivMessage : " + data + "\n");
 		if(data!="null"){
 		    const obj =JSON.parse(data);
-			
+			//변환할 문자열이 유효한 json이 아닐수 있으므로 객체 생성
+		    
 			//멀티 알림일 경우
 			//multiAlarmData(obj);
 			
