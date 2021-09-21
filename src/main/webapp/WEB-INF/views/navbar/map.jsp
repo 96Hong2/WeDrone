@@ -1568,44 +1568,55 @@ function initMap(){
       } //end loadBookMarks()
       
       
-    //#내위치마커
+    //#내위치마커 ------------------------------------------------------------------------------------------------------------
+    
     //내위치마커
   	var myLocMarker = new kakao.maps.Marker({
-    	position : map.getCenter()
+    	position : new kakao.maps.LatLng(37.21953563998351, 127.21194259376661)
     });
-      
-    //내위치마커 설정
-    function setMyLocMK(position){
-    	console.log("내 위치 마커 설정! MKposition : ", position);
-    	
-    	var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-        	imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-        	imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-
-    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-    	myLocMarker.setPosition(position);
-    	myLocMarker.setImage(markerImage);
-    	myLocMarker.setMap(map);
-    }
     
-    //클릭한 곳의 기상정보를 알려주고 내위치마커로 찍을 수 있게 하는 마커 
+    //API마커 : 클릭한 곳의 기상정보를 알려주고 내위치마커로 찍을 수 있게 하는 마커 
     var APImarker = new kakao.maps.Marker({
     	position : map.getCenter()
     });
 
     //내위치마커로 설정하기 인포윈도우
     var myLocMKinfo = new kakao.maps.InfoWindow({zindex:1});
-    var myLocMKPosition = map.getCenter(); //내위치마커의 위치
+    //인포윈도우의 버튼에 걸린 onclick="setMyLocMK()" 설정
+    var infoContent = ""; 
+    //'<button type="button" class="btn btn-primary" onclick="setMyLocMK('+map.getCenter()+')">내위치마커로 설정</button>';
+ 	//myLocMKinfo.setContent(infoContent);
+  	
+      
+    //내위치마커 설정 (내위치마커 설정 버튼(인포윈도우) 클릭 시 실행됨)
+    function setMyLocMK(lat, lon){
+    	
+    	if (confirm("여기로 내위치마커를 지정할까요?") == true){//확인
+	    	console.log("내 위치 마커 설정! lat/lon : "+lat+" / "+lon);
+	    	
+	    	//인포윈도우, API마커 제거
+	    	//APImarker.setVisible(false);
+	    	APImarker.setMap(map);
+	    	myLocMKinfo.close();
+	    	
+	    	var imageSrc1 = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+	        	imageSize1 = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+	        	imageOption1 = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	
+	    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+	    	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1);
+	
+	    	myLocMarker.setPosition(new kakao.maps.LatLng(lat, lon));
+	    	myLocMarker.setImage(markerImage1);
+	    	myLocMarker.setMap(map);
+
+
+    	}else{//취소
+    		return;
+    	}
+    	
+    }
     
-    var infoContent = "";
-   	/*
-    '<button type="button" class="btn btn-primary" onclick="setMyLocMK(myLocMKPosition)">'
-    +'내위치마커로 설정'
-    +'</button>';
- 	myLocMKinfo.setContent(infoContent);
-  	*/
  	
     //현재 위치에 마커를 찍고 해당 마커를 중심으로 지도를 이동시키는 메소드
     function callMyLocation(){
@@ -1619,7 +1630,9 @@ function initMap(){
 		        
 		        var locPosition = new kakao.maps.LatLng(lat, lon);
 		        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
-		        infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+locPosition+')">'+'내위치마커로 설정'+'</button>';
+		        
+		        //현재위치를 내위치마커설정 버튼에 걸린 onclick이벤트의 매개변수로 연결
+		        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
 		        myLocMKinfo.setContent(infoContent);
 		        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
 				map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
@@ -1629,9 +1642,8 @@ function initMap(){
 		    var locPosition = new kakao.maps.LatLng(37.21953563998351, 127.21194259376661);
 	        weather(lat, lon);
 	        
-	        var locPosition = new kakao.maps.LatLng(lat, lon);
 	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
-	        infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+locPosition+')">'+'내위치마커로 설정'+'</button>';
+	        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
 	        myLocMKinfo.setContent(infoContent);
 	        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
 			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
@@ -1647,7 +1659,7 @@ function initMap(){
 	    
 	    callMyLocation();
 
-	    // 지도에서 클릭한 위도, 경도 가져오기 
+	    //지도 클릭 시 : 클릭한 위치의 기상API가져오기 + 내위치마커설정 버튼의 위치 매개변수 설정
 	    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	    	myLocMKinfo.close();
 	    	
@@ -1657,9 +1669,10 @@ function initMap(){
 	    	
 	    	//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
 	    	APImarker.setPosition(latlng); //해당 위치로 마커 이동
+	    	APImarker.setMap(map);
 	   		weather(lat, lon);
 	    	
-	    	infoContent = '<button type="button" class="btn btn-primary" onclick="setMyLocMK('+latlng+')">'+'내위치마커로 설정'+'</button>';
+	    	infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
 	        myLocMKinfo.setContent(infoContent);
 	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
 	    });
