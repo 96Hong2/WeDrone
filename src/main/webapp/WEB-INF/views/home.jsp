@@ -90,14 +90,14 @@
 		</button>
 	</div>
 	<!-- 퀵메뉴 -->
-	<div class="position-relative">
+	<%-- <div class="position-relative">
 		<div id="quick" class="position-fixed bottom-0 end-0">
 			<a href="${path}/confusion"
 				class="rounded-pill btn btn-success fw-bold"> <i
 				class="bi bi-info-circle"></i> 실시간 정보
 			</a>
 		</div>
-	</div>
+	</div> --%>
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="fixmenu/msgbar.jsp" />
 	</c:if>
