@@ -445,8 +445,7 @@ $(document).ready(function(){
    $('#reviewListArea').hide();
    
    //내위치마커 ON 표시
-   var myLocON = sessionStorage.getItem("myLocON"); 
-   if(myLocON == null){
+   if("${sessionScope.myLocON}" == ""){
 	   $('#myLocON').hide();
    }
    
@@ -1612,7 +1611,81 @@ function initMap(){
     
     //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
     function callMyLocMK(){
-    	console.log("callMyLocMK 서버에서 모든 내위치마커 불러오기");
+    	console.log("서버에서 모든 내위치마커 불러오기");
+    	
+    	var loginId = "${sessionScope.loginId}";
+
+    	console.log("loginId : ", loginId);
+    	
+    	$.ajax({
+		     url:'callMyLocMK',
+		     type:'post',
+		     dataType:'json',
+		     success:function(data){
+		    	console.log("내위치마커 가져오기 : ", data.list);
+		   		var list = data.list;
+		   		
+		    	list.forEach(function(locMK, index){
+		    		console.log("**locMK 번호 : ",locMK.myLocId);
+		    		console.log("**내위치마커 생성 loginId/locMK.userId : "+loginId+"/"+locMK.userId);
+		    		if(loginId == locMK.userId){
+		    			console.log("내위치마커 생성");
+		    			//만약 로그인아이디와 내위치마커의 유저아이디가 같다면 내위치마커로 생성
+		    			myLocMarker = new kakao.maps.Marker({
+		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
+		    			});
+		    			var imageSrc2 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
+			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
+				    	myLocMarker.setImage(markerImage2);
+				    	myLocMarker.setMap(map);
+				    	
+				    	markers.push(myLocMarker);
+		    		}else{
+		    			//다른 사람들의 위치마커
+		    			var locMarker = new kakao.maps.Marker({
+		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
+		    			});
+		    			var imageSrc2 = 'resources/img/otherMK2.png', // 마커이미지의 주소입니다    
+			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
+				    	locMarker.setImage(markerImage2);
+				    	
+	                    /*
+	                    kakao.maps.event.addListener(locMarker, 'mouseover', function() {
+	                         //마우스 오버 시 닉네임, 상세주소 인포윈도우 뜸
+	                         locMK.nickName,
+	                         locMK.address
+	                     });
+	                    
+	                    kakao.maps.event.addListener(locMarker, 'mouseout', function() {
+	                         
+	                     });
+				    	*/
+				    	
+				    	//클릭 시 메시지 보내기
+	                    kakao.maps.event.addListener(locMarker, 'click', function(e) {
+	                    	if (confirm(locMK.nickName+" 님에게 메시지를 보내겠습니까?") == true){//확인
+	                    		alert(locMK.nickName+"님에게 메시지 보내기!");
+	                    	}else{
+	                    		return;
+	                    	}
+	                     });
+				    	
+	                    locMarker.setMap(map);
+				    	markers.push(locMarker);
+				    	
+		    		}
+		    		
+		    	})
+		    	
+		     },
+		     error:function(e){
+		         console.log(e);
+		     }
+		 });
     }
     
     //내위치마커 설정 (내위치마커 설정 버튼(인포윈도우) 클릭 시 실행됨)
@@ -1626,7 +1699,6 @@ function initMap(){
 	    	APImarker.setMap(null);
 	    	myLocMKinfo.close();
 	    	
-	    	
 	    	$.ajax({
 	  		     url:'setMyLocMK',
 	  		     type:'post',
@@ -1637,36 +1709,27 @@ function initMap(){
 	  		     },
 	  		     dataType:'json',
 	  		     success:function(data){
+	  		    	console.log("setMyLocMK : ", data);
 	  		    	
-	  		    	alert("setMyLocMK 성공여부 : ", data);
-	  		    	//세션에 myLocON 저장
+	  		    	//내위치마커 생성
+	  		    	var imageSrc1 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
+		        	imageSize1 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+		        	imageOption1 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		
+			    	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1);
+					
+			    	myLocMarker.setPosition(new kakao.maps.LatLng(lat, lon));
+			    	myLocMarker.setImage(markerImage1);
+			    	myLocMarker.setMap(map);
+					
+			    	//내위치마커 ON표시 , OFF버튼 띄우기
+			    	$('#myLocON').show();
+			    	callMyLocMK();
 	  		     },
 	  		     error:function(e){
 	  		         console.log(e);
 	  		     }
 	  		 });
-	    	
-	    	
-	    	var imageSrc1 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
-	        	imageSize1 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
-	        	imageOption1 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-	
-	    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-	    	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1);
-	
-	    	myLocMarker.setPosition(new kakao.maps.LatLng(lat, lon));
-	    	myLocMarker.setImage(markerImage1);
-	    	myLocMarker.setMap(map);
-			
-	    	//내위치마커 ON표시 , OFF버튼 띄우기
-	    	/*
-	    	var content = "<b>내위치마커 ON &nbsp;"
-	    	+"<button id='myLocMKOFF' type='button' onclick='javascrirpt:myLocMKOFF()' class='btn btn-sm btn-outline-dark mx-1 me-1'>"
-	    	+"내위치마커 OFF</button></b>";
-	    	$('#myLocON').empty();
-	    	$('#myLocON').append(content);
-	    	*/
-	    	$('#myLocON').show();
 	    	
     	}else{//취소
     		return;
@@ -1675,10 +1738,24 @@ function initMap(){
     } //end setMyLocMK()
     
     
+    //내위치마커 끄기
     function myLocMKOFF(){
-    	alert("내위치마커 OFF");
-    	$('#myLocON').hide();
-    	myLocMarker.setMap(null);
+    	
+    	$.ajax({
+ 		     url:'offMyLocMK',
+ 		     type:'get',
+ 		     dataType:'json',
+ 		     success:function(data){
+ 		    	console.log("내위치마커 OFF : ", data);
+		    	
+ 		    	alert("내위치마커 OFF");
+		    	$('#myLocON').hide();
+		    	myLocMarker.setMap(null);
+ 		     },
+ 		     error:function(e){
+ 		         console.log(e);
+ 		     }
+ 		 });
     }
     
     //클릭한 위치의 주소를 받아 API정보와 인포윈도우를 띄워주는 메소드.
@@ -1743,7 +1820,7 @@ function initMap(){
     
 	//내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
 	function loadAPICall(){
-   		console.log("loadAPICALL")
+   		console.log("loadAPICALL");
    	
 	   	APImarker.setMap(map); //마커 찍기
 	   	markers.push(APImarker);

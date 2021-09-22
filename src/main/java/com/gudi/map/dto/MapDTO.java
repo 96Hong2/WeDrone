@@ -23,6 +23,7 @@ public class MapDTO {
 	private int areaId;
 	private String reviewDate;
 	private String myLocTime;
+	private int myLocId;
 	
 	private String cmtContent;
 	private Date cmtDate;
@@ -38,6 +39,12 @@ public class MapDTO {
 	private String informContent;
 	
 	
+	public int getMyLocId() {
+		return myLocId;
+	}
+	public void setMyLocId(int myLocId) {
+		this.myLocId = myLocId;
+	}
 	public String getMyLocTime() {
 		return myLocTime;
 	}

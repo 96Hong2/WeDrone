@@ -218,11 +218,24 @@ public class MapController {
 		return APIservice.apiCall(params);
 	}
 	
+	//은홍 //서버에서 모든 내위치마커를 불러오는 메소드
+	@RequestMapping(value ="/callMyLocMK", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> callMyLocMK() {
+		return service.callMyLocMK();
+	}
+	
 	//은홍 //내위치마커를 추가하는 메소드
 	@RequestMapping(value ="/setMyLocMK", method = RequestMethod.POST)
-	public @ResponseBody int setMyLocMK(@RequestParam int lat, @RequestParam int lon, @RequestParam String address, HttpSession session) {
+	public @ResponseBody int setMyLocMK(@RequestParam double lat, @RequestParam double lon, @RequestParam String address, HttpSession session) {
 		logger.info("myLat/myLon/myDetailLoc : "+ lat+"/"+ lon+"/"+ address);
 		
 		return service.setMyLocMK(lat, lon, address, session);
 	}
+	
+	//은홍 //내위치마커를 끄는 메소드
+	@RequestMapping(value ="/offMyLocMK", method = RequestMethod.GET)
+	public @ResponseBody int offMyLocMK(HttpSession session) {
+		return service.offMyLocMK(session);
+	}
+	
 }

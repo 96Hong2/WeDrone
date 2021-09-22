@@ -68,6 +68,8 @@ public interface MapDAO {
 	int isMyLocMK(String loginId);
 
 	int deleteMyLocMK(String loginId);
+
+	ArrayList<MapDTO> callMyLocMK();
 }
 
 

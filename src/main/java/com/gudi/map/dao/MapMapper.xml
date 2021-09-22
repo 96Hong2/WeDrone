@@ -177,16 +177,20 @@
 		DELETE FROM image WHERE postId = #{param1} AND imgField = 'review'
 	</delete>
 	
-	<select id="isMyLocMK" parameterType="String" resultType="int">
-		SELECT COUNT(myLocId) FROM myLocMK WHERE userId=#{loginId}
+	<select id="isMyLocMK" resultType="int">
+		SELECT COUNT(myLocId) FROM myLocMK WHERE userId=#{param1}
 	</select>
 	
-	<delete id="deleteMyLocMK" parameterType="String">
-		DELETE FROM myLocId WHERE userId=#{loginId}
+	<delete id="deleteMyLocMK">
+		DELETE FROM myLocMK WHERE userId=#{param1}
 	</delete>
 	
 	<insert id="setMyLocMK" parameterType="com.gudi.map.dto.MapDTO">
 		INSERT INTO myLocMK(myLocId, lat, lon, nickName, address, userId) 
 		VALUES(myLocMK_seq.NEXTVAL, #{lat}, #{lon}, #{nickName}, #{address}, #{userId})
 	</insert>
+	
+	<select id="callMyLocMK" resultType="com.gudi.map.dto.MapDTO">
+		SELECT myLocId, lat, lon, nickName, address, userId, myLocTime FROM myLocMK
+	</select>
 </mapper>
