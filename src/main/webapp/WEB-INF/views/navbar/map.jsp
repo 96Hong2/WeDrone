@@ -389,7 +389,13 @@ ul.tabs li.current {
          </div>
 
          <!-- 지도 영역 -->
-         <div id="map"><div id='myLocON'></div></div>
+         <div id="map">
+         	<div id='myLocON'>
+         		<b>내위치마커 ON &nbsp;
+         		<button id='myLocMKOFF' type='button' onclick='javascrirpt:myLocMKOFF()' class='btn btn-sm btn-outline-dark mx-1 me-1'>
+         		내위치마커 OFF</button></b>
+         	</div>
+         </div>
 
       </div>
 
@@ -438,8 +444,11 @@ $(document).ready(function(){
    //리뷰리스트 숨기기
    $('#reviewListArea').hide();
    
-   //내위치마커 ON 숨기기
-   $('#myLocON').hide();
+   //내위치마커 ON 표시
+   var myLocON = sessionStorage.getItem("myLocON"); 
+   if(myLocON == null){
+	   $('#myLocON').hide();
+   }
    
    //탭 설정
    $('ul.tabs li').click(function(){
@@ -479,6 +488,7 @@ $(document).ready(function(){
 	   initMap();
 	   
 	   loadAPICall();
+	   callMyLocMK();
    })
    
    //자동 스크롤
@@ -1600,21 +1610,46 @@ function initMap(){
     //인포윈도우의 버튼 onclick="setMyLocMK()" 설정
     var infoContent = "";
     
-      
+    //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
+    function callMyLocMK(){
+    	console.log("callMyLocMK 서버에서 모든 내위치마커 불러오기");
+    }
+    
     //내위치마커 설정 (내위치마커 설정 버튼(인포윈도우) 클릭 시 실행됨)
-    function setMyLocMK(lat, lon){
+    function setMyLocMK(lat, lon, address){
     	
     	if (confirm("여기로 내위치마커를 지정할까요?") == true){//확인
-	    	console.log("내 위치 마커 설정! lat/lon : "+lat+" / "+lon);
-	    	
+	    	console.log("내 위치 마커 설정! lat/lon/address : "+lat+" / "+lon+" / "+address);
+	    
 	    	//인포윈도우, API마커 제거
 	    	//APImarker.setVisible(false);
 	    	APImarker.setMap(null);
 	    	myLocMKinfo.close();
 	    	
-	    	var imageSrc1 = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-	        	imageSize1 = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-	        	imageOption1 = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	    	
+	    	$.ajax({
+	  		     url:'setMyLocMK',
+	  		     type:'post',
+	  		     data:{
+	  		         "lat" : lat,
+	  		         "lon" : lon,
+	  		         "address" : address
+	  		     },
+	  		     dataType:'json',
+	  		     success:function(data){
+	  		    	
+	  		    	alert("setMyLocMK 성공여부 : ", data);
+	  		    	//세션에 myLocON 저장
+	  		     },
+	  		     error:function(e){
+	  		         console.log(e);
+	  		     }
+	  		 });
+	    	
+	    	
+	    	var imageSrc1 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
+	        	imageSize1 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+	        	imageOption1 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 	
 	    	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 	    	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1);
@@ -1624,18 +1659,21 @@ function initMap(){
 	    	myLocMarker.setMap(map);
 			
 	    	//내위치마커 ON표시 , OFF버튼 띄우기
+	    	/*
 	    	var content = "<b>내위치마커 ON &nbsp;"
 	    	+"<button id='myLocMKOFF' type='button' onclick='javascrirpt:myLocMKOFF()' class='btn btn-sm btn-outline-dark mx-1 me-1'>"
 	    	+"내위치마커 OFF</button></b>";
 	    	$('#myLocON').empty();
 	    	$('#myLocON').append(content);
+	    	*/
 	    	$('#myLocON').show();
 	    	
     	}else{//취소
     		return;
     	}
     	
-    }
+    } //end setMyLocMK()
+    
     
     function myLocMKOFF(){
     	alert("내위치마커 OFF");
@@ -1643,8 +1681,36 @@ function initMap(){
     	myLocMarker.setMap(null);
     }
     
+    //클릭한 위치의 주소를 받아 API정보와 인포윈도우를 띄워주는 메소드.
+    function setAPI_Info(latlng){
+    	//클릭한 위치의 주소 받아오기
+        searchDetailAddrFromCoords(latlng, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                infoContent = "";
+                infoContent += detailAddr;
+                
+                var addressInfo = result[0].address.address_name;
+                console.log("상세주소 : ", addressInfo);
+                
+                var lat = latlng.getLat(),
+    	    	lon = latlng.getLng();    
+            
+	    	//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
+	    	APImarker.setPosition(latlng); //해당 위치로 마커 이동
+	    	APImarker.setMap(map);
+	   		weather(lat, lon);
+	    	
+	    	infoContent += '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+',\''+addressInfo+'\')">내위치마커로 설정</button>';
+	        myLocMKinfo.setContent(infoContent);
+	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
+            }
+        });
+    }
  	
-    //현재 위치에 마커를 찍고 해당 마커를 중심으로 지도를 이동시키는 메소드
+    //현재 위치를 불러오는 메소드
+    //현재위치에 마커를 찍고 해당 마커를 중심으로 지도를 이동시킨다.
     function callMyLocation(){
 		// HTML5의 geolocation으로 사용할 수 있는지 확인
 		if (navigator.geolocation) {
@@ -1659,10 +1725,8 @@ function initMap(){
 		        APImarker.setMap(map);
 		        
 		        //현재위치를 내위치마커설정 버튼에 걸린 onclick이벤트의 매개변수로 연결
-		        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
-		        myLocMKinfo.setContent(infoContent);
-		        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
-				map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+				setAPI_Info(locPosition);
+			   	map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동
 		      });
 		} else {//못 불러오면
 			//경기도 임의의 중심점을 중심으로 마커 찍기
@@ -1671,10 +1735,9 @@ function initMap(){
 	        
 	        APImarker.setPosition(locPosition); //해당 위치로 마커 이동
 	        APImarker.setMap(map);
-	        infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
-	        myLocMKinfo.setContent(infoContent);
-	        myLocMKinfo.open(map, APImarker); //인포윈도우 열기
-			map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
+	        
+	        setAPI_Info(locPosition);
+	        map.setCenter(locPosition);//해당 위치를 중심으로 지도 이동    
 		}
     }
     
@@ -1691,18 +1754,14 @@ function initMap(){
 	    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 	    	myLocMKinfo.close();
 	    	
-			var latlng = mouseEvent.latLng; //클릭한 위치 가져오기
+			//클릭한 위치 가져오기
+	    	var latlng = mouseEvent.latLng;
 	    	var lat = latlng.getLat(),
 	    	lon = latlng.getLng();
+			
+	    	//인포윈도우, API
+	    	setAPI_Info(mouseEvent.latLng);
 	    	
-	    	//map.setCenter(latlng);//해당 위치를 중심으로 지도 이동    
-	    	APImarker.setPosition(latlng); //해당 위치로 마커 이동
-	    	APImarker.setMap(map);
-	   		weather(lat, lon);
-	    	
-	    	infoContent = '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+')">내위치마커로 설정</button>';
-	        myLocMKinfo.setContent(infoContent);
-	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
 	    });
     		
 	} //end loadAPICall()
@@ -1799,7 +1858,7 @@ function initMap(){
   		     type:'post',
   		     data:{
   		         "lon" : lon,
-  		         "lat" : lat,
+  		         "lat" : lat
   		     },
   		     dataType:'json',
   		     success:function(data){

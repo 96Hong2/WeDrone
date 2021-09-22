@@ -177,4 +177,16 @@
 		DELETE FROM image WHERE postId = #{param1} AND imgField = 'review'
 	</delete>
 	
+	<select id="isMyLocMK" parameterType="String" resultType="int">
+		SELECT COUNT(myLocId) FROM myLocMK WHERE userId=#{loginId}
+	</select>
+	
+	<delete id="deleteMyLocMK" parameterType="String">
+		DELETE FROM myLocId WHERE userId=#{loginId}
+	</delete>
+	
+	<insert id="setMyLocMK" parameterType="com.gudi.map.dto.MapDTO">
+		INSERT INTO myLocMK(myLocId, lat, lon, nickName, address, userId) 
+		VALUES(myLocMK_seq.NEXTVAL, #{lat}, #{lon}, #{nickName}, #{address}, #{userId})
+	</insert>
 </mapper>

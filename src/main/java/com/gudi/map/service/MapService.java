@@ -389,5 +389,23 @@ public HashMap<String, Object> rmFileUpload(MapDTO dto) {
 			
 		}
 
+		public int setMyLocMK(int lat, int lon, String address, HttpSession session) {
+			//myLocId, lat, lon, nickName, address, userId, myLocTime
+			MapDTO dto = new MapDTO();
+			String loginId = (String)session.getAttribute("loginId");
+			dto.setLat(lat);
+			dto.setLon(lon);
+			dto.setNickName((String)session.getAttribute("loginNickName"));
+			dto.setAddress(address);
+			dto.setUserId(loginId);
+			
+			if(dao.isMyLocMK(loginId) > 0) {
+				int del = dao.deleteMyLocMK(loginId);
+				logger.info("기존 내위치마커 제거 성공여부 : {} ",del);
+			}
+			
+			return dao.setMyLocMK(dto);
+		}
+
 
 }

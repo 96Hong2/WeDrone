@@ -22,6 +22,7 @@ public class MapDTO {
 	private int rating;
 	private int areaId;
 	private String reviewDate;
+	private String myLocTime;
 	
 	private String cmtContent;
 	private Date cmtDate;
@@ -36,6 +37,13 @@ public class MapDTO {
 	private int relatedId;
 	private String informContent;
 	
+	
+	public String getMyLocTime() {
+		return myLocTime;
+	}
+	public void setMyLocTime(String myLocTime) {
+		this.myLocTime = myLocTime;
+	}
 	public String getInformField() {
 		return informField;
 	}

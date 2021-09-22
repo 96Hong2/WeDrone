@@ -62,6 +62,12 @@ public interface MapDAO {
 	int rmFileUpdate(String fileName, String newFileName, int reviewId);
 
 	int rmFileDelete(int reviewId);
+
+	int setMyLocMK(MapDTO dto);
+
+	int isMyLocMK(String loginId);
+
+	int deleteMyLocMK(String loginId);
 }
 
 

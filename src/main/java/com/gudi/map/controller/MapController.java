@@ -217,4 +217,12 @@ public class MapController {
 		
 		return APIservice.apiCall(params);
 	}
+	
+	//은홍 //내위치마커를 추가하는 메소드
+	@RequestMapping(value ="/setMyLocMK", method = RequestMethod.POST)
+	public @ResponseBody int setMyLocMK(@RequestParam int lat, @RequestParam int lon, @RequestParam String address, HttpSession session) {
+		logger.info("myLat/myLon/myDetailLoc : "+ lat+"/"+ lon+"/"+ address);
+		
+		return service.setMyLocMK(lat, lon, address, session);
+	}
 }
