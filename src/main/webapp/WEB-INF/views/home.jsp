@@ -52,29 +52,29 @@
 				<img src="resources/img/c2.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<h2>드론 세상에 오신 것을 환영합니다</h2>
+					<p class=fs-2>드론 세상에 오신 것을 환영합니다</p>
 					<hr style="border: groove 3px white">
 
-					<h4>우리는 드론을 사랑하는 사람들입니다. 드론에 관심 있는 사람이라면 언제든 환영합니다</h4>
+					<p class=fs-4>우리는 드론을 사랑하는 사람들입니다. 드론에 관심 있는 사람이라면 언제든 환영합니다</p>
 				</div>
 			</div>
 			<div class="carousel-item">
 				<img src="resources/img/c1.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<h2>비행 정보를 나누어보세요</h2>
+					<p class=fs-2>비행 정보를 나누어보세요</p>
 					<hr style="border: groove 3px white">
-					<h4>비행 후기를 들려주세요. 그것은 모든 사람들에게 즐거운 일이 될 것입니다</h4>
+					<p class=fs-4>비행 후기를 들려주세요. 그것은 모든 사람들에게 즐거운 일이 될 것입니다</p>
 				</div>
 			</div>
 			<div class="carousel-item">
 				<img src="resources/img/c3.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<h2>비행관련 실시간 기상정보를 확인하세요</h2>
+					<p class=fs-2>비행관련 실시간 기상정보를 확인하세요</p>
 					<hr style="border: groove 3px white">
-					<h4>드론 비행에 있어 안전보다 중요한 일은 없습니다. 비행 전에 자기장 지수와 풍속, 미세먼지 등을
-						확인하세요</h4>
+					<p class=fs-4>드론 비행에 있어 안전보다 중요한 일은 없습니다. 비행 전에 자기장 지수와 풍속, 미세먼지 등을
+						확인하세요</p>
 				</div>
 			</div>
 		</div>
@@ -88,18 +88,16 @@
 			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
 				class="visually-hidden">Next</span>
 		</button>
-	</div>
-
 	<!-- 퀵메뉴 -->
 	<div class="position-relative">
-		<div id="quick" class="position-fixed bottom-0 end-0">
+		<div id="quick" class="position-absolute top-50 end-0 translate-middle-y">
 			<a href="${path}/confusion"
 				class="rounded-pill btn btn-success fw-bold"> <i
 				class="bi bi-info-circle"></i> 실시간 정보
 			</a>
 		</div>
 	</div>
-
+</div>
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="fixmenu/msgbar.jsp" />
 	</c:if>

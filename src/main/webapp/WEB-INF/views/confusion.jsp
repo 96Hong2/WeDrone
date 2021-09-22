@@ -6,50 +6,42 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<!-- 부트스트랩 메타태그 -->
+<%-- 부트 스트랩 메타태그 --%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 부트스트랩 파일 -->
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-	crossorigin="anonymous">
-	
-</script>
-<link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
-<!-- css cdn 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap"
-	rel="stylesheet">
-<!-- 아이콘 -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
-	integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"
-	crossorigin="anonymous">
+<%-- 부트 스트랩 아이콘 --%>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<!-- 부트스트랩 css 추가 -->
+<link href="${path}/resources/css/bootstrap.css" rel="stylesheet">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+	crossorigin="anonymous">
+<%-- 공통 css --%>
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
-<link href="/Project2/assets/css/main.css?ver=95" rel="stylesheet">
-<style>
-/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
-.wrap {
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	height: 100%
-}
-
-footer {
-	width: 100%;
-	height: 80px;
-	background-color: #3c3c3c;;
-	margin-top: auto
-}
-</style>
 </head>
 <title>드론</title>
 <body>
+<c:if test="${sessionScope.loginId eq null}">
+		<jsp:include page="fixmenu/navbar.jsp" />
+	</c:if>
+	<c:if test="${sessionScope.loginId ne null}">
+		<jsp:include page="fixmenu/lognav.jsp" />
+	</c:if>
 
+<!-- 들어갈 내용 -->
+	
+<h3>실시간 날씨정보 띄우기</h3>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${path}/resources/js/js.js"></script>
+<script src="${path}/resources/js/common.js"></script>
 </body>
+
+<script>
+</script>
 </html>

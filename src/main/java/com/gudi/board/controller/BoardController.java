@@ -169,6 +169,17 @@ public class BoardController {
 
 			return "mypage/userout";
 		}
+		
+		//실시간정보
+		@RequestMapping(value = "/confusion")
+		public String confusion(Model model) {
+
+			return "confusion";
+		}
+		
+		
 	}
+	
+	
 
 }
