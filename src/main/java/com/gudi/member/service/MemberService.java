@@ -1,7 +1,5 @@
 package com.gudi.member.service;
 
-
-
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -21,14 +19,14 @@ public class MemberService {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	ModelAndView mav = new ModelAndView();
-	
+
 	@Autowired(required = false)
 	MemberDAO dao;
 
 	public ModelAndView join(MemberDTO dto) {
 		logger.info("서비스 조인 들어옴");
 		logger.info("회원가입 요청dto : " + dto);
-		
+
 		String msg = "회원가입에 실패했습니다.";
 
 		String plainPw = dto.getPw();
@@ -59,23 +57,23 @@ public class MemberService {
 	}
 
 	public ModelAndView login(String userId, String pw, HttpSession session) {
-		logger.info("서비스 로그인요청 id/pw : "+userId+ "/" + pw);
+		logger.info("서비스 로그인요청 id/pw : " + userId + "/" + pw);
 		String page = "loginForm";
 		String msg = "아이디 또는 비밀번호를 확인하세요.";
-		
+
 		HashMap<String, String> map = dao.login(userId);
 		String DBPw = map.get("PW");
 		String nickName = map.get("NICKNAME");
-		logger.info("들어온 pw값/DB의 pw : "+pw+"/"+DBPw);
-		logger.info("들어온 nickName : {}",nickName);
+		logger.info("들어온 pw값/DB의 pw : " + pw + "/" + DBPw);
+		logger.info("들어온 nickName : {}", nickName);
 		logger.info("DBPw : {}", DBPw);
-		
-		if(DBPw != null && DBPw != "") {
+
+		if (DBPw != null && DBPw != "") {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			boolean matched = encoder.matches(pw, DBPw);
-			logger.info("PW 일치 여부 : "+matched);
-			
-			if(matched) {
+			logger.info("PW 일치 여부 : " + matched);
+
+			if (matched) {
 				session.setAttribute("loginId", userId);
 				session.setAttribute("loginNickName", nickName);
 				page = "home";
@@ -86,4 +84,42 @@ public class MemberService {
 		mav.setViewName(page);
 		return mav;
 	}
+
+	// 수빈 -내정보, 회원탈퇴
+	public ModelAndView memberInfo(String userId) {
+
+		ModelAndView mav = new ModelAndView();
+		String page = "redirect:/myinfo";
+
+		MemberDTO dto = dao.memberInfo(userId);
+		logger.info("dto : {}", dto);
+
+		if (dto != null) {
+			page = "mypages";
+			mav.addObject("info", dto);
+		}
+
+		mav.setViewName(page);
+
+		return mav;
+	}
+
+	// 수빈 -내정보, 회원탈퇴
+	public ModelAndView memberDel(String userId) {
+		ModelAndView mav = new ModelAndView();
+
+		int success = dao.memberDel(userId);
+		logger.info("삭제된 회원정보: " +success);
+
+		mav.setViewName("redirect:/home");
+
+		return mav;
+	}
+
+	// 수빈 -내정보, 회원탈퇴
+	public void update(HashMap<String, String> params) {
+		int success = dao.update(params);
+		logger.info("수정 성공 여부 : " + success);
+	}
+
 }

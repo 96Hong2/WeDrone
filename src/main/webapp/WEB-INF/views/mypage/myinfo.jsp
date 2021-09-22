@@ -77,7 +77,7 @@
 					class="needs-validation py-3" novalidate>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="form-control" name="nickName"
-							id="nickName" placeholder="닉네임" value="" required> <label
+							id="nickName" placeholder="닉네임" value="${sessionScope.loginNickName}" required> <label
 							for="validationTooltip01" class="fw-bold">닉네임</label>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
@@ -91,7 +91,7 @@
 
 					<div class="form-floating col-md-9 mb-3">
 						<input type="password" class="nullchecks form-control"
-							name="UserPw" id="UserPw" placeholder="비밀번호" value="" required>
+							name="UserPw" id="UserPw" placeholder="비밀번호" value="${sessionScope.DBPw}" required>
 						<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<div class="invalid-feedback">10자 이상 입력해주세요</div>
 					</div>
@@ -109,12 +109,12 @@
 							<label class="form-check-label" for="emailcheckchange1">
 								동의 </label> <input class="form-check-input" type="radio" value="Y"
 								name="emailcheckchange" id="emailcheckchange1"
-								<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
+								<c:if test="${sesseionScope.chkAlert eq 'Y'}">checked</c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
 								name="emailcheckchange" id="emailcheckchange2" value="N"
-								<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
+								<c:if test="${sesseionScope.chkAlert eq 'N'}">checked</c:if>> <label
 								class="form-check-label" for="emailcheckchange2"> 거부 </label>
 						</div>
 					</div>

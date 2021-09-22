@@ -1,5 +1,8 @@
 package com.gudi.member.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import com.gudi.member.dto.MemberDTO;
 import com.gudi.member.service.MemberService;
@@ -39,42 +41,62 @@ public class MemberController {
 	}
 
 	@ResponseBody
-    @RequestMapping(value = "/idCheck", method = RequestMethod.POST)
-    public int idCheck(String userId) throws Exception {
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	public int idCheck(String userId) throws Exception {
 		logger.info("컨트롤 아이디체크 들어옴");
 		logger.info(userId);
-        int result = service.idCheck(userId);
-        return result;
-    }
+		int result = service.idCheck(userId);
+		return result;
+	}
 
-    @ResponseBody
-    @RequestMapping(value = "/nickCheck", method = RequestMethod.POST)
-    public int nickCheck(String nickName) throws Exception {
-    	logger.info("컨트롤 닉네임체크 들어옴");
-    	logger.info(nickName);
-        int result = service.nickCheck(nickName);
-        return result;
-    }
-    
-    @RequestMapping(value = "/loginForm")
-	public String loginForm(Model model) {    	
+	@ResponseBody
+	@RequestMapping(value = "/nickCheck", method = RequestMethod.POST)
+	public int nickCheck(String nickName) throws Exception {
+		logger.info("컨트롤 닉네임체크 들어옴");
+		logger.info(nickName);
+		int result = service.nickCheck(nickName);
+		return result;
+	}
+
+	@RequestMapping(value = "/loginForm")
+	public String loginForm(Model model) {
 		return "loginForm";
 	}
-    
-    @RequestMapping(value = "/login")
-	public ModelAndView login(@RequestParam String userId, @RequestParam String pw, HttpSession session) {	
-		
-		logger.info("컨트롤 로그인 요청");				
+
+	@RequestMapping(value = "/login")
+	public ModelAndView login(@RequestParam String userId, @RequestParam String pw, HttpSession session) {
+
+		logger.info("컨트롤 로그인 요청");
 		return service.login(userId, pw, session);
 	}
-    
-    @RequestMapping(value = "/logout")
-    public String logout(HttpSession session) {
-        logger.info("컨트롤 로그아웃 요청");
-        session.invalidate();    
-        
-        return "redirect:/";
-    }
 
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		logger.info("컨트롤 로그아웃 요청");
+		session.invalidate();
+
+		return "redirect:/";
+	}
+
+	//수빈 -내정보, 회원탈퇴
+	@RequestMapping(value = "/memberInfo")
+	public ModelAndView memberInfo(@RequestParam String userId) {
+		logger.info("userId : {}", userId);
+		return service.memberInfo(userId);
+	}
+	//수빈 -내정보, 회원탈퇴
+	@RequestMapping(value = "/memberDel")
+	public ModelAndView memberDel(@RequestParam String userId) {
+		logger.info("delete userId : {}", userId);
+		return service.memberDel(userId);
+	}
+
+	//수빈 -내정보, 회원탈퇴
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@RequestParam HashMap<String, String> params) {
+		logger.info("update info : {}", params);
+		service.update(params);
+		return "redirect:/memberInfo?id=" + params.get("userId");
+	}
 
 }

@@ -5,29 +5,54 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <!-- XML 이 어떤interface 와 연결이 되는가? -->
-<mapper namespace="com.gudi.member.dao.MemberDAO">	
+<mapper namespace="com.gudi.member.dao.MemberDAO">
 
-<insert id="join" parameterType="member">
-		INSERT INTO members(userId,pw,nickName,chkAlert) VALUES
+	<insert id="join" parameterType="member">
+		INSERT INTO
+		members(userId,pw,nickName,chkAlert) VALUES
 		(#{userId},#{pw},#{nickName},#{chkAlert})
 	</insert>
 
-	<select id="idCheck"
-		parameterType="member" resultType="int">
-		SELECT COUNT(*) FROM members
+	<select id="idCheck" parameterType="member" resultType="int">
+		SELECT
+		COUNT(*) FROM members
 		WHERE userId = #{userId}
 	</select>
 
-	<select id="nickCheck"
-		parameterType="member" resultType="int">
-		SELECT COUNT(*) FROM members
+	<select id="nickCheck" parameterType="member" resultType="int">
+		SELECT
+		COUNT(*) FROM members
 		WHERE nickName = #{nickName}
 	</select>
 
-	<select id="login" parameterType="String" resultType="java.util.HashMap">
+	<select id="login" parameterType="String"
+		resultType="java.util.HashMap">
 		SELECT pw, nickName FROM members WHERE userId = #{userId}
 	</select>
-	
+
+	<!--수빈 내정보, 회원탈퇴 -->
+	<select id="memberInfo"
+		resultType="com.gudi.member.dto.MemberDTO">
+		SELECT * FROM member WHERE userId = #{param1}
+	</select>
+
+	<!--수빈 내정보, 회원탈퇴 -->
+	<delete id="memberDel">
+		DELETE FROM member WHERE userId = #{param1}
+	</delete>
+
+	<!--수빈 내정보, 회원탈퇴 -->
+	<update id="update" parameterType="hashmap">
+		UPDATE member
+		<set>
+			<if test="!pw.equals('')">pw = #{pw},</if>
+			<if test="!nickName.equals('')">nickName = #{nickName}</if>
+		</set>
+		WHERE id = #{userId}
+	</update>
+
+
+
 </mapper>
 
 

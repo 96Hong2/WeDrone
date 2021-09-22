@@ -70,7 +70,7 @@
 				<hr/>
 				<div class="cont container w-50">
 					<!-- 내 정보 수정 폼 -->
-		<h3>${sessionScope.loginNickName} 님, 환영합니다</h3>
+		<p class=fs-4>${sessionScope.loginNickName} 님, 환영합니다</p>
 				</div>
 			</div>
 		</div>
