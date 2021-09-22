@@ -488,11 +488,14 @@ $(document).ready(function(){
 	   
 	   loadAPICall();
 	   callMyLocMK();
+	   myLocScheduler = setInterval(callMyLocMK, 5000); //5초 간격으로 요청보내기
    })
    
    //자동 스크롤
    //$('#sideArea').scrollTop($('#sideArea').scrollHeight);
 })
+
+var myLocScheduler;
 
 //지도 초기화
 function initMap(){
@@ -510,6 +513,8 @@ function initMap(){
     map.setMaxLevel(10);
     map.setCenter(new kakao.maps.LatLng(37.21953563998351, 127.21194259376661));
     //kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd); //클릭 이벤트 제거
+    
+    clearInterval(myLocScheduler);
 }
       
       //#카카오맵 api 불러오기
@@ -1611,7 +1616,8 @@ function initMap(){
     
     //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
     function callMyLocMK(){
-    	console.log("서버에서 모든 내위치마커 불러오기");
+    	console.log("★서버에서 모든 내위치마커 불러오기★");
+    	deleteMarkers(markers);//기존마커 제거
     	
     	var loginId = "${sessionScope.loginId}";
 
