@@ -78,25 +78,23 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	//수빈 -내정보, 회원탈퇴
-	@RequestMapping(value = "/memberInfo")
+	@RequestMapping(value = "/memberinfo")
 	public ModelAndView memberInfo(@RequestParam String userId) {
-		logger.info("userId : {}", userId);
+		logger.info("id : {}", userId);
 		return service.memberInfo(userId);
 	}
-	//수빈 -내정보, 회원탈퇴
+
 	@RequestMapping(value = "/memberDel")
 	public ModelAndView memberDel(@RequestParam String userId) {
-		logger.info("delete userId : {}", userId);
+		logger.info("delete id : {}", userId);
 		return service.memberDel(userId);
 	}
 
-	//수빈 -내정보, 회원탈퇴
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@RequestParam HashMap<String, String> params) {
 		logger.info("update info : {}", params);
 		service.update(params);
-		return "redirect:/memberInfo?id=" + params.get("userId");
+		return "redirect:/memberInfo?userId=" + params.get("");
 	}
 
 }

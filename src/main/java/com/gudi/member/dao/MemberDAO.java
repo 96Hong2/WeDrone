@@ -1,6 +1,9 @@
 package com.gudi.member.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.springframework.stereotype.Repository;
 
 import com.gudi.member.dto.MemberDTO;
 
@@ -13,11 +16,11 @@ public interface MemberDAO {
 
 	HashMap<String, String> login(String userId);	
 	
-	//수빈 내정보, 회원탈퇴
 	MemberDTO memberInfo(String id);
-	//수빈 내정보, 회원탈퇴
+
 	int memberDel(String id);
-	//수빈 내정보, 회원탈퇴
+
 	int update(HashMap<String, String> params);
 
+	
 }

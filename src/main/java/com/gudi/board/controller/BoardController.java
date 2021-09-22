@@ -1,12 +1,11 @@
 package com.gudi.board.controller;
 
-
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,39 +13,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.board.service.BoardService;
 import com.gudi.board.service.InformService;
 import com.gudi.util.PageMaker;
 
-
-
 @Controller
 public class BoardController {
-	
+
 	@Autowired
 	BoardService service;
 
 	@Autowired
 	InformService informService;
-	
 
 	Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	
 	@RequestMapping(value = "/")
 	public String home(Model model) {
 
 		return "home";
 	}
-	
-	
+
 	@RequestMapping(value = "/warnmap")
 	public String warnmap(Model model) {
 
 		return "navbar/warnmap";
 	}
-	
+
 	@RequestMapping(value = "/navbar")
 	public String navbar(Model model) {
 
@@ -58,7 +55,7 @@ public class BoardController {
 
 		return "/lognav";
 	}
-	
+
 	@Controller
 	public class Controller0 {
 
@@ -104,8 +101,6 @@ public class BoardController {
 			return "mypage/mypages";
 		}
 
-
-	
 		// 내 정보
 		@RequestMapping("/myinfo")
 		public String springView8(HttpServletRequest request, Model model) throws Exception {
@@ -135,26 +130,24 @@ public class BoardController {
 		}
 
 		// 내 알림리스트
-				@RequestMapping("/alarmlist")
-				public String springView12(PageMaker pageMaker, Model model, Map<String, Object> map,
-						HttpServletRequest request) throws Exception {
-					map.put("userid", (String)request.getSession().getAttribute("loginId") );
-					int totalCount=informService.informCount(map);
-					
-					pageMaker.setTotPage(totalCount);
-					map.put("pageBegin", pageMaker.getPageBegin());
-					map.put("pageEnd", pageMaker.getPageEnd());
-					List<Map<String, Object>> list=informService.selectListInform(map);
-					String pagination=pageMaker.bootStrapPagingHTML(request.getContextPath()  +"/alarmlist");
-					
-					model.addAttribute("list",list);
-					model.addAttribute("totalCount",totalCount);
-					model.addAttribute("pageMaker",pageMaker);
-					model.addAttribute("pagination", pagination);
-					return "mypage/alarmlist";
-				}
+		@RequestMapping("/alarmlist")
+		public String springView12(PageMaker pageMaker, Model model, Map<String, Object> map,
+				HttpServletRequest request) throws Exception {
+			map.put("userid", (String) request.getSession().getAttribute("loginId"));
+			int totalCount = informService.informCount(map);
 
+			pageMaker.setTotPage(totalCount);
+			map.put("pageBegin", pageMaker.getPageBegin());
+			map.put("pageEnd", pageMaker.getPageEnd());
+			List<Map<String, Object>> list = informService.selectListInform(map);
+			String pagination = pageMaker.bootStrapPagingHTML(request.getContextPath() + "/alarmlist");
 
+			model.addAttribute("list", list);
+			model.addAttribute("totalCount", totalCount);
+			model.addAttribute("pageMaker", pageMaker);
+			model.addAttribute("pagination", pagination);
+			return "mypage/alarmlist";
+		}
 
 		// 즐겨찾기
 		@RequestMapping("/bookmark")
@@ -163,23 +156,23 @@ public class BoardController {
 			return "mypage/bookmark";
 		}
 
-		//회원탈퇴
+		// 회원탈퇴
 		@RequestMapping("/userout")
 		public String springView14(HttpServletRequest request, Model model) throws Exception {
 
 			return "mypage/userout";
 		}
-		
-		//실시간정보
+
+		// 실시간정보
 		@RequestMapping(value = "/confusion")
 		public String confusion(Model model) {
 
 			return "confusion";
 		}
+
 		
-		
+	
+
 	}
-	
-	
 
 }

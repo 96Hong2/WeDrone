@@ -55,10 +55,10 @@
 			</button>
 
 			<form class="d-flex">
-				<a class="btn btn-sm btn-outline-light me-1 mx-1" roll="button"
+				<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 					href="${path}/logout"> 로그아웃</a> <a
 					class="btn btn-sm btn-outline-light  mx-1" role="button"
-					href="${path}/mypages">마이페이지</a>
+					href="${path}/mypages">마이페이지${sesseionScope.loginNickName}</a>
 
 				<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"

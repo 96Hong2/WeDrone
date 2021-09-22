@@ -1,7 +1,11 @@
 package com.gudi.member.service;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -85,17 +89,16 @@ public class MemberService {
 		return mav;
 	}
 
-	// 수빈 -내정보, 회원탈퇴
 	public ModelAndView memberInfo(String userId) {
 
 		ModelAndView mav = new ModelAndView();
-		String page = "redirect:/myinfo";
+		String page = "redirect:/mypages";
 
 		MemberDTO dto = dao.memberInfo(userId);
 		logger.info("dto : {}", dto);
 
 		if (dto != null) {
-			page = "mypages";
+			page = "myinfo";
 			mav.addObject("info", dto);
 		}
 
@@ -104,19 +107,17 @@ public class MemberService {
 		return mav;
 	}
 
-	// 수빈 -내정보, 회원탈퇴
 	public ModelAndView memberDel(String userId) {
 		ModelAndView mav = new ModelAndView();
 
 		int success = dao.memberDel(userId);
-		logger.info("삭제된 회원정보: " +success);
+		logger.info("삭제된 행 : " + success);
 
 		mav.setViewName("redirect:/home");
 
 		return mav;
 	}
 
-	// 수빈 -내정보, 회원탈퇴
 	public void update(HashMap<String, String> params) {
 		int success = dao.update(params);
 		logger.info("수정 성공 여부 : " + success);

@@ -20,6 +20,13 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+<script>
+	if ($("#nickName").val().length < 1) {
+		alert("닉네임은 2글자 이상이어야 합니다.")
+		$("#nickname").focus();
+		return false;
+	}
+</script>
 </head>
 <title>드론</title>
 <body>
@@ -31,9 +38,6 @@
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 	<!-- 들어갈 내용 -->
-
-
-
 	<div class='row'>
 		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
@@ -73,25 +77,29 @@
 			<hr />
 			<div class="cont container w-50">
 				<!-- 내 정보 수정 폼 -->
-				<form id="myinfoform" action="/Project2/memberupdate" method="post"
+				<form id="myinfoform" action="${path}/memberupdate" method="post"
 					class="needs-validation py-3" novalidate>
 					<div class="form-floating col-md-9 mb-3">
-						<input type="text" class="form-control" name="nickName"
-							id="nickName" placeholder="닉네임" value="${sessionScope.loginNickName}" required> <label
-							for="validationTooltip01" class="fw-bold">닉네임</label>
+						<input type="text" class="nullchecks nullcheck form-control"
+							name="nickName" title="${updateSuc}
+							id="
+							nickName" placeholder="닉네임" value="${sessionScope.loginNickName}"
+							required> <label for="validationTooltip01"
+							class="fw-bold">닉네임</label>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
 							정보입니다(100자 이하만 가능)</div>
-						<input type="button" class="btn btn-dark mt-2" id="ckBtn"
-							value="중복확인">
+
+						<input type="button" class="btn btn-secondary btn-sm mt-2"
+							id="nickCheck" value="중복확인">
 						<!-- 중복확인 끝 -->
 						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
 						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
 
 					<div class="form-floating col-md-9 mb-3">
-						<input type="password" class="nullchecks form-control"
-							name="UserPw" id="UserPw" placeholder="비밀번호" value="${sessionScope.DBPw}" required>
+						<input type="password" class="nullchecks form-control" name="DBPw"
+							id="pwForm" placeholder="비밀번호" value="${info.DBPw}" required>
 						<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<div class="invalid-feedback">10자 이상 입력해주세요</div>
 					</div>
@@ -109,19 +117,20 @@
 							<label class="form-check-label" for="emailcheckchange1">
 								동의 </label> <input class="form-check-input" type="radio" value="Y"
 								name="emailcheckchange" id="emailcheckchange1"
-								<c:if test="${sesseionScope.chkAlert eq 'Y'}">checked</c:if>>
+								<c:if test="${info.chkAlert eq 'Y'}">checked</c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
 								name="emailcheckchange" id="emailcheckchange2" value="N"
-								<c:if test="${sesseionScope.chkAlert eq 'N'}">checked</c:if>> <label
+								<c:if test="${info.chkAlert eq 'N'}">checked</c:if>> <label
 								class="form-check-label" for="emailcheckchange2"> 거부 </label>
 						</div>
 					</div>
 					<hr />
 					<div class="col text-center">
-						<input id="infochange" class="btn btn-dark" type="button"
-							value="정보수정">
+						<input id="infochange" class="btn btn-dark" type="submit"
+							onclick="go_submit()" value="정보수정">
+
 					</div>
 				</form>
 			</div>
@@ -131,49 +140,52 @@
 	</div>
 	</div>
 	<script>
-		$('#ckBtn').click(function() {
-			var logId = $('#logId').val().trim();
-			console.log(userId);
-			if (userId != "" && userId.length <= 100) {
-				$('#check2').addClass('visually-hidden');
-				$('#check1').removeClass('visually-hidden');
-				$.ajax({
-					type : "POST",//방식(닉네임이라 POST로 해야함)
-					url : "${path}/signupcheck",//주소 ->닉네임
-					data : {
-						userId : userId
-					},
-					dataType : 'JSON',
-					success : function(data) { //성공시
-						console.log(data);
-						if (data.suc) {
-							$('#pass').addClass("visually-hidden");
-							$('#fail').removeClass("visually-hidden");
-							$('#UserId').removeClass("is-valid");
-							$('#UserId').addClass("is-invalid");
-						} else {
-							$('#pass').removeClass("visually-hidden");
-							$('#fail').addClass("visually-hidden");
-							$('#UserId').removeClass("is-invalid");
-							$('#UserId').addClass("is-valid");
-							$('#UserId').attr('readonly', true)
-						}
-					},
-					error : function(e) { //실패시
-						console.log(e);
-					}
-				});
-			} else {
-				$('#check2').removeClass('visually-hidden');
-				$('#check1').addClass('visually-hidden');
-				$('#UserId').addClass("is-invalid");
-			}
-		})
-	</script>
+		$('#infochange')
+				.click(
+						function() {
+							if ($('#nickName').attr('class') != 'form-control is-invalid'
+									&& $('#DBPw').attr('class') != 'form-control is-invalid') {
+								//nkckName 요소의 class 속성의 값을 가져온다.
+								console.log("안녕");
+								$(this).attr('type', 'submit');
+								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
+							}
+						})
+		if ($('#nickName').attr('title') != "") {
+			//만약 nickName 요소의 title 속성을 추가 
+			Swal.fire({
+				title : '정보수정완료',
+				icon : 'success',
+				confirmButtonColor : '#000',
+				confirmButtonText : '확인',
+			})
+		}
 
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		$("#nickCheck").click(function() {
+			;
+			console.log(nickName);
+			$.ajax({
+				type : 'post',
+				url : 'nickCheck',
+				data : {
+					"nickName" : $("#nickName").val()
+				},
+				dataType : 'JSON',
+				success : function(data) {
+					console.log(data);
+					if (data == 1) {
+						alert("중복된 닉네임입니다.");
+					} else if (data == 0) {
+						alert("사용 가능한 닉네임입니다.");
+						$("#nickCheckOk").attr("value", "Y");
+					}
+				}
+			})
+		})
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+	</script>
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 </body>
-</script>
 </html>

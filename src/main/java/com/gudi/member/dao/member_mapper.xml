@@ -30,22 +30,22 @@
 		SELECT pw, nickName FROM members WHERE userId = #{userId}
 	</select>
 
-	<!--수빈 내정보, 회원탈퇴 -->
+	<!--수빈 내정보 -->
 	<select id="memberInfo"
 		resultType="com.gudi.member.dto.MemberDTO">
-		SELECT * FROM member WHERE userId = #{param1}
+		SELECT * FROM member WHERE userId = #{userId}
 	</select>
 
-	<!--수빈 내정보, 회원탈퇴 -->
+	<!--수빈 회원탈퇴 -->
 	<delete id="memberDel">
-		DELETE FROM member WHERE userId = #{param1}
+		DELETE FROM member WHERE userId = #{userId}
 	</delete>
 
-	<!--수빈 내정보, 회원탈퇴 -->
+	<!--수빈 내정보 업데이트-->
 	<update id="update" parameterType="hashmap">
 		UPDATE member
 		<set>
-			<if test="!pw.equals('')">pw = #{pw},</if>
+			<if test="!DBPw.equals('')">DBPw = fn_encrypt(#{DBPw}),</if>
 			<if test="!nickName.equals('')">nickName = #{nickName}</if>
 		</set>
 		WHERE id = #{userId}
