@@ -40,7 +40,15 @@
 
 
 
-
+<!-- 퀵메뉴 -->
+	<div class="position-relative">
+		<div id="quick" class="position-fixed bottom-0 end-0">
+			<a href="${path}/confusion"
+				class="rounded-pill btn btn-success fw-bold"> <i
+				class="bi bi-info-circle"></i> 실시간 정보
+			</a>
+		</div>
+	</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
