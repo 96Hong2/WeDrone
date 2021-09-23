@@ -138,7 +138,7 @@ function loadReviewDetail(reviewId, userId, tab){
 			var content2 = "";
 			content2 += "<div class='revBookMarkContainer'>";
 			if(review.isBookMark > 0){
-				conten2t += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
+				content2 += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
 				content2 += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
              }else{
             	content2 += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";

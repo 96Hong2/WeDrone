@@ -55,14 +55,16 @@
 			</button>
 
 			<form class="d-flex">
-				<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
-					href="${path}/logout"> 로그아웃</a> <a
+				 <a
 					class="btn btn-sm btn-outline-light  mx-1" role="button"
-					href="${path}/memberInfo">마이페이지${sesseionScope.loginNickName}</a>
+					href="${path}/memberInfo">마이페이지</a>
 
 				<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
 					aria-controls="offcanvasRight">메시지</button>
+					
+					<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
+					href="${path}/logout"> 로그아웃</a>
 			</form>
 		</div>
 	</div>

@@ -461,7 +461,7 @@ ul.tabs li.current {
 <script>
       
 $(document).ready(function(){
-   
+	
    //리뷰리스트 숨기기
    $('#reviewListArea').hide();
    
@@ -483,7 +483,8 @@ $(document).ready(function(){
    
    //후기마커 탭 클릭 시
    $('#tab-reviewMK-li').click(function(){
-      location.reload(true);       
+      //location.reload(true);
+	   location.href = "map";
    })
    
    //내후기마커 탭 클릭 시
@@ -514,7 +515,23 @@ $(document).ready(function(){
    
    //자동 스크롤
    //$('#sideArea').scrollTop($('#sideArea').scrollHeight);
+   
+ //원하는 탭 파라미터를 받아서 해당 탭으로 이동
+	var requestTab = "${requestTab}";
+	console.log("requestTab : "+requestTab);
+	
+	moveTab(requestTab);
+ 
 })
+
+function moveTab(requestTab){
+	if(requestTab=="myReview"){
+		//내 후기마커 탭으로 이동하기위해 click이벤트 발생시킴
+		$('#tab-myReviewMK-li').trigger("click");
+	}else if(requestTab=="bookmark"){
+		$('#tab-bookmark-li').trigger("click");
+	}
+}
 
 var myLocScheduler;
 

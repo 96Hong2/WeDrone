@@ -122,11 +122,11 @@ public class BoardController {
 			return "mypage/mycomment";
 		}
 
-		// 내가 후기마커
+		// 내 후기마커
 		@RequestMapping("/myreview")
 		public String springView11(HttpServletRequest request, Model model) throws Exception {
-
-			return "mypage/myreview";
+			model.addAttribute("requestTab", "myReview");
+			return "navbar/map";
 		}
 
 		// 내 알림리스트
@@ -152,8 +152,8 @@ public class BoardController {
 		// 즐겨찾기
 		@RequestMapping("/bookmark")
 		public String springView13(HttpServletRequest request, Model model) throws Exception {
-
-			return "mypage/bookmark";
+			model.addAttribute("requestTab", "bookmark");
+			return "navbar/map";
 		}
 
 		// 회원탈퇴
