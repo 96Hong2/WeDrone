@@ -40,7 +40,7 @@
 					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
 					<a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/myinfo" style="cursor: pointer;">내 정보</a> <a
+						href="${path}/memberInfo" style="cursor: pointer;">내 정보</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
 						class="ps-4  list-group-item list-group-item-action fs-5"

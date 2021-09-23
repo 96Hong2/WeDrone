@@ -1,9 +1,6 @@
 package com.gudi.member.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.springframework.stereotype.Repository;
 
 import com.gudi.member.dto.MemberDTO;
 

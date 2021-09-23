@@ -1,6 +1,6 @@
 package com.gudi.member.controller;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -79,9 +79,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/memberInfo")
-	public ModelAndView memberInfo(@RequestParam String userId) {
-		logger.info("id : {}", userId);
-		return service.memberInfo(userId);
+	public ModelAndView memberInfo(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		return service.memberInfo(loginId);
 	}
 
 	@RequestMapping(value = "/memberDel")

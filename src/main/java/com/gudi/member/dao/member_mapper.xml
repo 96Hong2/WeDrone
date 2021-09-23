@@ -33,7 +33,7 @@
 	<!--수빈 내정보 -->
 	<select id="memberInfo"
 		resultType="com.gudi.member.dto.MemberDTO">
-		SELECT * FROM member WHERE userId = #{userId}
+		SELECT * FROM members WHERE userId = #{userId}
 	</select>
 
 	<!--수빈 회원탈퇴 -->

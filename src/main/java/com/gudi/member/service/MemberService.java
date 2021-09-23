@@ -65,9 +65,11 @@ public class MemberService {
 		HashMap<String, String> map = dao.login(userId);
 		String DBPw = map.get("PW");
 		String nickName = map.get("NICKNAME");
+		String chkAlert = map.get("CHKALERT");
 		logger.info("들어온 pw값/DB의 pw : " + pw + "/" + DBPw);
 		logger.info("들어온 nickName : {}", nickName);
 		logger.info("DBPw : {}", DBPw);
+		logger.info("알림여부 : {}", chkAlert);
 
 		if (DBPw != null && DBPw != "") {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -86,6 +88,7 @@ public class MemberService {
 		return mav;
 	}
 
+	//내 정보 
 	public ModelAndView memberInfo(String userId) {
 
 		ModelAndView mav = new ModelAndView();
@@ -95,8 +98,8 @@ public class MemberService {
 		logger.info("dto : {}", dto);
 
 		if (dto != null) {
-			page = "myinfo";
-			mav.addObject("info", dto);
+			page = "mypage/myinfo";
+			mav.addObject("dto", dto);
 		}
 
 		mav.setViewName(page);
@@ -104,6 +107,7 @@ public class MemberService {
 		return mav;
 	}
 
+	//탈퇴하기
 	public ModelAndView memberDel(String userId) {
 		ModelAndView mav = new ModelAndView();
 
@@ -115,6 +119,7 @@ public class MemberService {
 		return mav;
 	}
 
+	//정보 수정하기
 	public void update(HashMap<String, String> params) {
 		int success = dao.update(params);
 		logger.info("수정 성공 여부 : " + success);

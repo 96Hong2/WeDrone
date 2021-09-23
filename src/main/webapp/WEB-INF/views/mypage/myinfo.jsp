@@ -37,12 +37,11 @@
 		<!-- 사이드바 -->
 		<div class="d-flex col-sm-2"
 			style="height: auto; width: 200px; min-height: 100vh;">
-
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
 					<a class="ps-4  list-group-item list-group-item-action active fs-5"
-						href="${path}/myinfo" style="cursor: pointer;">내 정보</a> <a
+						href="${path}/memberInfo" style="cursor: pointer;">내 정보</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
 						class="ps-4  list-group-item list-group-item-action fs-5"
@@ -58,9 +57,7 @@
 				</div>
 			</nav>
 		</div>
-
 		<!--들어갈 내용-->
-
 		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
 				<button type="button" id="sidebarCollapse"
@@ -78,7 +75,7 @@
 						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
 							type="text" class="nullchecks nullcheck form-control"
 							name="nickName" title="${updateSuc}
-							id="nickName" placeholder="닉네임" value="${sessionScope.loginNickName}"
+							id="nickName" placeholder="닉네임" value="${dto.nickName}"
 							required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
@@ -94,7 +91,7 @@
 					<div class="form-control col-md-9 mb-3">
 					<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<input type="password" class="form-control" name="UserPw"
-							id="UserPw" placeholder="비밀번호" value="${dto.DBPw}" required>
+							id="UserPw" placeholder="비밀번호" value="" required>
 						<div class="invalid-feedback">10자 이상 입력해주세요</div>
 					</div>
 					<div class="form-control col-md-9 mb-3">
@@ -122,7 +119,7 @@
 								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>
 					</div>
-					<hr />
+					<hr/>
 					<div class="col text-center">
 						<input id="infochange" class="btn btn-dark" type="submit"
 							onclick="go_submit()" value="정보수정">
@@ -166,7 +163,7 @@
 							if ($('#UserPw').attr('class') == 'form-control is-valid'
 									&& $('#UserPwchs').attr('class') == 'form-control is-valid') {
 								//UserName 요소의 class 속성의 값을 가져온다.
-								console.log("안녕");
+								console.log("안녕 비번바뀌었어");
 								$(this).attr('type', 'submit');
 								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
 							}
@@ -178,15 +175,12 @@
 													$(this).attr("class","form-control is-invalid");
 												}
 											});
-
-		
-		
 	
 		$('#infochange').click(function() {
 							if ($('#nickName').attr('class') != 'form-control is-invalid'
 									&& $('#DBPw').attr('class') != 'form-control is-invalid') {
 								//nkckName 요소의 class 속성의 값을 가져온다.
-								console.log("바뀌었다!성공");
+								console.log("정보 바뀜");
 								$(this).attr('type', 'submit');
 								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
 							}
