@@ -206,6 +206,15 @@ ul.tabs li.current {
 	color: grey;
 	font-size: 15px;
 }
+
+.revAddress{
+	font-size: 13px;
+	color: darkgrey;
+}
+
+.revBox1_1{
+	margin-left: 4px;
+}
 </style>
 </head>
 <title>드론</title>
@@ -513,6 +522,9 @@ var myLocScheduler;
 function initMap(){
 	//location.reload(true); //새로고침
 	
+	 kakao.maps.event.removeListener(map, 'click', reviewMarkerAdd);
+	 kakao.maps.event.removeListener(map, 'click', callApiInfo);
+	
 	deletePolygon(polygons); //폴리곤 제거
     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
@@ -585,6 +597,73 @@ function initMap(){
        var reviewIds = [];
        //후기작성 마커
        var marker = new kakao.maps.Marker();
+       
+       
+       
+       
+       
+       
+       // 지도에 클릭 이벤트를 등록합니다
+       // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+       var reviewMarkerAdd = function (mouseEvent, name){
+    	   
+    	   console.log("클릭");
+          
+          infowindow.close();
+
+
+                 // 클릭한 위도, 경도 정보를 가져옵니다 
+                 var latlng = mouseEvent.latLng; 
+                 
+                 
+                 //클릭한 위치의 주소 받아오기
+                 searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+                     if (status === kakao.maps.services.Status.OK) {
+                         var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                         detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                         
+                         var rmLat = latlng.getLat(); 
+                         var rmLng = latlng.getLng(); 
+                         
+                         var address_info = result[0].address.address_name
+                         
+                         var content = '<div class="bAddr">' +
+                                         '<span class="title">법정동 주소정보</span>' + 
+                                         detailAddr + 
+                                     '</div>'+
+                                     '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\', '+rmLat+', '+rmLng+')">'+
+                                     '후기 작성'+
+                                   '</button>';
+                                   
+                                   var content2 = '<div class="bAddr">' +
+                                   '<span class="title">법정동 주소정보</span>' + 
+                                   detailAddr + 
+                               '</div><div><p style="color:red;">선택 지역을 벗어났습니다.</p></div>';
+                                   
+                         console.log("상세주소 : "+address_info);
+                         console.log("지역명 : "+name);
+                         
+                         infowindow.setContent(content);
+                         
+                         if(address_info.indexOf(name) == -1){
+                            infowindow.setContent(content2);
+                         }
+                                     
+                 // 마커 위치를 클릭한 위치로 옮깁니다
+                 marker.setPosition(latlng);
+                 marker.setMap(map);
+                                     
+                                     infowindow.open(map, marker);
+                     }
+                 });
+       }
+       
+       
+       
+       
+       
+       
+       
       
       //#지역 오버레이에서 선택버튼 클릭 시 수행되는 함수 
       //해당 지역 확대 및 리스트,마커 가져오기
@@ -631,6 +710,14 @@ function initMap(){
          
          //var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
          
+         kakao.maps.event.addListener(map, 'click', reviewMarkerAdd);
+         
+         
+         
+       
+         
+         
+         /*
          // 지도에 클릭 이벤트를 등록합니다
          // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
          kakao.maps.event.addListener(map, 'click', function reviewMarkerAdd(mouseEvent){
@@ -678,26 +765,11 @@ function initMap(){
                    // 마커 위치를 클릭한 위치로 옮깁니다
                    marker.setPosition(latlng);
                    marker.setMap(map);
-
                                        
                                        infowindow.open(map, marker);
-                                     
-
-                                    /*
-                                       // 마커에 마우스아웃 이벤트를 등록합니다
-                                       kakao.maps.event.addListener(marker, 'mouseout', function() {
-                                           // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-                                           infowindow.close();
-                                       });*/
-                   
-                   /*var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-                   message += '경도는 ' + latlng.getLng() + ' 입니다';
-                   
-                   var resultDiv = document.getElementById('clickLatlng'); 
-                   resultDiv.innerHTML = message;*/
                        }
                    });
-         });
+         }); */
          
          
          
@@ -748,8 +820,8 @@ function initMap(){
                     +"<div class='revBox1'>"
                     +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
                     +"<div class='revBox1_1'>"
-                    +"<div class='revNickName'>"+review.nickName+"</div>"
-                    +"<div calss='revAddress'>"+review.address+"</div>"
+                    +"<div class='revNickName' id='revNickName'>"+review.nickName+"</div>"
+                    +"<div class='revAddress' id='revAddress'>"+review.address+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
@@ -1251,6 +1323,8 @@ function initMap(){
          deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
          reviewIds = []; //reviewIds 초기화
          infowindow.close();
+         
+         
          
          $.ajax({
               url:'getMyReviewList',
@@ -1840,6 +1914,19 @@ function initMap(){
 		}
     }
     
+    var callApiInfo = function(mouseEvent) {
+    	myLocMKinfo.close();
+    	
+		//클릭한 위치 가져오기
+    	var latlng = mouseEvent.latLng;
+    	var lat = latlng.getLat(),
+    	lon = latlng.getLng();
+		
+    	//인포윈도우, API
+    	setAPI_Info(mouseEvent.latLng);
+    	
+    }
+    
 	//내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
 	function loadAPICall(){
    		console.log("loadAPICALL");
@@ -1850,18 +1937,7 @@ function initMap(){
 	    callMyLocation();
 
 	    //지도 클릭 시 : 클릭한 위치의 기상API가져오기 + 내위치마커설정 버튼의 위치 매개변수 설정
-	    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-	    	myLocMKinfo.close();
-	    	
-			//클릭한 위치 가져오기
-	    	var latlng = mouseEvent.latLng;
-	    	var lat = latlng.getLat(),
-	    	lon = latlng.getLng();
-			
-	    	//인포윈도우, API
-	    	setAPI_Info(mouseEvent.latLng);
-	    	
-	    });
+	    kakao.maps.event.addListener(map, 'click', callApiInfo);
     		
 	} //end loadAPICall()
       
