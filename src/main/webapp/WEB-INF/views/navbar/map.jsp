@@ -810,7 +810,7 @@ function initMap(){
                     //평점(구름아이콘)
                     var rating = "";
                     for(var i=0; i<review.rating; i++){
-                       rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+                       rating +="<img src='resources/img/thumbs.png' class='revRatingImg'>";
                     }
                    
                     var element = "<li class='list-group-item'>"
@@ -829,8 +829,8 @@ function initMap(){
                     +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
-                    +"<div calss='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
-                    +"<div calss='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
+                    +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
+                    +"<div class='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
                     +"</div>"; //end revBox2_2
 
                     /*
@@ -1361,7 +1361,7 @@ function initMap(){
                     +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
                     +"<div class='revBox1_1'>"
                     +"<div class='revNickName'>"+review.nickName+"</div>"
-                    +"<div calss='revAddress'>"+review.address+"</div>"
+                    +"<div class='revAddress'>"+review.address+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
@@ -1369,8 +1369,8 @@ function initMap(){
                     +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
-                    +"<div calss='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
-                    +"<div calss='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
+                    +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
+                    +"<div class='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
                     +"</div>"; //end revBox2_2
 
                     /*
@@ -1544,7 +1544,7 @@ function initMap(){
                     +"<img class='reviewThumb' src='/photo/"+review.newFileName+"'/>"
                     +"<div class='revBox1_1'>"
                     +"<div class='revNickName'>"+review.nickName+"</div>"
-                    +"<div calss='revAddress'>"+review.address+"</div>"
+                    +"<div class='revAddress'>"+review.address+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
@@ -1552,8 +1552,8 @@ function initMap(){
                     +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
-                    +"<div calss='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
-                    +"<div calss='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
+                    +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
+                    +"<div class='revLikeCnt'><img src='resources/img/like1_full.png' width='18px' height='18px'> 좋아요 "+review.likeCnt+"</div>"
                     +"</div>"; //end revBox2_2
 
                     /*
