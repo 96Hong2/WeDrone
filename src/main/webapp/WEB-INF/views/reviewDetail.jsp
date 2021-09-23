@@ -42,8 +42,9 @@
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="reviewTitle"></h5>
+				<div class="modal-header" id="modal-header">
+					<div id="modalHeader"></div>
+					<h5 class="modal-title" id="reviewTitle" align="left"></h5>
 					<button class="btn btn-default" type="button" data-dismiss="modal"
 						aria-label="Close" id="close">
 						<span aria-hidden="true">X</span>
@@ -55,10 +56,10 @@
 					</div>
 
 					<hr />
+					
+				<div class="modal-footer">
 					<div id='commentArea'>
 						<div class="container px-4 my-4" id="rm_commentWrap">
-		<h3 id="comments" class="fw-bold mt-3">댓글</h3>
-				<hr />
 				<c:if test="${sessionScope.loginNickName == null}">
 					<div class="d-flex align-items-center">
 						<div class="form-floating flex-grow-1 px-2">
@@ -85,57 +86,19 @@
 					</div>
 				</c:if>
 				
-				<div id="commentLists" class="container px-5 py-4 my-4">
-					<!--<c:forEach items="123456789" var="commentLists">
-						<div class="updateCheck">
-							<p class="fw-bold">dddddddd</p>
-							<p class="lh-sm">
-								dddddddd
-								<c:if test="${sessionScope.loginId eq sessionScope.loginId}">
-									<a id="commentDelBtn"
-										class='commentDelBtn ms-2 float-end btn btn-secondary btn-sm'
-										title="123456789">삭제</a>
-									<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>
-								</c:if>
-							</p>
-							<hr />
-						</div>
-						<div class="updateForm visually-hidden" id="updateForm">
-							<p class="fw-bold">123456789$</p>
-							<div class="form-floating flex-grow-1 px-2">
-								<textarea class="commentUpdateContent form-control"
-									placeholder="Leave a comment here" name="commentUpdateContent"
-									id="commentUpdateContent" style="height: 100px; resize: none;">123456789</textarea>
-								<label for="commentUpdateContent">수정할 댓글을 작성하세요</label>
-								<div class="invalid-feedback">1자 이상 입력해주세요</div>
-							</div>
-							<div class="d-flex justify-content-end mt-2"
-								id="commentUpdateOut">
-								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2'
-									id="commentUpdateContentBtn" title="123456789">등록</a>
-								<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>
-							</div>
-							<hr />
-						</div>
-					</c:forEach>-->
-				</div>
+				<div id="commentLists" class="container px-5 py-4 my-4"></div>
 				<div class="container px-5 py-4 my-4" id="pagination_area">
 					<div class="pageContainer">
 								<nav aria-lable="Page navigation" style="text-align:center">
 									<ul class="pagination" id="pagination"></ul>
 								</nav>
-								</div>
+					</div>
 				</div>
 		</div>
 
 					</div>
 
 				</div>
-				<div class="modal-footer">
-					<!-- <a class="btn" id="modalY" href="#">예</a>
-					<button class="btn" type="button" data-dismiss="modal">아니요</button> -->
-					<!-- <button type="button" class="btn btn-default"
-						data-dismiss="modal" id="close">닫기</button> -->
 				</div>
 			</div>
 		</div>
@@ -169,13 +132,27 @@ function loadReviewDetail(reviewId, userId, tab){
 		dataType : 'JSON',
 		success : function(review) {
 			console.log("review dto: ",review);
+			
+			var content2 = "";
+			content2 += "<div class='revBookMarkContainer'>";
+			if(review.isBookMark > 0){
+				conten2t += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
+				content2 += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
+             }else{
+            	content2 += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
+            	content2 += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a></div>";
+             }
+			
 			//작성날짜, 글쓴이닉네임, 사진, 내용, 평점, 좋아요개수, 내 좋아요여부, 댓글갯수, 내 즐겨찾기여부
-			$('#reviewTitle').append("<b>"+review.nickName+" 님의 후기마커</b>");
+			$('#reviewTitle').append("<b>"+review.nickName+" 님의 후기 </b>");
+			$('#reviewTitle').append("<b id='addressArea'>"+review.address+"</b>");
+			$('#modalHeader').append(content2);
+			
 			
 			//평점(구름아이콘)
 			var rating = "";
 			for(var i=0; i<review.rating; i++){
-			    rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+			    rating +="<img src='resources/img/thumbs.png' class='revRatingImg'>";
 			}
 			
 			var content = "";
@@ -184,19 +161,19 @@ function loadReviewDetail(reviewId, userId, tab){
 			+"<img class='reviewImg' id='preview-image' src='/photo/"+review.newFileName+"' />"
 			+"</div>"
 			+"<div class='revContainer2'>"
-			+"<div id='revContent'>"+review.reviewContent+"</div>"
 			+"<div id='revRating'>"
-			+ rating
+			+ rating+""
 			+"</div>"
-			+"<div id='revAddress'>"+review.address+"</div>"
-			+"<div id='revDate'>"+review.reviewDate+"</div>";
+			+"<div id='revDate'>"+review.reviewDate+"</div>"
+			+"<div id='clearBox'></div>"
+			+"<div id='revContent'>"+review.reviewContent+"</div>";
 			
 			if(review.userId == userId){
 				content += "<div style='margin:10px;'><span id='buttonArea2'><button type='button' id='updateBtn' class='btn btn-outline-primary myRevBtns' onclick='updateReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\",\""+userId+"\", "+review.rating+", "+review.areaId+")'>수정하기</button></span>";
 				content += "<span id='buttonArea'><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns' id='deleteBtn'>삭제하기</button></span></div>";
 				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
 			}else{
-				content += "<div class='revContainer2_1' style='margin-top : 60px;'>";
+				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
 			}
 			content += "<div class='revLikeContainer'>";
 			
@@ -215,16 +192,9 @@ function loadReviewDetail(reviewId, userId, tab){
 			content += "</div>";
 			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b id='rm_cmtCnt'>"+review.commentCnt+"</b></div>";
 			
-			content += "<div class='revBookMarkContainer'>";
-			if(review.isBookMark > 0){
-				content += "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
-				content += "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
-             }else{
-            	content += "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
-            	content += "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
-             }
 			
-			content += "</div></div></div>"; //end .revContainer2_1, .revContainer2
+			
+			content += "</div></div>"; //end .revContainer2_1, .revContainer2
             
 			
 			$('.revContainer').append(content);
@@ -599,7 +569,6 @@ function undoLike(reviewId, userId, areaName, tab){
 			content += "<hr/>";
 			content += "</div>";
 			content += "<div class='updateForm visually-hidden' id='updateForm"+item.cmtId+"'>";
-			content += "<p class='fw-bold'>" + item.nickName + "</p>";
 			content += "<div class='form-floating flex-grow-1 px-2'>";
 			content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'";
 			content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cmtContent + "</textarea>";//댓글내용

@@ -195,6 +195,17 @@ ul.tabs li.current {
 	top : 10px;
 	right : 10px;
 }
+
+#content{
+	width : 99%;
+	height: 130px;
+	resize: none;
+}
+
+#loveHere{
+	color: grey;
+	font-size: 15px;
+}
 </style>
 </head>
 <title>드론</title>
@@ -414,19 +425,20 @@ ul.tabs li.current {
                      aria-label="Close"></button>
                </div>
                <div class="modal-body">
-                  <input id="content" type="text" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"/>
-                     <!--  <form id="fileUpload" enctype="multipart/form-data"> -->
+               		<textarea id="content" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"></textarea>
+                  <!-- <input id="content" type="text" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"/> -->
                         <input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
-                     <!--  </form>-->
                </div>
                <div class="modal-footer">
-               <select name="rating" id="rating" style="width:100px; height:30px;">
-               <option value='5'>5</option>
-               <option value='4'>4</option>
-               <option value='3'>3</option>
-               <option value='2'>2</option>
-               <option value='1'>1</option>
-            </select>
+               	<p id="loveHere"> 이 장소 추천해요 </p> 
+               	<img src="resources/img/thumbs.png" width="20" height="20"/>
+	               <select name="rating" id="rating" style="width:100px; height:30px;">
+	               <option value='5'>5</option>
+	               <option value='4'>4</option>
+	               <option value='3'>3</option>
+	               <option value='2'>2</option>
+	               <option value='1'>1</option>
+	            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <button type="button" class="btn btn-secondary"
                      data-bs-dismiss="modal" id="closeBtn">취소</button>
                   <button type="button" class="btn btn-primary" id="rmSubmit">등록</button>
@@ -1640,7 +1652,7 @@ function initMap(){
 		    			myLocMarker = new kakao.maps.Marker({
 		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
 		    			});
-		    			var imageSrc2 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
+		    			var imageSrc2 = 'resources/img/flag.png', // 마커이미지의 주소입니다    
 			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
 			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
@@ -1653,7 +1665,7 @@ function initMap(){
 		    			var locMarker = new kakao.maps.Marker({
 		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
 		    			});
-		    			var imageSrc2 = 'resources/img/otherMK2.png', // 마커이미지의 주소입니다    
+		    			var imageSrc2 = 'resources/img/flag.png', // 마커이미지의 주소입니다    
 			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
 			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
@@ -1718,7 +1730,7 @@ function initMap(){
 	  		    	console.log("setMyLocMK : ", data);
 	  		    	
 	  		    	//내위치마커 생성
-	  		    	var imageSrc1 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
+	  		    	var imageSrc1 = 'resources/img/flag2.png', // 마커이미지의 주소입니다    
 		        	imageSize1 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
 		        	imageOption1 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 		

@@ -6,43 +6,51 @@
 
 /* Wrap */
 .revContainer {
-	display	: flex;
+	/* display	: flex; */
+	background-color: white;
 }
 
 /* revContainer1 : 이미지가 담기는 컨테이너, 이미지는 비율 맞춰서 넣자.. */
 .revContainer1{
-	width: 500px;
+	width: 98%;
 	height: 400px;
-	background-color : pink;
-	justify-content: left;
+	background-color : grey;
+	/* justify-content: left; */
 	margin : 10px;
 }
 
 .reviewImg {
-	width: 500px;
+	width: 100%;
 	height: 400px;
 }
 
 
 /* revContainer2 : 내용, 평점, 날짜, 상세주소, 수정삭제, 좋아요/댓글/즐찾  */
 .revContainer2{
+	width: 98%;
 	margin-left : 5px;
-	width:350px;
 	text-align: left;	
 }
 
 #revContent{
-	margin-top : 10px;
+	margin-top : 17px; 
 	padding : 10px;
-	height : 200px;
+	width: 100%;
+	height : 120px;
 	background-color : aliceblue;
+}
+
+#clearBox{
+	clear:both;
 }
 
 /* Rating : 평점 (구름)*/
 #revRating{
-	display : flex;
-	justify-content: left;
-	margin-top : 10px;
+	/* display : flex; */
+	/* justify-content: left; */
+	width: 85%;
+	height: 20px;
+	float: left;
 }
 
 .revRatingImg{
@@ -54,14 +62,12 @@
 
 
 /* 상세주소, 작성날짜 */
-#revAddress{
-	/* font-size : 15px; */
-	margin-top : 10px;
-}
 
 #revDate{
 	/* font-size : 15px; */
-	margin-top : 5px;
+	width: 15%;
+	height: 20px;
+	float: right;
 }
 
 /* 수정, 삭제버튼 */
@@ -103,7 +109,54 @@
 }
 
 .revBookMarkImg{
-	height: 30px;
+	height: 42px;
+	width: 42px;
+}
+
+#preview-image{
+	object-fit: cover;
+}
+
+#addressArea{
+	font-size: 16px;
+	text-align: right;
+	color: darkgrey;
+	font-weight: lighter;
+}
+
+#commentArea{
+	width: 98%;
+}
+
+.revLikeContainer{
+	width: 100px;
+	float: left;
+	display: inline-block;
+}
+
+#revCmt{
+	width: 100px;
+	float: left;
+	display: inline-block;
+}
+
+.revBookMarkContainer{
 	width: 30px;
-	margin-bottom: 5px;
+	display: inline-block;
+	margin-right: 0;
+}
+
+#modal-header{
+	align-items: unset;
+	justify-content: flex-start;
+}
+
+#reviewTitle{
+	margin-left: 30px;
+	margin-top: 2px;
+}
+
+#close{
+	margin-right: 0;
+	
 }
