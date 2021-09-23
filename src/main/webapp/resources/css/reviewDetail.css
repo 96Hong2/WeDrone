@@ -201,4 +201,5 @@
 
 .updateCheck{
 	width: 96%;
+	word-break:break-all;
 }
