@@ -1,8 +1,6 @@
 
-<!-- 제이쿼리 스크립트 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js">
 	
-</script>
+
 <!--부트스트랩 번들-->
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
