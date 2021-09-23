@@ -117,6 +117,7 @@
 function loadReviewDetail(reviewId, userId, tab){
 	$('.revContainer').empty();
 	$('#reviewTitle').empty();
+	$('#modalHeader').empty();
 	
 	var currPage = 1;
 	
