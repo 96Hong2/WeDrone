@@ -511,9 +511,12 @@ var myLocScheduler;
 
 //지도 초기화
 function initMap(){
+	//location.reload(true); //새로고침
+	
 	deletePolygon(polygons); //폴리곤 제거
     customOverlay.setMap(null); //현재 존재하는 오버레이 삭제
     map.setDraggable(true); //마우스 드래그로 지도 이동하기 on
+    
     deleteMarkers(markers);//마커 제거
     marker.setMap(null); //후기작성마커 제거
     APImarker.setMap(null); //내위치마커-날씨마커 제거
@@ -1625,6 +1628,8 @@ function initMap(){
     var myLocMKinfo = new kakao.maps.InfoWindow({zindex:1});
     //인포윈도우의 버튼 onclick="setMyLocMK()" 설정
     var infoContent = "";
+  	//마커에 마우스 오버 시 나타나는 인포윈도우
+    var locMKinfo = new kakao.maps.InfoWindow({zindex:1});
     
     //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
     function callMyLocMK(){
@@ -1652,7 +1657,7 @@ function initMap(){
 		    			myLocMarker = new kakao.maps.Marker({
 		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
 		    			});
-		    			var imageSrc2 = 'resources/img/flag.png', // 마커이미지의 주소입니다    
+		    			var imageSrc2 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
 			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
 			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
@@ -1671,17 +1676,16 @@ function initMap(){
 						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
 				    	locMarker.setImage(markerImage2);
 				    	
-	                    /*
 	                    kakao.maps.event.addListener(locMarker, 'mouseover', function() {
-	                         //마우스 오버 시 닉네임, 상세주소 인포윈도우 뜸
-	                         locMK.nickName,
-	                         locMK.address
+	                    	var infoContent = "<div>"+locMK.nickName+"님에게 대화걸기</div>";
+	                    	locMKinfo.setContent(infoContent);
+	                    	locMKinfo.open(map, locMarker);
 	                     });
 	                    
 	                    kakao.maps.event.addListener(locMarker, 'mouseout', function() {
-	                         
+	                        locMKinfo.close();
 	                     });
-				    	*/
+				    	
 				    	
 				    	//클릭 시 메시지 보내기
 	                    kakao.maps.event.addListener(locMarker, 'click', function(e) {
