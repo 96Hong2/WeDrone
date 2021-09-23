@@ -70,6 +70,8 @@ public interface MapDAO {
 	int deleteMyLocMK(String loginId);
 
 	ArrayList<MapDTO> callMyLocMK();
+
+	int deleteLocMKs();
 }
 
 

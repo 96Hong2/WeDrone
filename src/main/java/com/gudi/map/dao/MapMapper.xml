@@ -9,7 +9,7 @@
 <mapper namespace="com.gudi.map.dao.MapDAO">	
 
 	<select id="getReviewCnt" parameterType="String" resultType="int">
-		SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{areaName})
+		SELECT COUNT(reviewId) FROM reviewMK WHERE areaId=(SELECT areaId FROM area WHERE areaName=#{areaName}) AND isdel='N'
 	</select>
 	
 	<select id="getAreaRating" parameterType="String" resultType="int">
@@ -80,7 +80,7 @@
 		(SELECT newFileName FROM image WHERE imgField='review' AND postId=#{param1}) newFileName
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1}) likeCnt
 		,(SELECT COUNT(*) FROM likes WHERE reviewId=#{param1} AND userId=#{param2}) isLike
-		,(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=#{param1}) commentCnt
+		,(SELECT COUNT(cmtId) FROM comments WHERE cmtField='review' AND postId=#{param1} AND isdel='N') commentCnt
 		,(SELECT COUNT(*) FROM bookMark WHERE reviewId=#{param1} AND userId=#{param2}) isBookMark
 		,(SELECT areaName FROM area WHERE areaId=reviewMK.areaId) areaName
 		FROM reviewMK 
@@ -193,4 +193,8 @@
 	<select id="callMyLocMK" resultType="com.gudi.map.dto.MapDTO">
 		SELECT myLocId, lat, lon, nickName, address, userId, myLocTime FROM myLocMK
 	</select>
+	
+	<delete id="deleteLocMKs">
+		DELETE FROM myLocMK WHERE (myLocTime &lt; SYSDATE)
+	</delete>
 </mapper>
