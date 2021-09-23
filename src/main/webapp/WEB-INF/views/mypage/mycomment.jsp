@@ -70,29 +70,29 @@
 			<div class="cont container w-50">
 				<!-- 내가 쓴 댓글 -->
 				<div class="cont container">
-					<c:if test="${reviewCmtList[0] ne null}">
+					<c:if test="${cmtList[0] ne null}">
 						<table class="table table-hover mt-2">
 							<thead class="table-light">
 								<tr>
-									<th scope="col">제목</th>
+									<th scope="col">날짜</th>
 									<th scope="col">댓글내용</th>
 									<th class="text-center" scope="col">상세보기</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${productCommentList}" var="list">
+								<c:forEach items="${cmtList}" var="list">
 									<tr>
-										<td class="align-middle">${list.reviewName}</td>
-										<td class="align-middle">${list.reviewContent}</td>
-										<td class="align-middle"><%-- <button class="btn btn-dark"
-												onclick="location.href='/Project/productdetail?productId=${list.}'">상세보기</button> --%></td>
+										<td class="align-middle">${list.cmtDate}</td>
+										<td class="align-middle">${list.cmtContent}</td>
+										<td class="align-middle"><button class="btn btn-dark"
+												onclick="location.href='/Project2/getReviewDetail?reviewId=${list.reviewId}'">상세보기</button></td>
 									</tr>
 
 								</c:forEach>
 							</tbody>
 						</table>
 					</c:if>
-					<c:if test="${reviewCmtList[0] eq null}">
+					<c:if test="${cmtList[0] eq null}">
 						<div class="text-center text-muted"><h3>작성한 댓글이 없습니다</h3></div>
 					</c:if>
 				</div>

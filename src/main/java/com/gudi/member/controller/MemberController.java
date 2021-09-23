@@ -78,7 +78,7 @@ public class MemberController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/memberinfo")
+	@RequestMapping(value = "/memberInfo")
 	public ModelAndView memberInfo(@RequestParam String userId) {
 		logger.info("id : {}", userId);
 		return service.memberInfo(userId);

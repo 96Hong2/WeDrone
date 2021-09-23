@@ -19,7 +19,7 @@
 	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
 	crossorigin="anonymous">
 <%-- 공통 css --%>
-<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
+<link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 </head>
 <title>드론</title>
 <body>
@@ -152,20 +152,17 @@
 					</div>
 					<hr />
 					<div class="col text-center">
-						<form action="${path}/userDel" method="post" id="delForm">
+						<form action="${path}/memberDel" method="post" id="delForm">
 							<input id="dropbtn" class="btn btn-dark mx-2" type="button"
 								value="탈퇴하기">
 						</form>
 					</div>
 				</div>
+				</div>
+				</div>
 			</div>
 </body>
-</div>
-</div>
-</div>
-</div>
-</div>
-</script>
+
 <script type="text/javascript">	
 
 	$(document).ready(function() {

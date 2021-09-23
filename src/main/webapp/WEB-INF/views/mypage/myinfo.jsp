@@ -20,14 +20,9 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
-<script>
-	if ($("#nickName").val().length < 1) {
-		alert("닉네임은 2글자 이상이어야 합니다.")
-		$("#nickname").focus();
-		return false;
-	}
-</script>
+
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>드론</title>
 <body>
 
@@ -80,17 +75,16 @@
 				<form id="myinfoform" action="${path}/memberupdate" method="post"
 					class="needs-validation py-3" novalidate>
 					<div class="form-floating col-md-9 mb-3">
-						<input type="text" class="nullchecks nullcheck form-control"
-							name="nickName" title="${updateSuc}
-							id="
-							nickName" placeholder="닉네임" value="${sessionScope.loginNickName}"
-							required> <label for="validationTooltip01"
-							class="fw-bold">닉네임</label>
+						<input type="text" class="nullchecks nullcheck form-control" name="nickName"
+							title="${updateSuc}
+							id="nickName" placeholder="닉네임"
+							value="${sessionScope.loginNickName}" required> <label
+							for="validationTooltip01" class="fw-bold">닉네임</label>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
 							정보입니다(100자 이하만 가능)</div>
-
-						<input type="button" class="btn btn-secondary btn-sm mt-2"
+							
+								<input type="button" class="btn btn-secondary btn-sm mt-2"
 							id="nickCheck" value="중복확인">
 						<!-- 중복확인 끝 -->
 						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
@@ -99,38 +93,37 @@
 
 					<div class="form-floating col-md-9 mb-3">
 						<input type="password" class="nullchecks form-control" name="DBPw"
-							id="pwForm" placeholder="비밀번호" value="${info.DBPw}" required>
+							id="pwForm" placeholder="비밀번호" value="${dto.DBPw}" required>
 						<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<div class="invalid-feedback">10자 이상 입력해주세요</div>
 					</div>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="password" class="form-control" id="UserPwch"
 							name="UserPwch" placeholder="비밀번호확인" value="" required> <label
-							for="validationTooltip02" class="fw-bold">비밀번호확인</label>
+							for="validationTooltip02" class="fw-bold">비밀번호 변경확인</label>
 						<div class="invalid-feedback">동일한지 확인해주세요</div>
 					</div>
 
 					<div class="col-md-9 mb-3">
-						<label for="checks" class="fw-bold" id="emailsusin"
-							name="emailsusin">알림 수신</label>
+						<label for="checks" class="fw-bold" id="chkAlert"
+							name="chkAlert">알림 수신</label>
 						<div class="form-check form-check-inline mx-3">
-							<label class="form-check-label" for="emailcheckchange1">
+							<label class="form-check-label" for="alarmcheckchange">
 								동의 </label> <input class="form-check-input" type="radio" value="Y"
-								name="emailcheckchange" id="emailcheckchange1"
-								<c:if test="${info.chkAlert eq 'Y'}">checked</c:if>>
+								name="chkAlert" id="chkAlert"
+								<c:if test="${dto.chkAlert eq 'Y'}">checked</c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
-								name="emailcheckchange" id="emailcheckchange2" value="N"
-								<c:if test="${info.chkAlert eq 'N'}">checked</c:if>> <label
-								class="form-check-label" for="emailcheckchange2"> 거부 </label>
+								name="alarmcheckchange" id="chkAlert2" value="N"
+								<c:if test="${dto.chkAlert eq 'N'}">checked</c:if>> <label
+								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>
 					</div>
 					<hr />
 					<div class="col text-center">
 						<input id="infochange" class="btn btn-dark" type="submit"
 							onclick="go_submit()" value="정보수정">
-
 					</div>
 				</form>
 			</div>
@@ -140,30 +133,10 @@
 	</div>
 	</div>
 	<script>
-		$('#infochange')
-				.click(
-						function() {
-							if ($('#nickName').attr('class') != 'form-control is-invalid'
-									&& $('#DBPw').attr('class') != 'form-control is-invalid') {
-								//nkckName 요소의 class 속성의 값을 가져온다.
-								console.log("안녕");
-								$(this).attr('type', 'submit');
-								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
-							}
-						})
-		if ($('#nickName').attr('title') != "") {
-			//만약 nickName 요소의 title 속성을 추가 
-			Swal.fire({
-				title : '정보수정완료',
-				icon : 'success',
-				confirmButtonColor : '#000',
-				confirmButtonText : '확인',
-			})
-		}
 
-		$("#nickCheck").click(function() {
-			;
-			console.log(nickName);
+	$("#nickCheck").click(function() {
+			
+			console.log("nickName");
 			$.ajax({
 				type : 'post',
 				url : 'nickCheck',
@@ -182,9 +155,22 @@
 				}
 			})
 		})
+	
+	
+		$('#infochange').click(function() {
+							if ($('#nickName').attr('class') != 'form-control is-invalid'
+									&& $('#DBPw').attr('class') != 'form-control is-invalid') {
+								//nkckName 요소의 class 속성의 값을 가져온다.
+								console.log("안녕");
+								$(this).attr('type', 'submit');
+								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
+							}
+						})
+		
 
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js">
-	</script>
+		
+		</script>
+	
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 </body>
