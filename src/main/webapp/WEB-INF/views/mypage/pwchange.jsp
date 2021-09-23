@@ -40,9 +40,9 @@
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
-					<a class="ps-4  list-group-item list-group-item-action active fs-5"
+					<a class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/memberInfo" style="cursor: pointer;">내 정보</a> <a
-						class="ps-4  list-group-item list-group-item-action fs-5"
+						class="ps-4  list-group-item list-group-item-action active fs-5"
 						href="${path}/pwchange" style="cursor: pointer;">비밀번호 변경</a><a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
@@ -66,31 +66,12 @@
 					class="me-2 btn btn-warning">
 					<i class="bi bi-info-circle"></i>
 				</button>
-				<h2 class="fw-bold my-3 fs-2">내 정보 수정</h2>
+				<h2 class="fw-bold my-3 fs-2">비밀번호 변경</h2>
 			</div>
 			<hr />
 			<div class="cont container w-50">
 				<!-- 내 정보 수정 폼 -->
-				<form id="myinfoform" action="${path}/memberupdate" method="post"
-					class="needs-validation py-3" novalidate>
-					<div class="form-control col-md-9 mb-3">
-						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
-							type="text" class="nullchecks nullcheck form-control"
-							name="nickName" title="${updateSuc}
-							id="nickName" placeholder="닉네임" value="${dto.nickName}"
-							required>
-						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
-						<div id="check2" class="invalid-feedback visually-hidden">필수
-							정보입니다(100자 이하만 가능)</div>
-
-						<input type="button" class="btn btn-secondary btn-sm mt-2"
-							id="nickCheck" value="중복확인">
-						<!-- 중복확인 끝 -->
-						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
-						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
-					</div>
-
-					<div class="form-control col-md-9 mb-3">
+				<div class="form-control col-md-9 mb-3">
 					<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<input type="password" class="form-control" name="UserPw"
 							id="UserPw" placeholder="비밀번호" value="" required>
@@ -104,27 +85,6 @@
 						<input id="infopwchange" class="btn btn-secondary btn-sm mt-2"
 							type="button" value="비밀번호 변경">
 					</div>
-
-					<div class="col-md-9 mb-3">
-						<label for="checks" class="fw-bold" id="chkAlert" name="chkAlert">알림
-							수신</label>
-						<div class="form-check form-check-inline mx-3">
-							<label class="form-check-label" for="alarmcheckchange">
-								동의 </label> <input class="form-check-input" type="radio" value="Y"
-								name="chkAlert" id="chkAlert"
-								<c:if test="${dto.chkAlert eq 'Y'}">checked</c:if>>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio"
-								name="alarmcheckchange" id="chkAlert2" value="N"
-								<c:if test="${dto.chkAlert eq 'N'}">checked</c:if>> <label
-								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
-						</div>
-					</div>
-					<hr/>
-					<div class="col text-center">
-						<input id="infochange" class="btn btn-dark" type="submit"
-							onclick="go_submit()" value="정보수정">
 					</div>
 				</form>
 			</div>

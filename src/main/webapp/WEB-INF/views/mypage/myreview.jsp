@@ -40,6 +40,8 @@
 					<a class="ps-4  list-group-item list-group-item-action  fs-5"
 						href="${path}/memberInfo" style="cursor: pointer;">내 정보</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
+						href="${path}/pwchange" style="cursor: pointer;">비밀번호 변경</a><a
+						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mypost" style="cursor: pointer;">내가 쓴 글</a><a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/mycomment" style="cursor: pointer;">내가 쓴 댓글</a> <a
