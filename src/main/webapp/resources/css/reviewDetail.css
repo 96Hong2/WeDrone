@@ -33,11 +33,12 @@
 }
 
 #revContent{
-	margin-top : 17px; 
+	margin-top : 20px; 
 	padding : 10px;
 	width: 100%;
-	height : 120px;
+	height : 100px;
 	background-color : aliceblue;
+	margin-left: 2px;
 }
 
 #clearBox{
@@ -48,9 +49,10 @@
 #revRating{
 	/* display : flex; */
 	/* justify-content: left; */
-	width: 85%;
+	width: 80%;
 	height: 20px;
 	float: left;
+	margin-left: 7px;
 }
 
 .revRatingImg{
@@ -68,6 +70,8 @@
 	width: 15%;
 	height: 20px;
 	float: right;
+	font-weight: lighter;
+	margin-top: 2px;
 }
 
 /* 수정, 삭제버튼 */
@@ -79,8 +83,9 @@
 /* 좋아요, 댓글, 즐찾 */
 .revContainer2_1{
 	padding-right : 10px;
-	display : flex;
 	justify-content: space-between;
+	height: 58px;
+	margin-left: 2px;
 }
 
 .likeAnchor{
@@ -111,6 +116,7 @@
 .revBookMarkImg{
 	height: 42px;
 	width: 42px;
+	margin-bottom: 3;
 }
 
 #preview-image{
@@ -130,33 +136,69 @@
 
 .revLikeContainer{
 	width: 100px;
+	height: 60%;
 	float: left;
 	display: inline-block;
+	margin-top: 12px;
+	margin-left: 3px;
 }
 
 #revCmt{
 	width: 100px;
 	float: left;
+	height: 60%;
 	display: inline-block;
+	margin-left: 7px;
+	margin-top: 12px;
 }
 
 .revBookMarkContainer{
-	width: 30px;
+	width: 45px;
 	display: inline-block;
 	margin-right: 0;
 }
 
 #modal-header{
 	align-items: unset;
-	justify-content: flex-start;
+	justify-content: space-between;
+	padding: 0.6rem 0.6rem;
 }
 
 #reviewTitle{
-	margin-left: 30px;
-	margin-top: 2px;
+	margin-top: 5px;
+	margin-left: 10px;
+	display: inline-block;
 }
 
-#close{
-	margin-right: 0;
-	
+#modalHeader{
+	margin-left: 10px;
+	width: 45px;
+	float:left;
+} 
+
+#header1{
+	width: 90%;
+}
+
+#btnArea{
+	float: right;
+}
+
+#updateBtn, #deleteBtn{
+	padding: 0.370rem 0.68rem;
+	font-size: 0.9rem;
+	margin-right: 2px;
+}
+
+#pageContainer{
+	display: flex;
+}
+
+#pageNav{
+	display: flex;
+	justify-content: center;
+}
+
+.updateCheck{
+	width: 96%;
 }

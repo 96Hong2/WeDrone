@@ -43,19 +43,20 @@
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header" id="modal-header">
-					<div id="modalHeader"></div>
-					<h5 class="modal-title" id="reviewTitle" align="left"></h5>
-					<button class="btn btn-default" type="button" data-dismiss="modal"
-						aria-label="Close" id="close">
-						<span aria-hidden="true">X</span>
-					</button>
+					<div id="header1">
+						<div id="modalHeader"></div>
+						<h5 class="modal-title" id="reviewTitle"></h5>
+					</div>
+					<div id="header2">
+						<button class="btn btn-default" type="button" data-dismiss="modal"
+							aria-label="Close" id="close">
+							<span aria-hidden="true">X</span>
+						</button>
+					</div>
 				</div>
 				<div class="modal-body">
 					<div class='revContainer'>
-						
 					</div>
-
-					<hr />
 					
 				<div class="modal-footer">
 					<div id='commentArea'>
@@ -86,10 +87,10 @@
 					</div>
 				</c:if>
 				
-				<div id="commentLists" class="container px-5 py-4 my-4"></div>
+				<div id="commentLists" class="container py-4 my-4"></div>
 				<div class="container px-5 py-4 my-4" id="pagination_area">
 					<div class="pageContainer">
-								<nav aria-lable="Page navigation" style="text-align:center">
+								<nav aria-lable="Page navigation" style="text-align:center" id="pageNav">
 									<ul class="pagination" id="pagination"></ul>
 								</nav>
 					</div>
@@ -168,14 +169,8 @@ function loadReviewDetail(reviewId, userId, tab){
 			+"<div id='clearBox'></div>"
 			+"<div id='revContent'>"+review.reviewContent+"</div>";
 			
-			if(review.userId == userId){
-				content += "<div style='margin:10px;'><span id='buttonArea2'><button type='button' id='updateBtn' class='btn btn-outline-primary myRevBtns' onclick='updateReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\",\""+userId+"\", "+review.rating+", "+review.areaId+")'>수정하기</button></span>";
-				content += "<span id='buttonArea'><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns' id='deleteBtn'>삭제하기</button></span></div>";
 				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
-			}else{
-				content += "<div class='revContainer2_1' style='margin-top : 10px;'>";
-			}
-			content += "<div class='revLikeContainer'>";
+				content += "<div class='revLikeContainer'>";
 			
 			if(review.isLike > 0){
 				content += "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+review.areaName+"\",\""+tab+"\")' class='likeAnchor'>";
@@ -192,7 +187,10 @@ function loadReviewDetail(reviewId, userId, tab){
 			content += "</div>";
 			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b id='rm_cmtCnt'>"+review.commentCnt+"</b></div>";
 			
-			
+			if(review.userId == userId){
+				content += "<div id='btnArea'><span id='buttonArea2'><button type='button' id='updateBtn' class='btn btn-outline-primary myRevBtns' onclick='updateReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\",\""+userId+"\", "+review.rating+", "+review.areaId+")'>수정</button></span>";
+				content += "<span id='buttonArea'><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns' id='deleteBtn'>삭제</button></span></div>";
+			}
 			
 			content += "</div></div>"; //end .revContainer2_1, .revContainer2
             
@@ -267,7 +265,7 @@ function doLike(reviewId, userId, areaName, tab){
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
 			console.log("좋아요 알림 보내기 : ", data.informSuccess);
-			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
+			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "
             +"<b>"+data.likeCnt+"</b></div></a></div>";
@@ -297,7 +295,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		success : function(data) {
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
-			var contents = "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
+			var contents = "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 "
             +"<b>"+data.likeCnt+"</b></div></a></div>";
@@ -326,7 +324,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			dataType : 'JSON',
 			success : function(data) {
 				console.log("data.success : ",data.success);
-				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
+				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
 				
 				$('.revBookMarkContainer').empty();
@@ -354,7 +352,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			dataType : 'JSON',
 			success : function(data) {
 				console.log("data.success : ",data.success);
-				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
+				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
 				
 				$('.revBookMarkContainer').empty();
