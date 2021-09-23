@@ -114,7 +114,7 @@ public class MemberService {
 		int success = dao.memberDel(userId);
 		logger.info("삭제된 행 : " + success);
 
-		mav.setViewName("redirect:/home");
+		mav.setViewName("redirect:/");
 
 		return mav;
 	}

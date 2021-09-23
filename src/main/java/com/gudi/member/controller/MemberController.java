@@ -85,9 +85,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/memberDel")
-	public ModelAndView memberDel(@RequestParam String userId) {
-		logger.info("delete id : {}", userId);
-		return service.memberDel(userId);
+	public ModelAndView memberDel(HttpSession session){
+		String loginId = (String)session.getAttribute("loginId");
+		return service.memberDel(loginId);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)

@@ -69,7 +69,7 @@ tbody a{
     <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
     <li class="breadcrumb-item active fs-4" aria-current="page">Mypage</li>
   </ol>
-
+</nav>
 
 <div class='row'>
 	<!-- 사이드바 -->
@@ -94,7 +94,7 @@ tbody a{
 						class="ps-4 list-group-item list-group-item-action fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a>
 					<a class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
+						href="${path}/memberDel" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 </div>

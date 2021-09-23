@@ -37,13 +37,13 @@
 	</select>
 
 	<!--수빈 회원탈퇴 -->
-	<delete id="memberDel">
-		DELETE FROM member WHERE userId = #{userId}
-	</delete>
+	<update id="memberDel" parameterType="String">
+		UPDATE members SET isDel = 'Y' WHERE userId = #{userId}
+	</update>
 
 	<!--수빈 내정보 업데이트-->
 	<update id="update" parameterType="hashmap">
-		UPDATE member
+		UPDATE members
 		<set>
 			<if test="!DBPw.equals('')">DBPw = fn_encrypt(#{DBPw}),</if>
 			<if test="!nickName.equals('')">nickName = #{nickName}</if>

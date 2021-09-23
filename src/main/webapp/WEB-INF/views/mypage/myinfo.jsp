@@ -53,7 +53,7 @@
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
+						href="${path}/memberDel" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 		</div>
@@ -178,7 +178,7 @@
 	
 		$('#infochange').click(function() {
 							if ($('#nickName').attr('class') != 'form-control is-invalid'
-									&& $('#DBPw').attr('class') != 'form-control is-invalid') {
+									&& $('#pw').attr('class') != 'form-control is-invalid') {
 								//nkckName 요소의 class 속성의 값을 가져온다.
 								console.log("정보 바뀜");
 								$(this).attr('type', 'submit');

@@ -20,7 +20,10 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>0
 <title>드론</title>
 <body>
 	<c:if test="${sessionScope.loginId eq null}">
@@ -50,7 +53,7 @@
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
 						class="ps-4  list-group-item list-group-item-action active fs-5"
-						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
+						href="${path}/memberDel" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 		</div>
@@ -153,8 +156,10 @@
 					<hr />
 					<div class="col text-center">
 						<form action="${path}/memberDel" method="post" id="delForm">
-							<input id="dropbtn" class="btn btn-dark mx-2" type="button"
-								value="탈퇴하기">
+							<button type="button" class="btn btn-dark mx-2" 
+								value="탈퇴하기" onclick="location.href='memberDel?id=${dto.id}';">탈퇴하기</button>
+								
+								
 						</form>
 					</div>
 				</div>
@@ -163,33 +168,6 @@
 			</div>
 </body>
 
-<script type="text/javascript">	
-
-	$(document).ready(function() {
-		$('#dropbtn').click(function() {
-			if($('#exitcheck').is(":checked")){
-				Swal.fire({
-					  title: '정말 탈퇴하시겠습니까?',
-					  text: "사용하고 계신 닉네임은 탈퇴할 경우 재사용 및 복구가 불가능합니다.",
-					  icon: 'warning',
-					  showCancelButton: true,
-					  confirmButtonColor: '#000',
-					  confirmButtonText: '탈퇴하기',
-					  cancelButtonText: '취소'		
-					
-					}).then((result) => {							
-						 if (result.isConfirmed) {
-							 $('#delForm').submit();
-						}
-					})
-			}else{				
-				$('#exitcheck').addClass('is-invalid');
-			}
-			
-		})
-	})
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>

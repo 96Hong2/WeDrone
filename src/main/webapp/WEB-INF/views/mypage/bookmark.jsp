@@ -52,7 +52,7 @@
 						class="ps-4  list-group-item list-group-item-action active fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
+						href="${path}/memberDel" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 		</div>
