@@ -16,6 +16,7 @@
 				<value>classpath:com/gudi/board/dao/*.xml</value>
 				<value>classpath:com/gudi/member/dao/*.xml</value>
 				<value>classpath:com/gudi/map/dao/*.xml</value>
+				<value>classpath:com/gudi/calendar/dao/*.xml</value>
 			</list>
 		</property>
 		<property name="configLocation" value="classpath:config/aliase.xml"/>
@@ -25,4 +26,5 @@
 	<mybatis-spring:scan base-package="com.gudi.board.dao"/>
 	<mybatis-spring:scan base-package="com.gudi.member.dao"/>
 	<mybatis-spring:scan base-package="com.gudi.map.dao"/>
+	<mybatis-spring:scan base-package="com.gudi.calendar.dao"/>
 </beans>

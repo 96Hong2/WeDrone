@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper 에 대한 선언 문 -->
+<!DOCTYPE mapper PUBLIC
+	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gudi.calendar.dao.CalendarDAO">	
+	
+            
+    	<select id="selectEventList" resultType="com.gudi.calendar.dto.CalendarDTO">
+ 			SELECT SCHEDULEID AS  "id" , SCHEDULENAME title ,  STARTDATE as "start" ,ENDDATE AS "end"  FROM CALENDAR 
+    	</select>
+    	
+    	 <insert id="addSchedule" parameterType="com.gudi.calendar.dto.CalendarDTO">
+	    	INSERT INTO CALENDAR (SCHEDULEID, SCHEDULENAME, STARTDATE, ENDDATE) VALUES(CALENDAR_SEQ.NEXTVAL, #{scheduleName}, #{startDate}, #{endDate})
+    	</insert>
+	
+	
+		<select id="getEvent" resultType="com.gudi.calendar.dto.CalendarDTO">
+		  SELECT SCHEDULEID AS  "id" , SCHEDULENAME as title ,  STARTDATE as "start" ,ENDDATE AS "end"  FROM CALENDAR WHERE  SCHEDULEID =#{id} 
+		</select>
+    
+    	<delete id="deleteSch">
+    		DELETE FROM CALENDAR WHERE  SCHEDULEID =#{id} 
+    	</delete>
+    	
+    	<update id="updateSch">
+    		UPDATE CALENDAR SET SCHEDULENAME= #{scheduleName}, STARTDATE=#{startDate}, ENDDATE=#{endDate} WHERE SCHEDULEID=#{scheduleId}    		
+    	</update>
+    	
+</mapper>

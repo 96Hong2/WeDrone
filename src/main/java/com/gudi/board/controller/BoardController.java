@@ -67,12 +67,6 @@ public class BoardController {
 			return "navbar/map";
 		}
 
-		// calendar 페이지
-		@RequestMapping("/calendar")
-		public String springView1(HttpServletRequest request, Model model) throws Exception {
-
-			return "navbar/calendar";
-		}
 
 		@RequestMapping(value = "/board")
 		public String fbList(PageMaker pageMaker,  Model model, Map<String, Object> map, HttpServletRequest request) {

@@ -1,0 +1,68 @@
+@charset "utf-8";
+#calendar{
+   width:65%;
+   margin:20px auto;
+   margin-bottom:200px;
+}
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* 드래그 박스의 스타일 */
+#external-events {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	width: 100px;
+	padding: 0 10px;
+	border: 1px solid #ccc;
+	background: #eee;
+	text-align: left;
+}
+
+#external-events h4 {
+	font-size: 16px;
+	margin-top: 0;
+	padding-top: 1em;
+}
+
+#external-events .fc-event {
+	margin: 3px 0;
+	cursor: move;
+}
+
+#external-events p {
+	margin: 1.5em 0;
+	font-size: 11px;
+	color: #666;
+}
+
+#external-events p input {
+	margin: 0;
+	vertical-align: middle;
+}
+
+#calendar-wrap {
+	margin-left: 0px;
+}
+
+#calendar1 {
+	max-width: 1100px;
+	margin: 0 auto;
+}
+.fc-myCustomButton-button {
+/* 	background: #b31515 !important; */
+}
+
+.form-group{
+	
+	margin-bottom: 30px;
+}
+
+.fc-event-time, .fc-event-title{
+	font-size: 15px;	
+}
+.empl_nm{
+	display: none;
+}

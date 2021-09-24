@@ -64,6 +64,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		
 	// 로그인 한 전체의 세션 값을 list로 가져온다.
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+	
 	// 1대1
 	Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
 	
@@ -153,7 +154,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		webSocketSession.sendMessage(textMessage);
 		
 		
-	}			
+    	}			
 }
 
 
