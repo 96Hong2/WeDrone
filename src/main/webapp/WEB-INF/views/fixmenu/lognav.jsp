@@ -93,8 +93,32 @@
 	background-color:snow;
 }
 
+#reqChatBox li{
+	list-style: none;
+}
+
 #userListBox{
 	background-color:aliceblue;
+}
+
+#userListBox li{
+	list-style: none;
+}
+
+#userListBox a{
+	color: black;
+	text-decoration: none;
+}
+
+#userListBox a:hover{
+	font-weight : bolder;
+}
+
+
+#userImg{
+	width : 20px;
+	height : 20px;
+	margin-right : 3px;
 }
 
 </style>
@@ -139,11 +163,15 @@ function closeMsgBox(){
 
 //채팅창 팝업 열기
 function openMsg(user){
+	console.log("대화상대 : ",user);
 	//대화상대 user를 파라미터로 넘겨주기
-    var url = "message";
-    var name = "message popup";
-    var option = "width = 500, height = 500, top = 100, left = 200, location = no";
-    window.open(url, name, option);
+	
+    var url = "./chatRoom?other="+user;
+	//var url = "./message?other="+user;
+    var title = "popup";
+    var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
+                                   
+    window.open(url,title,status);
 }
 
 
@@ -161,12 +189,12 @@ function getUserList(){
 	    	list.forEach(function(user, index){
 	    		if(user.userId != "{sessionScope.loginId}"){
 	    		
-		    	content += "<li><div>"+user.nickName+" 님 &nbsp;";
+	    		content += "<li><a href='javascript:openMsg(\""+user.nickName+"\")'><div>"
+		    	content += "<img src='resources/img/comment.png' id='userImg'>"+user.nickName+" 님 &nbsp;";
 		    	
-		    	//내위치마커 주소(시까지)
-		    	var address = user.address;
-		    	address = address.substring(0, address.indexOf("시")+1); //시작인덱스, 끝인덱스
-		    	content += address+"</div></li>";
+		    	//내위치마커 주소
+		    	//address = address.substring(0, address.indexOf("시")+1); //시작인덱스, 끝인덱스
+		    	content += "<span style='font-size:15px; color:darkgray;'>"+user.address+"</span></div></a></li>";
 	    		}
 	    	})
 	    	
