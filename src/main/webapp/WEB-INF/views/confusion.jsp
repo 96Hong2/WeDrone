@@ -35,7 +35,7 @@
 <h3>실시간 날씨정보 띄우기</h3>
 <div id="addressInfo"></div>
 <div id="locationInfo"></div>
-
+<p>KP:<span id="drone-kp"></span></p>
 
 
  
