@@ -68,29 +68,29 @@
 			</div>
 			<hr />
 			<div class="cont container">
-				<c:if test="${getMyReviewList[0] ne null}">
+				<c:if test="${getMyPost[0] ne null}">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th scope="col">주소</th>
+								<th scope="col">제목</th>
 								<th scope="col">글내용</th>
 								<th class="text-center" scope="col">상세보기</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${getMyReviewList}" var="list">
+							<c:forEach items="${getMyPostList}" var="list">
 								<tr>
-									<td class="align-middle">${list.address}</td>
-									<td class="align-middle">${list.reviewContent}</td>
+									<td class="align-middle">${list.title}</td>
+									<td class="align-middle">${list.postContent}</td>
 									<td>
 										<button class="btn btn-dark"
-												onclick="location.href='/Project2/getReviewDetail?reviewId=${list.reviewId}'">상세보기</button></td>
+												onclick="location.href='/go/fbdetail?postId=${postId}'">상세보기</button></td>
 									</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</c:if>
-				<c:if test="${getMyReviewList[0] eq null}">
+				<c:if test="${getMyPost[0] eq null}">
 					<div class="text-center text-muted">
 						<h3>작성한 글이 없습니다</h3>
 					</div>

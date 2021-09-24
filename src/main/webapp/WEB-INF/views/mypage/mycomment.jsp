@@ -72,7 +72,7 @@
 			<div class="cont container w-50">
 				<!-- 내가 쓴 댓글 -->
 				<div class="cont container">
-					<c:if test="${cmtList[0] ne null}">
+					<c:if test="${getMyComment[0] ne null}">
 						<table class="table table-hover mt-2">
 							<thead class="table-light">
 								<tr>
@@ -82,19 +82,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${cmtList}" var="list">
+								<c:forEach items="${getMyCommentList}" var="list">
 									<tr>
 										<td class="align-middle">${list.cmtDate}</td>
 										<td class="align-middle">${list.cmtContent}</td>
 										<td class="align-middle"><button class="btn btn-dark"
-												onclick="location.href='/Project2/getReviewDetail?reviewId=${list.reviewId}'">상세보기</button></td>
+												onclick="location.href='location.href='/go/fbdetail?postId=${postId}'">상세보기</button></td>
 									</tr>
 
 								</c:forEach>
 							</tbody>
 						</table>
 					</c:if>
-					<c:if test="${cmtList[0] eq null}">
+					<c:if test="${getMyComment[0] eq null}">
 						<div class="text-center text-muted"><h3>작성한 댓글이 없습니다</h3></div>
 					</c:if>
 				</div>

@@ -68,6 +68,6 @@ public interface BoardDAO {
 
 	ArrayList<BoardDTO> getMyPost(String loginId);
 
-
+	ArrayList<BoardDTO> getMyComment(String loginId);
 	
 }

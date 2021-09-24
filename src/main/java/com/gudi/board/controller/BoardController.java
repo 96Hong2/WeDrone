@@ -140,9 +140,8 @@ public class BoardController {
 
 		// 내가 쓴 댓글
 		@RequestMapping("/mycomment")
-		public String springView10(HttpServletRequest request, Model model) throws Exception {
-
-			return "mypage/mycomment";
+		public ModelAndView myComment(HttpSession session) throws Exception {
+			return service.getMyComment(session);
 		}
 
 		// 내 후기마커

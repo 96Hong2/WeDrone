@@ -395,10 +395,22 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				ArrayList<BoardDTO> list = dao.getMyPost(loginId);
 				
 				mav.addObject("list", list);
-				mav.setViewName("mypost");
+				mav.setViewName("mypage/mypost");
 				return mav;
 			}
 		
+			public ModelAndView getMyComment(HttpSession session) {
+				ModelAndView mav = new ModelAndView();
+				
+				String loginId = (String)session.getAttribute("loginId");
+				logger.info("내가 쓴 댓글 가져오기 : " ,loginId);
+				
+				ArrayList<BoardDTO> list = dao.getMyComment(loginId);
+				
+				mav.addObject("list", list);
+				mav.setViewName("mypage/mycomment");
+				return mav;
+			}
 			
 	
 }

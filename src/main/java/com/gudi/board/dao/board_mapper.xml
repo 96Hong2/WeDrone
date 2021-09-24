@@ -165,6 +165,11 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	
 	<select id="getMyPost" parameterType="String" resultType="board">
-		SELECT 글아이디, 제목, 글쓴이, 날짜, (SELECT COUNT(댓글아이디) FROM 댓글 WHERE postId=p.postId) cmtCnt FROM post p WHERE userId=#{loginId} AND postDel='N'
+SELECT postId, title, nickName, postDate, (SELECT COUNT(cmtId) FROM COMMENTS WHERE postId=p.postId AND isDel = 'N') cmtCnt 
+FROM post p WHERE userId=#{loginId} AND postDel='N'
+	</select>
+	
+	<select id="getMyComment" parameterType="String" resultType="board">
+	SELECT cmtId, cmtDate, cmtContent FROM COMMENTS WHERE userId=userId AND isDel='N'
 	</select>
 </mapper>

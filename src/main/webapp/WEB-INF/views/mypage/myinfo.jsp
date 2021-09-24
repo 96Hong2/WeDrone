@@ -71,14 +71,14 @@
 			<hr />
 			<div class="cont container w-50">
 				<!-- 내 정보 수정 폼 -->
-				<form id="myinfoform" action="${path}/memberupdate" method="post"
+				<form id="myinfoform" action="${path}/update" method="post"
 					class="needs-validation py-3" novalidate>
 					<div class="form-control col-md-9 mb-3">
 						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
 							type="text" class="nullchecks nullcheck form-control"
 							name="nickName" title="${updateSuc}
-							id="nickName" placeholder="닉네임" value="${dto.nickName}"
-							required>
+							id="
+							nickName" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
 							정보입니다(100자 이하만 가능)</div>
@@ -90,25 +90,25 @@
 						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
 
-					
+
+
 
 					<div class="col-md-9 mb-3">
 						<label for="checks" class="fw-bold" id="chkAlert" name="chkAlert">알림
 							수신</label>
 						<div class="form-check form-check-inline mx-3">
 							<label class="form-check-label" for="alarmcheckchange">
-								동의 </label> <input class="form-check-input" type="radio" value="Y"
-								name="chkAlert" id="chkAlert"
-								<c:if test="${dto.chkAlert eq 'Y'}">checked</c:if>>
+								동의 </label> <input class="form-check-input" type="radio" name="chkAlert"
+								id="chkAlert" <c:if test="${dto.chkAlert eq 'Y'}"></c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
-								name="alarmcheckchange" id="chkAlert2" value="N"
-								<c:if test="${dto.chkAlert eq 'N'}">checked</c:if>> <label
+								name="alarmcheckchange" id="chkAlert2"
+								<c:if test="${dto.chkAlert eq 'N'}"></c:if>> <label
 								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>
 					</div>
-					<hr/>
+					<hr />
 					<div class="col text-center">
 						<input id="infochange" class="btn btn-dark" type="submit"
 							onclick="go_submit()" value="정보수정">
@@ -121,9 +121,8 @@
 	</div>
 	</div>
 	<script>
+		$("#nickCheck").click(function() {
 
-	$("#nickCheck").click(function() {
-			
 			console.log("nickName");
 			$.ajax({
 				type : 'post',
@@ -143,12 +142,15 @@
 				}
 			})
 		})
-	
-		$('#infopwchange').click(function() {
+
+		$('#infopwchange')
+				.click(
+						function() {
 							if ($('#UserPw').val().trim() == "") {
-								$('#UserPw').attr('class','nullchecks form-control is-invalid');
+								$('#UserPw').attr('class',
+										'nullchecks form-control is-invalid');
 							}
-							
+
 							if ($('#UserPw').attr('class') == 'form-control is-valid'
 									&& $('#UserPwchs').attr('class') == 'form-control is-valid') {
 								//UserName 요소의 class 속성의 값을 가져온다.
@@ -157,15 +159,18 @@
 								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
 							}
 						})
-						$("#UserPwchs").on("propertychange change keyup paste input",function() {
-												if ($("#UserPw").val() == $(this).val()) {
-													$(this).attr("class","form-control is-valid");
-												} else {
-													$(this).attr("class","form-control is-invalid");
-												}
-											});
-	
-		$('#infochange').click(function() {
+		$("#UserPwchs").on("propertychange change keyup paste input",
+				function() {
+					if ($("#UserPw").val() == $(this).val()) {
+						$(this).attr("class", "form-control is-valid");
+					} else {
+						$(this).attr("class", "form-control is-invalid");
+					}
+				});
+
+		$('#infochange')
+				.click(
+						function() {
 							if ($('#nickName').attr('class') != 'form-control is-invalid'
 									&& $('#pw').attr('class') != 'form-control is-invalid') {
 								//nkckName 요소의 class 속성의 값을 가져온다.
@@ -174,10 +179,7 @@
 								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
 							}
 						})
-		
-
-		
-		</script>
+	</script>
 
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
