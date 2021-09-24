@@ -19,16 +19,19 @@
 		padding: 5px;
 	}
 	
-	#hiddenForm{
-		display: none;
-	}
-	
 	#weDrone{
 		color: white;
 	}
 	
 	#shallWeBegin{
 		color: white;
+	}
+	
+	#msg{
+		width:  60%;
+		background-color: transparent;
+		border: 1px solid white;
+		float: left;
 	}
 	
 
@@ -44,7 +47,6 @@
 					<div id="monitor">
 						<span class='text' id="shallWeBegin"></span>
 					</div>
-					<input type="button" id="login" value="시작"/>
 					<div id="hiddenForm">
 						메시지 : <input type="text" id="msg"/>
 						<input type="button" value="전송" onclick="sendMsg()"/>
@@ -75,11 +77,6 @@ setInterval(typing, 200)
 var webSocket = null;
 var $mon = $("#monitor");
 
-
-$("#login").click(function(){
-	$("#hiddenForm").show();
-	$("#login").hide();
-	$(".text").hide();
    var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginId}";
    console.log(url);
    webSocket = new WebSocket(url);

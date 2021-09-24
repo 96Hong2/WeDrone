@@ -658,15 +658,74 @@ function initMap(){
                                    '<span class="title">법정동 주소정보</span>' + 
                                    detailAddr + 
                                '</div><div><p style="color:red;">지원하지 않는 지역입니다.</p></div>';
+                               
+                               		var areaName = "";
+                               		var areaChk = 1;
+                               		
+                               		//마커가 지정지역만 찍히도록..
+                                   if(detailAddr.indexOf('화성시') != -1){
+                                	   areaChk = 2;
+                                       areaName = '화성시';
+                                    }else if(detailAddr.indexOf('오산시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '오산시';
+                                    }else if(detailAddr.indexOf('평택시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '평택시';
+                                    }else if(detailAddr.indexOf('안성시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '안성시';
+                                    }else if(detailAddr.indexOf('이천시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '이천시';
+                                    }else if(detailAddr.indexOf('여주시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '여주시';
+                                    }else if(detailAddr.indexOf('광주시') != -1){
+                                    	areaChk = 2;
+                                       areaName = '광주시';
+                                    }else if(detailAddr.indexOf('성남시 수정구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '성남시 수정구';
+                                    }else if(detailAddr.indexOf('성남시 중원구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '성남시 중원구';
+                                    }else if(detailAddr.indexOf('성남시 분당구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '성남시 분당구';
+                                    }else if(detailAddr.indexOf('용인시 처인구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '용인시 처인구';
+                                    }else if(detailAddr.indexOf('용인시 기흥구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '용인시 기흥구';
+                                    }else if(detailAddr.indexOf('용인시 수지구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '용인시 수지구';
+                                    }else if(detailAddr.indexOf('수원시 권선구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '수원시 권선구';
+                                    }else if(detailAddr.indexOf('수원시 팔달구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '수원시 팔달구';
+                                    }else if(detailAddr.indexOf('수원시 영통구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '수원시 영통구';
+                                    }else if(detailAddr.indexOf('수원시 장안구') != -1){
+                                    	areaChk = 2;
+                                       areaName = '수원시 장안구';
+                                    }
                                    
-                         console.log("상세주소 : "+address_info);
-                         console.log("지역명 : "+name);
+                         //console.log("상세주소 : "+address_info);
+                         //console.log("지역명 : "+areaName);
                          
                          infowindow.setContent(content);
-                         /*
-                         if(address_info.indexOf(name) == -1){
+                         
+                         if(areaChk == 1){
                             infowindow.setContent(content2);
-                         }*/
+                         }
+                         
+                         //console.log("areaChk : "+areaChk);
                                      
                  // 마커 위치를 클릭한 위치로 옮깁니다
                  marker.setPosition(latlng);
