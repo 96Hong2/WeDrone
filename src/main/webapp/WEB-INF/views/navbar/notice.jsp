@@ -20,7 +20,54 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+<style type="text/css">
+table{
+ font-family: "Do Hyeon", sans-serif;
+}
+.table-striped tbody tr:hover{
+	background: #e9ecef;
+	cursor: pointer;
+}
+.pagination{
+	display: inline-flex !important;
+}
 
+.page-item.active .page-link {
+    background-color: #41464b;
+    border-color: #41464b;
+}
+.page-link {
+    color: #41464b;
+}
+.page-link:hover {
+    color: #212529;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+.h1-title{
+ font-family: "Do Hyeon", sans-serif;
+ font-style: normal;
+ font-weight: 500;
+ color: #212529; 
+ font-size: 2.5rem;
+ margin-top: 30px;
+ margin-bottom: 20px;
+}
+tbody a{
+	text-decoration: none;
+	color: #212529;
+}
+.page-link:focus, .page-link:hover {   
+  outline:none;
+}
+nav {
+    margin: 0;
+    padding: 0;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: large;
+    scroll-behavior: smooth;
+}
+</style>
 </head>
 <title>드론</title>
 <body>
@@ -30,14 +77,41 @@
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
-		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
-    <li class="breadcrumb-item active fs-4" aria-current="page">Notice</li>
-  </ol>
-</nav>
-<!-- 들어갈 내용 -->
 
+<div class="wrap">
+		<div class="container bs-docs-container">
+			<div class="row">
+				<div class="col-md-12" style="margin-top: 30px">
+					<h1 class="text-center h1-title">공지사항 게시판 목록</h1>
+				</div>
+				
+ <div class="table-responsive">
+					<table class="table table-striped">
+					<thead>
+		<tr>
+			<th>No.</th>
+			<th>제목</th>			
+			<th>작성일</th>
+		</tr>
+		</thead>
+
+		<c:if test="${noticeList eq null || noticeList eq ''}">
+			<tr>
+				<td colspan="5">해당 데이터가 존재하지 않습니다.</td>
+			</tr>
+		</c:if>
+		<c:forEach items="${noticeList}" var="post">
+			<tr>
+				<td>${post.postId}</td>
+				<td><a href="noticeDetail?postId=${post.postId}">${post.title}</a></td>			
+				<td>${post.postDate}</td>
+			</tr>
+		</c:forEach>
+	</table>
+</div>
+</div>
+</div>
+</div>
 
 
 <!-- 퀵메뉴 -->

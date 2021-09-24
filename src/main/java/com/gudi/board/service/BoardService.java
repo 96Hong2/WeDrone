@@ -333,6 +333,58 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return dao.fileDelete(imgId);
 			}
 
+			
+			public ModelAndView newsList(HttpSession session) {
+				ModelAndView mav = new ModelAndView();
+
+				if (session.getAttribute("loginId") != null) {
+					mav.setViewName("navbar/news");
+					ArrayList<BoardDTO> newsList = dao.newsList();
+					mav.addObject("newsList", newsList);
+				} else {
+					mav.setViewName("loginForm");
+					mav.addObject("msg", "로그인이 필요한 서비스 입니다.");
+				}
+
+				return mav;
+			}
+
+			public ModelAndView noticeList(HttpSession session) {
+				ModelAndView mav = new ModelAndView();
+
+				if (session.getAttribute("loginId") != null) {
+					mav.setViewName("navbar/notice");
+					ArrayList<BoardDTO> noticeList = dao.noticeList();
+					mav.addObject("noticeList", noticeList);
+				} else {
+					mav.setViewName("loginForm");
+					mav.addObject("msg", "로그인이 필요한 서비스 입니다.");
+				}
+
+				return mav;
+			}
+
+			public ModelAndView newsDetail(String postId) {
+				ModelAndView mav = new ModelAndView();
+				BoardDTO dto = dao.newsDetail(postId);//글의 상세 정보
+				mav.addObject("post", dto);			
+				
+				//해당 글의 파일 정보		
+				mav.setViewName("newsDetail");
+
+				return mav;
+			}
+
+			public ModelAndView noticeDetail(String postId) {
+				ModelAndView mav = new ModelAndView();
+				BoardDTO dto = dao.noticeDetail(postId);//글의 상세 정보
+				mav.addObject("post", dto);			
+				
+				//해당 글의 파일 정보		
+				mav.setViewName("noticeDetail");
+
+				return mav;
+			}
 		
 			
 	

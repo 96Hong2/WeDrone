@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,25 +74,48 @@ public class BoardController {
 			return "navbar/calendar";
 		}
 
-		// news 페이지
-		@RequestMapping("/news")
-		public String springView2(HttpServletRequest request, Model model) throws Exception {
+		@RequestMapping(value = "/board")
+		public String fbList(PageMaker pageMaker,  Model model, Map<String, Object> map, HttpServletRequest request) {
+			int totalCount=service.fbTotalCount(map);
+			pageMaker.setTotPage(totalCount);
+			map.put("pageBegin", pageMaker.getPageBegin());
+			map.put("pageEnd", pageMaker.getPageEnd());
+			List<Map<String, Object>> list=service.fbList(map);
+			String pagination=pageMaker.bootStrapPagingHTML(request.getContextPath()  +"/board");
+			
+			model.addAttribute("list",list);
+			model.addAttribute("totalCount",totalCount);
+			model.addAttribute("pageMaker",pageMaker);
+			model.addAttribute("pagination", pagination);
+			return "fbList";
+		}
 
-			return "navbar/news";
+
+		// news 페이지
+		@RequestMapping(value = "/news", method = RequestMethod.GET)
+		public ModelAndView newsList(HttpSession session) {
+			logger.info("컨트롤 newsList 요청");
+			return service.newsList(session);
+		}
+		
+		// news 상세보기
+		@RequestMapping(value = "/newsDetail")
+		public ModelAndView newsDetail(@RequestParam String postId) {
+			logger.info("상세보기 요청 : " + postId);
+			return service.newsDetail(postId);
 		}
 
 		// notice 페이지
-		@RequestMapping("/notice")
-		public String springView3(HttpServletRequest request, Model model) throws Exception {
-
-			return "navbar/notice";
+		@RequestMapping(value = "/notice", method = RequestMethod.GET)
+		public ModelAndView noticeList(HttpSession session) {
+			logger.info("컨트롤 newsList 요청");
+			return service.noticeList(session);
 		}
-
-		// board 페이지
-		@RequestMapping("/board")
-		public String springView4(HttpServletRequest request, Model model) throws Exception {
-
-			return "navbar/board";
+		// notice 상세보기
+		@RequestMapping(value = "/noticeDetail")
+		public ModelAndView noticeDetail(@RequestParam String postId) {
+			logger.info("상세보기 요청 : " + postId);
+			return service.noticeDetail(postId);
 		}
 
 		// 마이페이지

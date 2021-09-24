@@ -46,23 +46,7 @@ public class FbController {
 	@Autowired
 	InformService informService;
 	
-	@RequestMapping(value = "/fbList")
-	public String fbList(PageMaker pageMaker,  Model model, Map<String, Object> map, HttpServletRequest request) {
-		int totalCount=service.fbTotalCount(map);
-		pageMaker.setTotPage(totalCount);
-		map.put("pageBegin", pageMaker.getPageBegin());
-		map.put("pageEnd", pageMaker.getPageEnd());
-		List<Map<String, Object>> list=service.fbList(map);
-		String pagination=pageMaker.bootStrapPagingHTML(request.getContextPath()  +"/fbList");
-		
-		model.addAttribute("list",list);
-		model.addAttribute("totalCount",totalCount);
-		model.addAttribute("pageMaker",pageMaker);
-		model.addAttribute("pagination", pagination);
-		return "fbList";
-	}
 	
-
 	// 글쓰기//지윤쓰
 	@RequestMapping(value = "/fbwriteForm")
 	public String fbwriteForm(Model model, HttpSession session) {

@@ -148,5 +148,20 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 		DELETE FROM IMAGE WHERE IMGID=#{imgid}		
 	</delete>
 	
+	<select id="newsList" resultType="board">
+		SELECT * FROM post WHERE postDel = 'N' AND postField = 'news' ORDER BY postId  DESC
+	</select>
+	
+	<select id="newsDetail" parameterType="String" resultType="board">
+		SELECT * FROM post WHERE postId = #{postId}  AND postDel = 'N'
+	</select>
+	
+	<select id="noticeList" resultType="board">
+		SELECT * FROM post WHERE postDel = 'N' AND postField = 'notice' ORDER BY postId  DESC
+	</select>
+	
+	<select id="noticeDetail" parameterType="String" resultType="board">
+		SELECT * FROM post WHERE postId = #{postId}  AND postDel = 'N'
+	</select>
 	
 </mapper>

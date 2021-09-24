@@ -58,7 +58,13 @@ public interface BoardDAO {
 
 	int fileDelete(String imgId);
 
-	
+	ArrayList<BoardDTO> newsList();
+
+	ArrayList<BoardDTO> noticeList();
+
+	BoardDTO newsDetail(String postId);
+
+	BoardDTO noticeDetail(String postId);
 
 
 	

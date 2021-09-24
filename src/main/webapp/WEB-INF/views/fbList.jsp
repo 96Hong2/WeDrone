@@ -28,6 +28,13 @@
 <script src="resources/js/jquery.twbsPagination.js"></script>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
+<script>
+if("${sessionScope.loginId}"== null || "${sessionScope.loginId}"== ""){
+   alert("로그인이 필요한 서비스 입니다.");
+   location.href = "${pageContext.request.contextPath}/loginForm";
+}
+</script>
+
 <style type="text/css">
 table{
  font-family: "Do Hyeon", sans-serif;
