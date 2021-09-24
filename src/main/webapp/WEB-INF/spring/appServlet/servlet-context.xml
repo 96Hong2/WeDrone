@@ -41,5 +41,16 @@
 
 	</websocket:handlers>
 	
-	
+	 <interceptors>       
+        <interceptor>            
+            <mapping path="/calendar"/>
+             <mapping path="/warnmap"/>
+              <mapping path="/map"/> 
+              <mapping path="/news"/>
+              <mapping path="/notice"/>  
+              <mapping path="/board"/>               
+            <beans:bean class="com.gudi.util.loginCheck"/>
+        </interceptor>        
+    </interceptors>
+    
 </beans:beans>
