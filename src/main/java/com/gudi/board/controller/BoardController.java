@@ -134,9 +134,8 @@ public class BoardController {
 
 		// 내가 쓴 글
 		@RequestMapping("/mypost")
-		public String springView9(HttpServletRequest request, Model model) throws Exception {
-
-			return "mypage/mypost";
+		public ModelAndView myPost(HttpSession session) throws Exception {
+			return service.getMyPost(session);
 		}
 
 		// 내가 쓴 댓글

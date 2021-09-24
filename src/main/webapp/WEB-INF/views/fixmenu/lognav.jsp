@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 		<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
 			href="${path}/"> <img src="resources/img/LOGO.png"
-			class="rounded float-end rounded mx-auto d-block mx-2" alt=""
+			class="rounded float-eand rounded mx-auto d-block mx-2" alt=""
 			width="50" height="50">WeDron
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -41,11 +41,12 @@
 				<li class="nav-item"><a
 					class="nav-link active text-center fs-4 " href="${path}/board">Board</a></li>
 			</ul>
-
+			
+			<button type="button" onclick="javascript:msgPop()" class="btn btn-sm btn-#3c3c3c; position-relative" style="display:inline;">
 			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span
 				class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
 				class="visually-hidden">unread messages</span></span>
-
+			</button>
 
 			<button type="button" onclick="alarmListMove()"
 				class="btn btn-sm btn-#3c3c3c; position-relative">
@@ -61,7 +62,7 @@
 
 				<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-					aria-controls="offcanvasRight">메시지</button>
+					aria-controls="offcanvasRight" onclick="msgPop()">메시지</button>
 					
 					<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 					href="${path}/logout"> 로그아웃</a>
@@ -70,3 +71,13 @@
 	</div>
 </nav>
 <%@ include file="../common/footer.jsp"%>
+
+<script>
+function msgPop(){
+    var url = "message";
+    var name = "message popup";
+    var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+    window.open(url, name, option);
+    console.log("메시지 창");
+}
+</script>

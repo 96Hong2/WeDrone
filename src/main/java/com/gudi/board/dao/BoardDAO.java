@@ -66,6 +66,8 @@ public interface BoardDAO {
 
 	BoardDTO noticeDetail(String postId);
 
+	ArrayList<BoardDTO> getMyPost(String loginId);
+
 
 	
 }

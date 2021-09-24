@@ -385,6 +385,19 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 
 				return mav;
 			}
+
+			public ModelAndView getMyPost(HttpSession session) {
+				ModelAndView mav = new ModelAndView();
+				
+				String loginId = (String)session.getAttribute("loginId");
+				logger.info("내가 쓴 글 가져오기 / 아이디 : ",loginId);
+				
+				ArrayList<BoardDTO> list = dao.getMyPost(loginId);
+				
+				mav.addObject("list", list);
+				mav.setViewName("mypost");
+				return mav;
+			}
 		
 			
 	
