@@ -30,7 +30,10 @@ public interface InformDAO {
 	public InformDTO selectLsatInform(String userId);
 
 	public void fileWrite(Map<String, Object> map);
+     
+	public int insertWeather(Map<String, String> paramMap);
 
+	public Map<String, String> getWeather();
 
 	
 }

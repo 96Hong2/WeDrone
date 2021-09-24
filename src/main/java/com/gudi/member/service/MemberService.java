@@ -79,6 +79,7 @@ public class MemberService {
 			if (matched) {
 				session.setAttribute("loginId", userId);
 				session.setAttribute("loginNickName", nickName);
+				session.setAttribute("chkAlert", chkAlert);
 				page = "home";
 				msg = "로그인 성공";
 			}
@@ -101,7 +102,7 @@ public class MemberService {
 			page = "mypage/myinfo";
 			mav.addObject("dto", dto);
 		}
-
+//지우시면 안돼요 ㅜㅜ
 		mav.setViewName(page);
 
 		return mav;

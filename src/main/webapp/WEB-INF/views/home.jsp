@@ -89,10 +89,13 @@
 				class="visually-hidden">Next</span>
 		</button>
 	<!-- 퀵메뉴 -->
-	<div class="position-relative">
+
+	<div class="position-relative" class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div id="quick" class="position-absolute top-50 end-0 translate-middle-y">
+		<div id="addressInfo"></div>
+       <div id="locationInfo"></div>
 			<a href="${path}/confusion"
-				class="rounded-pill btn btn-success fw-bold"> <i
+				class="rounded-pill btn btn-success fw-bold" data-toggle="modal" class="btn" data-target="#myModal"> <i
 				class="bi bi-info-circle"></i> 실시간 정보
 			</a>
 		</div>
@@ -109,6 +112,13 @@
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 <script>
-	
+
+$('a.btn').on('click', function(e) {
+	    e.preventDefault();
+	    var url = $(this).attr('href');
+	    $(".modal-body").html('<iframe width="100%" height="100%" frameborder="0" scrolling="yes" allowtransparency="true" src="'+url+'"></iframe>');
+	});
+
+
 </script>
 </html>

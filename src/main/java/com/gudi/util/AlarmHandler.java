@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -53,6 +55,8 @@ import com.gudi.board.service.InformService;
  * 
  *  4.footer.jsp
  */
+
+
 @Component//<Bean class=“…”/>와 동일한 표현이다
 //@Component 어노테이션을 이용하면 Bean Configuration 파일에 Bean을 따로 등록하지 않아도 사용할 수 있다.
 //빈 등록자체를 빈 클래스 자체에다가 할 수 있다는 의미이다.//@Autowired 비슷한 기능
@@ -66,7 +70,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 	@Autowired
 	InformService informService;
 	
-	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	 // afterConnectionEstablished : 웹소켓이 연결되면 호출되는 함수
 	// 서버에 접속이 성공 했을때
@@ -84,6 +88,47 @@ public class AlarmHandler extends TextWebSocketHandler  {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String userId=getId(session);
+		
+		Map<String, Object> httpSession = session.getAttributes();
+		String loginId = (String) httpSession.get("loginId");	
+		//logger.info(" message - {} " , message.getPayload());
+		//logger.info("접속자 유저 세션 - {} " , userId);
+		//logger.info("로그인한 유저 세션 - {} " , loginId);
+		
+		if(loginId!=null) {
+			
+			    //Recent 최금 측정값 목록
+			    //message.getPayload() 라는 함수를 통해서 메시지에 담긴 텍스트값을 얻을 수 있다
+			  //텍스트 값이 ALARM-SPACEWEATHERGETKP 라면
+				if(message.getPayload().equals("ALARM-SPACEWEATHERGETKP")) {
+					//json 포멧을 이해할수 있게 파싱
+					SpaceWeatherGetKP customParsing =SpaceWeatherGetKP.getInstance();
+					SpaceWeatherDTO dto = customParsing.getDataParsing();//getDataParsing() 구문 분석
+					Map<String, String> paramMap = new HashMap<String, String>();
+					paramMap = customParsing.getRecentData(paramMap, dto);
+					
+					logger.info("지구 자기장 알림 내용 데이타 파싱 값 : {}", paramMap.toString());
+					
+					//알림 수신 여부
+					String chkAlert = (String) httpSession.get("chkAlert");
+					//문자형에서 double 형으로 변경(kp는 숫자이므로 변경해줘야 함)
+					Double kp =Double.parseDouble((String)paramMap.get("kp"));
+					
+					logger.info("알람수신 체크여부:  {} " ,chkAlert);
+					logger.info("KP 지수:  {} " ,paramMap.get("kp"));
+					
+					/**  알람 수신 체크 Y  , KP 지수가 5 이 상인 경우  임의로 1으로 넣어놈*/
+					if(chkAlert!=null && chkAlert.equals("Y") && kp >=1) {
+						WebSocketSession webSocketSession = userSessionsMap.get(userId);
+						Gson gson = new Gson();
+						paramMap.put("messageType", "weather");//footer.jsp
+						//해당 유저 알림데이터 전체 가져오기일 경우  JSON 으로 전환 후 TextMessage 변환
+						TextMessage textMessage = new TextMessage(gson.toJson(paramMap));
+						webSocketSession.sendMessage(textMessage);
+					}
+										
+				}else{
+
 		//접속한 해당 유저 읽지않은 알림 데이터 전체 카운트 만 가져올 경우  
 		//int countInform=informService.countInform(userId);
 		
@@ -107,8 +152,12 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		TextMessage textMessage = new TextMessage(gson.toJson(selectLsatInform));
 		webSocketSession.sendMessage(textMessage);
 		
+		
+	}			
+}
 
-	}
+
+}
 
 	// 연결 해제될때
 	@Override
@@ -118,7 +167,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 		userSessionsMap.remove(session.getId());
 		//소켓 연결이 끊겼을 때 전체 접속자 아이디 해체 저리한다.
 		sessions.remove(session);
-		//CloseStatus 이게 뭔지 찾아봐도 알수가 없어서요 ㅜㅜ 소켓이 닫혀 있는지 상태 확인 입니다.아아 감
+		//CloseStatus 소켓이 닫혀 있는지 상태 확인
 	}
 	
 

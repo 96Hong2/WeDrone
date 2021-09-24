@@ -60,7 +60,14 @@ public class InformService {
 		return dao.selectLsatInform(userId);
 	}
 	
-	
+	public int insertWeather(Map<String, String> paramMap) {
+		return dao.insertWeather(paramMap);		
+	}
+
+
+	public Map<String, String> getWeather() {
+		return dao.getWeather();
+	}
 	
 
 }
