@@ -1,4 +1,4 @@
-package com.gudi.member.controller;
+package com.gudi.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,4 +15,10 @@ public class MsgController {
 	public String message(Model model) {
 		return "message";
 	}
+	
+	@RequestMapping(value = "/chatRoom")
+	public String chatRoom(Model model) {
+		return "chat/chatRoom";
+	}
+	
 }

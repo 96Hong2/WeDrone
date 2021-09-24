@@ -622,11 +622,13 @@ function initMap(){
        
        // 지도에 클릭 이벤트를 등록합니다
        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-       var reviewMarkerAdd = function (mouseEvent, name){
+       var reviewMarkerAdd = function (mouseEvent){
+    	   
     	   
     	   console.log("클릭");
           
           infowindow.close();
+          
 
 
                  // 클릭한 위도, 경도 정보를 가져옵니다 
@@ -655,16 +657,16 @@ function initMap(){
                                    var content2 = '<div class="bAddr">' +
                                    '<span class="title">법정동 주소정보</span>' + 
                                    detailAddr + 
-                               '</div><div><p style="color:red;">선택 지역을 벗어났습니다.</p></div>';
+                               '</div><div><p style="color:red;">지원하지 않는 지역입니다.</p></div>';
                                    
                          console.log("상세주소 : "+address_info);
                          console.log("지역명 : "+name);
                          
                          infowindow.setContent(content);
-                         
+                         /*
                          if(address_info.indexOf(name) == -1){
                             infowindow.setContent(content2);
-                         }
+                         }*/
                                      
                  // 마커 위치를 클릭한 위치로 옮깁니다
                  marker.setPosition(latlng);
@@ -728,7 +730,6 @@ function initMap(){
          //var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
          
          kakao.maps.event.addListener(map, 'click', reviewMarkerAdd);
-         
          
          
        
@@ -1798,8 +1799,15 @@ function initMap(){
 				    	
 				    	//클릭 시 메시지 보내기
 	                    kakao.maps.event.addListener(locMarker, 'click', function(e) {
-	                    	if (confirm(locMK.nickName+" 님에게 메시지를 보내겠습니까?") == true){//확인
-	                    		alert(locMK.nickName+"님에게 메시지 보내기!");
+	                    	if (confirm(locMK.nickName+" 님에게 대화를 요청할까요?") == true){//확인
+	                    		//alert(locMK.nickName+"님에게 메시지 보내기!");
+	                    		
+	                    		  var url = "./chatRoom";
+	                    		  var title = "popup";
+	                    		  var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
+	                    		  	                    		  
+	                    		  window.open(url,title,status);
+	                    	
 	                    	}else{
 	                    		return;
 	                    	}

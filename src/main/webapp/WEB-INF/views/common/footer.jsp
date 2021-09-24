@@ -40,7 +40,7 @@ function getDronIntervalTime() {
     var minutes = ('0' + today.getMinutes()).slice(-2);
     var seconds = ('0' + today.getSeconds()).slice(-2); 
     var timeString = hours + ':' + minutes  + ':' + seconds
-    console.log(timeString);
+    //console.log(timeString);
 	return minutes;
 }///1분마다 실행
 

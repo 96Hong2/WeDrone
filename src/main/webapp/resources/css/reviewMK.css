@@ -93,9 +93,13 @@
 
 .revCmtCnt{
 	float: left;
+	font-size: 16px;
+	margin-top: 6px;
 }
 
 .revLikeCnt{
-	margin-left: 2px;
+	margin-left: 7px;
 	float: right;
+	font-size: 16px;
+	margin-top: 6px;
 }

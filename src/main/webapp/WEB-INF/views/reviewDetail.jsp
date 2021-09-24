@@ -503,6 +503,7 @@ function undoLike(reviewId, userId, areaName, tab){
 	function loadComments(reviewId, currPage) { //댓글 데이터를 불러오는 함수
 		
 		console.log("loadComments 실행 : "+reviewId+"/"+currPage);
+		$("#pagination").twbsPagination('destroy');
 		
 		$.ajax({
 					type : "POST",
@@ -517,8 +518,6 @@ function undoLike(reviewId, userId, areaName, tab){
 							console.log("리스트 값이 null이 아닐 떄");
 							$("#rm_commentWrap").show(); //만약 숨겨져있으면 보이게 한다
 							//$('#cmtCount').html(data.totalCnt);
-							
-							$("#pagination").twbsPagination('destroy');
 							
 							drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
 
