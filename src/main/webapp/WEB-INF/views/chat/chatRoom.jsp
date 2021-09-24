@@ -23,7 +23,7 @@
 	   font-family: 'IBM Plex Sans KR', sans-serif;
 	}
 	#monitor{
-		margin: 5px;
+		margin: auto;
 		width: 85%;
 		height: 500px;
 		overflow: auto;
@@ -38,7 +38,7 @@
 	#weDrone{
 		color: white;
 		display: inline-block;
-		margin-left: 5px;
+		margin-left: auto;
 		font-family: 'Do Hyeon', sans-serif;
 	}
 	
@@ -48,7 +48,7 @@
 	}
 	
 	#msg{
-		width:  69%;
+		width:  77%;
 		background-color: transparent;
 		border: 1px solid white;
 		margin-left: 5px;
@@ -79,9 +79,15 @@
 		font-size: 14px;
 	}
 	
+	#iSend:hover{
+		color: greenyellow;
+		font-weight: bold;
+	}
+	
 	#hiddenForm{
+		width: 85%;
 		color: white;
-		margin-left: 10px;
+		margin: auto;
 		font-size: 16px;
 	}
 	
@@ -90,9 +96,14 @@
 	}
 	
 	.backgroundDiv_1{
-		margin: 5px;
+		margin: auto;
 		width: 85%;
 		height: 57px;
+	}
+	
+	#outMsg{
+		font-size: 12px;
+		color: orangered;
 	}
 	
 	
@@ -153,7 +164,7 @@ var $mon = $("#monitor");
    //웹소켓이 끊겼을 때
    webSocket.onclose = function(e){
       console.log("close : ",e);
-      $mon.append("대화방에서 나왔습니다.<br/>");
+      $mon.append("<span id='outMsg'>대화방에서 나왔습니다.</span>");
    }   
    
    //메시지를 서버로 부터 받았을 때
@@ -172,6 +183,7 @@ var $mon = $("#monitor");
 	
 	//웹소켓 종료
 	function disConn(){
+		$("#shallWeBegin").hide();
 	   webSocket.close();
 	}
 

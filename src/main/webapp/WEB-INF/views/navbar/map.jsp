@@ -1861,7 +1861,7 @@ function initMap(){
 	                    	if (confirm(locMK.nickName+" 님에게 대화를 요청할까요?") == true){//확인
 	                    		//alert(locMK.nickName+"님에게 메시지 보내기!");
 	                    		
-	                    		  var url = "./chatRoom";
+	                    		  var url = "./chatRoom?other="+locMK.userId;
 	                    		  var title = "popup";
 	                    		  var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
 	                    		  	                    		  
