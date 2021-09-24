@@ -90,20 +90,7 @@
 						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
 
-					<div class="form-control col-md-9 mb-3">
-					<label for="validationTooltip02" class="fw-bold">비밀번호</label>
-						<input type="password" class="form-control" name="UserPw"
-							id="UserPw" placeholder="비밀번호" value="" required>
-						<div class="invalid-feedback">10자 이상 입력해주세요</div>
-					</div>
-					<div class="form-control col-md-9 mb-3">
-					<label for="validationTooltip02" class="fw-bold">비밀번호 변경확인</label>
-						<input type="password" class="form-control" id="UserPwchs"
-							name="UserPwchs" placeholder="비밀번호확인" value="" required>
-						<div class="invalid-feedback">동일한지 확인해주세요</div>
-						<input id="infopwchange" class="btn btn-secondary btn-sm mt-2"
-							type="button" value="비밀번호 변경">
-					</div>
+					
 
 					<div class="col-md-9 mb-3">
 						<label for="checks" class="fw-bold" id="chkAlert" name="chkAlert">알림

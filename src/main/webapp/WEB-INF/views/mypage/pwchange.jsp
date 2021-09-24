@@ -71,86 +71,18 @@
 			<hr />
 			<div class="cont container w-50">
 				<!-- 내 정보 수정 폼 -->
-				<div class="form-control col-md-9 mb-3">
-					<label for="validationTooltip02" class="fw-bold">비밀번호</label>
-						<input type="password" class="form-control" name="UserPw"
-							id="UserPw" placeholder="비밀번호" value="" required>
-						<div class="invalid-feedback">10자 이상 입력해주세요</div>
-					</div>
-					<div class="form-control col-md-9 mb-3">
-					<label for="validationTooltip02" class="fw-bold">비밀번호 변경확인</label>
-						<input type="password" class="form-control" id="UserPwchs"
-							name="UserPwchs" placeholder="비밀번호확인" value="" required>
-						<div class="invalid-feedback">동일한지 확인해주세요</div>
-						<input id="infopwchange" class="btn btn-secondary btn-sm mt-2"
-							type="button" value="비밀번호 변경">
-					</div>
-					</div>
-				</form>
-			</div>
-		</div>
+		<form action="join1">
+			평문 받기 : <input type="text" name="pass"/>
+			<button>입력</button>
+		</form>
+		<form action="confirm">
+			암호화 일치 확인 : <input type="text" name="pass"/>
+			<button>확인</button>
+		</form>
 	</div>
 	</div>
 	</div>
-	</div>
-	<script>
-
-	$("#nickCheck").click(function() {
-			
-			console.log("nickName");
-			$.ajax({
-				type : 'post',
-				url : 'nickCheck',
-				data : {
-					"nickName" : $("#nickName").val()
-				},
-				dataType : 'JSON',
-				success : function(data) {
-					console.log(data);
-					if (data == 1) {
-						alert("중복된 닉네임입니다.");
-					} else if (data == 0) {
-						alert("사용 가능한 닉네임입니다.");
-						$("#nickCheckOk").attr("value", "Y");
-					}
-				}
-			})
-		})
 	
-		$('#infopwchange').click(function() {
-							if ($('#UserPw').val().trim() == "") {
-								$('#UserPw').attr('class','nullchecks form-control is-invalid');
-							}
-							
-							if ($('#UserPw').attr('class') == 'form-control is-valid'
-									&& $('#UserPwchs').attr('class') == 'form-control is-valid') {
-								//UserName 요소의 class 속성의 값을 가져온다.
-								console.log("안녕 비번바뀌었어");
-								$(this).attr('type', 'submit');
-								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
-							}
-						})
-						$("#UserPwchs").on("propertychange change keyup paste input",function() {
-												if ($("#UserPw").val() == $(this).val()) {
-													$(this).attr("class","form-control is-valid");
-												} else {
-													$(this).attr("class","form-control is-invalid");
-												}
-											});
-	
-		$('#infochange').click(function() {
-							if ($('#nickName').attr('class') != 'form-control is-invalid'
-									&& $('#pw').attr('class') != 'form-control is-invalid') {
-								//nkckName 요소의 class 속성의 값을 가져온다.
-								console.log("정보 바뀜");
-								$(this).attr('type', 'submit');
-								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
-							}
-						})
-		
-
-		
-		</script>
 
 	<script src="${path}/resources/js/js.js"></script>
 	<script src="${path}/resources/js/common.js"></script>

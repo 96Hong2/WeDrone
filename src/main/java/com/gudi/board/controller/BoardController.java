@@ -170,12 +170,7 @@ public class BoardController {
 			return "confusion";
 		}
 
-		//비밀번호 변경
-				@RequestMapping(value = "/pwchange")
-				public String pwchange(Model model) {
-
-					return "mypage/pwchange";
-				}
+		
 
 	
 
