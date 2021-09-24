@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 	style="back-groundcolor: #3c3c3c;">
 	<div class="container-fluid">
@@ -42,7 +43,7 @@
 					class="nav-link active text-center fs-4 " href="${path}/board">Board</a></li>
 			</ul>
 			
-			<button type="button" onclick="javascript:msgPop()" class="btn btn-sm btn-#3c3c3c; position-relative" style="display:inline;">
+			<button type="button" onclick="javascript:openMsgBox()" class="btn btn-sm btn-#3c3c3c; position-relative" style="display:inline;">
 			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span
 				class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
 				class="visually-hidden">unread messages</span></span>
@@ -62,7 +63,7 @@
 
 				<button class="btn btn-sm btn-outline-light mx-1 " type="button"
 					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-					aria-controls="offcanvasRight" onclick="msgPop()">메시지</button>
+					aria-controls="offcanvasRight" onclick="openMsgBox()">메시지</button>
 					
 					<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 					href="${path}/logout"> 로그아웃</a>
@@ -72,12 +73,110 @@
 </nav>
 <%@ include file="../common/footer.jsp"%>
 
+<style>
+#msgBoxTitle{
+	display : flex;
+	justify-content: space-between;
+}
+
+.msgBox{
+	position : absolute;
+	background-color: pink;
+	padding : 15px;
+	width : 400px;
+	top:13%;
+	right:1%;
+	z-index: 3;
+}
+
+#reqChatBox{
+	background-color:snow;
+}
+
+#userListBox{
+	background-color:aliceblue;
+}
+
+</style>
+
+<div class="msgBox">
+	<div id="msgBoxTitle">
+		<h4><b>WeDrone 1:1채팅</b></h4>
+		<a href="javascript:closeMsgBox()" style="text-decoration:none; color:black; margin-right:10px;"><h4><b>X</b></h4></a>
+	</div>
+	<hr/>
+	<div id="reqChatBox">
+		<h5><b>내가 받은 대화요청</b></h5>
+		<p>대화를 수락할 유저를 클릭하세요</p>
+		<ul id="reqList">
+			<li><div>드론곤볼 광주시</div></li>
+			<li><div>드로니 광주시</div></li>
+		</ul>
+	</div>
+	<div id="userListBox">
+		<h5><b>접속한 유저 리스트</b></h5>
+		<p>대화를 요청할 유저를 클릭하세요</p>
+		<ul id="userList">
+		
+		</ul>
+	</div>
+</div>
+
 <script>
-function msgPop(){
+
+//현재 접속한 유저 리스트 불러오기
+getUserList();
+
+$('.msgBox').hide();
+
+function openMsgBox(){
+	$('.msgBox').show(800);
+}
+
+function closeMsgBox(){
+	$('.msgBox').hide();
+}
+
+//채팅창 팝업 열기
+function openMsg(user){
+	//대화상대 user를 파라미터로 넘겨주기
     var url = "message";
     var name = "message popup";
-    var option = "width = 500, height = 500, top = 100, left = 200, location = no"
+    var option = "width = 500, height = 500, top = 100, left = 200, location = no";
     window.open(url, name, option);
-    console.log("메시지 창");
+}
+
+
+function getUserList(){
+	$.ajax({
+	     url:'callMyLocMK', //서버의 모든 내위치마커 불러오기
+	     type:'post',
+	     dataType:'json',
+	     success:function(data){
+	    	console.log("메시지 유저리스트 가져오기 : ", data.list);
+	    	
+	    	var list = data.list;
+	    	var content = "";
+	    	
+	    	list.forEach(function(user, index){
+	    		if(user.userId != "{sessionScope.loginId}"){
+	    		
+		    	content += "<li><div>"+user.nickName+" 님 &nbsp;";
+		    	
+		    	//내위치마커 주소(시까지)
+		    	var address = user.address;
+		    	address = address.substring(0, address.indexOf("시")+1); //시작인덱스, 끝인덱스
+		    	content += address+"</div></li>";
+	    		}
+	    	})
+	    	
+		    $("#userList").empty();
+		    $("#userList").append(content);	    		
+	    	
+	     },
+	     error:function(e){
+	         console.log("에러 e : ",e);
+	     }
+	 });
 }
 </script>
