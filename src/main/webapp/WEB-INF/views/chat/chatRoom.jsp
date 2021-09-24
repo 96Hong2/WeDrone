@@ -9,7 +9,19 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/chatPopUp.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+   href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap"
+   rel="stylesheet">
 <style>
+
+	body, html {
+	   font-family: 'IBM Plex Sans KR', sans-serif;
+	}
 	#monitor{
 		margin: 5px;
 		width: 85%;
@@ -19,20 +31,70 @@
 		padding: 5px;
 	}
 	
+	.monitor{
+		color: white;
+	}
+	
 	#weDrone{
 		color: white;
+		display: inline-block;
+		margin-left: 5px;
+		font-family: 'Do Hyeon', sans-serif;
 	}
 	
 	#shallWeBegin{
-		color: white;
+		color: greenyellow;
+		margin: auto;
 	}
 	
 	#msg{
-		width:  60%;
+		width:  69%;
 		background-color: transparent;
 		border: 1px solid white;
-		float: left;
+		margin-left: 5px;
+		height: 28px;
+		color: white;
 	}
+	
+	#imOut{
+		display:inline-block;
+		float: right;
+		margin-bottom: auto;
+		background-color: transparent;
+		color: orangered;
+		margin-top: 5%;
+		border: none;
+	}
+	
+	#iSend{
+		margin-top: 5px;
+		display: inline-block;
+		margin-left: 5px;
+		background-color: transparent;
+		color: white;
+		border: none;
+		/* border: 1px solid white; */
+		width: 8.4%;
+		height: 32px;
+		font-size: 14px;
+	}
+	
+	#hiddenForm{
+		color: white;
+		margin-left: 10px;
+		font-size: 16px;
+	}
+	
+	#backgroundDiv{
+		margin: auto;
+	}
+	
+	.backgroundDiv_1{
+		margin: 5px;
+		width: 85%;
+		height: 57px;
+	}
+	
 	
 
 </style>
@@ -41,19 +103,21 @@
 	<div id='stars'></div>
 	<div id='stars2'></div>
 	<div id='stars3'></div>
+		<div id="backgroundDiv">
 		<form>
-				<div class="backgroundDiv">
-					<h3 id="weDrone">WeDrone</h3>
-					<div id="monitor">
-						<span class='text' id="shallWeBegin"></span>
-					</div>
-					<div id="hiddenForm">
-						메시지 : <input type="text" id="msg"/>
-						<input type="button" value="전송" onclick="sendMsg()"/>
-						<input type="button" value="나가기" onclick="disConn()"/>
-					</div>
+				<div class="backgroundDiv_1">
+					<h2 id="weDrone">WeDrone</h2>
+						<input type="button" value="나가기" id="imOut" onclick="disConn()"/>
+				</div>
+				<div class="monitor" id="monitor">
+					<span class='text' id="shallWeBegin"></span>
+				</div>
+				<div id="hiddenForm">
+					말하기 : <input type="text" id="msg"/>
+					<input type="button" value="전송" id="iSend" onclick="sendMsg()"/>
 				</div>
 			</form>
+		</div>
 </body>
 <script>
 
@@ -98,12 +162,12 @@ var $mon = $("#monitor");
       $mon.append(e.data+"<br/>");
    }         
    
-});
    
 	//메시지를 보내기
 	function sendMsg(){
-	   webSocket.send($("#msg").val());
+	   webSocket.send("> "+$("#msg").val());
 	   $("#msg").val("");
+	   $("#shallWeBegin").hide();
 	}
 	
 	//웹소켓 종료
