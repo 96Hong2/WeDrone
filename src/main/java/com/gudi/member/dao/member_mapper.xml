@@ -45,7 +45,7 @@
 	<update id="update" parameterType="hashmap">
 		UPDATE members
 		<set>
-			<if test="!DBPw.equals('')">DBPw = fn_encrypt(#{DBPw}),</if>
+			<if test="!chkAlert.equals('')">chkAlert = #{chkAlert},</if>
 			<if test="!nickName.equals('')">nickName = #{nickName}</if>
 		</set>
 		WHERE id = #{userId}
