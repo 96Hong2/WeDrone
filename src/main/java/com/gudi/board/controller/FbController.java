@@ -63,7 +63,7 @@ public class FbController {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("postId", result.getPostId());
 		service.fbfileUpload(file, session ,map);		
-		return "redirect:/fbList";
+		return "redirect:/board";
 	}
 
 	// 업로드//지윤쓰

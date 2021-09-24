@@ -204,7 +204,7 @@ table {
 			<td colspan="2">
 				<c:choose>
 					<c:when test="${param.update eq 'ok' }">
-						<button onclick="location.href='${path}/fbList'" class = "btn btn-dark" >리스트</button>
+						<button onclick="location.href='${path}/board'" class = "btn btn-dark" >리스트</button>
 					</c:when>
 					<c:otherwise>
 					<button onclick="history.back();" class = "btn btn-dark" >리스트</button>

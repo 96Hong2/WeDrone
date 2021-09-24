@@ -68,7 +68,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		
 		if(dao.fbwrite(dto)>0) {
 			//page = "redirect:/fbdetail?postId="+dto.getPostId();
-			page="redirect:/fbList";
+			page="redirect:/board";
 			if(fileList.size()>0) {
 				for(String key : fileList.keySet()) {
 					dao.fbfileWrite(key, fileList.get(key), dto.getPostId(),loginNickName);
@@ -203,7 +203,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			public ModelAndView fbdel(String postId) {
 				int success = dao.fbdel(postId);
 				ModelAndView mav = new ModelAndView();
-				mav.setViewName("redirect:/fbList");
+				mav.setViewName("redirect:/board");
 				
 				return mav;
 			}
