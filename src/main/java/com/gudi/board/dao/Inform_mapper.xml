@@ -6,7 +6,6 @@
 
 <mapper namespace="com.gudi.board.dao.InformDAO">	
 	
-	<!-- 알림 기능이 너무 많다 보니까 하나하나 기능을 바로 알기 어렵더라고요 ㅜㅜ -->
 	
 	<!-- 알림을 가운트 하는 기능-->
 	<select id="countInform" resultType="int">

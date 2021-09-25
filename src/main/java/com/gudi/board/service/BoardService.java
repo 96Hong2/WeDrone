@@ -219,7 +219,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
         	    //댓글 알림 리스트
 				dto.setInformField("Fbpost");
 				dto.setRelateId(dto.getPostId());
-				dto.setInformContent(" '" +dto.getUserId() +"'님 게시글에 댓글이 달렸습니다.");
+				dto.setInformContent(" '" +dto.getPostedUserId() +"'님 게시글에 댓글이 달렸습니다.");
 								
 				if(success==1) {
 					//현재 댓글 작성자는 제외 발송
