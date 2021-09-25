@@ -51,7 +51,7 @@
 
 			<button type="button" onclick="alarmListMove()"
 				class="btn btn-sm btn-#3c3c3c; position-relative">
-				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span id="alarm-span"
+				<i class="bi bi-bell-fill" style="font-size: 1.8rem; color: white"></i><span id="alarm-span" style="display: none;"
 					class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
 					class="" id="alarm-span-count"></span></span>
 			</button>
@@ -71,8 +71,6 @@
 		</div>
 	</div>
 </nav>
-<%@ include file="../common/footer.jsp"%>
-
 <style>
 #msgBoxTitle{
 	display : flex;

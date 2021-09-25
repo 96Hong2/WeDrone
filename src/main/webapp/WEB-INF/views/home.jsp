@@ -129,7 +129,7 @@
 	</c:if>
 
 
-
+<%@ include file="./common/footer.jsp"%>
 </body>
 
 

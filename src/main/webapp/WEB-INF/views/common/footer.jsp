@@ -13,14 +13,14 @@
 </div>   
 
  <div class="toast align-items-center" role="alert"  id='alert-drone-toast' aria-live="assertive" aria-atomic="true" 
- 	style="color: white;background: #fff; position: absolute;
+ 	style="color: white;background: #fff; position: absolute; z-index: 999;height:220px;
     top: 78px; left:40%;  width: 200px; ">
     
   <div class="d-flex text-center" >
-    <div class="toast-body" style="z-index:3">
-     <h1 style="color:#000; z-index:3">긴급 알림</h1>
-     <p style="color:#000; z-index:3"><i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 32px z-index:3"></i>  KP:<span id="drone-kp"></span></p>
-     <p style="font-size: 15px; color: red; font-weight: normal; text-align: left; z-index:3" class="text-left  " >"오늘은 드론을 날리기 위험한<br>날입니다."</p>
+    <div class="toast-body">
+     <h1 style="color:#000 ; font-size: 22px;">긴급 알림</h1>
+     <p style="color:#000;"><i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 32px"></i>  KP:<span id="drone-kp"></span></p>
+     <p style="font-size: 15px; color: red; font-weight: normal; text-align: left;" class="text-left">"오늘은 드론을 날리기 위험한<br>날입니다."</p>
      <p>
   	  <button type="button"  id="drone-alert-btn"  >확인</button>
      </p>
@@ -40,7 +40,7 @@ function getDronIntervalTime() {
     var minutes = ('0' + today.getMinutes()).slice(-2);
     var seconds = ('0' + today.getSeconds()).slice(-2); 
     var timeString = hours + ':' + minutes  + ':' + seconds
-    //console.log(timeString);
+  //  console.log(timeString);
 	return minutes;
 }///1분마다 실행
 
@@ -51,9 +51,8 @@ var droneSystemTime = getDronIntervalTime();
 
 //한번만 메시지 알림을 위해 alarmCount 변수 설정 
 var alarmCount=0;
-
-window.addEventListener('DOMContentLoaded', function(){
-
+$(document).ready(function(){
+	
 	connectWs();	
 	
 	setTimeout(() => {
@@ -76,8 +75,9 @@ window.addEventListener('DOMContentLoaded', function(){
 		if(droneSystemTime != hh){			
 			droneSystemTime=hh;
 			sock.send("ALARM-SPACEWEATHERGETKP")				
-		}				
-	}, 3600000); //1초 -1000 간격 // 60000 - 1분마다 실행 //60000*60 = 3600000 1시간간격   하면서 클라이언트 시간 변경 감지
+		}		
+	  	
+	}, 1000); //1초 -1000 간격 // 60000 - 1분마다 실행 //60000*60 = 3600000 1시간간격   하면서 클라이언트 시간 변경 감지
 			
 	
 	$("#drone-alert-btn").click(function(){
@@ -86,7 +86,6 @@ window.addEventListener('DOMContentLoaded', function(){
 	
 	console.log("클라이언트 초기 시간: "+droneSystemTime);
 });
-
 
 function autoScript() {	
 	sock.send("${loginId}");
@@ -100,14 +99,14 @@ function connectWs(){
     sock = new SockJS(getContextPath()+'/alarm');		
 	socket = sock;
 	sock.onopen = function() {
-		//console.log('connect onopen');
+		console.log('connect onopen');
 	};
 
 
   
  sock.onmessage = function(evt) {
 	 	var data = evt.data;
-	    //console.log("ReceivMessage : " + data + "\n");
+	    console.log("ReceivMessage : " + data + "\n");
 		if(data!="null"){
 		    const obj =JSON.parse(data);
 			//변환할 문자열이 유효한 json이 아닐수 있으므로 객체 생성
@@ -134,7 +133,7 @@ function connectWs(){
 
  
  sock.onclose = function() {
-   //	console.log('connect close');   
+   	console.log('connect close');   
  };
 
 sock.onerror = function (err) {console.log('Errors : ' , err);};
@@ -186,6 +185,7 @@ function alarmData(obj){
 	//알람 보이기
 	if(parseInt(obj.countInform)>0){
 		$("#alarm-span-count").text(obj.countInform);
+		//$("#alarm-span").css("display", "block");
 		$("#alarm-span").show();
 		 
 		
@@ -206,8 +206,9 @@ function alarmData(obj){
 		//한번만 메시지 알림 = 알림 있다
 		alarmCount=obj.countInform;
 		
-	}else{
-		$("#alarm-span").hide();	
+	}else{		
+		$("#alarm-span").hide();
+		//$("#alarm-span").css("display", "none");
 	}
 	
 }

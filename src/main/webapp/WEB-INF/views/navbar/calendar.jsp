@@ -280,6 +280,7 @@ function convertDate(date) {
 
 
 <%@ include file="calendar_modal.jsp" %>
+<%@ include file="../common/footer.jsp"%>
 
 </body>
 </html>
