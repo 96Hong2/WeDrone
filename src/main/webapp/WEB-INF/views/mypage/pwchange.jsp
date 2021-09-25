@@ -66,7 +66,7 @@
 					<p class= fs-3>본인 확인</p>
 					<hr />
 					<div class="container w-50">
-						<form id="login" action="${path}/pwchanges" method="post">
+						<form id="login2" action="${path}/pwupdate" method="post">
 							<div class="form-group">
 								<label for="InputId" class="fw-bold">아이디</label> <input
 									type="text" class="form-control" name="userId" id="userId"
@@ -94,7 +94,7 @@
 							</c:if>
 							<hr />
 							<div>
-								<button class="btn btn-dark" name="login">로그인</button>
+								<button class="btn btn-dark" name="pwupdate">로그인</button>
 							</div>
 						</form>
 					</div>

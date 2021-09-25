@@ -131,9 +131,6 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	
 	
-	<select id="getComment"  resultType="map"> 
-		SELECT * FROM comments WHERE  cmtid =#{cmtId}
-	</select>
 	
 	<select id="alarmSendUserList"  resultType="String"> 
 	SELECT DISTINCT userid FROM COMMENTS WHERE  isdel ='N' AND POSTID =#{postId}  AND USERID !=#{userId} 

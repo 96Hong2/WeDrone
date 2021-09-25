@@ -1,6 +1,5 @@
 package com.gudi.member.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +17,6 @@ import com.gudi.member.dto.MemberDTO;
 @Service
 public class MemberService<pwchange> {
 
-	private static final Object msg = null;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	ModelAndView mav = new ModelAndView();
 
@@ -125,8 +123,18 @@ public class MemberService<pwchange> {
 	public void update(HashMap<String, String> params) {
 		int success = dao.update(params);
 		logger.info("내 정보 수정 성공 여부 : " + success);
-	}}
+	}
 
+
+	//비번 수정하기
+		public void pwupdate(HashMap<String, String> params) {
+			int success = dao.update(params);
+			logger.info("비밀번호 수정 성공 여부 : " + success);
+		}
+		
+		
+	
+	}
 	//비밀번호 가져오기
 	//*public ModelAndView getMyPassword(String userId, String pw, HttpSession session) {
 //		logger.info("본인 확인 요청 id, pw : " + userId + "/" + pw);

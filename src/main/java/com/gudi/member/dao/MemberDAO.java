@@ -19,5 +19,6 @@ public interface MemberDAO {
 
 	int update(HashMap<String, String> params);
 
+	int pwupdate(HashMap<String, String> params);
 	
 }

@@ -48,9 +48,13 @@
 			chkAlert = #{chkAlert} WHERE userId= #{userId}
 	</update>
 
-   <select id = "getMyPassword" parameterType="String" resultType="board">
-   select userId, pw from members where userId=userId; AND isDEL='N'
-   </select>
+<!--수빈 내정보 업데이트-->
+	<update id="pwupdate" parameterType="hashmap">
+		UPDATE members SET
+		pw = #{pw},
+			 WHERE userId= #{userId}
+	</update>
+   
 
 
 </mapper>

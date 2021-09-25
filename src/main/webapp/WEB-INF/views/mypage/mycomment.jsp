@@ -24,23 +24,23 @@
 
 <title>드론</title>
 <body>
-<c:if test="${sessionScope.loginId eq null}">
+	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />
 	</c:if>
 	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="../fixmenu/lognav.jsp" />
 	</c:if>
 
-<!-- 들어갈 내용 -->
-		<div class='row'>
-	<!-- 사이드바 -->
-		<div class="d-flex col-sm-2" style="height: auto; width: 200px;  min-height: 100vh;">
+	<!-- 들어갈 내용 -->
+	<div class='row'>
+		<!-- 사이드바 -->
+		<div class="d-flex col-sm-2"
+			style="height: auto; width: 200px; min-height: 100vh;">
 
 			<nav id="sidebar" style="transition: all 0.3s;">
 				<div class="list-group list-group-flush mt-3 ">
 					<h2 class="fst-italic ms-3 fw-bold text-decoration-none fs-2">마이페이지</h2>
-					<a
-						class="ps-4  list-group-item list-group-item-action fs-5"
+					<a class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/memberInfo" style="cursor: pointer;">내 정보</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/pwchange" style="cursor: pointer;">비밀번호 변경</a><a
@@ -92,20 +92,24 @@
 
 								</c:forEach>
 							</tbody>
+
 						</table>
+
 					</c:if>
 					<c:if test="${getMyComment[0] eq null}">
-						<div class="text-center text-muted"><h3>작성한 댓글이 없습니다</h3></div>
+						<div class="text-center text-muted">
+							<h3>작성한 댓글이 없습니다</h3>
+						</div>
 					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/js.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/js.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
 </body>
 
 <script>

@@ -62,38 +62,38 @@
 		<!--들어갈 내용-->
 		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
-				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<p class= fs-3>비밀번호 변경</p>
-					<hr />
-					<div class="container w-50">
-						
-							<div class="form-group my-2">
-								<label for="InputPassword" class="fw-bold">비밀번호</label> <input
-									type="password" class="form-control" name="pw" id="pw"
-									placeholder="비밀번호를 입력해주세요">
-								<div class="invalid-feedback">비밀번호를 입력해주세요</div>
-							</div>
-
-
-							<c:if test='${success eq "fail"}'>
-								<div id="redalert"
-									class=" alert alert-danger d-flex align-items-center"
-									role="alert">
-									<svg class="bi flex-shrink-0 me-2" width="24" height="24"
-										role="img" aria-label="Danger:">
-						<use xlink:href="#exclamation-triangle-fill" /></svg>
-									<div>없는 아이디거나 비밀번호가 틀립니다</div>
-								</div>
-							</c:if>
-							<hr />
-							<div>
-								<button class="btn btn-dark" name="login">로그인</button>
-							</div>
-						</form>
+				<button type="button" id="sidebarCollapse"
+					class="me-2 btn btn-warning">
+					<i class="bi bi-info-circle"></i>
+				</button>
+				<h2 class="fw-bold my-3 fs-2">비밀번호 변경</h2>
+			</div>
+			<hr />
+			<div class="cont container w-50">
+				<!-- 내 정보 수정 폼 -->
+				<form id="myinfoform" action="${path}/update" method="post"
+					class="needs-validation py-3" novalidate>
+					<div class="form-control col-md-9 mb-3">
+						<label for="validationTooltip01" class="fw-bold">변경할 비밀번호</label>
+						<input type="text" class="nullchecks nullcheck form-control"
+							name="nickName" title="${updateSuc}" id="nickName"
+							placeholder="비밀번호 입력" value="" required>
+						<div id="check1" class="invalid-feedback">필수 정보입니다(20자 이하만
+							가능)</div>
+						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
+						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
-				</div>
+					<hr />
+					<div class="col text-center">
+						<input id="infochange" class="btn btn-dark" type="submit"
+							value="변경">
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
+	</div>
+	</div>
 	</div>
 
 	<script src="${path}/resources/js/js.js"></script>
