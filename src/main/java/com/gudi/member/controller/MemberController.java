@@ -98,8 +98,9 @@ public class MemberController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@RequestParam HashMap<String, String> params) {	
+	public String update(@RequestParam HashMap<String, String> params, HttpSession session) {	
 		logger.info("update info : {}",params);
+		params.put("userId", (String)session.getAttribute("loginId"));
 		service.update(params);
 		return "redirect:/memberInfo?userId="+params.get("userId");
 	}

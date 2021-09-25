@@ -39,7 +39,15 @@
 		</websocket:handshake-interceptors>
 		<websocket:sockjs
 			client-library-url="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js" />
-
+	</websocket:handlers>
+	
+	<beans:bean id="ChatHandler" class="com.gudi.util.ChatHandler" />
+	<websocket:handlers>
+    	<websocket:mapping handler="ChatHandler" path="/chat-ws" />
+    	<websocket:handshake-interceptors>
+        	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+    	</websocket:handshake-interceptors>	
+    	<websocket:sockjs />
 	</websocket:handlers>
 	
 	 <interceptors>       

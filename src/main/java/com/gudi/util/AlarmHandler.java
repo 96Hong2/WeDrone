@@ -118,7 +118,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
 					logger.info("알람수신 체크여부:  {} " ,chkAlert);
 					logger.info("KP 지수:  {} " ,paramMap.get("kp"));
 					
-					/**  알람 수신 체크 Y  , KP 지수가 5 이 상인 경우  임의로 1으로 넣어놈*/
+					/**  알람 수신 체크 Y  , KP 지수가 5 이 상인 경우  테스트용으로 1으로 넣어놈*/
 					if(chkAlert!=null && chkAlert.equals("Y") && kp >=1) {
 						WebSocketSession webSocketSession = userSessionsMap.get(userId);
 						Gson gson = new Gson();

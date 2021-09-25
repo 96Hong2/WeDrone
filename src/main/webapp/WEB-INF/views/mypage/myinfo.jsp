@@ -76,7 +76,7 @@
 					<div class="form-control col-md-9 mb-3">
 						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
 							type="text" class="nullchecks nullcheck form-control"
-							name="nickName" title="${updateSuc}
+							name="nickName" title="${updateSuc}"
 							id="nickName" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
@@ -97,12 +97,12 @@
 							수신</label>
 						<div class="form-check form-check-inline mx-3">
 							<label class="form-check-label" for="alarmcheckchange">
-								동의 </label> <input class="form-check-input" type="radio" name="chkAlert"
+								동의 </label> <input class="form-check-input" type="radio" name="chkAlert" value="Y"
 								id="chkAlert" checked <c:if test="${dto.chkAlert eq 'Y'}"></c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
-								name="chkAlert" id="chkAlert2" 
+								name="chkAlert" id="chkAlert2" value="N"
 								<c:if test="${dto.chkAlert eq 'N'}"></c:if>> <label
 								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>

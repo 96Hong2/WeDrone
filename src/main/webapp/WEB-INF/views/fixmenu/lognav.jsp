@@ -89,6 +89,11 @@
 	z-index: 3;
 }
 
+.msgBox p{
+	font-size : 15px;
+	color : darkgray;
+}
+
 #reqChatBox{
 	background-color:snow;
 }
@@ -133,25 +138,56 @@
 		<h5><b>내가 받은 대화요청</b></h5>
 		<p>대화를 수락할 유저를 클릭하세요</p>
 		<ul id="reqList">
-			<li><div>드론곤볼 광주시</div></li>
-			<li><div>드로니 광주시</div></li>
+			<li>받은 대화요청이 없습니다.</li>
 		</ul>
 	</div>
 	<div id="userListBox">
 		<h5><b>접속한 유저 리스트</b></h5>
 		<p>대화를 요청할 유저를 클릭하세요</p>
 		<ul id="userList">
-		
+			<li>현재 대화 가능한 유저가 없습니다.</li>
 		</ul>
 	</div>
 </div>
 
+<div id="alertToast"></div>
+
+<!-- sockJS CDN -->
 <script>
 
-//현재 접속한 유저 리스트 불러오기
-getUserList();
+//웹소켓 전역변수 socket 선언
+var socket = null;
 
-$('.msgBox').hide();
+$(document).ready(function(){
+	//알림을 받기 위한 웹소켓 연결(/chat-ws는 servlet-context.xml에 있다)
+	sock = new SockJS("<c:url value="/chat-ws"/>");
+	socket = sock;
+	
+	//알림 데이터를 전달받았을 때 실행되는 함수로 onMessage함수를 연결(toast를 생성하는 함수)
+	sock.onmessage = onMessage;
+	
+	//메시지박스에 현재 접속한 유저 리스트 불러오기
+	getUserList();
+	
+	//메시지박스 숨기기(버튼을 클릭하면 보이게 하기 위함)
+	$('.msgBox').hide();
+});
+
+//알림 toast를 생성하고 띄워주는 함수(부트스트랩 사용)
+function onMessage(e){
+	var data = e.data; //웹소켓으로부터 받은 알림 데이터
+	
+	var toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+    toast += "<span aria-hidden='true'>&times;</span></button>";
+    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+    
+    $("#alertToast").append(toast); //alertToast div에 생성한 토스트 추가
+    $(".toast").toast({"animation": true, "autohide": false});
+    $('.toast').toast('show');
+}
+
 
 function openMsgBox(){
 	$('.msgBox').show(800);
@@ -161,20 +197,23 @@ function closeMsgBox(){
 	$('.msgBox').hide();
 }
 
-//채팅창 팝업 열기
+//대화를 요청받은 유저에게 알림 전송 & 채팅창 팝업 열기
 function openMsg(user){
-	console.log("대화상대 : ",user);
-	//대화상대 user를 파라미터로 넘겨주기
+	var requestor = "${sessionScope.loginId}";
+	console.log("요청자/대화상대 : "+requestor+" / "+user);
 	
+	//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
+	socket.send("메시지 알림,"+user+",새로운 메시지 요청이 왔습니다.,"+url);
+	
+	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;
-	//var url = "./message?other="+user;
     var title = "popup";
     var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
                                    
     window.open(url,title,status);
 }
 
-
+//메시지박스에 현재 접속한(내위치마커ON) 유저 리스트를 불러오는 함수.
 function getUserList(){
 	$.ajax({
 	     url:'callMyLocMK', //서버의 모든 내위치마커 불러오기
@@ -189,7 +228,7 @@ function getUserList(){
 	    	list.forEach(function(user, index){
 	    		if(user.userId != "{sessionScope.loginId}"){
 	    		
-	    		content += "<li><a href='javascript:openMsg(\""+user.nickName+"\")'><div>"
+	    		content += "<li><a href='javascript:openMsg(\""+user.userId+"\")'><div>"
 		    	content += "<img src='resources/img/comment.png' id='userImg'>"+user.nickName+" 님 &nbsp;";
 		    	
 		    	//내위치마커 주소
