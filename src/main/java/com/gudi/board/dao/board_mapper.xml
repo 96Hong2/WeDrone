@@ -172,4 +172,5 @@ FROM post p WHERE userId=#{loginId} AND postDel='N'
 	<select id="getMyComment" parameterType="String" resultType="board">
 	SELECT cmtId, cmtDate, cmtContent FROM COMMENTS WHERE userId=userId AND isDel='N'
 	</select>
-</mapper>
+	
+	</mapper>

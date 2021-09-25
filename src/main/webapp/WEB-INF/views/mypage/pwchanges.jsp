@@ -63,17 +63,10 @@
 		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<p class= fs-3>본인 확인</p>
+					<p class= fs-3>비밀번호 변경</p>
 					<hr />
 					<div class="container w-50">
-						<form id="login" action="${path}/pwchanges" method="post">
-							<div class="form-group">
-								<label for="InputId" class="fw-bold">아이디</label> <input
-									type="text" class="form-control" name="userId" id="userId"
-									<c:if test="${cookie.userId ne null}"> value="${cookie.userId.value}" </c:if>
-									placeholder="아이디를 입력해주세요">
-								<div class="invalid-feedback">아이디를 입력해주세요</div>
-							</div>
+						
 							<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호</label> <input
 									type="password" class="form-control" name="pw" id="pw"
