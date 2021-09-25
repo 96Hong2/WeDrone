@@ -1,0 +1,10 @@
+diff a/src/main/webapp/WEB-INF/views/fixmenu/lognav.jsp b/src/main/webapp/WEB-INF/views/fixmenu/lognav.jsp	(rejected hunks)
+@@ -71,8 +71,6 @@
+ 		</div>
+ 	</div>
+ </nav>
+-<%@ include file="../common/footer.jsp"%>
+-
+ <style>
+ #msgBoxTitle{
+ 	display : flex;

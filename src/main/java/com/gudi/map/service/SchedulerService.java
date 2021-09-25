@@ -11,7 +11,7 @@ public class SchedulerService {
 
 	@Autowired MapDAO dao;
 	
-	@Scheduled(fixedDelay=30000) //작업종료 30초 후 실행
+	@Scheduled(fixedDelay=60000) //작업종료 1분 후 실행
 	public void deleteLocMKs() {
 		int success = dao.deleteLocMKs();
 		System.out.println("1시간 경과한 내위치마커 제거 개수: "+success);

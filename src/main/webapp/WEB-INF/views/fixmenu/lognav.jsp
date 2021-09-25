@@ -71,6 +71,8 @@
 		</div>
 	</div>
 </nav>
+<%-- <%@ include file="../common/footer.jsp"%> --%>
+
 <style>
 #msgBoxTitle{
 	display : flex;
@@ -177,6 +179,8 @@
 <div id="alertToast"></div>
 
 <!-- sockJS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
 <script>
 
 //웹소켓 전역변수 socket 선언
