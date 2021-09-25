@@ -465,7 +465,9 @@ $(function(){
 		var postId=$("#postId").val();
 		var cmtContent = $('#cmtContent').val();		
 		var postedUserId='${post.userId }';
-		var postedTitle='${post.title}'
+		var postedTitle='${post.title}';
+		var loginNickName = "${sessionScope.loginNickName}";
+		
 		if(cmtContent==""){
 			$('#cmtContent').addClass('is-invalid');
 			return;
@@ -484,6 +486,9 @@ $(function(){
 			dataType : 'JSON',
 			success : function(data) {
 				$('#cmtContent').val("");
+				
+				//웹소켓으로 댓글 알림 보내기
+				socket.send("댓글 알림,"+postedUserId+","+loginNickName+"님이 당신의 게시글에 댓글을 달았습니다!,"+"#");
 				getCommentList(1);
 			},
 			error:function(result) {

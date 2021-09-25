@@ -126,6 +126,23 @@
 	margin-right : 3px;
 }
 
+#alertToast{
+	position : absolute;
+	top:13%;
+	left:1%;
+	z-index: 4;
+}
+
+#myToast a{
+	text-decoration : none;
+	color : black;
+}
+
+#myToast a:hover{
+	font-weight : bolder;
+}
+
+
 </style>
 
 <div class="msgBox">
@@ -177,17 +194,21 @@ $(document).ready(function(){
 function onMessage(e){
 	var data = e.data; //웹소켓으로부터 받은 알림 데이터
 	
-	var toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-    toast += "<span aria-hidden='true'>&times;</span></button>";
-    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+	var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
+    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
+    toast += "</div> <div class='toast-body'>" + data + "</div></div>"
     
+    $("#alertToast").empty();
     $("#alertToast").append(toast); //alertToast div에 생성한 토스트 추가
-    $(".toast").toast({"animation": true, "autohide": false});
-    $('.toast').toast('show');
+    //$('.toast').toast({"animation": true, "autohide": false});
+    //$('.toast').toast('show');
+    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
 }
 
+function toastClose(){
+	$('#myToast').hide();
+}
 
 function openMsgBox(){
 	$('.msgBox').show(800);
@@ -200,17 +221,18 @@ function closeMsgBox(){
 //대화를 요청받은 유저에게 알림 전송 & 채팅창 팝업 열기
 function openMsg(user){
 	var requestor = "${sessionScope.loginId}";
+	var reqNickName = "${sessionScope.loginNickName}";
 	console.log("요청자/대화상대 : "+requestor+" / "+user);
 	
 	//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
-	socket.send("메시지 알림,"+user+",새로운 메시지 요청이 왔습니다.,"+url);
+	socket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+url);
 	
 	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;
     var title = "popup";
     var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
                                    
-    window.open(url,title,status);
+    //window.open(url,title,status);
 }
 
 //메시지박스에 현재 접속한(내위치마커ON) 유저 리스트를 불러오는 함수.

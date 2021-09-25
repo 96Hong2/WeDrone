@@ -112,7 +112,8 @@
 		$('#detailModal').modal('hide');
 	});
 	
-
+	var loginNickName = "${sessionScope.loginNickName}";
+	var reviewUserId = "";
 	
 function loadReviewDetail(reviewId, userId, tab){
 	$('.revContainer').empty();
@@ -134,6 +135,7 @@ function loadReviewDetail(reviewId, userId, tab){
 		dataType : 'JSON',
 		success : function(review) {
 			console.log("review dto: ",review);
+			reviewUserId = review.userId;
 			
 			var content2 = "";
 			content2 += "<div class='revBookMarkContainer'>";
@@ -274,6 +276,8 @@ function doLike(reviewId, userId, areaName, tab){
 			$('.revLikeContainer').empty();
 			$('.revLikeContainer').append(contents);
 			
+			socket.send("좋아요 알림,"+reviewUserId+","+loginNickName+"님이 당신의 후기마커에 좋아요를 눌렀습니다!,"+"#");
+			
 			reloadMarkers(areaName, tab);
 		},
 		error : function(e) {
@@ -330,6 +334,8 @@ function undoLike(reviewId, userId, areaName, tab){
 				
 				$('.revBookMarkContainer').empty();
 				$('.revBookMarkContainer').append(contents);
+				
+				socket.send("즐겨찾기 알림,"+reviewUserId+","+loginNickName+"님이 당신의 후기마커를 즐겨찾기 했습니다!,"+"#");
 				
 				reloadMarkers(areaName, tab);
 			},
@@ -620,6 +626,7 @@ function undoLike(reviewId, userId, areaName, tab){
 					console.log("댓글 알림 보내기 : ", data.informSuccess);
 					$("#commentContent").val("");
 					alert("댓글을 등록했습니다.");
+					socket.send("댓글 알림,"+reviewUserId+","+loginNickName+"님이 당신의 후기마커에 댓글을 달았습니다!,"+"#");
 					loadComments(reviewId_1, 1);
 				},
 				error: function(e){
