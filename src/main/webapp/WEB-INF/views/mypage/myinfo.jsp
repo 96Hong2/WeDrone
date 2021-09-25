@@ -142,19 +142,11 @@
 			})
 		})
 
+		const result = "${msg}"
+		if (result === "modSuccess") {
+			alert("수정 되었습니다");
+		}
 		
-		
-		$('#infochange')
-				.click(
-						function() {
-							if ($('#nickName').attr('class') != 'form-control is-invalid'
-									&& $('#alert').attr('class') != 'form-control is-invalid') {
-								//nkckName 요소의 class 속성의 값을 가져온다.
-								console.log("정보 바뀜");
-								$(this).attr('type', 'submit');
-								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
-							}
-						}) 
 	</script>
 
 	<script src="${path}/resources/js/js.js"></script>
