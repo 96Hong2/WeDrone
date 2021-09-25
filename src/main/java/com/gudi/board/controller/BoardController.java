@@ -154,6 +154,7 @@ public class BoardController {
 		public String springView12(PageMaker pageMaker, Model model, Map<String, Object> map,
 				HttpServletRequest request) throws Exception {
 			map.put("userid", (String) request.getSession().getAttribute("loginId"));
+			informService.alarmAllRead(map);
 			int totalCount = informService.informCount(map);
 
 			pageMaker.setTotPage(totalCount);

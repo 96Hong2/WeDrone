@@ -62,7 +62,7 @@ style="z-index: 3; margin-top: -227px; margin-left: -205px; width: 410px; inset:
          $('.dim-layer').fadeOut();
          return false;
      });
-
+     return false;
  }
 
 //실시간 정보 위젯
@@ -245,6 +245,7 @@ style="z-index: 3; margin-top: -227px; margin-left: -205px; width: 410px; inset:
   		  	  $('#btn-weather').click(function(){
   		           layer_popup('#weather-layer1');  		           
   		           $("#weather-layer1" ).draggable();
+  		         	return false;
   		       });	
   		    	 
   		    	 
