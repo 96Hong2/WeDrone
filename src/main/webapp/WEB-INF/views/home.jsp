@@ -20,6 +20,11 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${path}/resources/js/bootstrap.js"></script>
+<script src="${path}/resources/js/bootstrap.bundle.js"></script>
+<script src="${path}/resources/js/common.js"></script>
+
 </head>
 <title>드론</title>
 <body>
@@ -33,7 +38,7 @@
 		<jsp:include page="fixmenu/lognav.jsp" />
 	</c:if>
 
-
+	<%@ include file="common/weather-widget.jsp" %>
 	<!--메인 슬라이드바  -->
 
 	<div id="carouselExampleCaptions" class="carousel slide"
@@ -90,7 +95,7 @@
 		</button>
 	<!-- 퀵메뉴 -->
 
-	<div class="position-relative" class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--  	<div class="position-relative" class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div id="quick" class="position-absolute top-50 end-0 translate-middle-y">
 		<div id="addressInfo"></div>
        <div id="locationInfo"></div>
@@ -100,17 +105,35 @@
 			</a>
 		</div>
 	</div>
+-->	
+	
+	
+<!-- 날씨 위젯 시작 -->
+<div style="position: fixed; bottom: 150px;  right: 0px;width: 100%; z-index: 99999">
+<div class="position-relative" class="modal hide fade" id="btn-weather"   tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="quick" class="position-absolute top-50 end-0 translate-middle-y" style="margin-right:0px;">
+		<a href="#weather-layer1" 
+			class="rounded-pill btn btn-success fw-bold" data-toggle="modal" class="btn" data-target="#myModal"> <i
+			class="bi bi-info-circle"></i> 실시간 정보
+		</a>
+	</div>
+</div>
+</div>
+
+<!--// 날씨 위젯 끝 -->
+	
+	
 </div>
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="fixmenu/msgbar.jsp" />
 	</c:if>
 
+
+
 </body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/bootstrap.js"></script>
-<script src="${path}/resources/js/bootstrap.bundle.js"></script>
-<script src="${path}/resources/js/common.js"></script>
+
+
 <script>
 
 //$('a.btn').on('click', function(e) {

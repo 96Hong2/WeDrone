@@ -51,7 +51,9 @@ var droneSystemTime = getDronIntervalTime();
 
 //한번만 메시지 알림을 위해 alarmCount 변수 설정 
 var alarmCount=0;
-$(document).ready(function(){
+
+window.addEventListener('DOMContentLoaded', function(){
+
 	connectWs();	
 	
 	setTimeout(() => {
@@ -84,6 +86,7 @@ $(document).ready(function(){
 	
 	console.log("클라이언트 초기 시간: "+droneSystemTime);
 });
+
 
 function autoScript() {	
 	sock.send("${loginId}");
