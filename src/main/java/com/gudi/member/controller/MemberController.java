@@ -29,9 +29,11 @@ public class MemberController {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
 	@Autowired(required = false)
 	MemberService service;
 
+	
 	@RequestMapping(value = "/joinForm")
 	public String joinForm(Model model) {
 		return "joinForm";
@@ -94,26 +96,27 @@ public class MemberController {
 		return service.memberDel(loginId);
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@RequestParam HashMap<String, String> params) {
-		logger.info("update info : {}", params);
+	public String update(@RequestParam HashMap<String, String> params) {	
+		logger.info("update info : {}",params);
 		service.update(params);
-		return "redirect:/memberInfo?userId=" + params.get("");
+		return "redirect:/memberInfo?userId="+params.get("userId");
 	}
-
-	// 비밀번호 변경
+		
+		// 비밀번호 변경
 	@RequestMapping(value = "/pwchange")
 	public String pwchange(Model model) {
 
 		return "mypage/pwchange";
 	}
 
-	// 비밀번호 변경
-	@RequestMapping(value="/pwchanges")
-	public ModelAndView pwchanges(HttpSession session) throws Exception {
-		return service.getMyPassword(session);
-	}
-
+	/*
+	 * // 비밀번호 변경
+	 * 
+	 * @RequestMapping(value="/pwchanges") public ModelAndView pwchanges(HttpSession
+	 * session) throws Exception { return service.getMyPassword(session); }
+	 */
 	String plainText = "";
 
 	String hashText = "";

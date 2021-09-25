@@ -44,7 +44,7 @@
 				<form id="login" action="login" method="post">
 					<div class="form-group">
 						<label for="InputId" class="fw-bold">아이디</label> <input
-							type="text" class="form-control" name="userId" id="userId"
+							type="text" class="form-control" name="userId" id="userId" cheked
 							<c:if test="${cookie.userId ne null}"> value="${cookie.userId.value}" </c:if>
 							placeholder="아이디를 입력해주세요">
 						<div class="invalid-feedback">아이디를 입력해주세요</div>

@@ -43,12 +43,9 @@
 
 	<!--수빈 내정보 업데이트-->
 	<update id="update" parameterType="hashmap">
-		UPDATE members
-		<set>
-			<if test="!chkAlert.equals('')">chkAlert = #{chkAlert},</if>
-			<if test="!nickName.equals('')">nickName = #{nickName}</if>
-		</set>
-		WHERE id = #{userId}
+		UPDATE members SET
+		nickName = #{nickName},
+			chkAlert = #{chkAlert} WHERE userId= #{userId}
 	</update>
 
    <select id = "getMyPassword" parameterType="String" resultType="board">

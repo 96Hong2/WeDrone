@@ -1,6 +1,5 @@
 package com.gudi.member.service;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,12 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gudi.board.dto.BoardDTO;
 import com.gudi.member.dao.MemberDAO;
 import com.gudi.member.dto.MemberDTO;
 
@@ -127,35 +124,29 @@ public class MemberService<pwchange> {
 	//정보 수정하기
 	public void update(HashMap<String, String> params) {
 		int success = dao.update(params);
-		logger.info("수정 성공 여부 : " + success);
-	}
-
-	//비밀번호 가져오기
-	public ModelAndView getMyPassword(String userId, String pw, HttpSession session) {
-		logger.info("본인 확인 요청 id, pw : " + userId + "/" + pw);
-		HashMap<String, String> map = dao.login(userId);
-		String DBPw = map.get("PW");
-		logger.info("들어온 pw값 : " + pw );
-		logger.info("DBPw : {}", DBPw);
-		if (DBPw != null && DBPw != "") {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			boolean matched = encoder.matches(pw, DBPw);
-			logger.info("PW 일치 여부 : " + matched);
-
-			if (matched) {
-				session.setAttribute("loginId", userId);
-		
-				pw = "${path}mypage/pwchange";
-				msg = "비밀번호가 이전과 동일합니다";
-			}
-			if(encoder.matches(pw,map.get("PW")))
-				
-		mav.addObject("msg", msg);
-		mav.setViewName(pw);
-		return mav;
-		
-	}
-
+		logger.info("내 정보 수정 성공 여부 : " + success);
 	}}
 
+	//비밀번호 가져오기
+	//*public ModelAndView getMyPassword(String userId, String pw, HttpSession session) {
+//		logger.info("본인 확인 요청 id, pw : " + userId + "/" + pw);
+//		HashMap<String, String> map = dao.login(userId);
+//		String DBPw = map.get("PW");
+//		logger.info("들어온 pw값 : " + pw );
+//		logger.info("DBPw : {}", DBPw);
+//		if (DBPw != null && DBPw != "") {
+//			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//			boolean matched = encoder.matches(pw, DBPw);
+//			logger.info("PW 일치 여부 : " + matched);
+//			if (matched) {
+//				session.setAttribute("loginId", userId);
+//						pw = "${path}mypage/pwchange";
+//				msg = "비밀번호가 이전과 동일합니다";
+//			}
+//			if(encoder.matches(pw,map.get("PW")))
+//					mav.addObject("msg", msg);
+//		mav.setViewName(pw);
+		//return mav;*/
+		//	}
 
+//}}

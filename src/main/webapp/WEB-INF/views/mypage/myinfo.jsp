@@ -77,8 +77,7 @@
 						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
 							type="text" class="nullchecks nullcheck form-control"
 							name="nickName" title="${updateSuc}
-							id="
-							nickName" placeholder="닉네임" value="${dto.nickName}" required>
+							id="nickName" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
 							정보입니다(100자 이하만 가능)</div>
@@ -99,11 +98,11 @@
 						<div class="form-check form-check-inline mx-3">
 							<label class="form-check-label" for="alarmcheckchange">
 								동의 </label> <input class="form-check-input" type="radio" name="chkAlert"
-								id="chkAlert" <c:if test="${dto.chkAlert eq 'Y'}"></c:if>>
+								id="chkAlert" checked <c:if test="${dto.chkAlert eq 'Y'}"></c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
-								name="alarmcheckchange" id="chkAlert2"
+								name="chkAlert" id="chkAlert2" 
 								<c:if test="${dto.chkAlert eq 'N'}"></c:if>> <label
 								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>
@@ -111,7 +110,7 @@
 					<hr />
 					<div class="col text-center">
 						<input id="infochange" class="btn btn-dark" type="submit"
-							onclick="go_submit()" value="정보수정">
+							value="정보수정">
 					</div>
 				</form>
 			</div>
@@ -143,42 +142,19 @@
 			})
 		})
 
-		$('#infopwchange')
-				.click(
-						function() {
-							if ($('#UserPw').val().trim() == "") {
-								$('#UserPw').attr('class',
-										'nullchecks form-control is-invalid');
-							}
-
-							if ($('#UserPw').attr('class') == 'form-control is-valid'
-									&& $('#UserPwchs').attr('class') == 'form-control is-valid') {
-								//UserName 요소의 class 속성의 값을 가져온다.
-								console.log("안녕 비번바뀌었어");
-								$(this).attr('type', 'submit');
-								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
-							}
-						})
-		$("#UserPwchs").on("propertychange change keyup paste input",
-				function() {
-					if ($("#UserPw").val() == $(this).val()) {
-						$(this).attr("class", "form-control is-valid");
-					} else {
-						$(this).attr("class", "form-control is-invalid");
-					}
-				});
-
+		
+		
 		$('#infochange')
 				.click(
 						function() {
 							if ($('#nickName').attr('class') != 'form-control is-invalid'
-									&& $('#pw').attr('class') != 'form-control is-invalid') {
+									&& $('#alert').attr('class') != 'form-control is-invalid') {
 								//nkckName 요소의 class 속성의 값을 가져온다.
 								console.log("정보 바뀜");
 								$(this).attr('type', 'submit');
 								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용한다.		
 							}
-						})
+						}) 
 	</script>
 
 	<script src="${path}/resources/js/js.js"></script>
