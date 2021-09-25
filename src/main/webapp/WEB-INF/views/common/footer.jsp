@@ -16,11 +16,11 @@
  	style="color: white;background: #fff; position: absolute;
     top: 78px; left:40%;  width: 200px; ">
     
-  <div class="d-flex text-center">
-    <div class="toast-body">
-     <h1 style="color:#000;">긴급 알림</h1>
-     <p style="color:#000;"><i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 32px"></i>  KP:<span id="drone-kp"></span></p>
-     <p style="font-size: 15px; color: red; font-weight: normal; text-align: left;" class="text-left">"오늘은 드론을 날리기 위험한<br>날입니다."</p>
+  <div class="d-flex text-center" >
+    <div class="toast-body" style="z-index:3">
+     <h1 style="color:#000; z-index:3">긴급 알림</h1>
+     <p style="color:#000; z-index:3"><i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 32px z-index:3"></i>  KP:<span id="drone-kp"></span></p>
+     <p style="font-size: 15px; color: red; font-weight: normal; text-align: left; z-index:3" class="text-left  " >"오늘은 드론을 날리기 위험한<br>날입니다."</p>
      <p>
   	  <button type="button"  id="drone-alert-btn"  >확인</button>
      </p>
