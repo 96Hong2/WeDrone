@@ -133,7 +133,6 @@ public class BoardController {
 		// 내가 쓴 글
 		@RequestMapping("/mypost")
 		public ModelAndView myPost(HttpSession session) throws Exception {
-			logger.info("내가쓴글 보기:"+postId);
 			return service.getMyPost(session);
 		}
 

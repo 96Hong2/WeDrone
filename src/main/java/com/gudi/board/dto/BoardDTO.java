@@ -28,6 +28,15 @@ public class BoardDTO {
 	private String postedUserId;
 	private String postedTitle;
 	private String regUserid;
+	private int cmtCnt;
+	
+	
+	public int getCmtCnt() {
+		return cmtCnt;
+	}
+	public void setCmtCnt(int cmtCnt) {
+		this.cmtCnt = cmtCnt;
+	}
 	public int getInformId() {
 		return informId;
 	}

@@ -21,7 +21,17 @@
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 </head>
-
+<style>
+	#postTitle{
+		text-decoration : none;
+		color : black;
+	}
+	
+	#postTitle:hover{
+		color : darkgray;
+		font-weight : bolder;
+	}
+</style>
 <title>드론</title>
 <body>
 	<c:if test="${sessionScope.loginId eq null}">
@@ -68,29 +78,27 @@
 			</div>
 			<hr />
 			<div class="cont container">
-				<c:if test="${getMyPost[0] ne null}">
+				<c:if test="${list ne null}">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th scope="col">제목</th>
-								<th scope="col">글내용</th>
-								<th class="text-center" scope="col">상세보기</th>
+								<th class="text-center" scope="col">글제목 (댓글 수)</th>
+								<th scope="col">글쓴이</th>
+								<th scope='col'>작성날짜</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${getMyPostList}" var="list">
+							<c:forEach items="${list}" var="post">
 								<tr>
-									<td class="align-middle">${list.title}</td>
-									<td class="align-middle">${list.postContent}</td>
-									<td>
-										<button class="btn btn-dark"
-												onclick="location.href='/go/fbdetail?postId=${postId}'">상세보기</button></td>
+									<td class="align-middle"><a href='/go/fbdetail?postId=${post.postId}' id='postTitle'>${post.title} ( ${post.cmtCnt} )</a></td>
+									<td class="align-middle">${post.nickName}</td>
+									<td class="align-middle">${post.postDate}</td>
 									</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</c:if>
-				<c:if test="${getMyPost[0] eq null}">
+				<c:if test="${list eq null}">
 					<div class="text-center text-muted">
 						<h3>작성한 글이 없습니다</h3>
 					</div>

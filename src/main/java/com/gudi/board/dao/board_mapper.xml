@@ -162,12 +162,12 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
 	</select>
 	
 	<select id="getMyPost" parameterType="String" resultType="board">
-SELECT postId, title, nickName, postDate, (SELECT COUNT(cmtId) FROM COMMENTS WHERE postId=p.postId AND isDel = 'N') cmtCnt 
-FROM post p WHERE userId=#{loginId} AND postDel='N'
+		SELECT postId, title, nickName, postDate, (SELECT COUNT(cmtId) FROM COMMENTS WHERE postId=p.postId AND isDel = 'N') cmtCnt 
+		FROM post p WHERE userId=#{loginId} AND postDel='N' ORDER BY postDate DESC
 	</select>
 	
 	<select id="getMyComment" parameterType="String" resultType="board">
-	SELECT cmtId, cmtDate, cmtContent FROM COMMENTS WHERE userId=userId AND isDel='N'
+		SELECT cmtId, cmtDate, cmtContent FROM comments WHERE userId=#{loginId} AND isDel='N' ORDER BY cmtDate DESC
 	</select>
 	
 	</mapper>
