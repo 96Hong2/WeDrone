@@ -1,5 +1,6 @@
 package com.gudi.board.controller;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gudi.board.service.BoardService;
 import com.gudi.board.service.InformService;
 import com.gudi.util.PageMaker;
+import com.gudi.util.SpaceWeatherDTO;
+import com.gudi.util.SpaceWeatherGetKP;
 
 @Controller
 public class BoardController {
@@ -180,11 +184,22 @@ public class BoardController {
 		}
 
 		// 실시간정보
-		@RequestMapping(value = "/confusion")
-		public String confusion(Model model) {
+				@RequestMapping(value = "/confusion")
+				public String confusion(Model model) throws SocketTimeoutException {	
+					return "confusion";
+				}
 
-			return "confusion";
-		}
+				
+				@ResponseBody
+				@RequestMapping(value = "/apikp")
+				public String apikp(Model model) throws SocketTimeoutException {
+					SpaceWeatherGetKP customParsing =SpaceWeatherGetKP.getInstance();
+					SpaceWeatherDTO dto = customParsing.getDataParsing();//getDataParsing() 구문 분석
+					Map<String, String> paramMap = new HashMap<String, String>();
+					paramMap = customParsing.getRecentData(paramMap, dto);
+					String kp=paramMap.get("kp");									
+					return kp;
+				}
 
 		
 
