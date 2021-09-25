@@ -151,7 +151,6 @@ input[name=file]{
          <td colspan="2">
          <input type="button"  class = "btn btn-dark" onclick="location.href='${pageContext.request.contextPath}/board'" value="리스트"/>
          <button type="button"  class = "btn btn-dark" id="save">저장</button>
-         <button type="reset"  class = "btn btn-dark" id="save">취소</button>
          </td>
       </tr>
    </table>

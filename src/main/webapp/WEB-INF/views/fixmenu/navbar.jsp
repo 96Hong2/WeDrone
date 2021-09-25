@@ -50,3 +50,4 @@
 		</div>
 	</div>
 </nav>
+<%@ include file="../common/footer.jsp"%>

@@ -209,7 +209,6 @@ input[name=file]{
 				   <input type="button" onclick="location.href='${path}/board'"
 					value="자유게시판 리스트" class = "btn btn-dark" />
 					 <button type="button"  class = "btn btn-dark" id="save">저장</button>
-					 <button type="reset"  class = "btn btn-dark" id="save">취소</button>
 			</td>
 			</tr>
 		</table>

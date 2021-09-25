@@ -13,10 +13,10 @@
 
 <!-- margin-top: -231px; margin-left: -205px; width: 410px; inset: 320.5px auto auto 667px; height: 462px; display: block; -->	
 <div id="weather-layer1" class="pop-layer" 
-style="z-index: 999999999">
+style="z-index: 3">
     <div class="pop-container">
         <div class="pop-conts">
-        	<h5 class="modal-title text-center"  style="text-align: center;width: 100%;margin-bottom: 20px; ">실시간 날씨정보 띄우기</h5>
+        	<h5 class="modal-title text-center"  style="text-align: center;width: 100%;margin-bottom: 20px; ">실시간 정보 띄우기</h5>
             <div id="locationInfo"></div>
         	<div id="addressInfo"></div>
 			<p>KP:<span id="drone-kp2"></span></p>

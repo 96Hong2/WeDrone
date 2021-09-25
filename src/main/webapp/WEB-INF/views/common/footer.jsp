@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', function(){
 			droneSystemTime=hh;
 			sock.send("ALARM-SPACEWEATHERGETKP")				
 		}				
-	}, 1000); //1초 -1000 간격 // 60000 - 1분마다 실행 //60000*60 = 3600000 1시간간격   하면서 클라이언트 시간 변경 감지
+	}, 3600000); //1초 -1000 간격 // 60000 - 1분마다 실행 //60000*60 = 3600000 1시간간격   하면서 클라이언트 시간 변경 감지
 			
 	
 	$("#drone-alert-btn").click(function(){

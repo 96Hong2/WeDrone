@@ -208,6 +208,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return mav;
 			}
 
+			//댓글 작성
 			public HashMap<String, Object> fbcmtwrite(BoardDTO dto) {
 				HashMap<String, Object> map = new HashMap<String, Object>();				
 				int success = dao.fbcmtwrite(dto);
@@ -215,32 +216,33 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				logger.info("자유 게시판 댓글 쓰기 성공 여부 "+success);
 				map.put("success", success);
 
+        	    //댓글 알림 리스트
 				dto.setInformField("Fbpost");
 				dto.setRelateId(dto.getPostId());
-				dto.setInformContent(" '" +dto.getPostedTitle() +"' 의 게시글에 댓글이 달렸습니다.");
+				dto.setInformContent(" '" +dto.getUserId() +"'님 게시글에 댓글이 달렸습니다.");
 								
 				if(success==1) {
-					/** 현재 댓글 작성자는 제외 발송 */
+					//현재 댓글 작성자는 제외 발송
 					dto.setRegUserid(dto.getUserId());
 					List<String> alarmSendUserList=dao.alarmSendUserList(dto);
 					
-					/** 게시글 작성자와 댓글 작성자가 같지 않으면 알림 발송 */
+					//게시글 작성자와 댓글 작성자가 같지 않으면 알림 발송
 					if(!dto.getUserId().equals(dto.getPostedUserId())) {											
-						/** 1.게시판 글 작성자 PostedUserId 에게 발송  */
+						//게시판 글 작성자 PostedUserId 에게 발송 
 						logger.info("1.게시판 글 작성자 PostedUserId 에게 발송 ");
 						dto.setUserId(dto.getPostedUserId());
 						informDAO.insertInform(dto);
 					}
 					
 										
-					for(String str:alarmSendUserList){
-						if(!str.equals(dto.getPostedUserId())) {
-							/** 2.댓글 작성자  에게 발송  */
-							logger.info("2.댓글 작성자  에게 발송 :  {} ", str);
-							dto.setUserId(str);
-							informDAO.insertInform(dto);
-						}						
-					}			
+					//for(String str:alarmSendUserList){
+						//if(!str.equals(dto.getPostedUserId())) {
+							//2.댓글 작성자  에게 발송 
+							//logger.info("2.댓글 작성자  에게 발송 :  {} ", str);
+						//dto.setUserId(str);
+						//	informDAO.insertInform(dto);
+						//}						
+					//}			
 				}
 								
 				return map;
@@ -248,7 +250,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 					
 										
 				
-
+            //자유 게시판 리스트
 			public HashMap<String, Object> list(int page,HttpSession session, int postId) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				
