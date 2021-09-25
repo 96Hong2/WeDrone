@@ -81,7 +81,7 @@
 
 .msgBox{
 	position : absolute;
-	background-color: pink;
+	background-color: snow;
 	padding : 15px;
 	width : 400px;
 	top:13%;
@@ -95,7 +95,7 @@
 }
 
 #reqChatBox{
-	background-color:snow;
+	/* background-color:white; */
 }
 
 #reqChatBox li{
@@ -103,7 +103,7 @@
 }
 
 #userListBox{
-	background-color:aliceblue;
+	/* background-color:white; */
 }
 
 #userListBox li{
@@ -119,6 +119,14 @@
 	font-weight : bolder;
 }
 
+#reqChatBox a{
+	color: black;
+	text-decoration: none;
+}
+
+#reqChatBox a:hover{
+	font-weight : bolder;
+}
 
 #userImg{
 	width : 20px;
@@ -147,7 +155,7 @@
 
 <div class="msgBox">
 	<div id="msgBoxTitle">
-		<h4><b>WeDrone 1:1채팅</b></h4>
+		<h4><img src='resources/img/chat-box.png' width='30px' height='30px'>&nbsp;<b>WeDrone 1:1 채팅</b></h4>
 		<a href="javascript:closeMsgBox()" style="text-decoration:none; color:black; margin-right:10px;"><h4><b>X</b></h4></a>
 	</div>
 	<hr/>
@@ -155,9 +163,10 @@
 		<h5><b>내가 받은 대화요청</b></h5>
 		<p>대화를 수락할 유저를 클릭하세요</p>
 		<ul id="reqList">
-			<li>받은 대화요청이 없습니다.</li>
+			<li id="emptyReqCmt">받은 대화요청이 없습니다.</li>
 		</ul>
 	</div>
+	<hr/>
 	<div id="userListBox">
 		<h5><b>접속한 유저 리스트</b></h5>
 		<p>대화를 요청할 유저를 클릭하세요</p>
@@ -193,17 +202,32 @@ $(document).ready(function(){
 //알림 toast를 생성하고 띄워주는 함수(부트스트랩 사용)
 function onMessage(e){
 	var data = e.data; //웹소켓으로부터 받은 알림 데이터
+	console.log("e.data : ",e.data);
 	
-	var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
-    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
-    toast += "</div> <div class='toast-body'>" + data + "</div></div>"
-    
-    $("#alertToast").empty();
-    $("#alertToast").append(toast); //alertToast div에 생성한 토스트 추가
-    //$('.toast').toast({"animation": true, "autohide": false});
-    //$('.toast').toast('show');
-    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
+	console.log("data 맨앞 2글자가 **인가? ",data.substring(0,2)=="**");
+	
+	if(data.substring(0,2) != "**"){ //채팅요청과 일반알림을 구분하기위해 e.data의 맨 앞에 **을 찍어서 구분했다. **이면 채팅요청, 아니면 일반알림
+		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+	    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
+	    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
+	    toast += "</div> <div class='toast-body'>" + data + "</div></div>"
+	    
+	    $("#alertToast").empty();
+	    $("#alertToast").append(toast); //alertToast div에 생성한 토스트 추가
+	    //$('.toast').toast({"animation": true, "autohide": false});
+	    //$('.toast').toast('show');
+	    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
+	    
+	}else{
+		//var chatReq = "<li><a href='javascript:openMsg(\""+data+"\")'><div>";
+		data = data.substr(2);
+		console.log("자른 data : ", data);
+		var chatReq = "<li><a href='javascript:openMsg(\""+data+"\")'><div>";
+		chatReq += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
+		chatReq += "[<b>대화요청</b>] &nbsp;"+data+" 님</a></div></li>";
+		$("#emptyReqCmt").empty();
+		$("#reqList").append(chatReq);
+	}
 }
 
 function toastClose(){
@@ -220,19 +244,21 @@ function closeMsgBox(){
 
 //대화를 요청받은 유저에게 알림 전송 & 채팅창 팝업 열기
 function openMsg(user){
-	var requestor = "${sessionScope.loginId}";
+	var requestor = "${sessionScope.loginId}"; //대화를 요청하는, openMsg를 호출하는 유저(나)
 	var reqNickName = "${sessionScope.loginNickName}";
 	console.log("요청자/대화상대 : "+requestor+" / "+user);
 	
 	//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
-	socket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+url);
+	socket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+"#");
+	//타입을 chat으로 주면 해당 유저의 msgBox에 채팅요청이 간다.
+	socket.send("chat,"+user+","+reqNickName+","+url);
 	
 	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;
     var title = "popup";
     var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
                                    
-    //window.open(url,title,status);
+    window.open(url,title,status);
 }
 
 //메시지박스에 현재 접속한(내위치마커ON) 유저 리스트를 불러오는 함수.

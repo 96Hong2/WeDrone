@@ -49,20 +49,27 @@ public class ChatHandler extends TextWebSocketHandler {
 				String type = strs[0]; //타입
 				String target = strs[1]; //타겟(알림받을 유저아이디)
 				String content = strs[2]; //내용
-				//String url = strs[3]; //알림 클릭 시 이동할 URL
-				String url = "#";
+				String url = strs[3]; //알림 클릭 시 이동할 URL
+				//String url = "#";
 				log("type/target/content/url - "+type+"/"+target+"/"+content+"/"+url);
 				//targetSession변수로 알림받을 유저의 웹소켓세션을 가져온다.
 				WebSocketSession targetSession = users.get(target);
 				
 				//알림받을 유저가 실시간 접속하고 있을 경우(targetSession이 users에 아직 존재할 경우)
 				if(targetSession != null) {
-					//ex) [타입] 알림메시지 내용 , 클릭하면 url로 이동함
-					TextMessage txtMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>");
-					log("txtMsg onMessage(e.data) - "+txtMsg);
-					//알림받을 유저의 세션으로 txtMsg를 전송한다.
-					targetSession.sendMessage(txtMsg);
-					//받는 jsp페이지의 javascript영역에서 onMessage(e)의 e.data로 받게된다.
+					if(type.equals("chat")) { //채팅 요청 //그냥 보내면 일반알림메시지랑 구분할 수 없어서 **을 넣었음
+						//TextMessage txtMsg = new TextMessage("**<a target='_blank' href='"+ url +"'>[<b>대화요청</b>] &nbsp;" + content + " 님</a>");
+						TextMessage txtMsg = new TextMessage("**"+ content);
+						log("웹소켓 채팅요청 txtMsg - "+txtMsg.getPayload());
+						targetSession.sendMessage(txtMsg);
+					}else {
+						//ex) [타입] 알림메시지 내용 , 클릭하면 url로 이동함
+						TextMessage txtMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>");
+						log("웹소켓 알림메시지 txtMsg - "+txtMsg.getPayload());
+						//알림받을 유저의 세션으로 txtMsg를 전송한다.
+						targetSession.sendMessage(txtMsg);
+						//받는 jsp페이지의 javascript영역에서 onMessage(e)의 e.data로 받게된다.
+					}
 				}
 			}
 		}else {

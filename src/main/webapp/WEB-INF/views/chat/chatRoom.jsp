@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>WeDrone - Chatting</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/chatPopUp.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -153,6 +153,7 @@ var webSocket = null;
 var $mon = $("#monitor");
 
    var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginId}";
+   //var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginId}";
    console.log(url);
    webSocket = new WebSocket(url);
    
