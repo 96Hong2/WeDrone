@@ -213,7 +213,7 @@ ul.tabs li.current {
 }
 
 .revBox1_1{
-	margin-left: 4px;
+	margin-left: 10px;
 }
 
 .MapClickBtn{
@@ -225,6 +225,7 @@ ul.tabs li.current {
 .bAddr{
 	font-size: 17px;
 }
+
 
 </style>
 </head>
@@ -445,7 +446,7 @@ ul.tabs li.current {
                      aria-label="Close"></button>
                </div>
                <div class="modal-body">
-               		<textarea id="content" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"></textarea>
+               		<textarea id="content" name="content" maxlength="200" placeholder="10자 이상 입력해주세요" autocomplete="off"></textarea>
                   <!-- <input id="content" type="text" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"/> -->
                         <input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
                </div>
@@ -915,11 +916,11 @@ function initMap(){
                     +"<div class='revBox1_1'>"
                     +"<div class='revNickName' id='revNickName'>"+review.nickName+"</div>"
                     +"<div class='revAddress' id='revAddress'>"+review.address+"</div>"
+                    +"<div class='revRating'>"+rating+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
                     +"<div class='revBox2'>"
-                    +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
                     +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
@@ -1461,7 +1462,7 @@ function initMap(){
                     //평점(구름아이콘)
                     var rating = "";
                     for(var i=0; i<review.rating; i++){
-                       rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+                       rating +="<img src='resources/img/thumbs.png' class='revRatingImg'>";
                     }
                       
                     var element = "<li class='list-group-item'>"
@@ -1473,11 +1474,11 @@ function initMap(){
                     +"<div class='revBox1_1'>"
                     +"<div class='revNickName'>"+review.nickName+"</div>"
                     +"<div class='revAddress'>"+review.address+"</div>"
+                    +"<div class='revRating'>"+rating+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
                     +"<div class='revBox2'>"
-                    +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
                     +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"
@@ -1644,7 +1645,7 @@ function initMap(){
                     //평점(구름아이콘)
                     var rating = "";
                     for(var i=0; i<review.rating; i++){
-                       rating +="<img src='resources/img/cloud.png' class='revRatingImg'>";
+                       rating +="<img src='resources/img/thumbs.png' class='revRatingImg'>";
                     }
                       
                     var element = "<li class='list-group-item'>"
@@ -1656,11 +1657,11 @@ function initMap(){
                     +"<div class='revBox1_1'>"
                     +"<div class='revNickName'>"+review.nickName+"</div>"
                     +"<div class='revAddress'>"+review.address+"</div>"
+                    +"<div class='revRating'>"+rating+"</div>"
                     +"</div>"
                     +"</div>"
                     +"<div class='invisibleBox'></div>"
                     +"<div class='revBox2'>"
-                    +"<div class='revRating'>"+rating+"</div>"
                     +"<div class='revBox2_1'>"
                     +"<div class='revBox2_2'>"
                     +"<div class='revCmtCnt'><img src='resources/img/comment.png' width='18px' height='18px'> 댓글 "+review.commentCnt+"</div>"

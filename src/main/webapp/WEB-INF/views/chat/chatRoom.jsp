@@ -146,7 +146,7 @@
 					<span class='text' id="shallWeBegin"></span><br/>
 				</div>
 				<div id="hiddenForm">
-					말하기 : <input type="text" id="msg"/>
+					말하기 : <input type="text" id="msg" autocomplete="off"/>
 					<input type="button" value="전송" id="iSend" onclick="sendMsg()"/>
 				</div>
 			<!-- </form> -->
@@ -194,6 +194,7 @@ var $mon = $("#monitor");
    webSocket.onmessage = function(e){
       console.log("message : ",e);
       $mon.append(e.data+"<br/>");
+      $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
    }         
    
    

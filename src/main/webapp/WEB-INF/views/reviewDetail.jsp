@@ -79,7 +79,7 @@
 						<input type="hidden" id="rmLoginId" name="rmLoginId" value="${sessionScope.loginId}"/>
 							<textarea class="form-control" placeholder="Leave a comment here"
 								name="commentContent" id="commentContent"
-								style="height: 100px; resize: none;" maxlength="150"></textarea>
+								style="height: 100px; resize: none;" maxlength="150" autocomplete="off"></textarea>
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 							<label for="commentContent">150자 이내로 입력해주세요.</label>
 						</div>

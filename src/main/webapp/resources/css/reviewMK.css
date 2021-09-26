@@ -58,6 +58,7 @@
 .revRating{
 	display : flex;
 	justify-content: left;
+	margin-top: 5px;
 }
 
 .revRatingImg{
@@ -77,6 +78,7 @@
 .revBox2_2{
 	text-align :left;
 	font-size : 15px;
+	margin-top: 8px;
 }
 
 .revIsBookMark{
