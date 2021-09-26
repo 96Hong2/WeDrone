@@ -43,7 +43,7 @@
 	}
 	
 	#shallWeBegin{
-		color: greenyellow;
+		color: darkcyan;
 		margin: auto;
 	}
 	
@@ -106,6 +106,11 @@
 		color: orangered;
 	}
 	
+	#alert{
+		font-size: 12px;
+		color: greenyellow;
+	}
+	
 	
 
 </style>
@@ -115,25 +120,25 @@
 	<div id='stars2'></div>
 	<div id='stars3'></div>
 		<div id="backgroundDiv">
-		<form>
-				<div class="backgroundDiv_1">
+		<!-- <form onsubmit="return false;">-->				
+			<div class="backgroundDiv_1">
 					<h2 id="weDrone">WeDrone</h2>
 						<input type="button" value="나가기" id="imOut" onclick="disConn()"/>
 				</div>
 				<div class="monitor" id="monitor">
-					<span class='text' id="shallWeBegin"></span>
+					<span class='text' id="shallWeBegin"></span><br/>
 				</div>
 				<div id="hiddenForm">
 					말하기 : <input type="text" id="msg"/>
 					<input type="button" value="전송" id="iSend" onclick="sendMsg()"/>
 				</div>
-			</form>
+			<!-- </form> -->
 		</div>
 </body>
 <script>
 
 
-const content = "채팅을 시작하시겠습니까?";
+const content = "바른 말 고운 말을 사용합시다";
 const text = document.querySelector(".text");
 let i = 0;
 
@@ -145,14 +150,14 @@ function typing(){
         i = 0;
     }
 }
-setInterval(typing, 200)
+setInterval(typing, 300)
 
 
 //var url = "ws://localhost:8080/web/chat/";
 var webSocket = null;
 var $mon = $("#monitor");
 
-   var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginId}";
+   var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
    //var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginId}";
    console.log(url);
    webSocket = new WebSocket(url);
@@ -177,9 +182,9 @@ var $mon = $("#monitor");
    
 	//메시지를 보내기
 	function sendMsg(){
-	   webSocket.send("> "+$("#msg").val());
+	   webSocket.send("${sessionScope.loginNickName} : "+$("#msg").val());
 	   $("#msg").val("");
-	   $("#shallWeBegin").hide();
+	   //$("#shallWeBegin").hide();
 	}
 	
 	//웹소켓 종료
@@ -187,6 +192,13 @@ var $mon = $("#monitor");
 		$("#shallWeBegin").hide();
 	   webSocket.close();
 	}
+	
+	 $("#iSend").on("keyup",function(key){
+	        if(key.keyCode==13) {
+	            alert("엔터키 이벤트");
+	        }
+	    });
+
 
 
 </script>
