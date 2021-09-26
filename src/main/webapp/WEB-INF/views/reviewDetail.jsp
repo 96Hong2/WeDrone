@@ -79,7 +79,7 @@
 						<input type="hidden" id="rmLoginId" name="rmLoginId" value="${sessionScope.loginId}"/>
 							<textarea class="form-control" placeholder="Leave a comment here"
 								name="commentContent" id="commentContent"
-								style="height: 100px; resize: none;" maxlength="150"></textarea>
+								style="height: 100px; resize: none;" maxlength="150" autocomplete="off"></textarea>
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 							<label for="commentContent">150자 이내로 입력해주세요.</label>
 						</div>
@@ -120,7 +120,7 @@ function loadReviewDetail(reviewId, userId, tab){
 	$('#reviewTitle').empty();
 	$('#modalHeader').empty();
 	
-	var currPage = 1;
+	//var currPage = 1;
 	
 	console.log("reviewId : ", reviewId);
 	console.log("userId : ", userId);
@@ -200,7 +200,7 @@ function loadReviewDetail(reviewId, userId, tab){
 			
 			$('.revContainer').append(content);
 			
-			loadComments(reviewId, currPage);	
+			loadComments(reviewId, 1);	
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -521,6 +521,7 @@ function undoLike(reviewId, userId, areaName, tab){
 					dataType : 'JSON',
 					success : function(data) {
 						
+						if(data.list != null){
 							console.log("리스트 값이 null이 아닐 떄");
 							$("#rm_commentWrap").show(); //만약 숨겨져있으면 보이게 한다
 							//$('#cmtCount').html(data.totalCnt);
@@ -528,7 +529,7 @@ function undoLike(reviewId, userId, areaName, tab){
 							drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
 
 								$("#pagination").twbsPagination({
-									startPage : data.currPage, //시작페이지
+									startPage : 1, //시작페이지
 									totalPages : data.pages, //총 페이지 개수
 									visiblePages : 5,
 									initiateStartPageClick: false,
@@ -537,11 +538,26 @@ function undoLike(reviewId, userId, areaName, tab){
 								    next : ">",	// 다음 페이지 버튼에 쓰여있는 텍스트
 								    last : ">>",
 									onPageClick : function(e, page){
-										console.log("twbsPagination 에서 onPageClick 실행");
-										console.log(page+"번째 페이지 출력중");
+										//console.log("twbsPagination 에서 onPageClick 실행");
+										//console.log(page+"번째 페이지 출력중");
 										loadComments(reviewId, page);
 									}
 								});
+							}else{
+								$("#pagination").twbsPagination({
+									startPage : 1, //시작페이지
+									totalPages : 1, //총 페이지 개수
+									visiblePages : 1,
+									initiateStartPageClick: false,
+									first : "<<",	// 페이지네이션 버튼중 처음으로 돌아가는 버튼에 쓰여 있는 텍스트
+								    prev : "<",	// 이전 페이지 버튼에 쓰여있는 텍스트
+								    next : ">",	// 다음 페이지 버튼에 쓰여있는 텍스트
+								    last : ">>",
+									onPageClick : function(e, page){
+										console.log("nothing");
+									}
+								});
+							}
 					},
 					error : function(e) {
 						console.log("ajax loadComments() 에러 : " + e);

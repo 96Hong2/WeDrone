@@ -72,7 +72,7 @@
 	</select>
 	
 	<select id="allCount" resultType="int">
-		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N' AND postId = #{param1}
+		SELECT COUNT(cmtId) FROM comments WHERE isDel = 'N' AND postId = #{param1} AND cmtfield = 'review'
 	</select>
 
 	<select id="getReviewDetail" resultType="com.gudi.map.dto.MapDTO">
