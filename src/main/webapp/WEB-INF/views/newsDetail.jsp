@@ -182,7 +182,7 @@ table {
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>${post.postContent}</td>
+				<td><a href="${post.postContent}">${post.postContent}</a></td>
 			</tr>
 			<tr>
 				<td colspan="2"><c:choose>
