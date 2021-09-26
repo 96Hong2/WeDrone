@@ -174,10 +174,6 @@ table {
 			<td>${post.postId}</td>
 		</tr>
 		<tr>
-			<th>제목</th>
-			<td>${post.title}</td>
-		</tr>
-		<tr>
 			<th>닉네임</th>
 			<td>${post.nickName} (${post.userId})</td>
 		</tr>
@@ -189,38 +185,13 @@ table {
 			<th>내용</th>
 			<td>${post.postContent}</td>
 		</tr>
-	<!--  
-		<tr>
-			<th>첨부파일</th>
-			<td>
-			<c:forEach items="${fileList}" var="row" varStatus="status">			
-				<c:choose>
-					<c:when test="${(row.ext eq 'GIF') or  (row.ext eq 'JPEG') or (row.ext eq 'JPG') or (row.ext eq 'PNG')}">
-						<span class="span-file">
-							<a href="${path}/resources/upload/${row.newFileName}" data-fancybox data-caption="${row.oriFileName}">
-							<img src="${path}/resources/upload/${row.newFileName}" width="80" height="80"  class="img-responsive img-thumbnail">
-							</a>						
-						<a href="${path}/common/download.do?fileName=${row.newFileName}" ><i class="fa fa-download" ></i>&nbsp;${row.oriFileName}</a>
-						</span>
-					</c:when>
-					<c:otherwise>
-						<span class="span-file">
-							<a href="${path}/common/download.do?fileName=${row.newFileName}" ><i class="fa fa-save" ></i>&nbsp;${row.oriFileName}</a>
-						</span>
-					</c:otherwise>
-				</c:choose>
-				&nbsp;&nbsp;&nbsp;
-				<c:if test="${not status.last }">|</c:if>								
-				&nbsp;&nbsp;&nbsp;
-			</c:forEach>
-			</td>
-		</tr>
-		-->
+		
+		
 		<tr>
 			<td colspan="2">
 				<c:choose>
 					<c:when test="${param.update eq 'ok' }">
-						<button onclick="location.href='${path}/board'" class = "btn btn-dark" >리스트</button>
+						<button onclick="location.href='${path}/fbList'" class = "btn btn-dark" >리스트</button>
 					</c:when>
 					<c:otherwise>
 					<button onclick="history.back();" class = "btn btn-dark" >리스트</button>
@@ -231,14 +202,14 @@ table {
 			<c:choose>			
 				<c:when test="${post.userId eq loginId}">
 					<button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
-					<button onclick="postDelete()"    class = "btn btn-dark" >삭제</button>	
+					<button onclick="location.href='./fbdel?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>	
 				</c:when>
 				<c:otherwise>
 					<button onclick="alert('작성자만 수정 가능합니다.')" class = "btn btn-dark" >수정</button>
 					<button onclick="alert('작성자만 삭제 가능합니다.')" class = "btn btn-dark" >삭제</button>	
 				</c:otherwise>
 			</c:choose>				
-
+		
 			</td>
 		</tr>
 	</table>
@@ -269,7 +240,7 @@ table {
 							<div class="d-flex align-items-center">
 								<div class="form-floating flex-grow-1 px-2">
 									<textarea class="form-control" placeholder="Leave a comment here"
-										name="cmtContent" id="cmtContent"  maxlength="150"
+										name="cmtContent" id="cmtContent"
 										style="height: 100px; resize: none;"></textarea>
 									<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 									<label for="cmtContent">로그인 후 이용해주세요.</label>
@@ -326,7 +297,6 @@ table {
 			
 			 </div>	
 	</div>	<!--// 	commentArea -->	
-				
 		
 		
 
@@ -341,7 +311,7 @@ table {
 				</div>				
 				<div class="modal-body">
 				 <form id="frm-comment" >
-					<textarea rows="5" cols="" style="width: 100%" id="commnet-update-cmtcontent" name="cmtcontent"  maxlength="150"></textarea>
+					<textarea rows="5" cols="" style="width: 100%" id="commnet-update-cmtcontent" name="cmtcontent"></textarea>
 				 	<input type="hidden" id="commnet-update-cmtId"  name="cmtId">
 				 </form>
 				</div>
@@ -404,7 +374,7 @@ function commentDelete(cmtId){
 			}			
 		});
 	}
-	alert(cmtid);
+	//alert(cmtId);
 }
 
 function commentUpdateForm(cmtId){		
@@ -452,8 +422,6 @@ function commentUpdate(){
 		}			
 	});		
 }
-
-
 $(function(){
 	$("#cmtContent").on("keypress", function(e){		
 		if($('#cmtContent').hasClass('is-invalid')){
@@ -504,61 +472,61 @@ $(function(){
 
 
 function getCommentList(currPage){
-		var postId=$("#postId").val();
-		if(currPage==""|| currPage==undefined){
-			currPage=1;
-		}				
-		$.ajax({
-		type : "POST",
-		url : "fbcmList", 
-		data : {
-			"postId" : postId,
-			"page" : currPage
-		},
-		dataType : 'JSON',
-		success : function(data) {
-			//console.log(data);
-			var loginId='${loginId}';
-			//$("#selectMaterialSearchTotalCount").text(result.totalCount);           
-            
-            //핸들바 템플릿 가져오기
-            var source = $("#template").html();
-            var template = Handlebars.compile(source);
-            
-            Handlebars.registerHelper('userConfirm', function(postUserid, options) {
-                if(postUserid==loginId){
-                    return options.fn(this);
-                }
-                return options.inverse(this);                                   
-            });
-            Handlebars.registerHelper('userNotConfirm', function(postUserid, options) {
-            	 if(postUserid==loginId){
-            		 return options.inverse(this);  
-                 }
-            	 return options.fn(this);                                 
-            })
-            
-             Handlebars.registerHelper('commentCount', function(rn, options) {     
-            	 return parseInt(data.commentTotalCount)-rn+1;                                 
-            })
-            
-            $("#commentTotalCount").text(data.commentTotalCount);
-            if(parseInt(data.commentTotalCount)>10){
-            	 $("#nav-pagination").html(data.pagination);
+	var postId=$("#postId").val();
+	if(currPage==""|| currPage==undefined){
+		currPage=1;
+	}				
+	$.ajax({
+	type : "POST",
+	url : "fbcmList", 
+	data : {
+		"postId" : postId,
+		"page" : currPage
+	},
+	dataType : 'JSON',
+	success : function(data) {
+		//console.log(data);
+		var loginId='${loginId}';
+		//$("#selectMaterialSearchTotalCount").text(result.totalCount);           
+        
+        //핸들바 템플릿 가져오기
+        var source = $("#template").html();
+        var template = Handlebars.compile(source);
+        
+        Handlebars.registerHelper('userConfirm', function(postUserid, options) {
+            if(postUserid==loginId){
+                return options.fn(this);
             }
-            //배열 형식 이라 자동으로 매칭                           
-            $("#tbody-commentList").html(template(data.commentList));  
-          
-		},
-		error:function(result) {
-			console.log("error:");
-			console.log(result);
-		}
-	});			
+            return options.inverse(this);                                   
+        });
+        Handlebars.registerHelper('userNotConfirm', function(postUserid, options) {
+        	 if(postUserid==loginId){
+        		 return options.inverse(this);  
+             }
+        	 return options.fn(this);                                 
+        })
+        
+         Handlebars.registerHelper('commentCount', function(rn, options) {     
+        	 return parseInt(data.commentTotalCount)-rn+1;                                 
+        })
+        
+        $("#commentTotalCount").text(data.commentTotalCount);
+        if(parseInt(data.commentTotalCount)>10){
+        	 $("#nav-pagination").html(data.pagination);
+        }
+        //배열 형식 이라 자동으로 매칭                           
+        $("#tbody-commentList").html(template(data.commentList));  
+      
+	},
+	error:function(result) {
+		console.log("error:");
+		console.log(result);
+	}
+});			
 }
 
 function commentModalClose(){
-	$("#commentUpdate-modal").modal("hide");
+$("#commentUpdate-modal").modal("hide");
 }
 
 </script>

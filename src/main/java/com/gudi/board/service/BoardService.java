@@ -323,6 +323,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return dao.getComment(map);
 			}
 
+
 			public List<String> alarmSendUserList(BoardDTO dto) {
 				return dao.alarmSendUserList(dto);
 			}

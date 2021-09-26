@@ -24,7 +24,7 @@
 <script src="${path}/resources/js/bootstrap.js"></script>
 <script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" ></script>
 </head>
 <title>드론</title>
 <body>
@@ -124,12 +124,21 @@
 	
 	
 </div>
-	<c:if test="${sessionScope.loginId eq null}">
-		<jsp:include page="fixmenu/msgbar.jsp" />
-	</c:if>
+	
+	
+		<c:if test="${sessionScope.loginId eq null}">
+			<jsp:include page="fixmenu/msgbar.jsp" />
+		</c:if>
 
 
 <%@ include file="./common/footer.jsp"%>
+
+
+
+
+
+
+
 </body>
 
 
