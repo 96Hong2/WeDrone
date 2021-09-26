@@ -28,7 +28,7 @@ import com.gudi.util.SpaceWeatherGetKP;
 
 @Controller
 public class BoardController {
-
+//주석~~~~~
 	@Autowired
 	BoardService service;
 
