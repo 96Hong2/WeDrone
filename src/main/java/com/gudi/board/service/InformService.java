@@ -1,5 +1,7 @@
 package com.gudi.board.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +69,14 @@ public class InformService {
 
 	public Map<String, String> getWeather() {
 		return dao.getWeather();
+	}
+
+
+	public HashMap<String, Object> getReqList(String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<InformDTO> list = dao.getReqList(loginId);
+		map.put("list", list);
+		return map;
 	}
 	
 

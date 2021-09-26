@@ -12,8 +12,22 @@ public class InformDTO {
 	private String informContent;
 	private String isRead;
 	private int countInform;
+	private String regUserId;
+	private String msgDate;
 	
 	
+	public String getMsgDate() {
+		return msgDate;
+	}
+	public void setMsgDate(String msgDate) {
+		this.msgDate = msgDate;
+	}
+	public String getRegUserId() {
+		return regUserId;
+	}
+	public void setRegUserId(String regUserId) {
+		this.regUserId = regUserId;
+	}
 	public Integer getInformId() {
 		return informId;
 	}

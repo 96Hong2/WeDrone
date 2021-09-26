@@ -1,5 +1,6 @@
 package com.gudi.board.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,8 @@ public interface InformDAO {
 	public int insertWeather(Map<String, String> paramMap);
 
 	public Map<String, String> getWeather();
+
+	public ArrayList<InformDTO> getReqList(String loginId);
 
 	
 }

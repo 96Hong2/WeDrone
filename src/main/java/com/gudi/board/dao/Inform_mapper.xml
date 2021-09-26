@@ -71,7 +71,9 @@
 			VALUES(image_seq.NEXTVAL, #{oriFileName},#{newFileName},#{postId},#{imgField},#{imgPath})
 	</insert>
 	
-	
+	<select id="getReqList" parameterType="String" resultType="com.gudi.board.dto.InformDTO">
+		SELECT userId, TO_CHAR(informDate, 'hh24:mi:ss') msgDate, informContent, regUserId FROM inform WHERE informField='message' AND userId=#{loginId} 
+	</select>
 	
 	
 </mapper>

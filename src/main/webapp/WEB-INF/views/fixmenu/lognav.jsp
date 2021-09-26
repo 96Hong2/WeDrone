@@ -197,6 +197,9 @@ $(document).ready(function(){
 	//메시지박스에 현재 접속한 유저 리스트 불러오기
 	getUserList();
 	
+	//메시지박스에 현재 나에게 대화요청한 유저 리스트 불러오기
+	getReqList();
+	
 	//메시지박스 숨기기(버튼을 클릭하면 보이게 하기 위함)
 	$('.msgBox').hide();
 });
@@ -204,9 +207,7 @@ $(document).ready(function(){
 //알림 toast를 생성하고 띄워주는 함수(부트스트랩 사용)
 function onMessage(e){
 	var data = e.data; //웹소켓으로부터 받은 알림 데이터
-	console.log("e.data : ",e.data);
-	
-	console.log("data 맨앞 2글자가 **인가? ",data.substring(0,2)=="**");
+	console.log("onMessage e.data : ",e.data);
 	
 	if(data.substring(0,2) != "**"){ //채팅요청과 일반알림을 구분하기위해 e.data의 맨 앞에 **을 찍어서 구분했다. **이면 채팅요청, 아니면 일반알림
 		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
@@ -221,12 +222,17 @@ function onMessage(e){
 	    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
 	    
 	}else{
-		//var chatReq = "<li><a href='javascript:openMsg(\""+data+"\")'><div>";
 		data = data.substr(2);
 		console.log("자른 data : ", data);
-		var chatReq = "<li><a href='javascript:openMsg(\""+data+"\")'><div>";
+		var chatReq = "<li id='req_"+data+"_li'><a href='javascript:openMsg(\""+data+"\")'><div>";
 		chatReq += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
-		chatReq += "[<b>대화요청</b>] &nbsp;"+data+" 님</a></div></li>";
+		chatReq += "[<b>대화요청</b>] &nbsp;"+data+" 님 ";
+		
+		var now = new Date();
+		//var nowHour = (now.getHours() > 12 ? "오후 "+(parseInt(now.getHours)-12)+"시" : "오전 "+now.getHours+"시"); 
+		var reqTime = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+		chatReq += "<span style='font-size:15px; color:darkgray;'>"+reqTime+"</span></a>";
+		chatReq += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+data+"\")'>거절</button></div></li>";
 		$("#emptyReqCmt").empty();
 		$("#reqList").append(chatReq);
 	}
@@ -242,6 +248,14 @@ function openMsgBox(){
 
 function closeMsgBox(){
 	$('.msgBox').hide();
+}
+
+function rejectChat(user){
+	if(confirm(user+"님의 대화요청을 거절하시겠습니까?") == true){
+		$("#req_"+user+"_li").empty();	
+	}else{
+		return;
+	}
 }
 
 //대화를 요청받은 유저에게 알림 전송 & 채팅창 팝업 열기
@@ -270,7 +284,7 @@ function getUserList(){
 	     type:'post',
 	     dataType:'json',
 	     success:function(data){
-	    	console.log("메시지 유저리스트 가져오기 : ", data.list);
+	    	console.log("실시간마커 유저리스트 가져오기 : ", data.list);
 	    	
 	    	var list = data.list;
 	    	var content = "";
@@ -289,6 +303,37 @@ function getUserList(){
 	    	
 		    $("#userList").empty();
 		    $("#userList").append(content);	    		
+	    	
+	     },
+	     error:function(e){
+	         console.log("에러 e : ",e);
+	     }
+	 });
+}
+
+//메시지박스에 대화를 요청한 유저 리스트를 불러오는 함수
+function getReqList(){
+	$.ajax({
+	     url:'getReqList', //DB알림 중 message로 된 이 유저의 알림 다 가져오기
+	     type:'post',
+	     dataType:'json',
+	     success:function(data){
+	    	console.log("대화요청 리스트 가져오기 : ", data.list);
+	    	
+	    	var list = data.list;
+	    	var content = "";
+	    	
+	    	list.forEach(function(user, index){
+	    		//아이디(regUserId), 닉네임(informContent) 모두 가져와야 함!!
+		    	content = "<li id='req_"+user.informContent+"_li'><a href='javascript:openMsg(\""+user.regUserId+"\")'><div>";
+		    	content += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
+		    	content += "[<b>대화요청</b>] &nbsp;"+user.informContent+" 님 ";
+		    	content += "<span style='font-size:15px; color:darkgray;'>"+user.msgDate+"</span></a>";
+		    	content += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+user.informContent+"\")'>거절</button></div></li>";
+	    	})
+	    	
+		    $("#reqList").empty();
+		    $("#reqList").append(content);
 	    	
 	     },
 	     error:function(e){
