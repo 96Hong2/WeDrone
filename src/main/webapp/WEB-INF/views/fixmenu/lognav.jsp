@@ -8,8 +8,8 @@
 	<div class="container-fluid">
 		<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
 			href="${path}/"> <img src="resources/img/LOGO.png"
-			class="rounded float-eand rounded mx-auto d-block mx-2" alt=""
-			width="50" height="50">WeDron
+			class="rounded float-end rounded mx-auto d-block mx-2" alt=""
+			width="50" height="50">WeDrone
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
@@ -60,10 +60,6 @@
 				 <a
 					class="btn btn-sm btn-outline-light  mx-1" role="button"
 					href="${path}/memberInfo">마이페이지</a>
-
-				<button class="btn btn-sm btn-outline-light mx-1 " type="button"
-					data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-					aria-controls="offcanvasRight" onclick="openMsgBox()">메시지</button>
 					
 					<a class="btn btn-sm btn-outline-light me-1 mx-1" role="button"
 					href="${path}/logout"> 로그아웃</a>

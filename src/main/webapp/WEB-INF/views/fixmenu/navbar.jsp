@@ -8,7 +8,7 @@
 		<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
 			href="${path}/"> <img src="resources/img/LOGO.png"
 			class="rounded float-end rounded mx-auto d-block mx-2" alt=""
-			width="50" height="50">WeDron
+			width="50" height="50">WeDrone
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"

@@ -63,7 +63,7 @@ body, html {
 /* 후기마커 */
 .overlay {
    margin-bottom: 60px;
-   background-color: rgba(248, 210, 221, 0.5);
+   background-color: rgba(70, 131, 180, 0.5);
    padding: 10px;
 }
 
@@ -93,7 +93,7 @@ body, html {
 
 .gauge2 {
    height: 10px;
-   background-color: #ccc;
+   background-color: white;
    display: inline-block;
    "
 }
@@ -302,7 +302,7 @@ ul.tabs li.current {
                <h5>
                   <b>Enjoy your flight, WeDrone</b>
                </h5>
-               <h6>${sessionScope.loginNickName} 님, 환영합니다 ^ㅇ^</h6>
+               <h6>${sessionScope.loginNickName} 님, 환영합니다</h6>
             </div>
             <ul class="tabs">
                <li class="tab-link" id="tab-myLocationMK-li" data-tab="tab-myLocationMK">내위치마커</li>
@@ -335,8 +335,8 @@ ul.tabs li.current {
 
          <!-- 후기마커 탭 -->
             <div id="tab-reviewMK" class="tab-content current">
-               <h4 id="firstComment" style="color: crimson; text-align: center;">♥
-                  지역을 선택해주세요! ♥</h4>
+               <h4 id="firstComment" style="color: crimson; text-align: center;">
+                  지역을 선택해주세요</h4>
                <div id='reviewListArea'>
                   <div>지도를 클릭하여 후기마커를 등록해보세요.</div>
                   <div id="listTopArea">

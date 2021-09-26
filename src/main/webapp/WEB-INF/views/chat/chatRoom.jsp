@@ -35,6 +35,23 @@
 		color: white;
 	}
 	
+			/* 스크롤바 설정*/
+	.monitor::-webkit-scrollbar{
+	    width: 6px;
+	}
+	
+	/* 스크롤바 막대 설정*/
+	.monitor::-webkit-scrollbar-thumb{
+	    height: 17%;
+	    background-color: rgba(33,133,133,1);
+	    border-radius: 10px;  
+	}
+	
+	/* 스크롤바 뒷 배경 설정*/
+	.monitor::-webkit-scrollbar-track{
+	    background-color: rgba(33,133,133,0.33);
+	}
+	
 	#weDrone{
 		color: white;
 		display: inline-block;
@@ -138,7 +155,7 @@
 <script>
 
 
-const content = "바른 말 고운 말을 사용합시다";
+const content = "바른 말 고운 말을 사용합시다    ";
 const text = document.querySelector(".text");
 let i = 0;
 
@@ -157,8 +174,8 @@ setInterval(typing, 300)
 var webSocket = null;
 var $mon = $("#monitor");
 
+   //var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
    var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
-   //var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginId}";
    console.log(url);
    webSocket = new WebSocket(url);
    
@@ -193,9 +210,9 @@ var $mon = $("#monitor");
 	   webSocket.close();
 	}
 	
-	 $("#iSend").on("keyup",function(key){
+	 $("#msg").on("keyup",function(key){
 	        if(key.keyCode==13) {
-	            alert("엔터키 이벤트");
+	        	sendMsg();
 	        }
 	    });
 
