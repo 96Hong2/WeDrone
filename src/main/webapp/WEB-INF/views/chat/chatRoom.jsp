@@ -157,8 +157,8 @@ setInterval(typing, 300)
 var webSocket = null;
 var $mon = $("#monitor");
 
-   //var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
-   var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginId}";
+   var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
+   //var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginId}";
    console.log(url);
    webSocket = new WebSocket(url);
    

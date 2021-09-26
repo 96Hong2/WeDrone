@@ -14,7 +14,7 @@
 	
 	<!--  알림 리스트를 가져오 -->
 	<select id="selectInform" resultType="Map">
-		SELECT * FROM INFORM WHERE userid=#{userid}
+		SELECT * FROM INFORM WHERE userid=#{userid} AND informField!='message'
 	</select>
 	
 	<!-- isread가 n인 사람만 리스트 -->
@@ -75,5 +75,23 @@
 		SELECT userId, TO_CHAR(informDate, 'hh24:mi:ss') msgDate, informContent, regUserId FROM inform WHERE informField='message' AND userId=#{loginId} 
 	</select>
 	
+	<insert id="insertReq">
+		INSERT INTO inform(informId, userId, informField, informContent, regUserId) VALUES(inform_seq.NEXTVAL, #{param1}, 'message', (SELECT nickName FROM members WHERE userId=#{param2}), #{param2})
+	</insert>
 	
+	<select id="getReqCnt" resultType="int">
+		SELECT COUNT(informId) FROM inform WHERE userId=#{param1} AND regUserId=#{param2} AND informField='message'
+	</select>
+	
+	<update id="updateReq">
+		UPDATE inform SET informDate = SYSDATE WHERE userId=#{param1} AND regUserId=#{param2} AND informField='message'
+	</update>
+	
+	<delete id="deleteReq">
+		DELETE FROM inform WHERE userId=#{param1} AND regUserId=#{param2} AND informField='message'
+	</delete>
+	
+	<delete id="deleteOldReq">
+		DELETE FROM inform WHERE ((informDate+30/(24*60)) &lt; SYSDATE) AND informField='message'
+	</delete>
 </mapper>

@@ -78,6 +78,36 @@ public class InformService {
 		map.put("list", list);
 		return map;
 	}
+
+
+	public HashMap<String, Object> insertReq(String userId, String reqUserId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int reqCnt = dao.getReqCnt(userId, reqUserId);
+		logger.info("해당 유저에게 이미 보낸 대화요청 개수 : {}",reqCnt);
+		
+		int success = 0;
+		if(reqCnt > 0) {
+			success = dao.updateReq(userId, reqUserId);
+			logger.info("해당 유저에게 보낸 대화요청 UPDATE : {}", success);
+		}else {
+			success = dao.insertReq(userId, reqUserId);
+			logger.info("해당 유저에게 보낸 대화요청 INSERT : {}", success);
+		}
+		map.put("success", success);
+		return map;
+	}
+
+
+	public HashMap<String, Object> deleteReq(String userId, String reqUserId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int success = 0;
+		success = dao.deleteReq(userId, reqUserId);
+		logger.info("해당 유저에게 보낸 대화요청 DELETE : {}", success);
+		
+		map.put("success", success);
+		return map;
+	}
 	
 
 }

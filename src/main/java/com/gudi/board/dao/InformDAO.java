@@ -38,6 +38,16 @@ public interface InformDAO {
 
 	public ArrayList<InformDTO> getReqList(String loginId);
 
+	public int insertReq(String userId, String reqUserId);
+
+	public int getReqCnt(String userId, String reqUserId);
+
+	public int updateReq(String userId, String reqUserId);
+
+	public int deleteReq(String userId, String reqUserId);
+
+	public int deleteOldReq();
+
 	
 }
 

@@ -252,7 +252,8 @@ function closeMsgBox(){
 
 function rejectChat(user){
 	if(confirm(user+"님의 대화요청을 거절하시겠습니까?") == true){
-		$("#req_"+user+"_li").empty();	
+		$("#req_"+user+"_li").empty();
+		deleteReq(user);
 	}else{
 		return;
 	}
@@ -269,12 +270,55 @@ function openMsg(user){
 	//타입을 chat으로 주면 해당 유저의 msgBox에 채팅요청이 간다.
 	mySocket.send("chat,"+user+","+reqNickName+","+url);
 	
+	//DB에 대화요청 저장(요청자, 받는사람)
+	//relatedId가 number니까 30분 뒤 시간을 저장해서 지워주도록 할까..?
+	insertReq(requestor, user);
+	
 	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;
     var title = "popup";
     var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
                                    
     window.open(url,title,status);
+}
+
+function insertReq(requestor, user){
+	$.ajax({
+	     url:'insertReq', //DB에 대화요청 알림 INSERT
+	     type:'get',
+	     data:{
+	    	 "userId" : requestor,
+	    	 "reqUserId" : user
+	     },
+	     dataType:'json',
+	     success:function(data){
+	    	alert(user+"님께 대화요청을 보냈습니다.");
+	    	console.log("DB에 대화요청알림 insert : ", data.success);
+	     },
+	     error:function(e){
+	         console.log("에러 e : ",e);
+	     }
+	 });
+}
+
+function deleteReq(user){
+	var loginUser = "{sessionScope.loginId}";
+	console.log("deleteReq loginUser : ",loginUser);
+	$.ajax({
+	     url:'deleteReq', //DB에서 대화요청 알림 DELETE
+	     type:'get',
+	     data:{
+	    	 "userId" : loginUser,
+	    	 "reqUserId" : user
+	     },
+	     dataType:'json',
+	     success:function(data){
+	    	console.log("DB에서 대화요청알림 delete : ", data.success);
+	     },
+	     error:function(e){
+	         console.log("에러 e : ",e);
+	     }
+	 });
 }
 
 //메시지박스에 현재 접속한(내위치마커ON) 유저 리스트를 불러오는 함수.

@@ -39,4 +39,18 @@ public class MsgController {
 		return service.getReqList(loginId);
 	}
 	
+	//대화요청 시 알림을 DB에 저장하는 메소드
+	@RequestMapping(value = "/insertReq")
+	@ResponseBody
+	public HashMap<String, Object> insertReq(@RequestParam String userId, @RequestParam String reqUserId) {
+		return service.insertReq(userId, reqUserId);
+	}
+	
+	//대화요청 시 알림을 DB에 저장하는 메소드
+	@RequestMapping(value = "/deleteReq")
+	@ResponseBody
+	public HashMap<String, Object> deleteReq(@RequestParam String userId, @RequestParam String reqUserId) {
+		return service.deleteReq(userId, reqUserId);
+	}
+	
 }
