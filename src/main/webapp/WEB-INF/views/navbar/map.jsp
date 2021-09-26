@@ -215,6 +215,17 @@ ul.tabs li.current {
 .revBox1_1{
 	margin-left: 4px;
 }
+
+.MapClickBtn{
+	color: white;
+	background-color: #0d6efd; 
+	border: none;
+}
+
+.bAddr{
+	font-size: 17px;
+}
+
 </style>
 </head>
 <title>드론</title>
@@ -576,6 +587,13 @@ function initMap(){
       //지도 클릭시 나타나는 인포윈도우
       var infowindow = new kakao.maps.InfoWindow({zindex:1}); 
       
+      kakao.maps.event.addListener(map, 'rightclick', function(mouseEvent) {
+    	    infowindow.close();
+    	    myLocMKinfo.close();
+    	    APImarker.setMap(null);
+    	    marker.setMap(null);
+    	});
+      
       //지도를 불러올 때 줌 못하게 막음
       function setZoomable(zoomable) {
              // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
@@ -638,24 +656,22 @@ function initMap(){
                  //클릭한 위치의 주소 받아오기
                  searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                      if (status === kakao.maps.services.Status.OK) {
-                         var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-                         detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                         var detailAddr = !!result[0].road_address ? '<div class="bAddr">도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                         detailAddr += '<div class="bAddr">지번 주소 : ' + result[0].address.address_name + '</div>';
                          
                          var rmLat = latlng.getLat(); 
                          var rmLng = latlng.getLng(); 
                          
                          var address_info = result[0].address.address_name
                          
-                         var content = '<div class="bAddr">' +
-                                         '<span class="title">법정동 주소정보</span>' + 
+                         var content = '<div class="bAddr" id="bAddr">' +
                                          detailAddr + 
-                                     '</div>'+
-                                     '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\', '+rmLat+', '+rmLng+')">'+
+                                     '<button type="button" class="MapClickBtn" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewWrite(\''+result[0].address.address_name+'\', '+rmLat+', '+rmLng+')">'+
                                      '후기 작성'+
-                                   '</button>';
+                                   '</button>'+
+                                    '</div>';
                                    
                                    var content2 = '<div class="bAddr">' +
-                                   '<span class="title">법정동 주소정보</span>' + 
                                    detailAddr + 
                                '</div><div><p style="color:red;">지원하지 않는 지역입니다.</p></div>';
                                
@@ -1802,6 +1818,7 @@ function initMap(){
     
     //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
     function callMyLocMK(){
+    	infowindow.close();
     	console.log("★서버에서 모든 내위치마커 불러오기★");
     	deleteMarkers(markers);//기존마커 제거
     	
@@ -1826,8 +1843,8 @@ function initMap(){
 		    			myLocMarker = new kakao.maps.Marker({
 		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
 		    			});
-		    			var imageSrc2 = 'resources/img/myLoc3.png', // 마커이미지의 주소입니다    
-			        	imageSize2 = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+		    			var imageSrc2 = 'resources/img/flag2.png', // 마커이미지의 주소입니다    
+			        	imageSize2 = new kakao.maps.Size(49, 49), // 마커이미지의 크기입니다
 			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 						var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2);
 				    	myLocMarker.setImage(markerImage2);
@@ -1961,8 +1978,8 @@ function initMap(){
     	//클릭한 위치의 주소 받아오기
         searchDetailAddrFromCoords(latlng, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
-                detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+                var detailAddr = !!result[0].road_address ? '<div class="bAddr">도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+                detailAddr += '<div class="bAddr">지번 주소 : ' + result[0].address.address_name + '</div>';
                 infoContent = "";
                 infoContent += detailAddr;
                 
@@ -1977,7 +1994,7 @@ function initMap(){
 	    	APImarker.setMap(map);
 	   		weather(lat, lon);
 	    	
-	    	infoContent += '<button type="button" class="btn btn-primary" onclick="javascript:setMyLocMK('+lat+','+lon+',\''+addressInfo+'\')">내위치마커로 설정</button>';
+	    	infoContent += '<button type="button" class="MapClickBtn" onclick="javascript:setMyLocMK('+lat+','+lon+',\''+addressInfo+'\')">내위치</button>';
 	        myLocMKinfo.setContent(infoContent);
 	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
             }
