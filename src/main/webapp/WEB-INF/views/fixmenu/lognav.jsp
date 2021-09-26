@@ -183,16 +183,16 @@
 
 <script>
 
-//웹소켓 전역변수 socket 선언
-var socket = null;
+//웹소켓 전역변수 mySocket 선언
+var mySocket = null;
 
 $(document).ready(function(){
 	//알림을 받기 위한 웹소켓 연결(/chat-ws는 servlet-context.xml에 있다)
-	sock = new SockJS("<c:url value="/chat-ws"/>");
-	socket = sock;
+	mySock = new SockJS("<c:url value="/chat-ws"/>");
+	mySocket = mySock;
 	
 	//알림 데이터를 전달받았을 때 실행되는 함수로 onMessage함수를 연결(toast를 생성하는 함수)
-	sock.onmessage = onMessage;
+	mySock.onmessage = onMessage;
 	
 	//메시지박스에 현재 접속한 유저 리스트 불러오기
 	getUserList();
@@ -251,9 +251,9 @@ function openMsg(user){
 	console.log("요청자/대화상대 : "+requestor+" / "+user);
 	
 	//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
-	socket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+"#");
+	mySocket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+"#");
 	//타입을 chat으로 주면 해당 유저의 msgBox에 채팅요청이 간다.
-	socket.send("chat,"+user+","+reqNickName+","+url);
+	mySocket.send("chat,"+user+","+reqNickName+","+url);
 	
 	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;

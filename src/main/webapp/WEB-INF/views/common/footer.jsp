@@ -61,7 +61,7 @@ $(document).ready(function(){
 	}, 300);
 	
 	//5초마다 알림데이터 가져오기
-	setInterval("autoScript()", 5000);
+	setInterval("autoScript()", 3*60*1000);
 	
 	
 	setTimeout(() => {

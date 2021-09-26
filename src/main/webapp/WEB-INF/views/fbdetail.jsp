@@ -488,7 +488,7 @@ $(function(){
 				$('#cmtContent').val("");
 				
 				//웹소켓으로 댓글 알림 보내기
-				socket.send("댓글 알림,"+postedUserId+","+loginNickName+"님이 당신의 게시글에 댓글을 달았습니다!,"+"#");
+				mySocket.send("댓글 알림,"+postedUserId+","+loginNickName+"님이 당신의 게시글에 댓글을 달았습니다!,"+"#");
 				getCommentList(1);
 			},
 			error:function(result) {
