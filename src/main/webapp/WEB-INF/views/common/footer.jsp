@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -6,21 +6,61 @@
 
 
  <div class="toast align-items-center" role="alert"  id='alert-drone-toast' aria-live="assertive" aria-atomic="true" 
- 	style="color: white;background: #fff; position: absolute; z-index: 999;height:200px;
+ 	style="color: white;background: #fff; position: absolute; z-index: 999;height:130px;
     top: 78px; left:40%;  width: 200px; ">
     
   <div class="d-flex text-center" >
-    <div class="toast-body">
-     <h1 style="color:#000 ; font-size: 22px;">긴급 알림</h1>
-     <p style="color:#000;"><i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 32px"></i>  KP:<span id="drone-kp"></span></p>
-     <p style="font-size: 15px; color: red; font-weight: normal; text-align: left;" class="text-left">"오늘은 드론을 날리기 위험한<br>날입니다."</p>
+    <div class="toast-body" style="width:100%;">
+    <div id="alertContainer">
+     <i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 25px; float: left; display: inline-block; margin-top: 1px;"></i>
+     	<p id="alertText">긴급 알림</p>
+     <button type="button"  id="drone-alert-btn" >X</button></div>
+     <div id="alertContent">
+     <p style="color:#000;" id="kpNumber">  KP:<span id="drone-kp"></span></p>
+     <p style="font-size: 15px; color: red; text-align: center; margin-top: 5px; display: block;" class="text-left">"오늘은 드론을 날리기<br> 위험한 날입니다."</p></div>
      <p>
-  	  <button type="button"  id="drone-alert-btn"  >확인</button>
+  	  
      </p>
    </div>
 
   </div>
 </div> 
+<style>
+	#drone-alert-btn{
+		background-color: transparent;
+		float: right;
+		border: none;
+		margin-left: 30px;
+		display: inline-block;
+		font-size: 18px;
+	}
+	
+	#drone-alert-btn:hover{
+		font-weight: bold;
+	}
+	
+	#alertContainer{
+		display: inline-block;
+		width: 100%;
+	}
+	
+	#alertContent{
+		display: inline-block;
+	}
+	
+	#kpNumber{
+		margin-left: 8px;
+		font-size: 15px;
+		display: inline-block;
+	}
+	
+	#alertText{
+		font-size: 20px;
+		color: black;
+		display: inline-block;
+		margin-left: 9px;
+	}
+</style>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/js/sockjs.min.js"></script>  --%>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> 
@@ -185,7 +225,7 @@ function alarmData(obj){
 		//토스트 메시지 보이기
 		if(alarmCount!=obj.countInform){
 			var html='<a style="color:#fff; text-decoration: none;"  href="${pageContext.request.contextPath}/alarmLinkMove?type=fbdetail&postId='+obj.relatedId+'&informid='+obj.informId+'">' +obj.informContent  +'</a>';
-		    $("#alert-toast .toast-body").html(html);
+			$("#alert-toast .toast-body").html(html);
 			$("#alert-toast").addClass("show");
 			$("#alert-toast .d-flex").css("display", "block");						
 			
