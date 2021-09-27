@@ -6,7 +6,9 @@
 
 #weDrone{
 	font-family: 'Russo One', sans-serif;
-	font-size: 32px;
+	font-size: 31px;
+	padding-top: 3.7px;
+	padding-bottom: 3.7px;
 }
 
 #msgBoxTitle{

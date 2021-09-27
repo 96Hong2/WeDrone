@@ -219,7 +219,7 @@ ul.tabs li.current {
 }
 
 .bAddr{
-	font-size: 17px;
+	font-size: 1.2em;
 }
 
 
