@@ -58,9 +58,12 @@ public class ChatHandler extends TextWebSocketHandler {
 				//알림받을 유저가 실시간 접속하고 있을 경우(targetSession이 users에 아직 존재할 경우)
 				if(targetSession != null) {
 					if(type.equals("chat")) { //채팅 요청 //그냥 보내면 일반알림메시지랑 구분할 수 없어서 **을 넣었음
-						//TextMessage txtMsg = new TextMessage("**<a target='_blank' href='"+ url +"'>[<b>대화요청</b>] &nbsp;" + content + " 님</a>");
-						TextMessage txtMsg = new TextMessage("**"+ content);
+						TextMessage txtMsg = new TextMessage("**"+ content); //요청받는 유저 아이디/닉네임
 						log("웹소켓 채팅요청 txtMsg - "+txtMsg.getPayload());
+						targetSession.sendMessage(txtMsg);
+					} else if(type.equals("chatReject")){ //채팅 거절 //일반알림메시지와 구분하기위해 ##를 넣었음
+						TextMessage txtMsg = new TextMessage("##"+ content); //거절한 유저 닉네임
+						log("웹소켓 채팅거절알림 txtMsg - "+txtMsg.getPayload());
 						targetSession.sendMessage(txtMsg);
 					}else {
 						//ex) [타입] 알림메시지 내용 , 클릭하면 url로 이동함

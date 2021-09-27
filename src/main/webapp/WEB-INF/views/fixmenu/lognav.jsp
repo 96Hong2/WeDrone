@@ -143,9 +143,8 @@
 			</ul>
 			
 			<button type="button" onclick="javascript:openMsgBox()" class="btn btn-sm btn-#3c3c3c; position-relative" style="display:inline;">
-			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span
-				class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2"><span
-				class="visually-hidden">unread messages</span></span>
+			<i class="bi bi-envelope" style="font-size: 1.8rem; color: white"></i><span id="redCircle" class="position-absoluteposition-absolute top-0 end-0 translate-middle badge border border-light rounded-circle bg-danger p-2">
+			<span class="visually-hidden">unread messages</span></span>
 			</button>
 
 			<button type="button" onclick="alarmListMove()"
@@ -219,6 +218,9 @@ $(document).ready(function(){
 	
 	//메시지박스 숨기기(버튼을 클릭하면 보이게 하기 위함)
 	$('.msgBox').hide();
+	
+	//헤더의 메시지아이콘에 빨간 동그라미 숨기기
+	$('#redCircle').hide();
 });
 
 //알림 toast를 생성하고 띄워주는 함수(부트스트랩 사용)
@@ -226,7 +228,43 @@ function onMessage(e){
 	var data = e.data; //웹소켓으로부터 받은 알림 데이터
 	console.log("onMessage e.data : ",e.data);
 	
-	if(data.substring(0,2) != "**"){ //채팅요청과 일반알림을 구분하기위해 e.data의 맨 앞에 **을 찍어서 구분했다. **이면 채팅요청, 아니면 일반알림
+	//채팅요청과 일반알림을 구분하기위해 e.data의 맨 앞에 특수기호를 찍어서 구분했다.
+	//**이면 채팅요청, ##이면 채팅거절알림, 아니면 일반알림(일반알림은 채팅뿐아니라 좋아요, 즐겨찾기, 댓글 등에서도 쓰이기 때문에 형식을 변경할 수 없음)
+	if(data.substring(0,2) == "**"){ //채팅요청
+	    data = data.substr(2);
+		console.log("자른 data : ", data);
+		var splitStr = data.split("/");
+		var reqId = splitStr[0];
+		var reqNickName = splitStr[1];
+		console.log("reqId/reqNickName : "+reqId+"/"+reqNickName);
+		
+		var chatReq = "<li id='req_"+reqNickName+"_li'><a href='javascript:acceptReq(\""+reqNickName+"\")'><div>";
+		chatReq += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
+		chatReq += "[<b>대화요청</b>] &nbsp;"+reqNickName+" 님 ";
+		
+		var now = new Date();
+		//var nowHour = (now.getHours() > 12 ? "오후 "+(parseInt(now.getHours)-12)+"시" : "오전 "+now.getHours+"시"); 
+		var reqTime = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
+		
+		chatReq += "<span style='font-size:15px; color:darkgray;'>"+reqTime+"</span></a>";
+		chatReq += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+reqId+"\",\""+reqNickName+"\")'>거절</button></div></li>";
+		$("#emptyReqCmt").empty();
+		$("#reqList").append(chatReq);
+	}else if(data.substring(0,2) == "##"){
+		//##은 채팅 거절알림, 채팅거절 알림메시지일 경우 여기서 해줄 일은 없다.
+		console.log("lognav.jsp 채팅거절요청 받음");
+		data = data.substr(2);
+		console.log("자른 data : ", data);
+		
+		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+	    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
+	    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
+	    toast += "</div> <div class='toast-body'>[알림] " + data + "님이 1:1채팅요청을 거절했습니다.</div></div>"
+	    
+	    $("#RejectAlert").empty();
+	    $("#RejectAlert").append(toast);
+		
+	}else{ //일반알림
 		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
 	    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
 	    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
@@ -238,20 +276,8 @@ function onMessage(e){
 	    //$('.toast').toast('show');
 	    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
 	    
-	}else{
-		data = data.substr(2);
-		console.log("자른 data : ", data);
-		var chatReq = "<li id='req_"+data+"_li'><a href='javascript:openMsg(\""+data+"\")'><div>";
-		chatReq += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
-		chatReq += "[<b>대화요청</b>] &nbsp;"+data+" 님 ";
-		
-		var now = new Date();
-		//var nowHour = (now.getHours() > 12 ? "오후 "+(parseInt(now.getHours)-12)+"시" : "오전 "+now.getHours+"시"); 
-		var reqTime = now.getHours()+":"+now.getMinutes()+":"+now.getSeconds();
-		chatReq += "<span style='font-size:15px; color:darkgray;'>"+reqTime+"</span></a>";
-		chatReq += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+data+"\")'>거절</button></div></li>";
-		$("#emptyReqCmt").empty();
-		$("#reqList").append(chatReq);
+	    //헤더의 메시지아이콘에 빨간 동그라미 보이기
+	    $('#redCircle').show();
 	}
 }
 
@@ -260,6 +286,7 @@ function toastClose(){
 }
 
 function openMsgBox(){
+	$('#redCircle').hide();
 	$('.msgBox').show(800);
 }
 
@@ -267,37 +294,64 @@ function closeMsgBox(){
 	$('.msgBox').hide();
 }
 
-function rejectChat(user){
-	if(confirm(user+"님의 대화요청을 거절하시겠습니까?") == true){
-		$("#req_"+user+"_li").empty();
-		deleteReq(user);
+function rejectChat(userId, userNickName){
+	var rejectorId = "${sessionScope.loginId}";
+	var rejectorNickName = "${sessionScope.loginNickName}";
+	if(confirm(userNickName+"님의 대화요청을 거절하시겠습니까?") == true){
+		$("#req_"+userNickName+"_li").empty();
+		//대화요청을 거절했을 때 거절당한 유저에게 보내는 웹소켓
+		mySocket.send("chatReject,"+userId+","+rejectorNickName+",#");
+		deleteReq(userNickName);
 	}else{
 		return;
 	}
 }
 
-//대화를 요청받은 유저에게 알림 전송 & 채팅창 팝업 열기
-function openMsg(user){
-	var requestor = "${sessionScope.loginId}"; //대화를 요청하는, openMsg를 호출하는 유저(나)
-	var reqNickName = "${sessionScope.loginNickName}";
-	console.log("요청자/대화상대 : "+requestor+" / "+user);
+//대화를 요청하는 함수 
+function sendReq(user, nickName){
+	if(confirm(nickName+"님께 1:1채팅을 요청하시겠습니까?") == true){	
+		var requestor = "${sessionScope.loginId}"; //대화를 요청하는 유저(나)
+		var reqNickName = "${sessionScope.loginNickName}";
+		var url = "./chatRoom?other="+user;
+		console.log("요청자/대화상대 : "+requestor+" / "+user);
+		console.log("요청자/대화상대 : "+reqNickName+" / "+nickName);
 	
-	//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
-	mySocket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+"#");
-	//타입을 chat으로 주면 해당 유저의 msgBox에 채팅요청이 간다.
-	mySocket.send("chat,"+user+","+reqNickName+","+url);
+		//대화를 요청받은 유저에게 알림 전송
+		//send의 인자는 알림 데이터로 "타입, 타겟(알림을 받을 유저아이디), 내용, 알림 클릭 시 이동할 URL"의 형식을 가진다.(,로 구분)
+		mySocket.send("채팅 알림,"+user+","+reqNickName+"님이 1:1 채팅을 요청했습니다,"+"#");
+		//타입을 chat으로 주면 해당 유저의 msgBox에 채팅요청이 간다.
+		mySocket.send("chat,"+user+","+requestor+"/"+reqNickName+","+url);
+		
+		//DB에 대화요청 저장(요청자, 받는사람)
+		//30분 뒤 대화요청 제거됨(SchedulerService)
+		insertReq(requestor, user);
+		
+		//채팅방 팝업창 열어주기
+		openChat(user);
+	}else{
+		return;
+	}
+}
+
+//대화요청을 수락했을 때 실행되는 함수
+function acceptReq(requestorId, requestorNickName){
+	$("#req_"+requestorNickName+"_li").empty();
+	deleteReq(requestorNickName);
 	
-	//DB에 대화요청 저장(요청자, 받는사람)
-	//relatedId가 number니까 30분 뒤 시간을 저장해서 지워주도록 할까..?
-	insertReq(requestor, user);
-	
+	//채팅방 팝업창 열어주기
+	openChat(requestorId);
+}
+
+//채팅방 팝업창을 열어주는 함수
+function openChat(user){
 	//대화상대 user를 URL을 통해 팝업창에 파라미터로 넘겨준다.
     var url = "./chatRoom?other="+user;
     var title = "popup";
     var status = "toolbar=no,resizable=no, channelmode=yes, location=no,status=no,menubar=no,width=680, height=660, top=0,left=70%"; 
-                                   
+                  
     window.open(url,title,status);
 }
+
 
 function insertReq(requestor, user){
 	$.ajax({
@@ -309,7 +363,6 @@ function insertReq(requestor, user){
 	     },
 	     dataType:'json',
 	     success:function(data){
-	    	alert(user+"님께 대화요청을 보냈습니다.");
 	    	console.log("DB에 대화요청알림 insert : ", data.success);
 	     },
 	     error:function(e){
@@ -330,7 +383,7 @@ function deleteReq(user){
 	     },
 	     dataType:'json',
 	     success:function(data){
-	    	console.log("DB에서 대화요청알림 delete : ", data.success);
+	    	console.log(loginUser+" DB에서 대화요청 delete : ", data.success);
 	     },
 	     error:function(e){
 	         console.log("에러 e : ",e);
@@ -353,7 +406,7 @@ function getUserList(){
 	    	list.forEach(function(user, index){
 	    		if(user.userId != "{sessionScope.loginId}"){
 	    		
-	    		content += "<li><a href='javascript:openMsg(\""+user.userId+"\")'><div>"
+	    		content += "<li><a href='javascript:sendReq(\""+user.userId+"\",\""+user.nickName+"\")'><div>"
 		    	content += "<img src='resources/img/comment.png' id='userImg'>"+user.nickName+" 님 &nbsp;";
 		    	
 		    	//내위치마커 주소
@@ -363,7 +416,7 @@ function getUserList(){
 	    	})
 	    	
 		    $("#userList").empty();
-		    $("#userList").append(content);	    		
+		    $("#userList").append(content);
 	    	
 	     },
 	     error:function(e){
@@ -384,13 +437,19 @@ function getReqList(){
 	    	var list = data.list;
 	    	var content = "";
 	    	
+	    	/*헤더 메시지아이콘에 빨간동그라미
+	    	if(list != null){
+	    		$('#redCircle').show();
+	    	}
+	    	*/
+	    	
 	    	list.forEach(function(user, index){
 	    		//아이디(regUserId), 닉네임(informContent) 모두 가져와야 함!!
-		    	content = "<li id='req_"+user.informContent+"_li'><a href='javascript:openMsg(\""+user.regUserId+"\")'><div>";
+		    	content = "<li id='req_"+user.informContent+"_li'><a href='javascript:acceptReq(\""+user.regUserId+"\",\""+user.informContent+"\")'><div>";
 		    	content += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
 		    	content += "[<b>대화요청</b>] &nbsp;"+user.informContent+" 님 ";
 		    	content += "<span style='font-size:15px; color:darkgray;'>"+user.msgDate+"</span></a>";
-		    	content += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+user.informContent+"\")'>거절</button></div></li>";
+		    	content += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+user.regUserId+"\",\""+user.informContent+"\")'>거절</button></div></li>";
 	    	})
 	    	
 		    $("#reqList").empty();
