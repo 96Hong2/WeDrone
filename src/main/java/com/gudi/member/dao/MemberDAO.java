@@ -20,5 +20,9 @@ public interface MemberDAO {
 	int update(HashMap<String, String> params);
 
 	int pwupdate(HashMap<String, String> params);
+
+	String idpwCheck(HashMap<String, String> params);
+
+	void pwChange(String hashPw, String loginId);
 	
 }

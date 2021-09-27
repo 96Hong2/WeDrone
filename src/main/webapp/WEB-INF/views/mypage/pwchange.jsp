@@ -82,7 +82,7 @@
 							</div>
 								<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호 변경</label> <input
-									type="password" class="form-control" name="pw" id="pw"
+									type="password" class="form-control" name="pwChange" id="pwChange"
 									placeholder="변경할 비밀번호를 입력해주세요">
 								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요</div>
 							</div>
@@ -121,6 +121,11 @@
 </div>
 </div>
 <%@ include file="../common/weather-widget.jsp" %>
+<c:if test="${suc eq false }">
+<script type="text/javascript">
+alert("정보를 올바르게 입력해주세요")
+</script>
+</c:if>
 <!--// 날씨 위젯 끝 -->
       
       

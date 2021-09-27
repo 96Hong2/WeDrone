@@ -141,6 +141,16 @@ public class MemberService<pwchange> {
 			int success = dao.update(params);
 			logger.info("비밀번호 수정 성공 여부 : " + success);
 		}
+
+		public String idpwCheck(HashMap<String, String> params) {
+		
+			return dao.idpwCheck(params);
+			
+		}
+
+		public void pwChange(String hashPw, String loginId) {
+			dao.pwChange(hashPw,loginId);
+		}
 		
 		
 	

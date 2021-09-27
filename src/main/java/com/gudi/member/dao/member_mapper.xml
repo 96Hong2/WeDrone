@@ -54,6 +54,18 @@
 		pw = #{pw},
 			 WHERE userId= #{userId}
 	</update>
+	
+	
+	<select id="idpwCheck" parameterType="hashmap"
+		resultType="String">
+		SELECT pw FROM members WHERE userId = #{userId}
+	</select>
+	
+	<update id="pwChange" parameterType="String">
+		UPDATE members SET
+		pw = #{param1}
+			 WHERE userId= #{param2}
+	</update>
    
 
 

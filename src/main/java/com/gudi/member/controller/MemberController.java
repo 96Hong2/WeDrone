@@ -31,7 +31,7 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-	@Autowired(required = false)
+	@Autowired
 	MemberService service;
 
 	
@@ -127,18 +127,31 @@ public class MemberController {
 	
 	
 	 // 비밀번호 업데이트
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/pwupdate", method = RequestMethod.POST)
-	public String pwupdate(@RequestParam HashMap<String, String> params, HttpSession session) {	
+	public String pwupdate(@RequestParam HashMap<String, String> params, HttpSession session,Model model) {
+		String loginId = (String)session.getAttribute("loginId");
 		// 1. 아이디랑 비밀번호 -> db에 맞는지 확인
 		// if() return "mypage/pwchange";
 		// else 로그아웃 처리 후 메인으로
-		logger.info("update info : {}",params);
-		params.put("pw", (String)session.getAttribute("pw"));
-		service.update(params);
-		session.invalidate();
-
-		return "mypage/pwchanges";
+		String  pw = service.idpwCheck(params);
+		if(pw == null) {
+			model.addAttribute("suc",false);
+			return "mypage/pwchange";
+		}else {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			boolean matched = encoder.matches(params.get("pw"), pw);
+			if(matched) {
+				String pwChange = params.get("pwChange");
+				encoder = new BCryptPasswordEncoder();
+				String HashPw = encoder.encode(pwChange);
+				service.pwChange(HashPw,loginId);
+				session.removeAttribute("loginId");
+				return "redirect:/";
+			}else {
+				model.addAttribute("suc",false);
+				return "mypage/pwchange";
+			}
+		}
 	}
 	 
 
