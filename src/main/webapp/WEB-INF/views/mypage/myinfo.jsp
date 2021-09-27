@@ -77,7 +77,7 @@
 						<label for="validationTooltip01" class="fw-bold">닉네임</label> <input
 							type="text" class="nullchecks nullcheck form-control"
 							name="nickName" title="${updateSuc}"
-							id="nickName" placeholder="닉네임" value="${dto.nickName}" required>
+							id="nickName" maxlength="7" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
 							정보입니다(100자 이하만 가능)</div>
