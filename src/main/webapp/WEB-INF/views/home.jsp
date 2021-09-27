@@ -38,7 +38,7 @@
 		<jsp:include page="fixmenu/lognav.jsp" />
 	</c:if>
 
-	<%@ include file="common/weather-widget.jsp" %>
+	
 	<!--메인 슬라이드바  -->
 
 	<div id="carouselExampleCaptions" class="carousel slide"
@@ -119,7 +119,7 @@
 	</div>
 </div>
 </div>
-
+<%@ include file="common/weather-widget.jsp" %>
 <!--// 날씨 위젯 끝 -->
 	
 	
