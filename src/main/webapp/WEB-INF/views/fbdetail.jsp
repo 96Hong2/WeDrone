@@ -384,12 +384,14 @@ function commentUpdateForm(cmtId){
 		dataType : 'JSON',
 		success : function(data) {
 			//console.log(data);
+			
 			$("#commnet-update-cmtcontent").val(data.CMTCONTENT);
 			$("#commnet-update-cmtId").val(cmtId);
 		},
 		error:function(result) {
 			console.log("error:");
 			console.log(result);
+			
 		}			
 	});		
 }
@@ -410,11 +412,13 @@ function commentUpdate(){
 		success : function(data) {
 			//console.log(data);			
 			getCommentList(1);
+			alert("수정이 완료되었습니다!");
 			$("#commentUpdate-modal").modal("hide");
 		},
 		error:function(result) {
 			console.log("error:");
 			console.log(result);
+			alert("수정 되지 않았습니다. 다시 시도해 주세요!");
 		}			
 	});		
 }
@@ -454,10 +458,12 @@ $(function(){
 				//웹소켓으로 댓글 알림 보내기
 				mySocket.send("댓글 알림,"+postedUserId+","+loginNickName+"님이 당신의 게시글에 댓글을 달았습니다!,"+"#");
 				getCommentList(1);
+				alert("댓글이 등록 되었습니다!");
 			},
 			error:function(result) {
 				console.log("error:");
 				console.log(result);
+				alert("댓글이 등록 되지 않았습니다. 다시 시도 해주세요!");
 			}			
 		});
 	});
