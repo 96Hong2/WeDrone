@@ -21,13 +21,25 @@
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${path}/resources/js/js.js"></script>
+<script src="${path}/resources/js/bootstrap.js"></script>
+<script src="${path}/resources/js/bootstrap.bundle.js"></script>
 <script src="${path}/resources/js/common.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" ></script>
 <!-- API script -->
 <script
 	src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=48073EB2-97FF-3571-8683-EEFD0567901F"></script>
+	<style>
+		#flyIndex{
+			float:right;
+			position: sticky;
+			width: 14.1%;
+		}
+		
+		
+	</style>
 </head>
 <title>드론</title>
+<body>
 <c:if test="${sessionScope.loginId eq null}">
 	<jsp:include page="../fixmenu/navbar.jsp" />
 </c:if>
@@ -35,40 +47,30 @@
 	<jsp:include page="../fixmenu/lognav.jsp" />
 </c:if>
 
-<nav
-	style="-bs-breadcrumb-divider: url(&amp; #34; data: image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&amp;#34;);"
-	aria-label="breadcrumb">
-	<ol class="breadcrumb">
-		<li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
-		<li class="breadcrumb-item active fs-4" aria-current="page">Map >
-			비행지역 조회</li>
-	</ol>
-</nav>
-<body>
+<div id="big_container">
+	<div id="map" style="width: 85.5%; float: left; height: 100%;"></div>
 
-	<div id="map" style="width: 80%;"></div>
-
-	<div style="border: 1px solid black; float: left; width: 224px;">
-		<input type="checkbox" class="chkAir" name="chkBox"
-			value="lt_c_aisprhc" checked />비행금지구역 <input type="checkbox"
-			class="chkAir" name="chkBox" value="lt_c_aisctrc" checked />관제권 <input
-			type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisresc" />비행제한구역
-		<input type="checkbox" class="chkAir" name="chkBox"
-			value="lt_c_aisdngc" />위험구역 <input type="checkbox" class="chkAir"
-			name="chkBox" value="lt_c_aismoac" />군작전구역 <input type="checkbox"
-			class="chkAir" name="chkBox" value="lt_c_aisatzc" />비행장교통구역 <input
-			type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisuac"
-			checked />초경량비행장치공역
-		<!-- 시범구역은 안보임..... -->
-		<!-- <input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisfldc" />경량항공기이착륙장 -->
-	</div>
-
-	<div style="border: 1px solid RED; float: left; width: 224px;">
-		<div>
-			<span>범례</span>
-			<div id="wms_image"></div>
+	<div id="flyIndex">
+		<div style="border: 1px solid black; width: 224px; height: 20%; font-size: 1.4em; margin-top: 10px">
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisprhc" checked />비행금지구역 <br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisctrc" checked />관제권 <br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisresc" />비행제한구역<br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisdngc" />위험구역 <br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aismoac" />군작전구역 <br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisatzc" />비행장교통구역 <br/>
+				<input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisuac" checked />초경량비행장치공역<br/>
+			<!-- 시범구역은 안보임..... -->
+			<!-- <input type="checkbox" class="chkAir" name="chkBox" value="lt_c_aisfldc" />경량항공기이착륙장 -->
+		</div>
+	
+		<div style="border: 1px solid RED; width: 224px; height: 20%">
+			<div>
+				<span>범례</span>
+				<div id="wms_image"></div>
+			</div>
 		</div>
 	</div>
+</div>
 		<!-- 날씨 위젯 시작 -->
 <div style="position: fixed; bottom: 150px;  right: 0px;width: 100%;">
 <div class="position-relative" class="modal hide fade" id="btn-weather"   tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
