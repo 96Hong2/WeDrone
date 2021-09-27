@@ -114,6 +114,7 @@
 	
 	var loginNickName = "${sessionScope.loginNickName}";
 	var reviewUserId = "";
+	var rmCmtCnt = "";
 	
 function loadReviewDetail(reviewId, userId, tab){
 	$('.revContainer').empty();
@@ -189,7 +190,7 @@ function loadReviewDetail(reviewId, userId, tab){
 			
 			content += "</div>";
 			content += "<div id='revCmt'><img src='resources/img/comment.png' class='revCommentImg'> 댓글 <b id='rm_cmtCnt'>"+review.commentCnt+"</b></div>";
-			
+			rmCmtCnt = review.commentCnt;
 			if(review.userId == userId){
 				content += "<div id='btnArea'><span id='buttonArea2'><button type='button' id='updateBtn' class='btn btn-outline-primary myRevBtns' onclick='updateReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\",\""+userId+"\", "+review.rating+", "+review.areaId+")'>수정</button></span>";
 				content += "<span id='buttonArea'><button type='button' onclick='deleteReview("+reviewId+",\""+review.areaName+"\",\""+tab+"\")' class='btn btn-outline-danger myRevBtns' id='deleteBtn'>삭제</button></span></div>";
@@ -644,12 +645,18 @@ function undoLike(reviewId, userId, areaName, tab){
 					alert("댓글을 등록했습니다.");
 					mySocket.send("댓글 알림,"+reviewUserId+","+loginNickName+"님이 당신의 후기마커에 댓글을 달았습니다!,"+"#");
 					loadComments(reviewId_1, 1);
+					
+					rmCmtCnt += 1;
+					var contents = "<b id='rm_cmtCnt'>"+rmCmtCnt+"</b>";
+					$('#rm_cmtCnt').empty();
+					$('#rm_cmtCnt').append(contents);
 				},
 				error: function(e){
 					console.log("댓글 작성 실패 :"+e);
 					alert("댓글을 등록하지 못했습니다.");
 				}
 			});
+			
 			
 		}else{
 			$("#commentContent").addClass("is-invalid");
@@ -677,12 +684,18 @@ function undoLike(reviewId, userId, areaName, tab){
 					$("#commentContent").val("");
 					alert("댓글을 삭제했습니다.");
 					loadComments(reviewId_1, 1);
+					
+					rmCmtCnt -= 1;
+					var contents = "<b id='rm_cmtCnt'>"+rmCmtCnt+"</b>";
+					$('#rm_cmtCnt').empty();
+					$('#rm_cmtCnt').append(contents);
 				},
 				error: function(e){
 					console.log("댓글 삭제 실패 :"+e);
 					alert("댓글을 삭제하지 못했습니다.");
 				}
 			});
+			
 		}
 	}
 	
