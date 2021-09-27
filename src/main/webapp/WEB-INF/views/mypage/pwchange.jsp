@@ -63,7 +63,7 @@
 		<div class="cont container mx-10 py-5 col-sm-8">
 			<div class="d-flex align-items-center">
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<p class= fs-3>본인 확인</p>
+					<p class= fs-3>비밀번호 변경</p>
 					<hr />
 					<div class="container w-50">
 						<form id="login2" action="${path}/pwupdate" method="post">
@@ -100,7 +100,7 @@
 							</c:if>
 							<hr />
 							<div>
-								<button class="btn btn-dark" name="pwupdate">로그인</button>
+								<button class="btn btn-dark" name="pwupdate">비밀번호 변경</button>
 							</div>
 						</form>
 					</div>
