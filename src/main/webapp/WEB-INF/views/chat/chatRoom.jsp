@@ -19,6 +19,15 @@
    rel="stylesheet">
 <style>
 
+	@font-face {
+	    font-family: 'Cafe24SsurroundAir';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	
+
 	body, html {
 	   font-family: 'IBM Plex Sans KR', sans-serif;
 	}
@@ -56,10 +65,10 @@
 		color: white;
 		display: inline-block;
 		margin-left: auto;
-		font-family: 'Do Hyeon', sans-serif;
 	}
 	
 	#shallWeBegin{
+		font-family: 'Cafe24SsurroundAir';
 		color: darkcyan;
 		margin: auto;
 	}
@@ -155,7 +164,7 @@
 <script>
 
 
-const content = "바른 말 고운 말을 사용합시다    ";
+const content = "바른 말 고운 말을 사용합시다 !    ";
 const text = document.querySelector(".text");
 let i = 0;
 
@@ -188,6 +197,7 @@ var $mon = $("#monitor");
    webSocket.onclose = function(e){
       console.log("close : ",e);
       $mon.append("<span id='outMsg'>대화방에서 나왔습니다.</span>");
+      $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
    }   
    
    //메시지를 서버로 부터 받았을 때

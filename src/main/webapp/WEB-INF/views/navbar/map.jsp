@@ -56,10 +56,6 @@ footer {
    margin-top: auto
 }
 
-body, html {
-   font-family: 'Do Hyeon', sans-serif;
-}
-
 /* 후기마커 */
 .overlay {
    margin-bottom: 60px;

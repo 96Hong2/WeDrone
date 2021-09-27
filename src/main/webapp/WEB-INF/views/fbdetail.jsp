@@ -46,9 +46,6 @@ footer {
 	background-color: #3c3c3c;;
 	margin-top: auto
 }
-body,html {
-	font-family: 'Do Hyeon', sans-serif;
-}
 
 
 	table, th, td{
@@ -67,7 +64,6 @@ body,html {
 
    }
  .h1-title{
- font-family: "Do Hyeon", sans-serif;
  font-style: normal;
  font-weight: 500;
  color: #212529; 

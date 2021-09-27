@@ -7,7 +7,7 @@
 	style="back-groundcolor: #3c3c3c;">
 	<div class="container-fluid">
 		<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
-			href="${path}/"> <img src="resources/img/LOGO.png"
+			href="${path}/" id="weDrone"> <img src="resources/img/LOGO.png"
 			class="rounded float-end rounded mx-auto d-block mx-2" alt=""
 			width="50" height="50">WeDrone
 		</a>
@@ -70,6 +70,11 @@
 <%-- <%@ include file="../common/footer.jsp"%> --%>
 
 <style>
+
+#WeDrone{
+	font-family: 'Voltaire';
+}
+
 #msgBoxTitle{
 	display : flex;
 	justify-content: space-between;

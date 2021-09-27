@@ -21,9 +21,7 @@
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 <style type="text/css">
-table{
- font-family: "Do Hyeon", sans-serif;
-}
+
 .table-striped tbody tr:hover{
 	background: #e9ecef;
 	cursor: pointer;
@@ -45,7 +43,6 @@ table{
     border-color: #dee2e6;
 }
 .h1-title{
- font-family: "Do Hyeon", sans-serif;
  font-style: normal;
  font-weight: 500;
  color: #212529; 
@@ -63,7 +60,6 @@ tbody a{
 nav {
     margin: 0;
     padding: 0;
-    font-family: 'Do Hyeon', sans-serif;
     font-size: large;
     scroll-behavior: smooth;
 }
