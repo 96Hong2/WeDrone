@@ -158,10 +158,10 @@
 					</div>
 					<hr />
 					<div class="col text-center">
-						<form action="${path}/memberDel" method="post" id="delForm">
+
 							<button type="button" class="btn btn-dark mx-2" 
-								value="탈퇴하기" onclick="location.href='memberDel?id=${dto.id}';">탈퇴하기</button>
-						</form>
+								value="탈퇴하기" onclick="location.href='memberDel'">탈퇴하기</button>
+
 					</div>
 				</div>
 				</div>
