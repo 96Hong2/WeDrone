@@ -26,6 +26,19 @@
 <script src="${path}/resources/js/common.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" ></script>
 </head>
+<style>
+
+	@font-face {
+	    font-family: 'MaruBuri-Regular';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+
+	.homeText{
+		font-family: 'MaruBuri-Regular';
+	}
+</style>
 <title>드론</title>
 <body>
 	<!-- 아이디 있을 때 네비바 -->
@@ -57,28 +70,28 @@
 				<img src="resources/img/c2.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<p class=fs-2>드론 세상에 오신 것을 환영합니다</p>
+					<p class="homeText fs-2">드론 세상에 오신 것을 환영합니다</p>
 					<hr style="border: groove 3px white">
 
-					<p class=fs-4>우리는 드론을 사랑하는 사람들입니다. 드론에 관심 있는 사람이라면 언제든 환영합니다</p>
+					<p class="homeText fs-4">우리는 드론을 사랑하는 사람들입니다. 드론에 관심 있는 사람이라면 언제든 환영합니다</p>
 				</div>
 			</div>
 			<div class="carousel-item">
 				<img src="resources/img/c1.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<p class=fs-2>비행 정보를 나누어보세요</p>
+					<p class="homeText fs-2">비행 정보를 나누어보세요</p>
 					<hr style="border: groove 3px white">
-					<p class=fs-4>비행 후기를 들려주세요. 그것은 모든 사람들에게 즐거운 일이 될 것입니다</p>
+					<p class="homeText fs-4">비행 후기를 들려주세요. 그것은 모든 사람들에게 즐거운 일이 될 것입니다</p>
 				</div>
 			</div>
 			<div class="carousel-item">
 				<img src="resources/img/c3.jpg" height="700" class="d-block w-100"
 					alt="...">
 				<div class="carousel-caption d-none d-md-block">
-					<p class=fs-2>비행관련 실시간 기상정보를 확인하세요</p>
+					<p class="homeText fs-2">비행관련 실시간 기상정보를 확인하세요</p>
 					<hr style="border: groove 3px white">
-					<p class=fs-4>드론 비행에 있어 안전보다 중요한 일은 없습니다. 비행 전에 자기장 지수와 풍속, 미세먼지 등을
+					<p class="homeText fs-4">드론 비행에 있어 안전보다 중요한 일은 없습니다. 비행 전에 자기장 지수와 풍속, 미세먼지 등을
 						확인하세요</p>
 				</div>
 			</div>

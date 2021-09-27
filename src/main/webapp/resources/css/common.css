@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
 /* 기본 세팅 */
 
 @font-face {
@@ -16,7 +17,7 @@ h1, h2, h5, h3, h4, h6, p, html, body, nav, div {
   /*   height: 100%;
     width: 100%; */
    	font-family: 'NEXON Lv1 Gothic OTF';
-    font-size: large;
+    font-size: 0.95em;
     /*font-family: 'Gothic A1', sans-serif;*/
     /* font-family: 'Nanum Gothic', sans-serif;*/
     /*font-family: 'Noto Sans KR', sans-serif;*/
@@ -47,4 +48,9 @@ h1, h2, h5, h3, h4, h6, p, html, body, nav, div {
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
+}
+
+.navbar{
+	padding-top: .18rem !important;
+    padding-bottom: .18rem !important;
 }

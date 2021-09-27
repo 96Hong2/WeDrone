@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 폰트 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+<!--  -->
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 	style="back-groundcolor:#3c3c3c;">
 	<div class="container-fluid">
-		<a class="fs-3 text-center navbar-brand fw-bold text-color: #003399;"
-			href="${path}/"> <img src="resources/img/LOGO.png"
+		<a class="text-center navbar-brand"
+			href="${path}/" id="weDrone"> <img src="resources/img/LOGO.png"
 			class="rounded float-end rounded mx-auto d-block mx-2" alt=""
 			width="50" height="50">WeDrone
 		</a>
@@ -50,4 +55,10 @@
 		</div>
 	</div>
 </nav>
+<style>
+	#weDrone{
+	font-family: 'Russo One', sans-serif;
+	font-size: 32px;
+}
+</style>
 <%@ include file="../common/footer.jsp"%>
