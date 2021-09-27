@@ -154,14 +154,13 @@
 							class="form-check-label fw-bold text-danger" for="exitcheck">안내
 							사항을 모두 확인하였으며, 이에 동의합니다 </label>
 						<div class="invalid-feedback">약관에 동의해주세요</div>
+						
 					</div>
 					<hr />
 					<div class="col text-center">
 						<form action="${path}/memberDel" method="post" id="delForm">
 							<button type="button" class="btn btn-dark mx-2" 
 								value="탈퇴하기" onclick="location.href='memberDel?id=${dto.id}';">탈퇴하기</button>
-								
-								
 						</form>
 					</div>
 				</div>

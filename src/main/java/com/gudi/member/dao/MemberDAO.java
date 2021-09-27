@@ -15,7 +15,7 @@ public interface MemberDAO {
 	
 	MemberDTO memberInfo(String id);
 
-	int memberDel(String id);
+	int memberDel(String userId);
 
 	int update(HashMap<String, String> params);
 

@@ -80,7 +80,7 @@
 							id="nickName" maxlength="7" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
-							정보입니다(100자 이하만 가능)</div>
+							정보입니다(100자 이하만 가능)</div>${dto.nickName}
 
 						<input type="button" class="btn btn-secondary btn-sm mt-2"
 							id="nickCheck" value="중복확인">

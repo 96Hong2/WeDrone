@@ -94,7 +94,9 @@ public class MemberController {
 	@RequestMapping(value = "/memberDel")
 	public ModelAndView memberDel(HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
+		session.invalidate();
 		return service.memberDel(loginId);
+		
 	}
 
 	@SuppressWarnings("unchecked")
