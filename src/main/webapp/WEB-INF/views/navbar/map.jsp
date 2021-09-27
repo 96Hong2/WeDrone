@@ -1837,9 +1837,12 @@ function initMap(){
 		    		if(loginId == locMK.userId){
 		    			console.log("내위치마커 생성");
 		    			//만약 로그인아이디와 내위치마커의 유저아이디가 같다면 내위치마커로 생성
+		    			/*
 		    			myLocMarker = new kakao.maps.Marker({
 		    				position : new kakao.maps.LatLng(locMK.lat, locMK.lon)
 		    			});
+		    			*/
+		    			myLocMarker.setPosition(new kakao.maps.LatLng(locMK.lat, locMK.lon));
 		    			var imageSrc2 = 'resources/img/flag2.png', // 마커이미지의 주소입니다    
 			        	imageSize2 = new kakao.maps.Size(49, 49), // 마커이미지의 크기입니다
 			        	imageOption2 = {offset: new kakao.maps.Point(27, 45)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -1909,6 +1912,7 @@ function initMap(){
 	    	//인포윈도우, API마커 제거
 	    	//APImarker.setVisible(false);
 	    	APImarker.setMap(null);
+	    	//myLocMarker.setMap(null);
 	    	myLocMKinfo.close();
 	    	
 	    	$.ajax({
@@ -1930,6 +1934,7 @@ function initMap(){
 		
 			    	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1);
 					
+			    	myLocMarker.setMap(null); //먼저 생성된 마커가 있으면 지운다.
 			    	myLocMarker.setPosition(new kakao.maps.LatLng(lat, lon));
 			    	myLocMarker.setImage(markerImage1);
 			    	myLocMarker.setMap(map);
@@ -1991,7 +1996,7 @@ function initMap(){
 	    	APImarker.setMap(map);
 	   		weather(lat, lon);
 	    	
-	    	infoContent += '<button type="button" class="MapClickBtn" onclick="javascript:setMyLocMK('+lat+','+lon+',\''+addressInfo+'\')">내위치</button>';
+	    	infoContent += '<button type="button" class="MapClickBtn" onclick="javascript:setMyLocMK('+lat+','+lon+',\''+addressInfo+'\')">위치공유</button>';
 	        myLocMKinfo.setContent(infoContent);
 	   		myLocMKinfo.open(map, APImarker); //인포윈도우 열기
             }
