@@ -88,7 +88,7 @@
 	</update>
 	
 	<delete id="deleteReq">
-		DELETE FROM inform WHERE userId=#{param1} AND regUserId=#{param2} AND informField='message'
+		DELETE FROM inform WHERE userId=#{param1} AND informContent=#{param2} AND informField='message'
 	</delete>
 	
 	<delete id="deleteOldReq">
