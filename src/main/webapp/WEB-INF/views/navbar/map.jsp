@@ -222,6 +222,22 @@ ul.tabs li.current {
 	font-size: 1.2em;
 }
 
+	#sideArea::-webkit-scrollbar{
+	    width: 6px;
+	}
+	
+	/* 스크롤바 막대 설정*/
+	#sideArea::-webkit-scrollbar-thumb{
+	    height: 17%;
+	    background-color: darkgrey;
+	    border-radius: 10px;  
+	}
+	
+	/* 스크롤바 뒷 배경 설정*/
+	#sideArea::-webkit-scrollbar-track{
+	    background-color: lightgrey;
+	}
+
 
 </style>
 </head>
