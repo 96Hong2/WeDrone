@@ -13,7 +13,7 @@
 </div>   
 
  <div class="toast align-items-center" role="alert"  id='alert-drone-toast' aria-live="assertive" aria-atomic="true" 
- 	style="color: white;background: #fff; position: absolute; z-index: 999;height:220px;
+ 	style="color: white;background: #fff; position: absolute; z-index: 999;height:200px;
     top: 78px; left:40%;  width: 200px; ">
     
   <div class="d-flex text-center" >

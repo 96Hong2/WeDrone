@@ -100,7 +100,19 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- 날씨 위젯 시작 -->
+<div style="position: fixed; bottom: 150px;  right: 0px;width: 100%; z-index: 3">
+<div class="position-relative" class="modal hide fade" id="btn-weather"   tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="quick" class="position-absolute top-50 end-0 translate-middle-y" style="margin-right:0px;">
+		<a href="#weather-layer1" 
+			class="rounded-pill btn btn-success fw-bold" data-toggle="modal" class="btn" data-target="#myModal"> <i
+			class="bi bi-info-circle"></i> 실시간 정보
+		</a>
+	</div>
+</div>
+</div>
+<%@ include file="../common/weather-widget.jsp" %>
+<!--// 날씨 위젯 끝 -->
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/js.js"></script>
