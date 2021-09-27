@@ -145,7 +145,7 @@
 
 
 <%@ include file="./common/footer.jsp"%>
-
+<jsp:include page="./common/realFooter.jsp" />
 
 
 

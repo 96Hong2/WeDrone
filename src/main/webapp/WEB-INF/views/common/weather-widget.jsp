@@ -22,14 +22,23 @@
 		font-size: 1.5em;
 	}
 	
+	#weather-layer1{
+		z-index: 3; 
+		margin-top: -227px; 
+		margin-left: -205px; 
+		width: 410px; 
+		inset: 423.8px auto auto 1307.6px; 
+		height: 280px; 
+		cursor: pointer;
+		background-color: 
+	}
 	
 </style>
 
 
 
 <!-- margin-top: -231px; margin-left: -205px; width: 410px; inset: 320.5px auto auto 667px; height: 462px; display: block; -->	
-<div id="weather-layer1" class="pop-layer" 
-style="z-index: 3; margin-top: -227px; margin-left: -205px; width: 410px; inset: 423.8px auto auto 1307.6px; height: 280px; cursor: pointer;">
+<div id="weather-layer1" class="pop-layer" >
     <div class="pop-container">
         <div class="pop-conts">
         	<div id="titleContainer">
