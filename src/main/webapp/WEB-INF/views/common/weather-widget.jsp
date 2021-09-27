@@ -8,22 +8,37 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href="${path}/resources/css/popup-layer.css" rel="stylesheet">    
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<style>
+	#close{
+		display: inline-block;
+		float: right;
+	}
+	
+	#informTitle{
+		text-align: center;
+		width: 100%;
+		margin-bottom: 20px; 
+		display: inline-block;
+		font-size: 1.5em;
+	}
+	
+	
+</style>
 
 
 
 <!-- margin-top: -231px; margin-left: -205px; width: 410px; inset: 320.5px auto auto 667px; height: 462px; display: block; -->	
 <div id="weather-layer1" class="pop-layer" 
-style="z-index: 3; margin-top: -227px; margin-left: -205px; width: 410px; inset: 423.8px auto auto 1307.6px; height: 454.2px; cursor: pointer;">
+style="z-index: 3; margin-top: -227px; margin-left: -205px; width: 410px; inset: 423.8px auto auto 1307.6px; height: 280px; cursor: pointer;">
     <div class="pop-container">
         <div class="pop-conts">
-        	<h5 class="modal-title text-center"  style="text-align: center;width: 100%;margin-bottom: 20px; ">실시간 정보 띄우기</h5>
+        	<div id="titleContainer">
+        		<span class="modal-title text-center" id="informTitle">실시간 정보 띄우기<a href="#" class="btn-layerClose" id="close">X</a></span>
+        	</div>
             <div id="locationInfo"></div>
         	<div id="addressInfo"></div>
 			<p>KP:<span id="drone-kp2"></span></p>
             
-            <div class="btn-r">
-                <a href="#" class="btn-layerClose">닫기</a>
-            </div>
             <!--// content-->
         </div>
     </div>
