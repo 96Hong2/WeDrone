@@ -307,7 +307,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				return dao.fbTotalCount(map);
 			}
 
-			public List<Map<String, Object>> fbList(Map<String, Object> map) {
+			public List<Map<String, Object>> fbList(String search_option, String keyword, Map<String, Object> map) {
 				return dao.fbList(map);
 			}
 

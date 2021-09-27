@@ -72,21 +72,26 @@ public class BoardController {
 		}
 
 
-		@RequestMapping(value = "/board")
-		public String fbList(PageMaker pageMaker,  Model model, Map<String, Object> map, HttpServletRequest request) {
-			int totalCount=service.fbTotalCount(map);
-			pageMaker.setTotPage(totalCount);
-			map.put("pageBegin", pageMaker.getPageBegin());
-			map.put("pageEnd", pageMaker.getPageEnd());
-			List<Map<String, Object>> list=service.fbList(map);
-			String pagination=pageMaker.bootStrapPagingHTML(request.getContextPath()  +"/board");
-			
-			model.addAttribute("list",list);
-			model.addAttribute("totalCount",totalCount);
-			model.addAttribute("pageMaker",pageMaker);
-			model.addAttribute("pagination", pagination);
-			return "fbList";
-		}
+		// board 페이지
+				@RequestMapping(value = "/board")
+				public String fbList(PageMaker pageMaker, Model model, Map<String, Object> map, HttpServletRequest request,
+						@RequestParam(defaultValue = "nickName") String search_option,
+						@RequestParam(defaultValue = "") String keyword) {
+					int totalCount = service.fbTotalCount(map);
+					pageMaker.setTotPage(totalCount);
+					map.put("pageBegin", pageMaker.getPageBegin());
+					map.put("pageEnd", pageMaker.getPageEnd());
+					map.put("search_option", search_option);
+					map.put("keyword", keyword);
+					List<Map<String, Object>> list = service.fbList(search_option, keyword, map);
+					String pagination = pageMaker.bootStrapPagingHTML(request.getContextPath() + "/board");
+
+					model.addAttribute("list", list);
+					model.addAttribute("totalCount", totalCount);
+					model.addAttribute("pageMaker", pageMaker);
+					model.addAttribute("pagination", pagination);
+					return "fbList";
+				}
 
 
 		// news 페이지

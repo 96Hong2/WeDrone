@@ -157,6 +157,18 @@ nav {
 							</tr>
 						</tfoot>
 					</table>
+					<form name="form" method="post" action="board">
+
+							<select name="search_option">
+								<option value="nickName"
+									<c:if test="${map.search_option == 'm.nickName'}">selected</c:if>>작성자</option>
+
+								<option value="title"
+									<c:if test="${map.search_option == 'title'}">selected</c:if>>제목</option>
+							</select>
+							 <input name="keyword" value="${map.keyword}"> 
+							<input type="submit" value="조회">
+						</form>
 				 </div>
 				
 				</div>

@@ -104,7 +104,7 @@ WHERE rnum BETWEEN #{param1} AND #{param2}
            	(
             	SELECT  rownum AS rn , A.postid, A.title, A.postdate, A.userid, A.postfield, A.postdel , m.nickname FROM 
             		( SELECT * FROM post   WHERE postdel ='N' ORDER BY postid DESC ) A   JOIN  members m             	
-            	ON a.userid =m.userid                
+            	ON a.userid =m.userid  WHERE #{search_option} like '%'||#{keyword}||'%'               
           	) RE ORDER  BY rn ASC 
 		)		
 		WHERE rn BETWEEN  #{pageBegin} AND #{pageEnd}                 
