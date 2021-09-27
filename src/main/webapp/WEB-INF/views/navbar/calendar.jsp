@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   calendar = new FullCalendar.Calendar(calendarEl, {
  	  
-	  //이벤트 소스는 구글에서 가져와서 쓰는건가요??네
+	  //이벤트 소스는 구글에서 가져와서 쓰는
 	googleCalendarApiKey: 'AIzaSyDqXhIu1nACWbwfRgPhoulB0GLxlb3OW_0',
    //className은 임의로 넣어주는 제목 그래도 캘린더랑 맞춰주면 좋을듯 하다
 	eventSources: [
