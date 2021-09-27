@@ -526,7 +526,7 @@ function getCommentList(currPage){
         $("#tbody-commentList").html(template(data.commentList));  
       
 	},
-	error:function(result) {
+	error:function(result){
 		console.log("error:");
 		console.log(result);
 	}

@@ -3,14 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <div class="toast align-items-center fade" role="alert"  id='alert-toast' aria-live="assertive" aria-atomic="true" style="color: white;background: #dc5151; position: absolute;
-    top: 78px;right: 0px;">
-  <div class="d-flex">
-    <div class="toast-body">
-   </div>
-    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-</div>   
+
 
  <div class="toast align-items-center" role="alert"  id='alert-drone-toast' aria-live="assertive" aria-atomic="true" 
  	style="color: white;background: #fff; position: absolute; z-index: 999;height:200px;
@@ -192,7 +185,7 @@ function alarmData(obj){
 		//토스트 메시지 보이기
 		if(alarmCount!=obj.countInform){
 			var html='<a style="color:#fff; text-decoration: none;"  href="${pageContext.request.contextPath}/alarmLinkMove?type=fbdetail&postId='+obj.relatedId+'&informid='+obj.informId+'">' +obj.informContent  +'</a>';
-			$("#alert-toast .toast-body").html(html);
+		    $("#alert-toast .toast-body").html(html);
 			$("#alert-toast").addClass("show");
 			$("#alert-toast .d-flex").css("display", "block");						
 			
