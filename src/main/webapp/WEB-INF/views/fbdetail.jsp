@@ -195,8 +195,13 @@ table {
 				</c:choose>
 				
 				
+      <c:if test="${post.userId eq loginId}">
+      <button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
+      <button onclick="location.href='./fbdel?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>
+				</c:if>
+			<!-- 	
 			<c:choose>			
-				<c:when test="${post.userId eq loginId}">
+				<c:when test="${post.userId eq sessionScope.loginId}">
 					<button onclick="location.href='./fbupdateForm?postId=${post.postId}'" class = "btn btn-dark" >수정</button>
 					<button onclick="location.href='./fbdel?postId=${post.postId}'" class = "btn btn-dark" >삭제</button>	
 				</c:when>
@@ -205,7 +210,7 @@ table {
 					<button onclick="alert('작성자만 삭제 가능합니다.')" class = "btn btn-dark" >삭제</button>	
 				</c:otherwise>
 			</c:choose>				
-		
+		 -->
 			</td>
 		</tr>
 	</table>

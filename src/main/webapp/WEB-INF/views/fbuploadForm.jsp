@@ -8,7 +8,7 @@
 		<style></style>
 	</head>
 	<body>
-		<form action="fbupload" method="post" enctype="multipart/form-data">
+		<form action="upload" method="post" enctype="multipart/form-data">
 			<input type="file" name="file" onchange="fbfileUpload()"/>
 		</form>
 	</body>
