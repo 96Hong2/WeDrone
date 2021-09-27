@@ -312,7 +312,7 @@ function insertReq(requestor, user){
 }
 
 function deleteReq(user){
-	var loginUser = "{sessionScope.loginId}";
+	var loginUser = "${sessionScope.loginId}";
 	console.log("deleteReq loginUser : ",loginUser);
 	$.ajax({
 	     url:'deleteReq', //DB에서 대화요청 알림 DELETE
