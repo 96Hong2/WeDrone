@@ -87,6 +87,13 @@
 	font-weight : bolder;
 }
 
+#navbarSupportedContent ul li a:hover{
+	color: #ffffff;
+ 	 transition: .1s;
+  	-webkit-transition: .1s;
+  	-moz-transition: .1s;
+}
+
 
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -118,7 +125,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-left">
 				<li class="nav-item dropdown "><a
-					class="nav-link dropdown-toggle active fs-5 "
+					class="nav-link dropdown-toggle fs-5 "
 					data-bs-toggle="dropdown" href="#" role="button"
 					aria-expanded="false">Map</a>
 					<ul class="dropdown-menu active">
@@ -126,13 +133,13 @@
 						<li><a class="dropdown-item" href="${path}/map">지도 보기</a></li>
 					</ul></li>
 				<li class="nav-item"><a
-					class="nav-link active text-center  fs-5 " href="${path}/calendar">Calendar</a></li>
-				<li class="nav-item"><a class="nav-link active fs-5"
+					class="nav-link text-center  fs-5 " href="${path}/calendar">Calendar</a></li>
+				<li class="nav-item"><a class="nav-link fs-5"
 					href="${path}/news"> News</a></li>
 				<li class="nav-item"><a
-					class="nav-link active text-center  fs-5 " href="${path}/notice">Notice</a></li>
+					class="nav-link text-center  fs-5 " href="${path}/notice">Notice</a></li>
 				<li class="nav-item"><a
-					class="nav-link active text-center fs-5 " href="${path}/board">Board</a></li>
+					class="nav-link text-center fs-5 " href="${path}/board">Board</a></li>
 			</ul>
 			
 			<button type="button" onclick="javascript:openMsgBox()" class="btn btn-sm btn-#3c3c3c; position-relative" style="display:inline;">

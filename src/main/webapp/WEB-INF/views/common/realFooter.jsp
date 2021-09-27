@@ -79,6 +79,7 @@ html,body {
   -webkit-transition: .1s;
   -moz-transition: .1s;
 }
+
 .clearfix {
   clear: both;
 }
