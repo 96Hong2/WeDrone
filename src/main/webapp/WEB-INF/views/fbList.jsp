@@ -114,7 +114,7 @@ nav {
 				<c:if test="${not empty loginId }">
 					<div class="col-md-12">
 					<div class="page-item active" style="float: right; cursor: pointer;">
-					 	<a class="page-link" href="${pageContext.request.contextPath}/fbwriteForm">글작성</a>
+					 	<a class="page-link" style="z-index:1;" href="${pageContext.request.contextPath}/fbwriteForm">글작성</a>
 					 </div>	
 					</div>
 				</c:if>
