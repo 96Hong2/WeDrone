@@ -23,7 +23,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 </head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>0
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>드론</title>
 <body>
 	<c:if test="${sessionScope.loginId eq null}">
@@ -150,7 +150,7 @@
 	</textarea>
 					<div class="form-check my-3">
 						<input class="form-check-input" type="checkbox" value="1"
-							name="exitcheck" id="exitcheck"> <label
+							name="exitcheck" id="exitcheck" required> <label
 							class="form-check-label fw-bold text-danger" for="exitcheck">안내
 							사항을 모두 확인하였으며, 이에 동의합니다 </label>
 						<div class="invalid-feedback">약관에 동의해주세요</div>
@@ -158,17 +158,43 @@
 					</div>
 					<hr />
 					<div class="col text-center">
-
-							<button type="button" class="btn btn-dark mx-2" 
-								value="탈퇴하기" onclick="location.href='memberDel'">탈퇴하기</button>
+<form action="${path}/memberDel" method="post" id="delForm">
+							
+							<input id="dropbtn" type="button" class="btn btn-dark mx-2" 
+								value="탈퇴하기" ></form>
 
 					</div>
 				</div>
 				</div>
 				</div>
 			</div>
-</body>
+			</body>
+			<script type="text/javascript">	
 
+	$(document).ready(function() {
+		$('#dropbtn').click(function() {
+			if($('#exitcheck').is(":checked")){
+				Swal.fire({
+					  title: '정말 탈퇴하시겠습니까?',
+					  text: "사용하고 계신 닉네임은 탈퇴할 경우 재사용 및 복구가 불가능합니다.",
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#000',
+					  confirmButtonText: '탈퇴하기',
+					  cancelButtonText: '취소'		
+					
+					}).then((result) => {							
+						 if (result.isConfirmed) {
+							 $('#delForm').submit();
+						}
+					})
+			}else{				
+				$('#exitcheck').addClass('is-invalid');
+			}
+			
+		})
+	})
+	</script>
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>

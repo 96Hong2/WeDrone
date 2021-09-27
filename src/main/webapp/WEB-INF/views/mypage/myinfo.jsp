@@ -22,7 +22,9 @@
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
 </head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+</script>
 <title>드론</title>
 <body>
 
@@ -80,7 +82,7 @@
 							id="nickName" maxlength="7" placeholder="닉네임" value="${dto.nickName}" required>
 						<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
 						<div id="check2" class="invalid-feedback visually-hidden">필수
-							정보입니다(100자 이하만 가능)</div>${dto.nickName}
+							정보입니다(7자 이하만 가능)</div> 
 
 						<input type="button" class="btn btn-secondary btn-sm mt-2"
 							id="nickCheck" value="중복확인">
@@ -88,9 +90,6 @@
 						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
 						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
-
-
-
 
 					<div class="col-md-9 mb-3">
 						<label for="checks" class="fw-bold" id="chkAlert" name="chkAlert">알림
@@ -156,6 +155,7 @@
 			})
 		})
 
+		
 		const result = "${msg}"
 		if (result === "modSuccess") {
 			alert("수정 되었습니다");
