@@ -20,7 +20,25 @@
 	crossorigin="anonymous">
 <%-- 공통 css --%>
 <link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<script>
+$(document).ready(function() {
+	$("#loginBtn").on("click", function() {
+		
+			if ($("#userId").val() == "") {
+				alert("아이디를 입력해주세요.");
+				$("#userId").focus();
+				return false;
+			}
+			if ($("#pw").val() == "") {
+				alert("비밀번호를 입력해주세요.");
+				$("#pw").focus();
+				return false;
+			}
+	});
+})
+</script>
 
 <title>드론</title>
 <body>
@@ -67,7 +85,7 @@
 				</c:if>
 				<hr />
 				<div>					
-						<button class="btn btn-dark"  name="login">로그인</button>
+						<button class="btn btn-dark"  name="login" id="loginBtn">로그인</button>
 				</div>
 			</form>
 			</div>
@@ -82,8 +100,9 @@ if(msg != ""){
 }
 
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="${path}/resources/js/js.js"></script>
 <script src="${path}/resources/js/common.js"></script>
 </body>
 </html>
+

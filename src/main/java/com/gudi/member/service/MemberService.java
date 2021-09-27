@@ -77,6 +77,7 @@ public class MemberService<pwchange> {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			boolean matched = encoder.matches(pw, DBPw);
 			logger.info("PW 일치 여부 : " + matched);
+			
 
 			
 			if (isDel.equals("Y")||isDel=="Y") {
@@ -90,7 +91,7 @@ public class MemberService<pwchange> {
 				session.setAttribute("loginNickName", nickName);
 				session.setAttribute("chkAlert", chkAlert);
 				page = "home";
-				msg = "로그인 성공";
+				msg = "";
 			}
 		}
 		mav.addObject("msg", msg);
