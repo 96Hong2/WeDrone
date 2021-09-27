@@ -55,7 +55,7 @@
 						class="ps-4  list-group-item list-group-item-action fs-5"
 						href="${path}/bookmark" style="cursor: pointer;">즐겨찾기</a> <a
 						class="ps-4  list-group-item list-group-item-action fs-5"
-						href="${path}/memberDel" style="cursor: pointer;">회원탈퇴</a>
+						href="${path}/userout" style="cursor: pointer;">회원탈퇴</a>
 				</div>
 			</nav>
 		</div>
@@ -79,6 +79,12 @@
 									type="password" class="form-control" name="pw" id="pw"
 									placeholder="비밀번호를 입력해주세요">
 								<div class="invalid-feedback">비밀번호를 입력해주세요</div>
+							</div>
+								<div class="form-group my-2">
+								<label for="InputPassword" class="fw-bold">비밀번호 변경</label> <input
+									type="password" class="form-control" name="pw" id="pw"
+									placeholder="변경할 비밀번호를 입력해주세요">
+								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요</div>
 							</div>
 
 

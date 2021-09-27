@@ -115,18 +115,28 @@ public class MemberController {
 		return "mypage/pwchange";
 	}
 
+	// 비밀번호 변경
+	@RequestMapping(value = "/pwchanges")
+	public String pwchanges(Model model) {
+		
+		return "mypage/pwchanges";
+	}
+	
+	
 	
 	 // 비밀번호 업데이트
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/pwupdate", method = RequestMethod.POST)
-	public String pwupdate(@RequestParam HashMap<String, String> params, HttpSession session, RedirectAttributes rttr) {	
-
-		rttr.addFlashAttribute("msg","pwSuccess");
-		
+	public String pwupdate(@RequestParam HashMap<String, String> params, HttpSession session) {	
+		// 1. 아이디랑 비밀번호 -> db에 맞는지 확인
+		// if() return "mypage/pwchange";
+		// else 로그아웃 처리 후 메인으로
 		logger.info("update info : {}",params);
 		params.put("pw", (String)session.getAttribute("pw"));
 		service.update(params);
-		return "mypage/pwupdate";
+		session.invalidate();
+
+		return "mypage/pwchanges";
 	}
 	 
 
