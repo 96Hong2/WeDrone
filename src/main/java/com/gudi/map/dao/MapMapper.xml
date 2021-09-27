@@ -116,11 +116,11 @@
 	</select>
 	
 	<select id="getInformCnt" parameterType="String" resultType="int">
-		SELECT COUNT(informId) FROM inform WHERE userId=#{writerId}
+		SELECT COUNT(informId) FROM inform WHERE userId=#{writerId} AND informField!='message'
 	</select>
 	
 	<delete id="deleteOldInform">
-		DELETE FROM inform WHERE informDate=(SELECT MIN(informDate) FROM inform WHERE userId=#{param1})
+		DELETE FROM inform WHERE informDate=(SELECT MIN(informDate) FROM inform WHERE userId=#{param1}) AND informField!='message'
 	</delete>
 	
 	<insert id="sendInform" parameterType="com.gudi.map.dto.MapDTO">
