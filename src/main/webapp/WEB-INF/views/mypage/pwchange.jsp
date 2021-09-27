@@ -76,14 +76,14 @@
 							</div>
 							<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호</label> <input
-									type="password" class="form-control" name="pw" id="pw"
+									type="password" class="form-control" name="pw" id="pw"  maxlength="20"
 									placeholder="비밀번호를 입력해주세요">
 								<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 							</div>
 								<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호 변경</label> <input
-									type="password" class="form-control" name="pwChange" id="pwChange"
-									placeholder="변경할 비밀번호를 입력해주세요">
+									type="password" class="form-control" name="pwChange" id="pwChange"  maxlength="20"
+									placeholder="20자 이하로 입력해주세요" >
 								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요</div>
 							</div>
 
