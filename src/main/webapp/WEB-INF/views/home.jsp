@@ -157,7 +157,10 @@
 
 
 <script>
-
+var msg = "${msg}";
+if(msg != ""){
+alert(msg);
+}
 //$('a.btn').on('click', function(e) {
 	  //  e.preventDefault();
 	   // var url = $(this).attr('href');

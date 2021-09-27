@@ -65,16 +65,26 @@ public class MemberService<pwchange> {
 		String DBPw = map.get("PW");
 		String nickName = map.get("NICKNAME");
 		String chkAlert = map.get("CHKALERT");
+		String isDel = map.get("ISDEL");
+		
 		logger.info("들어온 pw값/DB의 pw : " + pw + "/" + DBPw);
 		logger.info("들어온 nickName : {}", nickName);
 		logger.info("DBPw : {}", DBPw);
 		logger.info("알림여부 : {}", chkAlert);
+		logger.info("탈퇴여부 : " + isDel);
 
 		if (DBPw != null && DBPw != "") {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			boolean matched = encoder.matches(pw, DBPw);
 			logger.info("PW 일치 여부 : " + matched);
 
+			
+			if (isDel.equals("Y")||isDel=="Y") {
+
+				page = "home";
+				msg = "탈퇴한 회원입니다.";
+			}
+			
 			if (matched) {
 				session.setAttribute("loginId", userId);
 				session.setAttribute("loginNickName", nickName);
