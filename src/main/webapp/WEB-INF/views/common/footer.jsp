@@ -9,8 +9,8 @@
  	style="color: white;background: #fff; position: absolute; z-index: 999;height:130px;
     top: 78px; left:40%;  width: 200px; ">
     
-  <div class="d-flex text-center" >
-    <div class="toast-body" style="width:100%;">
+  <div class="d-flex text-center" style="height: 100%;">
+    <div class="toast-body" style="width:100%; height: 100%;">
     <div id="alertContainer">
      <i class="fa fa-exclamation-triangle" style="color: #ffc107; font-size: 25px; float: left; display: inline-block; margin-top: 1px;"></i>
      	<p id="alertText">긴급 알림</p>
@@ -42,10 +42,13 @@
 	#alertContainer{
 		display: inline-block;
 		width: 100%;
+		height: 30%;
+		margin-bottom: 4px;
 	}
 	
 	#alertContent{
 		display: inline-block;
+		height: 70%;
 	}
 	
 	#kpNumber{
@@ -59,6 +62,10 @@
 		color: black;
 		display: inline-block;
 		margin-left: 9px;
+	}
+	
+	p{
+		margin-bottom: 0 !important;
 	}
 </style>
 
