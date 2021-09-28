@@ -323,7 +323,7 @@ ul.tabs li.current {
 
       <!-- 들어갈 내용 -->
       <script type="text/javascript"
-         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
+         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=503bd89de7b3ea1d3b24a7a50da8a828&libraries=services"></script>
 
       <div id="contentWrap">
          <!-- 사이드메뉴 영역 -->
