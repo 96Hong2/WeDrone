@@ -23,7 +23,7 @@ public class WebSocketController {
    public void onOpen(Session session, @PathParam("userNick") String userNick)
          throws IOException {
       //@PathParam 은 웹에서의 @PathVariable 과 같다.
-      System.out.println(userNick+"의 접속");
+      System.out.println(userNick+" 채팅 웹소켓 접속");
       System.out.println(session);
       
       /*
@@ -33,7 +33,7 @@ public class WebSocketController {
        }else {   */
           userList.put(userNick, session);
           userList.size();
-          System.out.println("현재 접속자 : "+ userList.size());
+          System.out.println("채팅방 현재 접속자 수 : "+ userList.size());
           broadCast("<span id='alert'>"+userNick+" 님께서 입장 하셨습니다.</span>");
        }
       
@@ -42,7 +42,7 @@ public class WebSocketController {
  //서버 종료시(이벤트) 실행되는 메서드
    @OnClose
    public void onClose(Session session, @PathParam("userNick") String userNick) {
-      System.out.println("접속 종료");
+      System.out.println(userNick+" 채팅 접속 종료");
       System.out.println(session);
       
            //접속 종료된 session 만 hashmap 에서 빼주기
@@ -53,7 +53,7 @@ public class WebSocketController {
                if(id.equals(userList.get(key).getId())) {//session의 id 와 종료한 session의 id가 같으면
                   System.out.println("종료하려는 userId : "+key);
                    userList.remove(key);//map 에서 지워준다.
-                   System.out.println("현재 사용자 Id : "+userList.size());
+                   System.out.println("현재 사용자 수 : "+userList.size());
                   
                
                }

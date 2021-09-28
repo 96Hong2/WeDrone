@@ -206,9 +206,13 @@ $(document).ready(function(){
 	//알림을 받기 위한 웹소켓 연결(/chat-ws는 servlet-context.xml에 있다)
 	mySock = new SockJS("<c:url value="/chat-ws"/>");
 	mySocket = mySock;
-	
 	//알림 데이터를 전달받았을 때 실행되는 함수로 onMessage함수를 연결(toast를 생성하는 함수)
 	mySock.onmessage = onMessage;
+	
+	//알림을 보내기 위한 웹소켓 연결(/chatRoom-ws는 servlet-context.xml에 있다)
+	chatSock = new SockJS("<c:url value="/chatRoom-ws"/>");
+	chatSocket = chatSock;
+	//chatSock.onmessage = onChatMessage; //웹소켓에서 알림을 받지는 않기 때문에 주석처리
 	
 	//메시지박스에 현재 접속한 유저 리스트 불러오기
 	getUserList();
@@ -249,21 +253,12 @@ function onMessage(e){
 		chatReq += "<span style='font-size:15px; color:darkgray;'>"+reqTime+"</span></a>";
 		chatReq += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+reqId+"\",\""+reqNickName+"\")'>거절</button></div></li>";
 		$("#emptyReqCmt").empty();
-		$("#reqList").append(chatReq);
+		$("#reqList").append(chatReq);	
+	/*
 	}else if(data.substring(0,2) == "##"){
 		//##은 채팅 거절알림, 채팅거절 알림메시지일 경우 여기서 해줄 일은 없다.
-		console.log("lognav.jsp 채팅거절요청 받음");
-		data = data.substr(2);
-		console.log("자른 data : ", data);
 		
-		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-	    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
-	    toast += "<p class='text-muted' style='font-size:14px;'> just now&nbsp;</p><a href='javascript:toastClose()'><strong>X</strong></a>";
-	    toast += "</div> <div class='toast-body'>[알림] " + data + "님이 1:1채팅요청을 거절했습니다.</div></div>"
-	    
-	    $("#RejectAlert").empty();
-	    $("#RejectAlert").append(toast);
-		
+	*/
 	}else{ //일반알림
 		var toast = "<div id='myToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
 	    toast += "<div class='toast-header'><i class='bi bi-bell-fill' style='font-size: 0.9rem; color : orange'></i><strong class='mr-auto'> &nbsp;알림 &nbsp;</strong>";
@@ -299,8 +294,10 @@ function rejectChat(userId, userNickName){
 	var rejectorNickName = "${sessionScope.loginNickName}";
 	if(confirm(userNickName+"님의 대화요청을 거절하시겠습니까?") == true){
 		$("#req_"+userNickName+"_li").empty();
-		//대화요청을 거절했을 때 거절당한 유저에게 보내는 웹소켓
-		mySocket.send("chatReject,"+userId+","+rejectorNickName+",#");
+		
+		//대화요청을 거절했을 때 거절당한 유저에게 보내는 채팅방 알림 웹소켓
+		chatSock.send("chatReject,"+userId+","+rejectorNickName+",#");
+		
 		deleteReq(userNickName);
 	}else{
 		return;

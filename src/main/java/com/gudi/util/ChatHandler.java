@@ -26,7 +26,7 @@ public class ChatHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession WSsession) throws Exception {
 		String loginId = getMemberId(WSsession); //http세션을 조회하여 접속한 유저의 loginId를 얻어온다.
 		if(loginId != null) { //loginId가 존재한다면?
-			log(loginId + " 의 웹소켓이 연결됨");
+			log(loginId + " 의 알림/요청 웹소켓이 연결됨");
 			//로그인 중인 개별 유저들이 들어가는 맵에 키 loginId - 값 WSsession 저장
 			users.put(loginId, WSsession);
 		}
@@ -61,10 +61,13 @@ public class ChatHandler extends TextWebSocketHandler {
 						TextMessage txtMsg = new TextMessage("**"+ content); //요청받는 유저 아이디/닉네임
 						log("웹소켓 채팅요청 txtMsg - "+txtMsg.getPayload());
 						targetSession.sendMessage(txtMsg);
-					} else if(type.equals("chatReject")){ //채팅 거절 //일반알림메시지와 구분하기위해 ##를 넣었음
+					
+					/*}else if(type.equals("chatReject")){ //채팅 거절 //일반알림메시지와 구분하기위해 ##를 넣었음
 						TextMessage txtMsg = new TextMessage("##"+ content); //거절한 유저 닉네임
 						log("웹소켓 채팅거절알림 txtMsg - "+txtMsg.getPayload());
 						targetSession.sendMessage(txtMsg);
+					*/
+						
 					}else {
 						//ex) [타입] 알림메시지 내용 , 클릭하면 url로 이동함
 						TextMessage txtMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>");
@@ -87,7 +90,7 @@ public class ChatHandler extends TextWebSocketHandler {
 		String loginId = getMemberId(WSsession);
 		
 		if(loginId != null) {
-			log(loginId + " 의 웹소켓 연결이 종료됨");
+			log(loginId + " 의 알림/요청 웹소켓 연결이 종료됨");
 			users.remove(loginId); //접속한 유저 목록Map에서 해당 loginId를 제거
 			sessions.remove(WSsession); //로그인한 전체 세션 목록에서 해당 세션을 제거
 		}
@@ -96,7 +99,7 @@ public class ChatHandler extends TextWebSocketHandler {
 	//에러 발생 시
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		log(session.getId() + " 웹소켓 에러 발생 : " + exception.getMessage());
+		log(session.getId() + "의 알림/요청 웹소켓 에러 발생 : " + exception.getMessage());
 	}
 	
 	//로그 메시지 띄우기(시간 : 메시지내용)
