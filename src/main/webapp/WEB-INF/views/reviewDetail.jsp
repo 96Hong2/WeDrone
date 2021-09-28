@@ -411,7 +411,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		$("#deleteBtn").hide();
 		$("#revRating").empty();
 		
-		var selectRate = '<select name="rating" id="rating" style="width:100px; height:30px;">'+
+		var selectRate = '<select name="rating2" id="rating2" style="width:100px; height:30px;">'+
             '<option value="5">5</option>'+
             '<option value="4">4</option>'+
             '<option value="3">3</option>'+
@@ -467,7 +467,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			if(confirm("수정하시겠습니까?")){
 				
 				var reviewUpdateContent = $("#revContent").html();
-				var updateRating = $("#rating option:selected").val();
+				var updateRating = $("#rating2 option:selected").val();
 				
 				//console.log("수정된 내용 : "+reviewUpdateContent);
 				//console.log("수정된 평점 : "+updateRating);
