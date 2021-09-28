@@ -205,5 +205,11 @@
 }
 
 #rmPhoto{
-	margin-left: 50px;
+	margin-left: 40%;
+	margin-top: 8px;
+}
+
+#rating{
+	z-index: 3;
+	position: absolute;
 }
