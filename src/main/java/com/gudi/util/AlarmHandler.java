@@ -184,7 +184,7 @@ public class AlarmHandler extends TextWebSocketHandler  {
         Map<String, Object> httpSession = session.getAttributes();
 		String loginId = (String) httpSession.get("loginId");		
 		if (loginId == null) {
-			System.out.println("로그인 loginID 가 널일경우  :" + session.getId());
+			//System.out.println("로그인 loginID 가 널일경우  :" + session.getId());
 			//브라우저가 열리고 해당 사이트에 접속하면 세션이 생긴다
 			//이때 로그인한 아이디값이 없을 경우 임의 값이 랜덤으로 생성된다.
 			//랜던으로 생성된 아이디값은 전체 접속자들 마다 전부 다름니다. 그럼 임의값을 주는 이유는 뭔가요??
