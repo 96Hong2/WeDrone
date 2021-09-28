@@ -263,24 +263,24 @@ var $mon = $("#monitor");
 
    var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginNickName}";
    //var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
-   console.log(url);
+   //console.log(url);
    webSocket = new WebSocket(url);
    
    //웹소켓이 연결되었을 때
    webSocket.onopen = function(e){
-      console.log("connect : ",e);
+      //console.log("connect : ",e);
    }
    
    //웹소켓이 끊겼을 때
    webSocket.onclose = function(e){
-      console.log("close : ",e);
+      //console.log("close : ",e);
       $mon.append("<span id='outMsg'>대화방에서 나왔습니다.</span>");
       $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
    }   
    
    //메시지를 서버로 부터 받았을 때
    webSocket.onmessage = function(e){
-      console.log("message : ",e);
+      //console.log("message : ",e);
       $mon.append(e.data+"<br/>");
       $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
    }         

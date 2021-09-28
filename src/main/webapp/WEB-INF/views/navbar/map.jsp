@@ -542,7 +542,7 @@ $(document).ready(function(){
    
  //원하는 탭 파라미터를 받아서 해당 탭으로 이동
 	var requestTab = "${requestTab}";
-	console.log("requestTab : "+requestTab);
+	//console.log("requestTab : "+requestTab);
 	
 	moveTab(requestTab);
  
@@ -656,7 +656,7 @@ function initMap(){
        var reviewMarkerAdd = function (mouseEvent){
     	   
     	   
-    	   console.log("클릭");
+    	   //console.log("클릭");
           
           infowindow.close();
           
@@ -777,7 +777,7 @@ function initMap(){
       function selectArea(name, order){ //지역명, 정렬기준
          //정렬기준 : default는 지역선택에 의한 함수실행으로 지역 확대가 이루어짐,
          //like는 좋아요순, latest는 최신순 선택에 의한 함수실행으로 지역확대X
-         console.log("selectArea name/order : "+name+"/"+order);
+         //console.log("selectArea name/order : "+name+"/"+order);
          
          if(order=='default'){
             //현재 지도 레벨에서 2레벨 확대한 레벨
@@ -902,9 +902,9 @@ function initMap(){
                  $('#orderMenu').empty();
                  $('#orderMenu').append(orderStr);
                  
-                 console.log("후기마커 data : ", data);
-                 console.log("후기마커 list : ", data.list);
-                 console.log("후기마커 list[0] : ", data.list[0]);
+                 //console.log("후기마커 data : ", data);
+                 //console.log("후기마커 list : ", data.list);
+                 //console.log("후기마커 list[0] : ", data.list[0]);
                  
                  var content = "";
                  var list = data.list;
@@ -971,7 +971,7 @@ function initMap(){
                     kakao.maps.event.addListener(revMarker, 'click', function(e) {
                         var userId = "${sessionScope.loginId}";
                         var reviewId = review.reviewId;
-                        console.log("상세보기 userId / reviewId : "+userId+"/"+reviewId);
+                        //console.log("상세보기 userId / reviewId : "+userId+"/"+reviewId);
                         
                         loadReviewDetail(reviewId, userId, "reviewMK");
                         $('#detailModal').modal("show");
@@ -1034,7 +1034,7 @@ function initMap(){
                         //리뷰 클릭 시 상세보기 모달창 띄우기
                          document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
                            var userId = "${sessionScope.loginId}";
-                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           //console.log("userId / reviewId : "+userId+"/"+reviewId);
                            
                            loadReviewDetail(reviewId, userId,"reviewMK");
                            $('#detailModal').modal("show");
@@ -1055,7 +1055,7 @@ function initMap(){
       
       function mouseovers(reviewId, Marker){
       	return function(){
-              console.log("mouseovers reviewId : ", reviewId);
+              //console.log("mouseovers reviewId : ", reviewId);
               
                //마커 하이라이트
                var imageSize = new kakao.maps.Size(52, 57); //1.5배 크기로
@@ -1073,7 +1073,7 @@ function initMap(){
       
       function mouseouts(reviewId, Marker){
     	  return function(){
-	    	  console.log("mouseouts reviewId : ", reviewId);
+	    	  //console.log("mouseouts reviewId : ", reviewId);
 	    	  
 	           //마커 원래대로
 	           var imageSize = new kakao.maps.Size(45, 50); //원래 크기로
@@ -1091,7 +1091,7 @@ function initMap(){
       
       //클릭한 지역의 이름으로 중심좌표를 받아오기 위한 함수
       function centroid(name) {
-         console.log('centroid name : ' + name);
+         //console.log('centroid name : ' + name);
          var centroids = {
             '오산시' : new kakao.maps.LatLng(37.1636128389639,
                   127.05518990396887),
@@ -1125,7 +1125,7 @@ function initMap(){
             '수원시 장안구' : new kakao.maps.LatLng(37.313055030637294,
                   127.00579838179321)
          };
-         console.log('centroid 선택한 위치값 : ', centroids[name]);
+         //console.log('centroid 선택한 위치값 : ', centroids[name]);
 
          return centroids[name];
       }
@@ -1198,8 +1198,8 @@ function initMap(){
                success:function(data){
                   reviewCnt = data.reviewCnt;
                   areaRating = data.areaRating;
-                  console.log("후기마커개수 : ", data.reviewCnt);
-                  console.log("지역평점", data.areaRating);
+                  //console.log("후기마커개수 : ", data.reviewCnt);
+                  //console.log("지역평점", data.areaRating);
                   
                   //커스텀 오버레이의 내용 설정
                   customOverlay.setContent('<div class="overlay">'
@@ -1265,7 +1265,7 @@ function initMap(){
       
       //후기 작성 버튼을 눌렀을 때
       function reviewWrite(detailAddr, rmLat, rmLng){
-         console.log("주소 : "+detailAddr);
+         //console.log("주소 : "+detailAddr);
          $("#reviewModalLabel").html(detailAddr);
          $("#rmLat").val(rmLat);
          $("#rmLng").val(rmLng);
@@ -1363,18 +1363,18 @@ function initMap(){
              return;
           }
           
-          console.log("rmLat : "+rmLat);
-            console.log("rmLng : "+rmLng);
-            console.log("rmDetailAddr : "+rmDetailAddr);
-            console.log("content : "+content);
-            console.log("rating : "+rating);
-            console.log("로그인아이디: "+rmLoginId);
-            console.log("로그인닉네임: "+rmLoginNickName);
+          //console.log("rmLat : "+rmLat);
+            //console.log("rmLng : "+rmLng);
+            //console.log("rmDetailAddr : "+rmDetailAddr);
+            //console.log("content : "+content);
+            //console.log("rating : "+rating);
+            //console.log("로그인아이디: "+rmLoginId);
+            //console.log("로그인닉네임: "+rmLoginNickName);
             
             
-            console.log("file : "+file.files[0].name);
-            console.log("file : "+file.files[0].value);
-            console.log("file : "+file.files[0].size);
+            //console.log("file : "+file.files[0].name);
+            //console.log("file : "+file.files[0].value);
+            //console.log("file : "+file.files[0].size);
             
             const formData = new FormData();
             formData.append("file", file.files[0]);
@@ -1396,7 +1396,7 @@ function initMap(){
                dataType:'JSON',
                success:function(data){
                
-                  console.log("작성된 글 아이디 : "+data.reviewId);
+                  //console.log("작성된 글 아이디 : "+data.reviewId);
                    formData.append("reviewId", data.reviewId);
                   
                   $.ajax({
@@ -1407,7 +1407,7 @@ function initMap(){
                        data : formData,
                        dataType:'JSON',
                        success:function(data){
-                          console.log(data);
+                          //console.log(data);
                           alert("등록이 완료되었습니다!");
                           loadReviews(areaName, 'default');
                           infowindow.close();
@@ -1429,7 +1429,7 @@ function initMap(){
        
        //모달창이 hidden일때 내용 초기화
        $('.modal').on('hidden.bs.modal', function (e) {
-          console.log('modal close');
+          //console.log('modal close');
           $("#content").val("");
           $("#rmPhoto").val("");
       });
@@ -1458,9 +1458,9 @@ function initMap(){
               },
               dataType:'JSON',
               success:function(data){
-                 console.log("내 후기마커 data : ", data);
-                 console.log("내 후기마커 list : ", data.list);
-                 console.log("내 후기마커 list[0] : ", data.list[0]);
+                 //console.log("내 후기마커 data : ", data);
+                 //console.log("내 후기마커 list : ", data.list);
+                 //console.log("내 후기마커 list[0] : ", data.list[0]);
                  
                  var content = "";
                  var list = data.list;
@@ -1530,7 +1530,7 @@ function initMap(){
                     kakao.maps.event.addListener(revMarker, 'click', function(e) {
                         var userId = "${sessionScope.loginId}";
                         var reviewId = review.reviewId;
-                        console.log("userId / reviewId : "+userId+"/"+reviewId);
+                        //console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
                         loadReviewDetail(reviewId, userId, "myReviewMK");
                         $('#detailModal').modal("show");
@@ -1607,7 +1607,7 @@ function initMap(){
                         //리뷰 클릭 시 상세보기 모달창 띄우기
                          document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
                            var userId = "${sessionScope.loginId}";
-                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           //console.log("userId / reviewId : "+userId+"/"+reviewId);
                            
                            loadReviewDetail(reviewId, userId, "myReviewMK");
                            $('#detailModal').modal("show");
@@ -1641,9 +1641,9 @@ function initMap(){
               },
               dataType:'JSON',
               success:function(data){
-                 console.log("즐겨찾기 data : ", data);
-                 console.log("즐겨찾기 list : ", data.list);
-                 console.log("즐겨찾기 list[0] : ", data.list[0]);
+                 //console.log("즐겨찾기 data : ", data);
+                 //console.log("즐겨찾기 list : ", data.list);
+                 //console.log("즐겨찾기 list[0] : ", data.list[0]);
                  
                  var content = "";
                  var list = data.list;
@@ -1713,7 +1713,7 @@ function initMap(){
                     kakao.maps.event.addListener(revMarker, 'click', function(e) {
                         var userId = "${sessionScope.loginId}";
                         var reviewId = review.reviewId;
-                        console.log("userId / reviewId : "+userId+"/"+reviewId);
+                        //console.log("userId / reviewId : "+userId+"/"+reviewId);
                         
                         loadReviewDetail(reviewId, userId, "bookmark");
                         $('#detailModal').modal("show");
@@ -1790,7 +1790,7 @@ function initMap(){
                         //리뷰 클릭 시 상세보기 모달창 띄우기
                          document.getElementsByClassName("reviewWrap"+reviewId)[0].addEventListener("click",function(){
                            var userId = "${sessionScope.loginId}";
-                           console.log("userId / reviewId : "+userId+"/"+reviewId);
+                           //console.log("userId / reviewId : "+userId+"/"+reviewId);
                            
                            loadReviewDetail(reviewId, userId, "bookmark");
                            $('#detailModal').modal("show");
@@ -1832,26 +1832,26 @@ function initMap(){
     //현재 서버에 있는 모든 유저들의 내위치마커 불러오기
     function callMyLocMK(){
     	infowindow.close();
-    	console.log("★서버에서 모든 내위치마커 불러오기★");
+    	//console.log("★서버에서 모든 내위치마커 불러오기★");
     	deleteMarkers(markers);//기존마커 제거
     	
     	var loginId = "${sessionScope.loginId}";
 
-    	console.log("loginId : ", loginId);
+    	//console.log("loginId : ", loginId);
     	
     	$.ajax({
 		     url:'callMyLocMK',
 		     type:'post',
 		     dataType:'json',
 		     success:function(data){
-		    	console.log("내위치마커 가져오기 : ", data.list);
+		    	//console.log("내위치마커 가져오기 : ", data.list);
 		   		var list = data.list;
 		   		
 		    	list.forEach(function(locMK, index){
-		    		console.log("**locMK 번호 : ",locMK.myLocId);
-		    		console.log("**내위치마커 생성 loginId/locMK.userId : "+loginId+"/"+locMK.userId);
+		    		//console.log("**locMK 번호 : ",locMK.myLocId);
+		    		//console.log("**내위치마커 생성 loginId/locMK.userId : "+loginId+"/"+locMK.userId);
 		    		if(loginId == locMK.userId){
-		    			console.log("내위치마커 생성");
+		    			//console.log("내위치마커 생성");
 		    			//만약 로그인아이디와 내위치마커의 유저아이디가 같다면 내위치마커로 생성
 		    			/*
 		    			myLocMarker = new kakao.maps.Marker({
@@ -1923,7 +1923,7 @@ function initMap(){
     function setMyLocMK(lat, lon, address){
     	
     	if (confirm("여기로 내위치마커를 지정할까요?") == true){//확인
-	    	console.log("내 위치 마커 설정! lat/lon/address : "+lat+" / "+lon+" / "+address);
+	    	//console.log("내 위치 마커 설정! lat/lon/address : "+lat+" / "+lon+" / "+address);
 	    
 	    	//인포윈도우, API마커 제거
 	    	//APImarker.setVisible(false);
@@ -1941,7 +1941,7 @@ function initMap(){
 	  		     },
 	  		     dataType:'json',
 	  		     success:function(data){
-	  		    	console.log("setMyLocMK : ", data);
+	  		    	//console.log("setMyLocMK : ", data);
 	  		    	
 	  		    	//내위치마커 생성
 	  		    	var imageSrc1 = 'resources/img/flag2.png', // 마커이미지의 주소입니다    
@@ -1979,7 +1979,7 @@ function initMap(){
  		     type:'get',
  		     dataType:'json',
  		     success:function(data){
- 		    	console.log("내위치마커 OFF : ", data);
+ 		    	//console.log("내위치마커 OFF : ", data);
 		    	
  		    	alert("내위치마커 OFF");
 		    	$('#myLocON').hide();
@@ -2002,7 +2002,7 @@ function initMap(){
                 infoContent += detailAddr;
                 
                 var addressInfo = result[0].address.address_name;
-                console.log("상세주소 : ", addressInfo);
+                //console.log("상세주소 : ", addressInfo);
                 
                 var lat = latlng.getLat(),
     	    	lon = latlng.getLng();    
@@ -2066,7 +2066,7 @@ function initMap(){
     
 	//내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
 	function loadAPICall(){
-   		console.log("loadAPICALL");
+   		//console.log("loadAPICALL");
    	
 	   	APImarker.setMap(map); //마커 찍기
 	   	markers.push(APImarker);
