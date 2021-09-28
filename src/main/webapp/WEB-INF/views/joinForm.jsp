@@ -123,7 +123,7 @@
 				</div>
 
 				<div class="col-md-9 mb-3">
-					<label for="validationTooltip05" class="fw-bold">메시지 좋아요 알림
+					<label for="validationTooltip05" class="fw-bold">알림
 						수신 여부</label>
 					<div class="form-check form-check-inline mx-3">
 						<input class="form-check-input" type="radio" name="chkAlert"
