@@ -304,7 +304,7 @@ function rejectChat(userId, userNickName){
 	}
 }
 
-//대화를 요청하는 함수 
+//대화를 요청하는 함수 (요청 받을 사람 아이디, 닉네임)
 function sendReq(user, nickName){
 	if(confirm(nickName+"님께 1:1채팅을 요청하시겠습니까?") == true){	
 		var requestor = "${sessionScope.loginId}"; //대화를 요청하는 유저(나)

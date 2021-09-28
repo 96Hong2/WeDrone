@@ -1932,7 +1932,11 @@ function initMap(){
 				    	
 				    	//클릭 시 메시지 보내기
 	                    kakao.maps.event.addListener(locMarker, 'click', function(e) {
-	                    	if (confirm(locMK.nickName+" 님에게 대화를 요청할까요?") == true){//확인
+	                    	
+	                    	//lognav.jsp의 웹소켓으로 채팅요청을 보내고 채팅방 팝업을 여는 함수
+	                    	sendReq(locMK.userId, locMK.nickName);
+	                    	
+	                    	/* if (confirm(locMK.nickName+" 님에게 대화를 요청할까요?") == true){//확인
 	                    		//alert(locMK.nickName+"님에게 메시지 보내기!");
 	                    		
 	                    		  var url = "./chatRoom?other="+locMK.userId;
@@ -1943,7 +1947,7 @@ function initMap(){
 	                    	
 	                    	}else{
 	                    		return;
-	                    	}
+	                    	} */
 	                     });
 				    	
 	                    locMarker.setMap(map);
