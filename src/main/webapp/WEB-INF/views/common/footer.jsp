@@ -96,12 +96,12 @@ $(document).ready(function(){
 	connectWs();	
 	
 	setTimeout(() => {
-		//시작후 0.3초후 알림데이터 가져오기
+		//시작후 0.1초후 알림데이터 가져오기
 		  sock.send("${loginId}");
-	}, 300);
+	}, 100);
 	
 	//5초마다 알림데이터 가져오기
-	setInterval("autoScript()", 3*60*1000);
+	setInterval("autoScript()", 5000);
 	
 	
 	setTimeout(() => {
@@ -224,7 +224,7 @@ function multiAlarmData(obj){
 function alarmData(obj){
 	//알람 보이기
 	if(parseInt(obj.countInform)>0){
-		$("#alarm-span-count").text(obj.countInform);
+		//$("#alarm-span-count").text(obj.countInform);
 		//$("#alarm-span").css("display", "block");
 		$("#alarm-span").show();
 		 
