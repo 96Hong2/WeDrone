@@ -323,7 +323,7 @@ ul.tabs li.current {
 
       <!-- 들어갈 내용 -->
       <script type="text/javascript"
-         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=503bd89de7b3ea1d3b24a7a50da8a828&libraries=services"></script>
+         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7ac57b2beb434c422fb707473027e420&libraries=services"></script>
 
       <div id="contentWrap">
          <!-- 사이드메뉴 영역 -->
@@ -1467,6 +1467,11 @@ function initMap(){
           //console.log('modal close');
           $("#content").val("");
           $("#rmPhoto").val("");
+          
+          
+          $("#preview-image2").attr("src","resources/img/basicImage.png");
+        
+          
       });
       
       
