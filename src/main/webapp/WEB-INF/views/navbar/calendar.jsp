@@ -45,13 +45,7 @@
 	 	<jsp:include page="../fixmenu/lognav.jsp" /> 
 	</c:if>
 
-<!-- 들어갈 내용 -->
-<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item fs-4"><a href="${path}/">Home</a></li>
-    <li class="breadcrumb-item active fs-4" aria-current="page">Map</li>
-  </ol>
-</nav>
+
 
 <!-- 날씨 위젯 시작 -->
 <div style="position: fixed; bottom: 150px;  right: 0px;width: 100%;">
@@ -129,34 +123,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
    
 	
-  	    customButtons: { 
-  	        myCustomButton: { 
-  	            text: '일정입력',
-  	            click: function(event) { 
-  	              onSelectEvent(event); 
-  	            } 
-  	        } 
-  		}, 
+  	   // customButtons: { 
+  	      //  myCustomButton: { 
+  	       //     text: '일정입력',
+  	          //  click: function(event) { 
+  	          //    onSelectEvent(event); 
+  	           // } 
+  	       // } 
+  		//}, 
     
 
-    headerToolbar: {
-		left : 'prev,next today',
-		center : 'title',
-		right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,myCustomButton'
-	},
+   // headerToolbar: {
+	//	left : 'prev,next today',
+	///	center : 'title',
+		//right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek,myCustomButton'
+	//},
 	//initialDate : '2021-09-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-	locale : 'ko', // 한국어 설정
-	editable : false, // 수정 가능
-	droppable : false, // 드래그 가능
+	//locale : 'ko', // 한국어 설정
+	//editable : false, // 수정 가능
+	//droppable : false, // 드래그 가능
 	//drop : function(arg) { // 드래그 엔 드롭 성공시
 	// 드래그 박스에서 아이템을 삭제한다.
 	//	arg.draggedEl.parentNode
 	//			.removeChild(arg.draggedEl);
 	//},   
-	defaultView: 'timeGridWeek',
-	navLinks: false, // can click day/week names to navigate views	
-	allDaySlot: false,
-	eventLimit: true, // allow "more" link when too many events
+//	defaultView: 'timeGridWeek',
+//	navLinks: false, // can click day/week names to navigate views	
+//	allDaySlot: false,
+//	eventLimit: true, // allow "more" link when too many events
 	//minTime: '10:00:00',
 	//maxTime: '24:00:00',
 	//contentHeight: 'auto',

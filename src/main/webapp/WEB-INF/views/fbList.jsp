@@ -108,7 +108,7 @@ nav {
 		<div class="container bs-docs-container">
 			<div class="row">
 				<div class="col-md-12" style="margin-top: 30px">
-					<h1 class="text-center h1-title">자유 게시판 목록</h1>
+					<h1 class="text-center h1-title">자유 게시판</h1>
 				</div>
 				
 				<c:if test="${not empty loginId }">

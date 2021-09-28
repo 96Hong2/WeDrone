@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<form action="upload" method="post" enctype="multipart/form-data">
-			<input type="file" name="file" onchange="fbfileUpload()"/>
+			<input type="file" name="file" onchange="ckUpload()"/>
 		</form>
 	</body>
 	<script>
@@ -25,9 +25,16 @@
 			self.close();
 		}
 		
+		function checkSize(input) {
+				console.log("checkSize :",input);
+		       if (input.files && input.files[0].size > (10)) {
+		           alert("이미지 용량은 10MB까지만 첨부 가능합니다.");
+		           input.value = null;
+		           return;
+		       }
+		}
 		
-		
-		function fbfileUpload(){
+		function ckUpload(){
 			$('form').submit();
 		}
 

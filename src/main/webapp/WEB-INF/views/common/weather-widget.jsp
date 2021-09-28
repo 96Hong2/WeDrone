@@ -28,7 +28,7 @@
 		margin-left: -205px; 
 		width: 410px; 
 		inset: 423.8px auto auto 1307.6px; 
-		height: 280px; 
+		height: 350px; 
 		cursor: pointer;
 		background-color: 
 	}
