@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap" rel="stylesheet">
 <!-- 아이콘 -->
+<link rel = "icon" href = "resources/img/dron1.ico">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
 	integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"
@@ -90,7 +91,7 @@ input[name=file]{
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
 </head>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 
 	<!-- 상단 메뉴바 -->

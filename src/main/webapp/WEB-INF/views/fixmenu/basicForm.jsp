@@ -22,7 +22,7 @@
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
 </head>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 <c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="../fixmenu/navbar.jsp" />

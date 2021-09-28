@@ -25,6 +25,7 @@
 	rel="stylesheet">
 
 <!-- 아이콘 -->
+<link rel = "icon" href = "resources/img/dron1.ico">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
 	integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"

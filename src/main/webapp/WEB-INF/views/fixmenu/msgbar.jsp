@@ -49,7 +49,7 @@ footer {
 
 </style>
 </head>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 <!-- 오른쪽 슬라이드바 -->
 		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"

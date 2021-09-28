@@ -7,11 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/errorPage.css">
+<link rel = "icon" href = "resources/img/dron1.ico">
 <!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
-<title>Insert title here</title>
+<title>WeDrone</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -48,7 +49,7 @@
       <p class="message__text">잘못된 요청입니다. 주소를 확인하거나 고객센터(www.goodee.co.kr)로 문의해주세요.</p>
     </div>
     <div class="error__nav e-nav">
-      <a href="https://14de-1-243-186-47.ngrok.io/go/" target="_blanck" class="e-nav__link"></a>
+      <a href="${path}/" target="_blanck" class="e-nav__link"></a>
     </div>
   </div>
   <!-- END Content -->

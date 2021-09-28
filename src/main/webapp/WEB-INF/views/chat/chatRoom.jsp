@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>WeDrone - Chatting</title>
+<title>WeDrone</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${path}/resources/css/chatPopUp.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,7 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+<link rel = "icon" href = "resources/img/dron1.ico">
 <style>
 
 	@font-face {
@@ -262,6 +263,7 @@ var webSocket = null;
 var $mon = $("#monitor");
 
    //var url = "ws://localhost:8090/go/chat/"+"${sessionScope.loginNickName}";
+   //var url = "wss://14de-1-243-186-47.ngrok.io/go/chat/"+"${sessionScope.loginNickName}";
    var url = "ws://localhost:8080/go/chat/"+"${sessionScope.loginNickName}";
    //console.log(url);
    webSocket = new WebSocket(url);

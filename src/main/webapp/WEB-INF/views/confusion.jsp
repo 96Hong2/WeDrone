@@ -16,7 +16,7 @@
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 	<c:if test="${sessionScope.loginId eq null}">
 		<jsp:include page="fixmenu/navbar.jsp" />

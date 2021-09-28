@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>드론</title>
+<title>WeDrone</title>
 <!-- 부트스트랩 파일 -->
 <link href="${path}/resources/css/bootstrap.css?ver=8" rel="stylesheet">
 <!-- css cdn 폰트 -->
@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Hahmlet:wght@500&display=swap">
 <!-- 아이콘 -->
+<link rel = "icon" href = "resources/img/dron1.ico">
 <link rel="stylesheet"	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">

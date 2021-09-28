@@ -9,6 +9,7 @@
 <%-- 부트 스트랩 메타태그 --%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- 부트 스트랩 아이콘 --%>
+<link rel = "icon" href = "resources/img/dron1.ico">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <!-- 부트스트랩 css 추가 -->
@@ -39,7 +40,7 @@
 		font-family: 'GmarketSansMedium';
 	}
 </style>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 	<!-- 아이디 있을 때 네비바 -->
 	<c:if test="${sessionScope.loginId eq null}">

@@ -19,6 +19,7 @@
 	rel="stylesheet">
 
 <!-- 아이콘 -->
+<link rel = "icon" href = "resources/img/dron1.ico">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
 <link rel="stylesheet"
@@ -139,7 +140,7 @@ table {
 <link href="${path}/resources/css/common.css?var=3" rel="stylesheet">
 
 </head>
-<title>드론</title>
+<title>WeDrone</title>
 <body>
 	<!-- 상단 메뉴바 -->
 	<!-- 아이디가 있다면 -->
