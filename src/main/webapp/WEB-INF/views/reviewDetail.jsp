@@ -112,6 +112,34 @@
 		$('#detailModal').modal('hide');
 	});
 	
+	
+	/*
+	var fileOX = "";
+	
+	function readImage(input) {
+	    // 인풋 태그에 파일이 있는 경우
+	    if(input.files && input.files[0]) {
+	        // 이미지 파일인지 검사 (생략)
+	        // FileReader 인스턴스 생성
+	        const reader = new FileReader()
+	        // 이미지가 로드가 된 경우
+	        reader.onload = e => {
+	            const previewImage = document.getElementById("preview-image")
+	            previewImage.src = e.target.result
+	        }
+	        // reader가 이미지 읽도록 하기
+	        reader.readAsDataURL(input.files[0])
+	    }
+	}
+	
+	// input file에 change 이벤트 부여
+	const inputImage = document.getElementById("rmPhoto")
+	inputImage.addEventListener("change", e => {
+	    readImage(e.target)
+	    fileOX = "ok";
+	})*/
+	
+	
 	var loginNickName = "${sessionScope.loginNickName}";
 	var reviewUserId = "";
 	var rmCmtCnt = "";
@@ -123,8 +151,8 @@ function loadReviewDetail(reviewId, userId, tab){
 	
 	var currPage = 1;
 	
-	console.log("reviewId : ", reviewId);
-	console.log("userId : ", userId);
+	//console.log("reviewId : ", reviewId);
+	//console.log("userId : ", userId);
 	//상세정보 불러오기 
 	$.ajax({
 		url : 'getReviewDetail',
@@ -135,7 +163,7 @@ function loadReviewDetail(reviewId, userId, tab){
 		},
 		dataType : 'JSON',
 		success : function(review) {
-			console.log("review dto: ",review);
+			//console.log("review dto: ",review);
 			reviewUserId = review.userId;
 			
 			var content2 = "";
@@ -255,7 +283,7 @@ function deleteReview(reviewId, areaName, tab){
 }
 
 function doLike(reviewId, userId, areaName, tab){
-	console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
+	//console.log("좋아요 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
 		url : 'doLike',
@@ -268,7 +296,7 @@ function doLike(reviewId, userId, areaName, tab){
 		success : function(data) {
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
-			console.log("좋아요 알림 보내기 : ", data.informSuccess);
+			//console.log("좋아요 알림 보내기 : ", data.informSuccess);
 			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "
@@ -288,7 +316,7 @@ function doLike(reviewId, userId, areaName, tab){
 }
 
 function undoLike(reviewId, userId, areaName, tab){
-	console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
+	//console.log("좋아요취소 reviewId/userId : "+reviewId+"/"+userId);
 	
 	$.ajax({
 		url : 'undoLike',
@@ -318,7 +346,7 @@ function undoLike(reviewId, userId, areaName, tab){
 }
 	
 	function doBookMark(reviewId, userId, areaName, tab){
-		console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
+		//console.log("즐겨찾기 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
 			url : 'doBookMark',
@@ -329,7 +357,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			},
 			dataType : 'JSON',
 			success : function(data) {
-				console.log("data.success : ",data.success);
+				//console.log("data.success : ",data.success);
 				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
 				
@@ -348,7 +376,7 @@ function undoLike(reviewId, userId, areaName, tab){
 	}
 
 	function undoBookMark(reviewId, userId, areaName, tab){
-		console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
+		//console.log("즐겨찾기 취소 reviewId/userId : "+reviewId+"/"+userId);
 		
 		$.ajax({
 			url : 'undoBookMark',
@@ -359,7 +387,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			},
 			dataType : 'JSON',
 			success : function(data) {
-				console.log("data.success : ",data.success);
+				//console.log("data.success : ",data.success);
 				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
 				
@@ -376,7 +404,7 @@ function undoLike(reviewId, userId, areaName, tab){
 	
 	
 	function updateReview(reviewId, areaName, tab, userId, rating, areaId){
-		console.log("후기마커 수정하기 버튼 클릭");
+		//console.log("후기마커 수정하기 버튼 클릭");
 		$("#revContent").attr('contenteditable', 'true');
 		$("#revContent").focus();
 		$("#updateBtn").hide();
@@ -394,13 +422,14 @@ function undoLike(reviewId, userId, areaName, tab){
 		$("#revRating").append(selectRate);
 		$('#rating option[value='+rating+']').prop('selected', 'selected').change();
 		
-		$("#revContainer1").append('<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*" onchange="fileChange()"/>');
+		$("#revContainer1").append('<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>');
 		
 		var cancelBtn = '<button type="button" class="btn btn-outline-danger myRevBtns" onclick="loadReviewDetail('+reviewId+',\''+userId+'\',\''+tab+'\')">취소</button>';
 		var updateBtn2 = '<button type="button" class="btn btn-outline-primary myRevBtns" id="reviewUpdateSubmitBtn">수정</button>';
 		
 		$("#buttonArea").append(cancelBtn);
 		$("#buttonArea2").append(updateBtn2);
+		
 		
 		var fileOX = "";
 		
@@ -420,12 +449,18 @@ function undoLike(reviewId, userId, areaName, tab){
 		    }
 		}
 		
+		
 		// input file에 change 이벤트 부여
 		const inputImage = document.getElementById("rmPhoto")
 		inputImage.addEventListener("change", e => {
 		    readImage(e.target)
 		    fileOX = "ok";
 		})
+		$("#rmPhoto2").click(function(e){
+		console.log("파일 미리보기");
+	    readImage(e.target)
+	    fileOX = "ok";
+	});
 		
 		$("#reviewUpdateSubmitBtn").click(function(){
 			
@@ -434,8 +469,8 @@ function undoLike(reviewId, userId, areaName, tab){
 				var reviewUpdateContent = $("#revContent").html();
 				var updateRating = $("#rating option:selected").val();
 				
-				console.log("수정된 내용 : "+reviewUpdateContent);
-				console.log("수정된 평점 : "+updateRating);
+				//console.log("수정된 내용 : "+reviewUpdateContent);
+				//console.log("수정된 평점 : "+updateRating);
 				
 				$.ajax({
 	                url:'rmUpdate',
@@ -449,13 +484,13 @@ function undoLike(reviewId, userId, areaName, tab){
 	               dataType:'JSON',
 	               success:function(data){
 	               
-	                  console.log("수정 성공 여부 : "+data.success);
+	                  //console.log("수정 성공 여부 : "+data.success);
 	                  
 	                   if(fileOX != ""){
 	                	   
 	                	   const file = $("#rmPhoto")[0];
 	                	   
-	                	   console.log("file : "+file.files[0].name);
+	                	   //console.log("file : "+file.files[0].name);
 	                	   
 	                	   const formData = new FormData();
 	                	   formData.append("reviewId", reviewId);
@@ -469,7 +504,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		                       data : formData,
 		                       dataType:'JSON',
 		                       success:function(data){
-		                          console.log(data);
+		                          ////console.log(data);
 		                          alert("수정이 완료되었습니다!+이미지");
 		                          loadReviews(areaName, 'default');
 		                          loadReviewDetail(reviewId, userId, tab);
@@ -509,7 +544,7 @@ function undoLike(reviewId, userId, areaName, tab){
 
 	function loadComments(reviewId, currPage) { //댓글 데이터를 불러오는 함수
 		
-		console.log("loadComments 실행 : "+reviewId+"/"+currPage);
+		//console.log("loadComments 실행 : "+reviewId+"/"+currPage);
 		$("#pagination").twbsPagination('destroy');
 		
 		$.ajax({
@@ -523,7 +558,7 @@ function undoLike(reviewId, userId, areaName, tab){
 					success : function(data) {
 						
 						if(data.list != null){
-							console.log("리스트 값이 null이 아닐 떄");
+							//console.log("리스트 값이 null이 아닐 떄");
 							$("#rm_commentWrap").show(); //만약 숨겨져있으면 보이게 한다
 							//$('#cmtCount').html(data.totalCnt);
 							
@@ -540,7 +575,7 @@ function undoLike(reviewId, userId, areaName, tab){
 								    last : ">>",
 									onPageClick : function(e, page){
 										//console.log("twbsPagination 에서 onPageClick 실행");
-										console.log(page+"번째 페이지 출력중");
+										//console.log(page+"번째 페이지 출력중");
 										loadComments(reviewId, page);
 									}
 								});
@@ -555,7 +590,7 @@ function undoLike(reviewId, userId, areaName, tab){
 								    next : ">",	// 다음 페이지 버튼에 쓰여있는 텍스트
 								    last : ">>",
 									onPageClick : function(e, page){
-										console.log("nothing");
+										//console.log("nothing");
 									}
 								});
 							}
@@ -569,7 +604,7 @@ function undoLike(reviewId, userId, areaName, tab){
 
 
 	function drawComments(list, loginId) {
-		console.log(list);
+		//console.log(list);
 		var loginId = loginId;
 		var content="";
 
@@ -621,9 +656,9 @@ function undoLike(reviewId, userId, areaName, tab){
 		var reviewId_1 = $("#reviewId").val();
 		var cmtContent = $("#commentContent").val();
 		var rmLoginId = $("#rmLoginId").val();
-		console.log("댓글 내용 : "+cmtContent);
-		console.log("댓글 달 후기마커 아이디 : "+reviewId_1);
-		console.log("로그인된 아이디 : "+rmLoginId);
+		//console.log("댓글 내용 : "+cmtContent);
+		//console.log("댓글 달 후기마커 아이디 : "+reviewId_1);
+		//console.log("로그인된 아이디 : "+rmLoginId);
 		
 		if(cmtContent.length != 0){
 			
@@ -639,8 +674,8 @@ function undoLike(reviewId, userId, areaName, tab){
 				},
 				dataType: 'JSON',
 				success: function(data){
-					console.log("댓글 작성 성공 여부 : "+data.success);
-					console.log("댓글 알림 보내기 : ", data.informSuccess);
+					//console.log("댓글 작성 성공 여부 : "+data.success);
+					//console.log("댓글 알림 보내기 : ", data.informSuccess);
 					$("#commentContent").val("");
 					alert("댓글을 등록했습니다.");
 					mySocket.send("댓글 알림,"+reviewUserId+","+loginNickName+"님이 당신의 후기마커에 댓글을 달았습니다!,"+"#");
@@ -680,7 +715,7 @@ function undoLike(reviewId, userId, areaName, tab){
 				},
 				dataType: 'JSON',
 				success: function(data){
-					console.log("댓글 삭제 성공 여부 : "+data.success);
+					//console.log("댓글 삭제 성공 여부 : "+data.success);
 					$("#commentContent").val("");
 					alert("댓글을 삭제했습니다.");
 					loadComments(reviewId_1, 1);
@@ -705,7 +740,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		var cmtContent = $("#commentUpdateContent").val();
 		var rmLoginId = $("#rmLoginId").val();
 		
-		console.log("수정할 댓글 내용 : "+cmtContent);
+		//console.log("수정할 댓글 내용 : "+cmtContent);
 		
 		if(cmtContent.length != 0){
 			$("#commentUpdateContent").removeClass("is-invalid");
@@ -720,7 +755,7 @@ function undoLike(reviewId, userId, areaName, tab){
 						},
 						dataType: 'JSON',
 						success: function(data){
-							console.log("댓글 수정 성공 여부 : "+data.success);
+							//console.log("댓글 수정 성공 여부 : "+data.success);
 							//$("#commentContent").val("");
 							alert("댓글을 수정했습니다.");
 							loadComments(reviewId_1, 1);

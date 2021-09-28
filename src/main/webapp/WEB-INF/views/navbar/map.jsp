@@ -194,7 +194,7 @@ ul.tabs li.current {
 
 #content{
 	width : 99%;
-	height: 130px;
+	height: 110px;
 	resize: none;
 }
 
@@ -236,6 +236,12 @@ ul.tabs li.current {
 	/* 스크롤바 뒷 배경 설정*/
 	#sideArea::-webkit-scrollbar-track{
 	    background-color: lightgrey;
+	}
+	
+	.reviewImg2 {
+	width: 99%;
+	height: 400px;
+	margin-bottom: 5px;
 	}
 
 
@@ -446,7 +452,7 @@ ul.tabs li.current {
    <!-- 모달 영역 -->
       <div class="modal fade" id="reviewModal" tabindex="-1"
          aria-labelledby="reviewModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
+         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title" id="reviewModalLabel"></h5>
@@ -458,9 +464,9 @@ ul.tabs li.current {
                      aria-label="Close"></button>
                </div>
                <div class="modal-body">
+               		<img class='reviewImg2' id='preview-image2' src='resources/img/basicImage.png' />
                		<textarea id="content" name="content" maxlength="200" placeholder="10자 이상 입력해주세요" autocomplete="off"></textarea>
-                  <!-- <input id="content" type="text" name="content" maxlength="200" placeholder="10자 이상 입력해주세요"/> -->
-                        <input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>
+                        <input type="file" name="rmPhoto2" id="rmPhoto2" accept="image/*"/>
                </div>
                <div class="modal-footer">
                	<p id="loveHere"> 이 장소 추천해요 </p> 
@@ -1276,7 +1282,35 @@ function initMap(){
          map.setMaxLevel(10);
       }
       
-         const file = $("#rmPhoto")[0];
+         const file = $("#rmPhoto2")[0];
+         
+         var fileOX = "";
+     	
+     	function readImage(input) {
+     		console.log("파일 미리보기2");
+     	    // 인풋 태그에 파일이 있는 경우
+     	    if(input.files && input.files[0]) {
+     	        // 이미지 파일인지 검사 (생략)
+     	        // FileReader 인스턴스 생성
+     	        const reader = new FileReader()
+     	        // 이미지가 로드가 된 경우
+     	        reader.onload = e => {
+     	            const previewImage = document.getElementById("preview-image2")
+     	            previewImage.src = e.target.result
+     	        }
+     	        // reader가 이미지 읽도록 하기
+     	        reader.readAsDataURL(input.files[0])
+     	    }
+     	}
+     	
+     	
+     	// input file에 change 이벤트 부여
+     	const inputImage = document.getElementById("rmPhoto2")
+     	inputImage.addEventListener("change", e => {
+     		console.log("파일 미리보기");
+     	    readImage(e.target)
+     	    fileOX = "ok";
+     	}) 
       
     //리뷰마커 작성하고 등록 버튼 눌렀을 때
       $("#rmSubmit").click(function(){
@@ -1303,6 +1337,7 @@ function initMap(){
              alert("10자 이상 입력해주세요!");
              return;
           }
+          
           
           var areaId;
           var areaName = "";
@@ -2195,6 +2230,8 @@ function initMap(){
   		     }
   		 });
   	}
+ 
+	
   	
   	
 </script>
