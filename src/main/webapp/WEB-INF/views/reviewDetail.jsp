@@ -121,7 +121,7 @@ function loadReviewDetail(reviewId, userId, tab){
 	$('#reviewTitle').empty();
 	$('#modalHeader').empty();
 	
-	//var currPage = 1;
+	var currPage = 1;
 	
 	console.log("reviewId : ", reviewId);
 	console.log("userId : ", userId);
@@ -201,7 +201,7 @@ function loadReviewDetail(reviewId, userId, tab){
 			
 			$('.revContainer').append(content);
 			
-			loadComments(reviewId, 1);	
+			loadComments(reviewId, currPage);	
 		},
 		error : function(e) {
 			console.log("에러 e : ", e);
@@ -530,7 +530,7 @@ function undoLike(reviewId, userId, areaName, tab){
 							drawComments(data.list, data.loginId); //댓글리스트를 브라우저에 그려준다
 
 								$("#pagination").twbsPagination({
-									startPage : 1, //시작페이지
+									startPage : data.currPage, //시작페이지
 									totalPages : data.pages, //총 페이지 개수
 									visiblePages : 5,
 									initiateStartPageClick: false,
@@ -540,7 +540,7 @@ function undoLike(reviewId, userId, areaName, tab){
 								    last : ">>",
 									onPageClick : function(e, page){
 										//console.log("twbsPagination 에서 onPageClick 실행");
-										//console.log(page+"번째 페이지 출력중");
+										console.log(page+"번째 페이지 출력중");
 										loadComments(reviewId, page);
 									}
 								});
