@@ -122,7 +122,7 @@
 	
 	
 <!-- 날씨 위젯 시작 -->
-<div style="position: fixed; bottom: 150px;  right: 50px;width: 100%; z-index: 3">
+<div style="position: fixed; bottom: 250px;  right: 50px;width: 100%; z-index: 3">
 <div class="position-relative" class="modal hide fade" id="btn-weather"   tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div id="quick" class="position-absolute top-50 end-0 translate-middle-y" style="margin-right:0px;">
 		<a href="#weather-layer1" 
@@ -139,16 +139,16 @@
 </div>
 	
 	
-		<c:if test="${sessionScope.loginId eq null}">
+		<%-- <c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="fixmenu/msgbar.jsp" />
 		</c:if>
+ --%>
 
 
-<%@ include file="./common/footer.jsp"%>
 <jsp:include page="./common/realFooter.jsp" />
 
 
-
+<%@ include file="./common/footer.jsp"%>
 
 
 

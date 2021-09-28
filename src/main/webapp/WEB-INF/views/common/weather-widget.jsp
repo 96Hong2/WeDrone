@@ -24,13 +24,13 @@
 	
 	#weather-layer1{
 		z-index: 3; 
-		margin-top: -227px; 
+		/* margin-top: -127px; 
 		margin-left: -205px; 
 		width: 410px; 
 		inset: 423.8px auto auto 1307.6px; 
-		height: 350px; 
+		height: 350px; */ 
 		cursor: pointer;
-		background-color: 
+		position : fixed;
 	}
 	
 </style>

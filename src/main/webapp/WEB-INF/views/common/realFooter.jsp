@@ -25,13 +25,13 @@ html,body {
   padding: 60px 0px;
 }
 /* STYLES SPECIFIC TO FOOTER  */
-.footer {
+.footer1 {
   width: 100%;
   position: relative;
   height: auto;
   background-color: #212529;
 }
-.footer .col {
+.footer1 .col {
   width: 190px;
   height: auto;
   float: left;
@@ -40,7 +40,7 @@ html,body {
   -moz-box-sizing: border-box;
   padding: 0px 20px 20px 20px;
 }
-.footer .col h1 {
+.footer1 .col h1 {
   margin: 0;
   padding: 0;
   font-family: inherit;
@@ -52,12 +52,12 @@ html,body {
   text-transform: uppercase;
   letter-spacing: 0.250em;
 }
-.footer .col ul {
+.footer1 .col ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.footer .col ul li {
+.footer1 .col ul li {
   color: #999999;
   font-size: 14px;
   font-family: inherit;
@@ -73,7 +73,7 @@ html,body {
   padding-right: 5px !important;
 }
 
-.footer .col ul li:hover {
+.footer1 .col ul li:hover {
   color: #ffffff;
   transition: .1s;
   -webkit-transition: .1s;
@@ -99,29 +99,29 @@ html,body {
   }
 }
 @media only screen and (max-width: 950px) {
-  .footer .col {
+  .footer1 .col {
     width: 33%;
   }
-  .footer .col h1 {
+  .footer1 .col h1 {
     font-size: 14px;
   }
-  .footer .col ul li {
+  .footer1 .col ul li {
     font-size: 13px;
   }
 }
 @media only screen and (max-width: 500px) {
-    .footer .col {
+    .footer1 .col {
       width: 50%;
     }
-    .footer .col h1 {
+    .footer1 .col h1 {
       font-size: 14px;
     }
-    .footer .col ul li {
+    .footer1 .col ul li {
       font-size: 13px;
     }
 }
 @media only screen and (max-width: 340px) {
-  .footer .col {
+  .footer1 .col {
     width: 100%;
   }
 }
@@ -130,7 +130,7 @@ html,body {
 <body>
 
 <!-- FOOTER START -->
-<div class="footer">
+<div class="footer1">
   <div class="contain">
   <div class="col">
     <h1>WeDrone</h1>
