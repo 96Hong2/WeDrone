@@ -12,9 +12,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+<link href="${path}/resources/css/common.css?var=2" rel="stylesheet">
 <title>WeDrone</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<style>
+	.message__text{
+		font-family: 'NEXON Lv1 Gothic OTF' !important;
+	}
+</style>
 </head>
 <body>
   <header class="top-header">
