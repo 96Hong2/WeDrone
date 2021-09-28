@@ -238,7 +238,7 @@ function onMessage(e){
 		var reqNickName = splitStr[1];
 		console.log("reqId/reqNickName : "+reqId+"/"+reqNickName);
 		
-		var chatReq = "<li id='req_"+reqNickName+"_li'><a href='javascript:acceptReq(\""+reqNickName+"\")'><div>";
+		var chatReq = "<li id='req_"+reqNickName+"_li'><a href='javascript:acceptReq(\""+reqId+"\",\""+reqNickName+"\")'><div>";
 		chatReq += "<img src='resources/img/comment.png' id='userImg'> &nbsp;";
 		chatReq += "[<b>대화요청</b>] &nbsp;"+reqNickName+" 님 ";
 		
