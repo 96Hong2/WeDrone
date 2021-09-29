@@ -64,7 +64,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 		String loginNickName= (String) session.getAttribute("loginNickName");
 		dto.setNickName(loginNickName);
 		dto.setUserId((String) session.getAttribute("loginId"));
-		logger.info("loginNickName : ",loginNickName);
+		//logger.info("loginNickName : ",loginNickName);
 		
 		if(dao.fbwrite(dto)>0) {
 			//page = "redirect:/fbdetail?postId="+dto.getPostId();
@@ -154,12 +154,12 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			HashMap<String, String> fileList 
 				= (HashMap<String, String>) session.getAttribute("fileList");			
 			fileList.remove(fileName);			
-			logger.info("업로드된 파일 수 : "+fileList.size());
+			//logger.info("업로드된 파일 수 : "+fileList.size());
 			session.setAttribute("fileList", fileList);
 		}
 		
 		
-		logger.info("file delete success : "+success);
+		//logger.info("file delete success : "+success);
 		map.put("success", success);
 		
 		return map;
@@ -212,8 +212,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			public HashMap<String, Object> fbcmtwrite(BoardDTO dto) {
 				HashMap<String, Object> map = new HashMap<String, Object>();				
 				int success = dao.fbcmtwrite(dto);
-				logger.info("dto :"+dto);
-				logger.info("자유 게시판 댓글 쓰기 성공 여부 "+success);
+				//logger.info("dto :"+dto);
+				//logger.info("자유 게시판 댓글 쓰기 성공 여부 "+success);
 				map.put("success", success);
 
         	    //댓글 알림 리스트
@@ -229,7 +229,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 					//게시글 작성자와 댓글 작성자가 같지 않으면 알림 발송
 					if(!dto.getUserId().equals(dto.getPostedUserId())) {											
 						//게시판 글 작성자 PostedUserId 에게 발송 
-						logger.info("1.게시판 글 작성자 PostedUserId 에게 발송 ");
+						//logger.info("1.게시판 글 작성자 PostedUserId 에게 발송 ");
 						dto.setUserId(dto.getPostedUserId());
 						informDAO.insertInform(dto);
 					}
@@ -261,10 +261,10 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				ArrayList<BoardDTO> list = dao.list(start, end, postId); 
 				
 				String loginId = (String) session.getAttribute("loginId");
-				logger.info("loginId 세션 : ", loginId);
+				//logger.info("loginId 세션 : ", loginId);
 				
 				int totalCnt = dao.allCount(postId);
-				logger.info("리스트 사이즈 : "+list.size()+"/ 댓글 총 개수"+totalCnt);
+				//logger.info("리스트 사이즈 : "+list.size()+"/ 댓글 총 개수"+totalCnt);
 				map.put("list", list);
 				map.put("totalCnt", totalCnt);
 				map.put("currPage", page);
@@ -284,8 +284,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			public HashMap<String, Object> fbcmtupdate(BoardDTO dto, HttpSession session) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				int success = dao.fbcmtupdate(dto);
-				logger.info("dto :"+dto);
-				logger.info("자유 게시판 글 수정 성공 여부 "+success);
+				//logger.info("dto :"+dto);
+				//logger.info("자유 게시판 글 수정 성공 여부 "+success);
 				map.put("success", success);
 				return map;
 
@@ -297,8 +297,8 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 			public HashMap<String, Object> fbcmtDel(BoardDTO dto, HttpSession session) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				int success = dao.fbcmtDel(dto);
-				logger.info("게시판 댓글 dto:"+dto);
-				logger.info("자유 게시판 댓글 삭제 성공 여부 "+success);
+				//logger.info("게시판 댓글 dto:"+dto);
+				//logger.info("자유 게시판 댓글 삭제 성공 여부 "+success);
 				map.put("success", success);
 				return map;
 			}

@@ -52,7 +52,7 @@ public class FbController {
 	public String fbwriteForm(Model model, HttpSession session) {
 		HashMap<String, String> list = new HashMap<String, String>();
 		session.setAttribute("fileList", list);
-		logger.info("fbwriteForm 요청");
+		//logger.info("fbwriteForm 요청");
 		return "fbwriteForm";
 	}
 
@@ -82,21 +82,21 @@ public class FbController {
 	// 삭제//지윤쓰
 	@RequestMapping(value = "/fbfileDelete")
 	public @ResponseBody HashMap<String, Object> fbfileDelete(@RequestParam String fileName, HttpSession session) {
-		logger.info("파일 삭제 요청 : " + fileName);
+		//logger.info("파일 삭제 요청 : " + fileName);
 		return service.fbfileDelete(fileName, session);
 	}
 
 	// 상세보기//지윤쓰
 	@RequestMapping(value = "/fbdetail")
 	public ModelAndView fbdetail(@RequestParam String postId) {
-		logger.info("상세보기 요청 : " + postId);
+		//logger.info("상세보기 요청 : " + postId);
 		return service.fbdetail(postId);
 	}
 
 	// 게시판 업데이트//지윤쓰
 	@RequestMapping(value = "/fbupdateForm")
 	public ModelAndView fbupdateForm(MultipartFile file, @RequestParam String postId, HttpSession session) {
-		logger.info("업데이트 폼 요청");
+		//logger.info("업데이트 폼 요청");
 
 		return service.fbupdateForm(file, postId, session);
 	}
@@ -120,7 +120,7 @@ public class FbController {
 	@RequestMapping(value = "/fileDelete")
 	@ResponseBody
 	public int fileDelete(@RequestParam String imgId) {
-		logger.info("파일 삭제 : " + imgId);
+		//logger.info("파일 삭제 : " + imgId);
 		return service.fileDelete(imgId);
 	}
 	
@@ -128,7 +128,7 @@ public class FbController {
 
 	@RequestMapping(value = "/fbdel")
 	public ModelAndView fbdel(Model model, @RequestParam String postId) {
-		logger.info("삭제 요청 : " + postId);
+		//logger.info("삭제 요청 : " + postId);
 		return service.fbdel(postId);
 	}
 

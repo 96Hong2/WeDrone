@@ -82,7 +82,7 @@ public class CmController {
 		@RequestMapping(value = "/fbcmtupdate")
 		@ResponseBody
 		public HashMap<String, Object> fbupdate(@ModelAttribute BoardDTO dto, HttpSession session) {
-			logger.info("댓글 업데이트  : {} ", dto);
+			//logger.info("댓글 업데이트  : {} ", dto);
 			return service.fbcmtupdate(dto, session);
 		}
 
@@ -90,7 +90,7 @@ public class CmController {
 		@RequestMapping(value = "/fbcmtDel")
 		@ResponseBody
 		public HashMap<String, Object> fbcmtDel(@ModelAttribute BoardDTO dto, HttpSession session) {
-			logger.info("댓글 삭제  : {} ", dto);
+			//logger.info("댓글 삭제  : {} ", dto);
 
 			return service.fbcmtDel(dto, session);
 		}

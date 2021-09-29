@@ -117,7 +117,7 @@ public class SpaceWeatherGetKP {
 			Map<String, String> map=new HashMap<String, String>();
 			map=customParsing.getRecentData(map, dto);
 			//System.out.println("최근 시간 :" +map.get("time"));
-			System.out.println("최근 kp지수 :" +map.get("kp"));
+			//System.out.println("최근 kp지수 :" +map.get("kp"));
 			
 			//전체 출력
 			//if(dto.getRecent() !=null && dto.getRecent().size()>0) {			

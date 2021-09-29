@@ -46,7 +46,7 @@ public class CalendarController {
 	@ResponseBody
 	@RequestMapping(value = "/selectEventList")
 	public List<CalendarDTO>  selectEventList(@RequestParam Map<String, Object> map) throws Exception {
-		logger.info(" select EventList , {} " ,  map.toString());
+		//logger.info(" select EventList , {} " ,  map.toString());
 		return calendarService.selectEventList(map);		
 	}
 
