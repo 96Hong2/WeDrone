@@ -15,6 +15,7 @@
 		<filter-class>
 			org.springframework.web.filter.CharacterEncodingFilter
 		</filter-class>
+		<async-supported>true</async-supported>
 		<!-- 파라메터1  : 인코딩 타입 : UTF-8 -->
 		<init-param>
 			<param-name>encoding</param-name>

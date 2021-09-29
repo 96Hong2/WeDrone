@@ -421,7 +421,7 @@ function undoLike(reviewId, userId, areaName, tab){
          	'</select>';
 		
 		$("#revRating").append(selectRate);
-		$('#rating option[value='+rating+']').prop('selected', 'selected').change();
+		$('#rating2 option[value='+rating+']').prop('selected', 'selected').change();
 		
 		$("#revContainer1").append('<input type="file" name="rmPhoto" id="rmPhoto" accept="image/*"/>');
 		
@@ -457,11 +457,12 @@ function undoLike(reviewId, userId, areaName, tab){
 		    readImage(e.target)
 		    fileOX = "ok";
 		})
+		/*
 		$("#rmPhoto2").click(function(e){
 		console.log("파일 미리보기");
 	    readImage(e.target)
 	    fileOX = "ok";
-	});
+	});*/
 		
 		$("#reviewUpdateSubmitBtn").click(function(){
 			

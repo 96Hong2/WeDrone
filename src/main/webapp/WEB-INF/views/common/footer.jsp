@@ -107,7 +107,7 @@ $(document).ready(function(){
 	setTimeout(() => {
 		//시작후 0.5초후 KP지수 데이터 가져오기
 		sock.send("ALARM-SPACEWEATHERGETKP");
-	}, 500);
+	}, 50000);
 	
 	setInterval(() => {	
 		var hh=getDronIntervalTime();

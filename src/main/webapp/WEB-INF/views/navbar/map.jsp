@@ -1467,7 +1467,8 @@ function initMap(){
        $('.modal').on('hidden.bs.modal', function (e) {
           //console.log('modal close');
           $("#content").val("");
-          $("#rmPhoto").val("");
+          $("#rmPhoto2").val("");
+          $('#rating option[value=5]').prop('selected', 'selected').change();
           
           
           $("#preview-image2").attr("src","resources/img/basicImage.png");
