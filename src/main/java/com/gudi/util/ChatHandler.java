@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -57,7 +59,8 @@ public class ChatHandler extends TextWebSocketHandler {
 				
 				//알림받을 유저가 실시간 접속하고 있을 경우(targetSession이 users에 아직 존재할 경우)
 				if(targetSession != null) {
-					if(type.equals("chat")) { //채팅 요청 //그냥 보내면 일반알림메시지랑 구분할 수 없어서 **을 넣었음
+					if(type.equals("chat")) { //채팅 요청 
+						//그냥 보내면 일반알림메시지랑 구분할 수 없어서 **을 넣었음
 						TextMessage txtMsg = new TextMessage("**"+ content); //요청받는 유저 아이디/닉네임
 						log("웹소켓 채팅요청 txtMsg - "+txtMsg.getPayload());
 						targetSession.sendMessage(txtMsg);
@@ -68,13 +71,20 @@ public class ChatHandler extends TextWebSocketHandler {
 						targetSession.sendMessage(txtMsg);
 					*/
 						
-					}else {
+					}else { //알림 요청
+						String chkAlert = getChkAlert(WSsession);
+						log("알림수신 여부 : "+chkAlert);
+						if(chkAlert.equals("Y")) {
 						//ex) [타입] 알림메시지 내용 , 클릭하면 url로 이동함
-						TextMessage txtMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>");
-						log("웹소켓 알림메시지 txtMsg - "+txtMsg.getPayload());
-						//알림받을 유저의 세션으로 txtMsg를 전송한다.
-						targetSession.sendMessage(txtMsg);
-						//받는 jsp페이지의 javascript영역에서 onMessage(e)의 e.data로 받게된다.
+							TextMessage txtMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>");
+							log("웹소켓 알림메시지 txtMsg - "+txtMsg.getPayload());
+							//알림받을 유저의 세션으로 txtMsg를 전송한다.
+							targetSession.sendMessage(txtMsg);
+							//받는 jsp페이지의 javascript영역에서 onMessage(e)의 e.data로 받게된다.
+						}else {
+							log("알림수신거부로 알림요청 취소");
+							return;
+						}
 					}
 				}
 			}
@@ -117,6 +127,18 @@ public class ChatHandler extends TextWebSocketHandler {
 		
 		//현재 세션에 저장된 loginId가 없으면 null을 반환, 존재하면 loginId 반환
 		return loginId == null ? null : loginId;
+	}
+	
+	//접속한 유저의 Http세션을 조회하여 알림수신여부를 얻어오는 함수
+	private String getChkAlert(WebSocketSession WSsession) {
+		
+		//웹소켓세션에 저장된 모든 Attributes의 Map을 httpSessionMap에 저장한다.
+		Map<String, Object> httpSessionMap = WSsession.getAttributes();
+		//세션에 저장된 loginId를 조회하여 가져온다.
+		String chkAlert = (String)httpSessionMap.get("chkAlert");
+
+		//현재 세션에 저장된 loginId가 없으면 null을 반환, 존재하면 loginId 반환
+		return chkAlert == null ? null : chkAlert;
 	}
 	
 }
