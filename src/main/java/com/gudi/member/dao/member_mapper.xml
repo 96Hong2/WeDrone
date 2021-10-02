@@ -27,7 +27,7 @@
 
 	<select id="login" parameterType="String"
 		resultType="java.util.HashMap">
-		SELECT userId, pw, nickName, chkalert, isDel FROM members WHERE userId = #{userId} 
+		SELECT userId, pw, nickName, chkAlert, isDel FROM members WHERE userId = #{userId} 
 	</select>
 
 	<!--수빈 내정보 -->

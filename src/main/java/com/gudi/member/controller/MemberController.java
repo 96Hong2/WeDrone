@@ -106,8 +106,10 @@ public class MemberController {
 		rttr.addFlashAttribute("msg","modSuccess");
 		
 		logger.info("update info : {}",params);
-		params.put("userId", (String)session.getAttribute("loginId"));
-		service.update(params);
+		String loginId = (String)session.getAttribute("loginId");
+		params.put("userId", loginId);
+		
+		service.update(params, session, loginId);
 		return "redirect:/memberInfo?userId="+params.get("userId");
 	}
 		

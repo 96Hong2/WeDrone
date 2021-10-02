@@ -134,8 +134,14 @@ public class MemberService<pwchange> {
 	}
 
 	//정보 수정하기
-	public void update(HashMap<String, String> params) {
+	public void update(HashMap<String, String> params, HttpSession session, String loginId) {
 		int success = dao.update(params);
+		HashMap<String, String> map = dao.login(loginId);
+		String nickName = map.get("NICKNAME");
+		String chkAlert = map.get("CHKALERT");
+		logger.info("정보수정 nick/chkAlert : " + nickName +"/"+chkAlert);
+		session.setAttribute("loginNickName", nickName);
+		session.setAttribute("chkAlert", chkAlert);
 		logger.info("내 정보 수정 성공 여부 : " + success);
 	}
 
