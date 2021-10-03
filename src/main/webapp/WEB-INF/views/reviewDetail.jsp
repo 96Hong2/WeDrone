@@ -246,9 +246,11 @@ function reloadMarkers(areaName, tab){
 	}else if(tab == "myReviewMK"){
 		//내후기마커 탭이라면? 내 후기마커리스트 새로고침
 		loadMyReviews("${sessionScope.loginId}");
-	}else{
+	}else if(tab == "bookmark"){
 		//즐겨찾기 탭이라면? 즐겨찾기한 후기마커 리스트 새로고침
 		loadBookMarks("${sessionScope.loginId}");
+	}else{
+		alert("새로고침 실패");
 	}
 }
 
@@ -298,7 +300,7 @@ function doLike(reviewId, userId, areaName, tab){
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
 			//console.log("좋아요 알림 보내기 : ", data.informSuccess);
-			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+			var contents = "<a href='javascript:undoLike("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_full.png' class='revLikeImg'> 좋아요 "
             +"<b>"+data.likeCnt+"</b></div></a></div>";
@@ -330,7 +332,7 @@ function undoLike(reviewId, userId, areaName, tab){
 		success : function(data) {
 			//console.log("data.success : ",data.success);
 			//console.log("data.likeCnt : ",data.likeCnt);
-			var contents = "<a href='javascript:doLike("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+			var contents = "<a href='javascript:doLike("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
 			+"<div class='revLike'>"
 			+"<img src='resources/img/like2_empty.png' class='revLikeImg'> 좋아요 "
             +"<b>"+data.likeCnt+"</b></div></a></div>";
@@ -359,7 +361,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			dataType : 'JSON',
 			success : function(data) {
 				//console.log("data.success : ",data.success);
-				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+				var contents = "<a href='javascript:undoBookMark("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star.png' class='revBookMarkImg'></div></a>";
 				
 				$('.revBookMarkContainer').empty();
@@ -389,7 +391,7 @@ function undoLike(reviewId, userId, areaName, tab){
 			dataType : 'JSON',
 			success : function(data) {
 				//console.log("data.success : ",data.success);
-				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\")' class='likeAnchor'>"
+				var contents = "<a href='javascript:doBookMark("+reviewId+",\""+userId+"\",\""+areaName+"\",\""+tab+"\")' class='likeAnchor'>"
 				+ "<div class='revBookMark'><img src='resources/img/star2.png' class='revBookMarkImg'></div></a>";
 				
 				$('.revBookMarkContainer').empty();
