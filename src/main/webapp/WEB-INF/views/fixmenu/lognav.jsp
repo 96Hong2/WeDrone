@@ -253,7 +253,10 @@ function onMessage(e){
 		chatReq += "<span style='font-size:15px; color:darkgray;'>"+reqTime+"</span></a>";
 		chatReq += "<button id='rejectChatBtn' class='btn btn-sm btn-outline-dark mx-1 me-1' type='button' onclick='javascript:rejectChat(\""+reqId+"\",\""+reqNickName+"\")'>거절</button></div></li>";
 		$("#emptyReqCmt").empty();
-		$("#reqList").append(chatReq);	
+		$("#reqList").append(chatReq);
+		
+		//헤더의 메시지아이콘에 빨간 동그라미 보이기
+	    $('#redCircle').show();
 	/*
 	}else if(data.substring(0,2) == "##"){
 		//##은 채팅 거절알림, 채팅거절 알림메시지일 경우 여기서 해줄 일은 없다.
@@ -270,9 +273,6 @@ function onMessage(e){
 	    //$('.toast').toast({"animation": true, "autohide": false});
 	    //$('.toast').toast('show');
 	    $('#myToast').fadeIn(400).delay(5000).fadeOut(400);
-	    
-	    //헤더의 메시지아이콘에 빨간 동그라미 보이기
-	    $('#redCircle').show();
 	}
 }
 
