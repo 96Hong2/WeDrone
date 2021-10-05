@@ -98,12 +98,12 @@
 						<div class="form-check form-check-inline mx-3">
 							<label class="form-check-label" for="alarmcheckchange">
 								동의 </label> <input class="form-check-input" type="radio" name="chkAlert" value="Y"
-								id="chkAlert" checked <c:if test="${dto.chkAlert eq 'Y'}"></c:if>>
+								id="chkAlert" <c:if test="${dto.chkAlert eq 'Y'}">checked</c:if>>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio"
 								name="chkAlert" id="chkAlert2" value="N"
-								<c:if test="${dto.chkAlert eq 'N'}"></c:if>> <label
+								<c:if test="${dto.chkAlert eq 'N'}">checked</c:if>> <label
 								class="form-check-label" for="alarmcheckchange2"> 거부 </label>
 						</div>
 					</div>

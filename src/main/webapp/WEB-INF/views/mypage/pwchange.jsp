@@ -67,25 +67,31 @@
 					<p class= fs-3>비밀번호 변경</p>
 					<hr />
 					<div class="container w-50">
-						<form id="login2" action="${path}/pwupdate" method="post">
+						<form id="pwChangeForm" action="${path}/pwupdate" method="post">
 							<div class="form-group">
-								<label for="InputId" class="fw-bold">아이디</label> <input
-									type="text" class="form-control" name="userId" id="userId"
+								<label for="InputId" class="fw-bold"></label> <input
+									type="hidden" class="form-control" name="userId" id="userId"
 									<c:if test="${cookie.userId ne null}"> value="${cookie.userId.value}" </c:if>
 									placeholder="아이디를 입력해주세요">
 								<div class="invalid-feedback">아이디를 입력해주세요</div>
 							</div>
 							<div class="form-group my-2">
-								<label for="InputPassword" class="fw-bold">비밀번호</label> <input
+								<label for="InputPassword" class="fw-bold">기존 비밀번호</label> <input
 									type="password" class="form-control" name="pw" id="pw"  maxlength="20"
-									placeholder="비밀번호를 입력해주세요">
-								<div class="invalid-feedback">비밀번호를 입력해주세요</div>
+									placeholder="기존 비밀번호를 입력해주세요">
+								<div class="invalid-feedback" id="pwInputChk">비밀번호를 입력해주세요</div>
 							</div>
-								<div class="form-group my-2">
+							<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호 변경</label> <input
 									type="password" class="form-control" name="pwChange" id="pwChange"  maxlength="20"
-									placeholder="20자 이하로 입력해주세요" >
-								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요</div>
+									placeholder="새 비밀번호 6~20자 입력" >
+								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요.</div>
+							</div>
+							<div class="form-group my-2">
+								<label for="InputPassword" class="fw-bold">비밀번호 변경 확인</label> <input
+									type="password" class="form-control" name="pwChange_chk" id="pwChange_chk"  maxlength="20"
+									placeholder="변경할 비밀번호를 다시 한 번 똑같이 입력" >
+								<div class="invalid-feedback">변경할 비밀번호가 일치하지 않습니다.</div>
 							</div>
 
 
@@ -101,7 +107,7 @@
 							</c:if>
 							<hr />
 							<div>
-								<button class="btn btn-dark" name="pwupdate">비밀번호 변경</button>
+								<button type='button' onclick="javascript:pwValidChk()" class="btn btn-dark" name="pwupdate">비밀번호 변경</button>
 							</div>
 						</form>
 					</div>
@@ -124,9 +130,36 @@
 <%@ include file="../common/weather-widget.jsp" %>
 <c:if test="${suc eq false }">
 <script type="text/javascript">
-alert("정보를 올바르게 입력해주세요")
+alert("기존 비밀번호를 올바르게 입력해주세요");
 </script>
 </c:if>
+
+<script type="text/javascript">
+
+function hide_invalid_fb(){
+	$(".invalid-feedback").hide();
+}
+
+function pwValidChk(){
+	$(".invalid-feedback").hide();
+	
+	if($("#pw").value == null){
+		$("#pwInputChk").show();
+		return;
+	}else{
+		alert("비번 변경! #pwChangeForm.submit()");
+	}
+	
+	/*
+	var formCtr = document.getElementsByClassName('form-control');
+	for(fItem : formCtr){
+		fItem.addEventListener("change", hide_invalid_fb);
+	}
+	*/
+}
+
+</script>
+
 <!--// 날씨 위젯 끝 -->
       
       
