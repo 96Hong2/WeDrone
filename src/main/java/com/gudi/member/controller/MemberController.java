@@ -31,9 +31,7 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-	@Autowired
-	MemberService service;
-
+	@Autowired MemberService service;
 	
 	@RequestMapping(value = "/joinForm")
 	public String joinForm(Model model) {
@@ -135,22 +133,25 @@ public class MemberController {
 		// 1. 아이디랑 비밀번호 -> db에 맞는지 확인
 		// if() return "mypage/pwchange";
 		// else 로그아웃 처리 후 메인으로
-		String  pw = service.idpwCheck(params);
+		String pw = service.idpwCheck(params);
 		if(pw == null) {
 			model.addAttribute("suc",false);
 			return "mypage/pwchange";
 		}else {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			boolean matched = encoder.matches(params.get("pw"), pw);
+			logger.info("*****매개변수로 받은 기존 pw/DB에 있는pw/matched : "+params.get("pw")+"/"+pw+"/"+matched);
 			if(matched) {
 				String pwChange = params.get("pwChange");
 				encoder = new BCryptPasswordEncoder();
 				String HashPw = encoder.encode(pwChange);
 				service.pwChange(HashPw,loginId);
-				session.removeAttribute("loginId");
-				return "redirect:/";
+				//session.removeAttribute("loginId");
+				//return "redirect:/";
+				model.addAttribute("suc", true);
+				return "mypage/pwchange";
 			}else {
-				model.addAttribute("suc",false);
+				model.addAttribute("suc", false);
 				return "mypage/pwchange";
 			}
 		}

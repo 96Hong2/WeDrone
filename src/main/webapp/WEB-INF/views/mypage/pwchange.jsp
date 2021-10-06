@@ -71,7 +71,8 @@
 							<div class="form-group">
 								<label for="InputId" class="fw-bold"></label> <input
 									type="hidden" class="form-control" name="userId" id="userId"
-									<c:if test="${cookie.userId ne null}"> value="${cookie.userId.value}" </c:if>
+									<%-- <c:if test="${cookie.userId ne null}"> value="${cookie.userId.value}" </c:if> --%>
+									value = "${sessionScope.loginId}" 
 									placeholder="아이디를 입력해주세요">
 								<div class="invalid-feedback">아이디를 입력해주세요</div>
 							</div>
@@ -85,13 +86,13 @@
 								<label for="InputPassword" class="fw-bold">비밀번호 변경</label> <input
 									type="password" class="form-control" name="pwChange" id="pwChange"  maxlength="20"
 									placeholder="새 비밀번호 6~20자 입력" >
-								<div class="invalid-feedback">변경할 비밀번호를 입력해주세요.</div>
+								<div class="invalid-feedback" id="pwInputChk2">변경할 비밀번호를 입력해주세요.</div>
 							</div>
 							<div class="form-group my-2">
 								<label for="InputPassword" class="fw-bold">비밀번호 변경 확인</label> <input
 									type="password" class="form-control" name="pwChange_chk" id="pwChange_chk"  maxlength="20"
-									placeholder="변경할 비밀번호를 다시 한 번 똑같이 입력" >
-								<div class="invalid-feedback">변경할 비밀번호가 일치하지 않습니다.</div>
+									placeholder="다시 한 번 똑같이 입력해주세요" >
+								<div class="invalid-feedback" id="pwInputChk3">변경할 비밀번호가 일치하지 않습니다.</div>
 							</div>
 
 
@@ -127,11 +128,18 @@
 	</div>
 </div>
 </div>
+
 <%@ include file="../common/weather-widget.jsp" %>
+
 <c:if test="${suc eq false }">
-<script type="text/javascript">
-alert("기존 비밀번호를 올바르게 입력해주세요");
-</script>
+	<script type="text/javascript">
+		alert("기존 비밀번호를 올바르게 입력해주세요.");
+	</script>
+</c:if>
+<c:if test="${suc eq true }">
+	<script type="text/javascript">
+		alert("비밀번호 변경이 완료되었습니다!");
+	</script>
 </c:if>
 
 <script type="text/javascript">
@@ -143,19 +151,19 @@ function hide_invalid_fb(){
 function pwValidChk(){
 	$(".invalid-feedback").hide();
 	
-	if($("#pw").value == null){
+	if($("#pw").val() == ""){
 		$("#pwInputChk").show();
 		return;
+	}else if($("#pwChange").val() == ""){	
+		$("#pwInputChk2").show();
+		return;
+	}else if($("#pwChange").val() != $("#pwChange_chk").val()){
+		$("#pwInputChk3").show();
+		return;
 	}else{
-		alert("비번 변경! #pwChangeForm.submit()");
+		//alert("비번 변경!  :"+$("#pw").val());
+		$("#pwChangeForm").submit();
 	}
-	
-	/*
-	var formCtr = document.getElementsByClassName('form-control');
-	for(fItem : formCtr){
-		fItem.addEventListener("change", hide_invalid_fb);
-	}
-	*/
 }
 
 </script>
