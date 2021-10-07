@@ -67,7 +67,7 @@ public class WebSocketController {
    @OnMessage
    public void onMsg(String msg, Session session) {
       System.out.println("받은 메시지 : "+msg);
-      //sendMsg(session, msg);//뭐든것이 들어있다 socket과 같은 역할
+      //sendMsg(session, msg);//모든것이 들어있다 socket과 같은 역할
       broadCast(msg);
    }
       
@@ -84,8 +84,8 @@ public class WebSocketController {
       for(String userId : userList.keySet()) {//keyset hashmap을 모아서 하나씩 보내는 메서드
           Session session = (Session) userList.get(userId);
           System.out.println("session id : "+session.getId());
+          System.out.println("받은 msg : "+msg);
           session.getBasicRemote().sendText(msg);
-       
         }
       } catch (IOException e) {
          
@@ -94,7 +94,7 @@ public class WebSocketController {
       
    }
    
- //서버에서 클라이언트로 보낼때
+ //서버에서 하나의 클라이언트로 보낼때
    public void sendMsg(Session session, String msg) {
       try {
          session.getBasicRemote().sendText(msg);

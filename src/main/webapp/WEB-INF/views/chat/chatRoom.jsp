@@ -273,15 +273,27 @@ var $mon = $("#monitor");
    
    //메시지를 서버로 부터 받았을 때
    webSocket.onmessage = function(e){
-      //console.log("message : ",e);
-      $mon.append(e.data+"<br/>");
+      var message = e.data;
+      console.log("message : ",message);
+      
+      var msgStr = message.split(',');
+      console.log("message str1/2 : "+msgStr[0]+'/'+msgStr[1]);
+      
+      if("${sessionScope.loginNickName}" === msgStr[0]){
+    	  $mon.append("<div style='text-align:left;'>[YOU]</div><br/>");
+    	  $mon.append("<div style='text-align:left;'>"+msgStr[1]+"</div><br/>");
+      }else{
+    	  $mon.append("<div style='text-align:left;'>["+msgStr[0]+"]</div><br/>");
+    	  $mon.append("<div>"+msgStr[1]+"</div><br/>");
+      }
+      
       $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
    }         
    
    
 	//메시지를 보내기
 	function sendMsg(){
-	   webSocket.send("${sessionScope.loginNickName} : "+$("#msg").val());
+	   webSocket.send("${sessionScope.loginNickName},"+$("#msg").val());
 	   $("#msg").val("");
 	   //$("#shallWeBegin").hide();
 	}
