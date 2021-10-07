@@ -640,7 +640,7 @@ function initMap(){
       })
       
 
-      //function 안 쪽에 지역변수로 넣으니까 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을대 전체를 못 없애줌. 그래서 전역변수로 만듦.
+      //지역변수로 설정하면 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애주기 때문에 전역변수로 선언
       var polygons = [];
       //현재 지도에 띄워지는 커스텀 오버레이 변수 설정
       var customOverlay = new kakao.maps.CustomOverlay();
@@ -654,10 +654,7 @@ function initMap(){
        var marker = new kakao.maps.Marker();
        
        
-       
-       
-       
-       
+      
        // 지도에 클릭 이벤트를 등록합니다
        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
        var reviewMarkerAdd = function (mouseEvent){
@@ -888,8 +885,9 @@ function initMap(){
          
       } //end selectArea()
       
-      
-      function loadReviews(name, order){ //리뷰리스트와 후기마커를 로드하는 메소드
+    
+      //리뷰리스트와 후기마커를 로드하는 메소드
+      function loadReviews(name, order){ //지역명과 정렬순서를 받는다. 
          
          deleteMarkers(markers); //현재 지도에 띄워져있는 마커가 있으면 모두 제거한다.
          reviewIds = []; //reviewIds 초기화
@@ -1060,6 +1058,7 @@ function initMap(){
            });
       } //end loadReviews()
       
+      //후기마커의 마커 또는 리스트요소에 마우스오버했을 때 실행되는 함수 
       function mouseovers(reviewId, Marker){
       	return function(){
               //console.log("mouseovers reviewId : ", reviewId);
@@ -1078,6 +1077,7 @@ function initMap(){
       	};
       }
       
+    //후기마커의 마커 또는 리스트요소에 마우스아웃했을 때 실행되는 함수
       function mouseouts(reviewId, Marker){
     	  return function(){
 	    	  //console.log("mouseouts reviewId : ", reviewId);
@@ -2065,6 +2065,7 @@ function initMap(){
         });
     }
  	
+    
     //현재 위치를 불러오는 메소드
     //현재위치에 마커를 찍고 해당 마커를 중심으로 지도를 이동시킨다.
     function callMyLocation(){
@@ -2097,6 +2098,7 @@ function initMap(){
 		}
     }
     
+    
     var callApiInfo = function(mouseEvent) {
     	myLocMKinfo.close();
     	
@@ -2109,6 +2111,7 @@ function initMap(){
     	setAPI_Info(mouseEvent.latLng);
     	
     }
+    
     
 	//내위치마커에서 클릭한 위치의 기상API 가져오는 메소드
 	function loadAPICall(){
@@ -2124,6 +2127,7 @@ function initMap(){
     		
 	} //end loadAPICall()
       
+	
     //일출, 일몰 시간 변환
   	function unix_timestamp(t) {
   		var date = new Date(t*1000);
@@ -2132,6 +2136,7 @@ function initMap(){
   		return hour.substr(-2) + ":" + minute.substr(-2);
   	}
 
+	
   	// 풍향 변환
   	function windDirection(deg) {
   		 var result = Math.round((deg + 22.5 * 0.5) / 22.5);
@@ -2241,8 +2246,7 @@ function initMap(){
   		     }
   		 });
   	}
- 
-	
+
   	
   	
 </script>
