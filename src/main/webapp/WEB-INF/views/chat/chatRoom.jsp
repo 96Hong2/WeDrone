@@ -294,6 +294,7 @@ var $mon = $("#monitor");
 	//메시지를 보내기
 	function sendMsg(){
 	   webSocket.send("${sessionScope.loginNickName},"+$("#msg").val());
+	   console.log("${sessionScope.loginNickName} / "+$("#msg").val());
 	   $("#msg").val("");
 	   //$("#shallWeBegin").hide();
 	}
