@@ -279,12 +279,28 @@ var $mon = $("#monitor");
       var msgStr = message.split(',');
       console.log("message str1/2 : "+msgStr[0]+'/'+msgStr[1]);
       
-      if("${sessionScope.loginNickName}" === msgStr[0]){
-    	  $mon.append("<div style='text-align:left;'>[YOU]</div><br/>");
-    	  $mon.append("<div style='text-align:left;'>"+msgStr[1]+"</div><br/>");
+      var today = new Date();   
+
+      var hours = ('0' + today.getHours()).slice(-2); 
+      var minutes = ('0' + today.getMinutes()).slice(-2);
+      var seconds = ('0' + today.getSeconds()).slice(-2); 
+
+      var timeString = hours + ':' + minutes  + ':' + seconds;
+
+      //console.log(timeString);
+      // 결과 : 15:47:29
+      
+      if(msgStr[1] == null){
+    	  $mon.append("<div style='margin:0px;'>"+msgStr[0]+"</div><br/>");
+      }else if("${sessionScope.loginNickName}" === msgStr[0]){
+    	  $mon.append("<div style='text-align:right; margin-right:20px;'>[&nbsp;YOU&nbsp;]</div>");
+    	  $mon.append("<div style='text-align:right; margin-right:20px;'>"+msgStr[1]);
+    	  $mon.append("<div style='font-size:10px;text-align:right; margin-right:20px;color:lightgray;'>"+timeString+"</div></div><br/>");
+    	  //style='position:absolute; left:50px; margin:0px;'
       }else{
-    	  $mon.append("<div style='text-align:left;'>["+msgStr[0]+"]</div><br/>");
-    	  $mon.append("<div>"+msgStr[1]+"</div><br/>");
+    	  $mon.append("<div style='margin-left:20px;'>[&nbsp;"+msgStr[0]+"&nbsp;]</div>");
+    	  $mon.append("<div style='margin-left:20px;'>"+msgStr[1]);
+    	  $mon.append("<div style='font-size:10px;text-align:left; margin-left:20px; color:lightgray;'>"+timeString+"</div></div><br/>");
       }
       
       $("#monitor").scrollTop($("#monitor")[0].scrollHeight);
@@ -294,7 +310,7 @@ var $mon = $("#monitor");
 	//메시지를 보내기
 	function sendMsg(){
 	   webSocket.send("${sessionScope.loginNickName},"+$("#msg").val());
-	   console.log("${sessionScope.loginNickName} / "+$("#msg").val());
+	   console.log("chatRoom.jsp에서 sendMsg ${sessionScope.loginNickName} / "+$("#msg").val());
 	   $("#msg").val("");
 	   //$("#shallWeBegin").hide();
 	}
