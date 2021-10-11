@@ -174,7 +174,21 @@
 </style>
 </head>
 <body>
-	<div id="RejectAlert"></div>
+	<!-- 거절알림 -->
+	<div id="RejectAlert">
+		<div id='myAlert'>
+		<div id='topAlert'>
+			<strong class='mr-auto'><img src='resources/img/chat-box.png' id='chatboxImg'>&nbsp;알림 &nbsp;</strong>
+			<a href='javascript:toastClose()' id='closeToast'><strong>X</strong></a>
+		</div>
+		<hr/>
+		<div id='rejectImgDiv'>
+			<img src='resources/img/rejected.png' id='rejectImg'>
+		</div>
+		<div id='rejectMsg' style='text-align:center;'></div></div>
+	</div>
+	
+	<!-- 채팅방 -->
 	<div id='stars'></div>
 	<div id='stars2'></div>
 	<div id='stars3'></div>
@@ -214,16 +228,20 @@ $(document).ready(function(){
 function onMsg(e){
 	var rejector = e.data; //웹소켓으로부터 받은 알림 데이터
 	console.log("채팅을 거절한 유저닉네임 : ",rejector);
-
+	
+	/*
 	var content = "<div id='myAlert'>";
 	content += "<div id='topAlert'><strong class='mr-auto'><img src='resources/img/chat-box.png' id='chatboxImg'>&nbsp;알림 &nbsp;</strong>";
 	content += "<a href='javascript:toastClose()' id='closeToast'><strong>X</strong></a></div>";
 	content += "<hr/>";
 	content += "<div id='rejectImgDiv'><img src='resources/img/rejected.png' id='rejectImg'></div>";
 	content += "<div style='text-align:center;'>" + rejector + "님이 1:1채팅요청을 거절했습니다.</div></div>";
-
-	$("#RejectAlert").empty();
-	$("#RejectAlert").append(content);
+	*/
+	
+	var content = rejector + "님이 1:1채팅요청을 거절했습니다.";
+	
+	$("#rejectMsg").empty();
+	$("#rejectMsg").append(content);
 	$("#RejectAlert").show();
 
 	//채팅 웹소켓 닫아주기
