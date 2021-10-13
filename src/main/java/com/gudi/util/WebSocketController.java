@@ -88,7 +88,6 @@ public class WebSocketController {
           session.getBasicRemote().sendText(msg);
         }
       } catch (IOException e) {
-         
          e.printStackTrace();
       }
       
